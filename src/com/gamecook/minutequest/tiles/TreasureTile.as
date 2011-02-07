@@ -7,10 +7,11 @@
  */
 package com.gamecook.minutequest.tiles
 {
-    public class TreasureTile
+    public class TreasureTile extends BaseTile
     {
         public function TreasureTile()
         {
         }
+
     }
 }

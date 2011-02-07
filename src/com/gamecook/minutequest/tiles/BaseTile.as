@@ -50,5 +50,10 @@ package com.gamecook.minutequest.tiles
             _id = value;
         }
 
+        public function parseObject(obj:Object):void
+        {
+
+        }
+
     }
 }

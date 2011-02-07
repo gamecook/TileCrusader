@@ -60,12 +60,9 @@ package com.gamecook.minutequest.factory
             }
             var instance:ITile = new classReference;
 
-            var prop:String;
-            for (prop in template)
-            {
-                if(instance.hasOwnProperty(prop))
-                    instance[prop] = template[prop];
-            }
+            if(instance.hasOwnProperty("parseObject"))
+                instance["parseObject"](template);
+
             return instance;
         }
 

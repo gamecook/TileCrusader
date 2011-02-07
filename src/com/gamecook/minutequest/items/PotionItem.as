@@ -7,9 +7,9 @@
  */
 package com.gamecook.minutequest.items
 {
-    public class Potion
+    public class PotionItem
     {
-        public function Potion()
+        public function PotionItem()
         {
         }
     }

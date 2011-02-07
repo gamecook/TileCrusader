@@ -7,57 +7,43 @@
  */
 package com.gamecook.minutequest.tiles
 {
-    import com.gamecook.minutequest.combat.IFight;
-
-    public class PlayerTile extends BaseTile implements IFight
+    public class PlayerTile extends MonsterTile
     {
-        private var _life:int;
-        private var _maxLife:int;
-        private var _hitValue:int;
-        private var _defenseValue:int;
+        protected var weapon:String;
+        protected var armor:String;
 
         public function PlayerTile()
         {
         }
 
-        public function get life():int
+        public function setWeapon(value:String):void
         {
-            return _life;
+            weapon = value;
         }
 
-        public function set life(value:int)
+        public function getWeapon(value:String):String
         {
-            _life = value;
+            return weapon;
         }
 
-        public function get maxLife():int
+        public function setArmor(value:String):void
         {
-            return _maxLife;
+            armor = value;
         }
 
-        public function set maxLife(value:int):void
+        public function getArmor():String
         {
-            _maxLife = value;
+            return armor;
         }
 
-        public function get hitValue():int
+        override public function parseObject(obj:Object):void
         {
-            return _hitValue;
-        }
+            super.parseObject(obj);
 
-        public function set hitValue(value:int):void
-        {
-            _hitValue = value;
-        }
-
-        public function get defenseValue():int
-        {
-            return _defenseValue;
-        }
-
-        public function set defenseValue(value:int):void
-        {
-            _defenseValue = value;
+            if(obj.hasOwnProperty("weapon"))
+                weapon = obj.weapon;
+            if(obj.hasOwnProperty("armor"))
+                armor = obj.armor;
         }
     }
 }

@@ -12,16 +12,10 @@ package com.gamecook.minutequest.combat
 
     public interface IFight
     {
-        function get life():int;
-        function set life(value:int);
+        function getLife():int;
 
-        function get maxLife():int;
-        function set maxLife(value:int):void;
+        function getHitValue():int;
 
-        function get hitValue():int;
-        function set hitValue(value:int):void;
-
-        function get defenseValue():int;
-        function set defenseValue(value:int):void;
+        function getDefenseValue():int;
     }
 }

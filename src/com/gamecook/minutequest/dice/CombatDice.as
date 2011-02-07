@@ -7,7 +7,7 @@
  */
 package com.gamecook.minutequest.dice
 {
-    public class MQDice extends BaseDice
+    public class CombatDice extends BaseDice implements ICombatDice
     {
         public static const BLACK_SHIELD:int = 0;
         public static const SKULL_1:int = 1;
@@ -16,7 +16,7 @@ package com.gamecook.minutequest.dice
         public static const SHIELD_1:int = 4;
         public static const SHIELD_2:int = 5;
 
-        public function MQDice(sides:int = 5)
+        public function CombatDice(sides:int = 5)
         {
             super(sides);
         }
@@ -33,8 +33,8 @@ package com.gamecook.minutequest.dice
                 switch (rollValue)
                 {
                     case SKULL_1: case SKULL_2: case SKULL_3:
-                        value ++;
-                        break;
+                    value ++;
+                    break;
                 }
             }
 
@@ -53,8 +53,8 @@ package com.gamecook.minutequest.dice
                 switch (rollValue)
                 {
                     case SHIELD_1: case SHIELD_2:
-                        value ++;
-                        break;
+                    value ++;
+                    break;
                 }
             }
 
@@ -67,7 +67,7 @@ package com.gamecook.minutequest.dice
             var i:int;
             var value:int;
 
-            for(i = 0; i < rolls; ++i)
+            for (i = 0; i < rolls; ++i)
             {
                 rollValue = roll();
                 value += rollValue == BLACK_SHIELD ? 1 : 0;

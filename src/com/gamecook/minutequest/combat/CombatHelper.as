@@ -30,8 +30,8 @@ package com.gamecook.minutequest.combat
 
         public function attack(attacker:IFight, defender:IFight):AttackStatus
         {
-            var hit:int = attacker.hitValue;
-            var defense:int = attacker.defenseValue;
+            var hit:int = attacker.getHitValue();
+            var defense:int = attacker.getDefenseValue();
             var difference:int;
             var success:Boolean;
             var kill:Boolean;
@@ -40,10 +40,10 @@ package com.gamecook.minutequest.combat
             {
                 success = true;
                 difference = hit - defense;
-                defender.life -= defense;
-                if(defender.life <=0)
+                defender.getLife() -= defense;
+                if(defender.getLife() <=0)
                 {
-                    defender.life = 0;
+                    defender.getLife() = 0;
                     kill = true;
                 }
             }

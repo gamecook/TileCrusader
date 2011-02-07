@@ -8,56 +8,81 @@
 package com.gamecook.minutequest.tiles
 {
     import com.gamecook.minutequest.combat.IFight;
+    import com.gamecook.minutequest.dice.CombatDice;
+    import com.gamecook.minutequest.dice.ICombatDice;
 
     public class MonsterTile extends BaseTile implements IFight
     {
-        private var _life:int;
-        private var _maxLife:int;
-        private var _hitValue:int;
-        private var _defenseValue:int;
+        protected var life:int = 1;
+        protected var maxLife:int = 1;
+        protected var dice:ICombatDice;
+        protected var attackRoll:int = 1;
+        protected var defenseRoll:int = 1;
 
         public function MonsterTile()
         {
         }
 
-        public function get life():int
+        public function getDice():ICombatDice
         {
-            return _life;
+            if(!dice)
+                dice = new CombatDice();
+            return dice;
         }
 
-        public function set life(value:int)
+        public function setAttackRolls(value:int):void
         {
-            _life = value;
+            attackRoll;
         }
 
-        public function get maxLife():int
+        public function setDefenseRolls(value:int):void
         {
-            return _maxLife;
+            defenseRoll;
         }
 
-        public function set maxLife(value:int):void
+        public function getLife():int
         {
-            _maxLife = value;
+            return life;
         }
 
-        public function get hitValue():int
+        public function setLife(value:int)
         {
-            return _hitValue;
+            life = value;
         }
 
-        public function set hitValue(value:int):void
+        public function getMaxLife():int
         {
-            _hitValue = value;
+            return maxLife;
         }
 
-        public function get defenseValue():int
+        public function setMaxLife(value:int):void
         {
-            return _defenseValue;
+            maxLife = value;
         }
 
-        public function set defenseValue(value:int):void
+        public function getHitValue():int
         {
-            _defenseValue = value;
+            return dice.attackRoll(attackRoll);
         }
+
+        public function getDefenseValue():int
+        {
+            return dice.monsterDefenseRoll(defenseRoll);
+        }
+
+        override public function parseObject(obj:Object):void
+        {
+            super.parseObject(obj);
+
+            if(obj.hasOwnProperty("life"))
+                life = obj.life;
+            if(obj.hasOwnProperty("maxLife"))
+                maxLife = obj.maxLife;
+            if(obj.hasOwnProperty("attackRoll"))
+                attackRoll = obj.attackRoll;
+            if(obj.hasOwnProperty("defenseRoll"))
+                defenseRoll = obj.defenseRoll;
+        }
+
     }
 }
