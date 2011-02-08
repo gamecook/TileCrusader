@@ -14,6 +14,10 @@ package com.gamecook.minutequest.combat
     {
         function getLife():int;
 
+        function subtractLife(value:int):void;
+
+        function addLife(value:int):void;
+
         function getHitValue():int;
 
         function getDefenseValue():int;

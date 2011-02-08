@@ -15,6 +15,14 @@ package
 
     import com.gamecook.frogue.renderer.MapDrawingRenderer;
 
+    import com.gamecook.minutequest.combat.AttackStatus;
+    import com.gamecook.minutequest.combat.CombatHelper;
+    import com.gamecook.minutequest.combat.DoubleAttackStatus;
+    import com.gamecook.minutequest.combat.IFight;
+    import com.gamecook.minutequest.factory.TileFactory;
+    import com.gamecook.minutequest.tiles.BaseTile;
+    import com.gamecook.minutequest.tiles.ITreasure;
+    import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
     import com.gamecook.minutequest.renderer.MQMapRenderer;
     import com.gamecook.util.TimeMethodExecutionUtil;
@@ -39,6 +47,9 @@ package
         private var populateMapHelper:PopulateMapHelper;
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
+        private var player:PlayerTile;
+        private var tileFactory:TileFactory;
+        private var combatHelper:CombatHelper;
 
         /**
 		 *
@@ -61,6 +72,10 @@ package
             renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), new TileTypes());
 
             controls = new Controls(this);
+
+            tileFactory = new TileFactory(new TileTypes());
+            player = tileFactory.createTile("@", "@") as PlayerTile;
+            combatHelper = new CombatHelper();
 
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
@@ -101,10 +116,10 @@ package
         {
             if(invalid)
             {
-            //TODO there is a bug in renderer that doesn't let you see the last row
-            var tiles =TimeMethodExecutionUtil.execute("getSurroundingTiles", map.getSurroundingTiles, movementHelper.playerPosition, renderWidth, renderHeight);
+                //TODO there is a bug in renderer that doesn't let you see the last row
+                var tiles =TimeMethodExecutionUtil.execute("getSurroundingTiles", map.getSurroundingTiles, movementHelper.playerPosition, renderWidth, renderHeight);
 
-            TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap,tiles);
+                TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap,tiles);
                 invalid = false;
             }
         }
@@ -117,12 +132,36 @@ package
             if(tmpPoint != null)
             {
                 var tile:String = map.getTileType(tmpPoint);
-                switch(tile)
+                if (tile == " " || tile == "x")
                 {
-                    case " ": case "x":
-                        movementHelper.move(value.x, value.y);
-                        invalidate();
-                        break;
+                    movementHelper.move(value.x, value.y);
+                    invalidate();
+                }
+                else
+                {
+                    var tmpTile:BaseTile = tileFactory.createTile(tile, tmpPoint.toString());
+
+                    if(tmpTile is IFight)
+                    {
+                        trace("Fight");
+                        var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
+                        trace(status);
+                        if(status.attackStatus.kill)
+                        {
+                            trace("Monster was killed!");
+                            map.swapTile(tmpPoint," ");
+                            invalidate();
+                        }
+                        else if(player.getLife() == 0)
+                        {
+                            trace("Player Died");
+                        }
+
+                    }
+                    else if(tmpTile is ITreasure)
+                    {
+                        trace("Treasure");
+                    }
                 }
             }
         }

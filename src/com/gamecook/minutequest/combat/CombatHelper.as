@@ -21,7 +21,12 @@ package com.gamecook.minutequest.combat
             var statusB:AttackStatus;
             if(!statusA.kill)
             {
+                trace("Monster Was Not Killed");
                 statusB = attack(attackerB, attackerA);
+            }
+            else
+            {
+                trace("Monster Was Killed");
             }
 
             return new DoubleAttackStatus(statusA, statusB);
@@ -31,19 +36,19 @@ package com.gamecook.minutequest.combat
         public function attack(attacker:IFight, defender:IFight):AttackStatus
         {
             var hit:int = attacker.getHitValue();
-            var defense:int = attacker.getDefenseValue();
+            var defense:int = defender.getDefenseValue();
             var difference:int;
             var success:Boolean;
+
             var kill:Boolean;
 
             if(hit > defense)
             {
                 success = true;
                 difference = hit - defense;
-                defender.getLife() -= defense;
-                if(defender.getLife() <=0)
+                defender.subtractLife(difference);
+                if(defender.getLife() == 0)
                 {
-                    defender.getLife() = 0;
                     kill = true;
                 }
             }

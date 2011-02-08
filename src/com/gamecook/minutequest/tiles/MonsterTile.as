@@ -62,12 +62,12 @@ package com.gamecook.minutequest.tiles
 
         public function getHitValue():int
         {
-            return dice.attackRoll(attackRoll);
+            return getDice().attackRoll(attackRoll);
         }
 
         public function getDefenseValue():int
         {
-            return dice.monsterDefenseRoll(defenseRoll);
+            return getDice().monsterDefenseRoll(defenseRoll);
         }
 
         override public function parseObject(obj:Object):void
@@ -84,5 +84,16 @@ package com.gamecook.minutequest.tiles
                 defenseRoll = obj.defenseRoll;
         }
 
+        public function subtractLife(value:int):void
+        {
+            life -= value;
+            if(life < 0) life = 0;
+        }
+
+        public function addLife(value:int):void
+        {
+            life += value;
+            if(life > maxLife) life = maxLife;
+        }
     }
 }

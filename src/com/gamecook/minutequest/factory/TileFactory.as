@@ -7,9 +7,8 @@
  */
 package com.gamecook.minutequest.factory
 {
-    import com.gamecook.minutequest.tiles.BaseTile;
     import com.gamecook.minutequest.tiles.TileTypes;
-    import com.gamecook.minutequest.tiles.ITile;
+    import com.gamecook.minutequest.tiles.BaseTile;
 
     import flash.utils.getDefinitionByName;
 
@@ -24,16 +23,16 @@ package com.gamecook.minutequest.factory
             this.tileTypes = tileTypes;
         }
 
-        public function createTile(value:String, uniqueID:String = null):ITile
+        public function createTile(value:String, uniqueID:String = null):BaseTile
         {
-            var instance:ITile;
+            var instance:BaseTile;
 
             instance = uniqueID ? returnInstance(value, uniqueID) : createInstance(value);
 
             return instance;
         }
 
-        private function returnInstance(value:String, uniqueID:String):ITile
+        private function returnInstance(value:String, uniqueID:String):BaseTile
         {
             if(!singletons[uniqueID])
             {
@@ -43,7 +42,7 @@ package com.gamecook.minutequest.factory
             return singletons[uniqueID];
         }
 
-        private function createInstance(value:String):ITile
+        private function createInstance(value:String):BaseTile
         {
             var template:Object = tileTypes.getTileTemplate(value);
             if(!template)
@@ -58,7 +57,8 @@ package com.gamecook.minutequest.factory
             {
                 classReference = BaseTile;
             }
-            var instance:ITile = new classReference;
+
+            var instance:BaseTile = new classReference;
 
             if(instance.hasOwnProperty("parseObject"))
                 instance["parseObject"](template);
