@@ -20,6 +20,7 @@ package
     import com.gamecook.minutequest.combat.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
     import com.gamecook.minutequest.factory.TileFactory;
+    import com.gamecook.minutequest.managers.TileInstanceManager;
     import com.gamecook.minutequest.tiles.BaseTile;
     import com.gamecook.minutequest.tiles.ITreasure;
     import com.gamecook.minutequest.tiles.PlayerTile;
@@ -48,8 +49,9 @@ package
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         private var player:PlayerTile;
-        private var tileFactory:TileFactory;
+        //rivate var tileFactory:TileFactory;
         private var combatHelper:CombatHelper;
+        private var tileInstanceManager:TileInstanceManager;
 
         /**
 		 *
@@ -73,8 +75,8 @@ package
 
             controls = new Controls(this);
 
-            tileFactory = new TileFactory(new TileTypes());
-            player = tileFactory.createTile("@", "@") as PlayerTile;
+            tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
+            player = tileInstanceManager.getInstance("@", "@", {life:5}) as PlayerTile;
             combatHelper = new CombatHelper();
 
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -139,7 +141,7 @@ package
                 }
                 else
                 {
-                    var tmpTile:BaseTile = tileFactory.createTile(tile, tmpPoint.toString());
+                    var tmpTile:BaseTile = tileInstanceManager.getInstance(tmpPoint.toString(), tile);
 
                     if(tmpTile is IFight)
                     {
@@ -152,6 +154,7 @@ package
                             map.swapTile(tmpPoint," ");
                             invalidate();
                         }
+
                         else if(player.getLife() == 0)
                         {
                             trace("Player Died");

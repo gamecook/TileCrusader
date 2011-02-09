@@ -12,10 +12,9 @@ package com.gamecook.minutequest.factory
 
     import flash.utils.getDefinitionByName;
 
-    public class TileFactory
+    public class TileFactory implements ITileFactory
     {
 
-        protected var singletons:Array = [];
         private var tileTypes:TileTypes;
 
         public function TileFactory(tileTypes:TileTypes)
@@ -23,26 +22,7 @@ package com.gamecook.minutequest.factory
             this.tileTypes = tileTypes;
         }
 
-        public function createTile(value:String, uniqueID:String = null):BaseTile
-        {
-            var instance:BaseTile;
-
-            instance = uniqueID ? returnInstance(value, uniqueID) : createInstance(value);
-
-            return instance;
-        }
-
-        private function returnInstance(value:String, uniqueID:String):BaseTile
-        {
-            if(!singletons[uniqueID])
-            {
-                singletons[uniqueID] = createInstance(value)
-            }
-
-            return singletons[uniqueID];
-        }
-
-        private function createInstance(value:String):BaseTile
+        public function createTile(value:String):BaseTile
         {
             var template:Object = tileTypes.getTileTemplate(value);
             if(!template)
