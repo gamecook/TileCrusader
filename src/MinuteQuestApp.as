@@ -11,6 +11,7 @@ package
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.io.IControl;
+    import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
 
     import com.gamecook.frogue.renderer.MapDrawingRenderer;
@@ -53,6 +54,7 @@ package
         private var combatHelper:CombatHelper;
         private var tileInstanceManager:TileInstanceManager;
         private var characterSheet:CharacterSheetView;
+        private var mapSelection:MapSelection;
 
         /**
 		 *
@@ -62,7 +64,7 @@ package
 
 			configureStage();
 
-            var tmpSize:int = 40;
+            var tmpSize:int = 30;
 
             var t:Number = getTimer();
             map = new RandomMap();
@@ -70,10 +72,13 @@ package
             trace("Map Size", map.width, map.height);
             trace("Render Size", renderWidth, renderHeight);
 
+            mapSelection = new MapSelection(map, renderWidth, renderHeight);
+
             populateMapHelper = new PopulateMapHelper(map);
             populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","W","W","W","T","T","T","T","T","T","T","T","T");
 
             movementHelper = new MovementHelper(map, populateMapHelper.getRandomEmptyPoint());
+
             tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
 
             renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), new TileTypes(), tileInstanceManager);
@@ -126,15 +131,11 @@ package
         {
             if(invalid)
             {
-                trace("Player Point", movementHelper.playerPosition);
-
                 //TODO there is a bug in renderer that doesn't let you see the last row
-                var tiles =TimeMethodExecutionUtil.execute("getSurroundingTiles", map.getSurroundingTiles, movementHelper.playerPosition, renderWidth, renderHeight);
-
-                TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap,tiles);
-                invalid = false;
-
+                mapSelection.setCenter(movementHelper.playerPosition);
+                TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap, mapSelection);
                 characterSheet.refresh();
+                invalid = false;
             }
         }
 
@@ -177,6 +178,10 @@ package
                     else if(tmpTile is ITreasure)
                     {
                         trace("Treasure");
+                        //TODO pickup Treasure
+                        movementHelper.move(value.x, value.y);
+                        invalidate();
+
                     }
                 }
             }

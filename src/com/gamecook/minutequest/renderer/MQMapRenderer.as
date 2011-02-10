@@ -29,13 +29,12 @@ package com.gamecook.minutequest.renderer
         }
 
 
-        override protected function renderTile(j:int, i:int, currentTile:String):void
+        override protected function renderTile(j:int, i:int, currentTile:String, tileID:int):void
         {
-            super.renderTile(j, i, currentTile);
+            super.renderTile(j, i, currentTile, tileID);
             if(currentTile == "@")
             {
-                trace(j,",",i);
-                var array:Array = "1:2|#".split("|");
+                trace("@ Tile ID", tileID);
             }
             // Check to see if tile has instance and render Tile UI
             /*var uiID:String = i+":"+j;
