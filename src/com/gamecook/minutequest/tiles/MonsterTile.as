@@ -35,10 +35,20 @@ package com.gamecook.minutequest.tiles
             attackRoll;
         }
 
+        public function getAttackRolls():int
+        {
+            return attackRoll;
+        }
+
         public function setDefenseRolls(value:int):void
         {
             defenseRoll;
         }
+
+        public function getDefenceRolls():int
+       {
+           return attackRoll;
+       }
 
         public function getLife():int
         {

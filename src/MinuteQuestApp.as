@@ -26,6 +26,7 @@ package
     import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
     import com.gamecook.minutequest.renderer.MQMapRenderer;
+    import com.gamecook.minutequest.views.CharacterSheetView;
     import com.gamecook.util.TimeMethodExecutionUtil;
 
     import flash.display.StageScaleMode;
@@ -41,7 +42,7 @@ package
     {
         public var map:RandomMap;
         private var renderer:MapDrawingRenderer;
-        private var renderWidth:int = 800/20;
+        private var renderWidth:int = Math.floor(650/20);
         private var renderHeight:int = 480/20;
         private var controls:Controls;
 
@@ -49,9 +50,9 @@ package
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         private var player:PlayerTile;
-        //rivate var tileFactory:TileFactory;
         private var combatHelper:CombatHelper;
         private var tileInstanceManager:TileInstanceManager;
+        private var characterSheet:CharacterSheetView;
 
         /**
 		 *
@@ -66,18 +67,25 @@ package
             var t:Number = getTimer();
             map = new RandomMap();
             TimeMethodExecutionUtil.execute("generateMap",map.generateMap, tmpSize);
+            trace("Map Size", map.width, map.height);
+            trace("Render Size", renderWidth, renderHeight);
 
             populateMapHelper = new PopulateMapHelper(map);
-            populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","W","W","W");
+            populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","W","W","W","T","T","T","T","T","T","T","T","T");
 
             movementHelper = new MovementHelper(map, populateMapHelper.getRandomEmptyPoint());
-            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), new TileTypes());
+            tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
+
+            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), new TileTypes(), tileInstanceManager);
 
             controls = new Controls(this);
 
-            tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
-            player = tileInstanceManager.getInstance("@", "@", {life:5}) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", {life:5, maxLife:5}) as PlayerTile;
             combatHelper = new CombatHelper();
+
+            characterSheet = new CharacterSheetView(player);
+            characterSheet.x = 650;
+            addChild(characterSheet);
 
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
@@ -118,11 +126,15 @@ package
         {
             if(invalid)
             {
+                trace("Player Point", movementHelper.playerPosition);
+
                 //TODO there is a bug in renderer that doesn't let you see the last row
                 var tiles =TimeMethodExecutionUtil.execute("getSurroundingTiles", map.getSurroundingTiles, movementHelper.playerPosition, renderWidth, renderHeight);
 
                 TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap,tiles);
                 invalid = false;
+
+                characterSheet.refresh();
             }
         }
 
@@ -141,7 +153,9 @@ package
                 }
                 else
                 {
-                    var tmpTile:BaseTile = tileInstanceManager.getInstance(tmpPoint.toString(), tile);
+                    var uID:String = tmpPoint.x+":"+tmpPoint.y;
+
+                    var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
 
                     if(tmpTile is IFight)
                     {
@@ -154,7 +168,6 @@ package
                             map.swapTile(tmpPoint," ");
                             invalidate();
                         }
-
                         else if(player.getLife() == 0)
                         {
                             trace("Player Died");

@@ -23,6 +23,7 @@ package com.gamecook.minutequest.tiles
 		TYPES['M'] = { name: 'Mummies', color: 0x736B00, impassable: true, classPath:"com.gamecook.minutequest.tiles.MonsterTile"},
 		TYPES['L'] = { name: 'Gargoyle', color: 0x9193B5, impassable: true, classPath:"com.gamecook.minutequest.tiles.MonsterTile"},
 		TYPES['W'] = { name: 'Chaos Warlock', color: 0xB51616, impassable: true, classPath:"com.gamecook.minutequest.tiles.MonsterTile"}
+		TYPES['T'] = { name: 'Treasure', color: 0x333333, impassable: true}
 		}
 
         public static function registerTile(id:String, template:Object):void

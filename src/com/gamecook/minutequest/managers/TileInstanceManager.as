@@ -20,7 +20,7 @@ package com.gamecook.minutequest.managers
             this.factory = factory;
         }
 
-        public function getInstance(uniqueID:String, type:String, values:Object = null):BaseTile
+        public function getInstance(uniqueID:String, type:String = "null", values:Object = null):BaseTile
         {
             if(!singletons[uniqueID])
             {
@@ -44,5 +44,9 @@ package com.gamecook.minutequest.managers
         }
 
 
+        public function hasInstance(uniqueID:String):Boolean
+        {
+            return singletons[uniqueID]
+        }
     }
 }
