@@ -21,5 +21,7 @@ package com.gamecook.minutequest.combat
         function getHitValue():int;
 
         function getDefenseValue():int;
+
+        function getMaxLife():int;
     }
 }

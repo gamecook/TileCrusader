@@ -11,9 +11,9 @@ package com.gamecook.minutequest.items
     {
         private var total:int;
 
-        public function GoldItem(total:int = 0)
+        public function GoldItem(min:int = 0, max:int = 100)
         {
-            this.total = total;
+            trace("Gold Created");
         }
 
         public function getTotal():int

@@ -55,6 +55,7 @@ package
         private var tileInstanceManager:TileInstanceManager;
         private var characterSheet:CharacterSheetView;
         private var mapSelection:MapSelection;
+        private var tileTypes:TileTypes;
 
         /**
 		 *
@@ -75,17 +76,17 @@ package
             mapSelection = new MapSelection(map, renderWidth, renderHeight);
 
             populateMapHelper = new PopulateMapHelper(map);
-            populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","W","W","W","T","T","T","T","T","T","T","T","T");
+            populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","T","T","T","T","T","T","T","T","T");
 
             movementHelper = new MovementHelper(map, populateMapHelper.getRandomEmptyPoint());
 
             tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
-
-            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), new TileTypes(), tileInstanceManager);
+            tileTypes = new TileTypes();
+            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
 
             controls = new Controls(this);
 
-            player = tileInstanceManager.getInstance("@", "@", {life:5, maxLife:5}) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
             combatHelper = new CombatHelper();
 
             characterSheet = new CharacterSheetView(player);
@@ -147,14 +148,31 @@ package
             if(tmpPoint != null)
             {
                 var tile:String = map.getTileType(tmpPoint);
-                if (tile == " " || tile == "x")
+                if (tileTypes.isPassable(tile) || tileTypes.isPickupable(tile))
                 {
+
+                    if(tileTypes.isPickupable(tile))
+                    {
+                        //var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
+                        if(tile == "$")
+                        {
+                            player.addGold(100);
+                        }
+                        else if (tile == "P")
+                        {
+                            player.addPotion(1);
+                        }
+
+                        map.swapTile(tmpPoint," ");
+                    }
+
                     movementHelper.move(value.x, value.y);
+
                     invalidate();
                 }
-                else
+                else if(tileTypes.isMonster(tile))
                 {
-                    var uID:String = tmpPoint.x+":"+tmpPoint.y;
+                    var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
 
                     var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
 
@@ -166,23 +184,22 @@ package
                         if(status.attackStatus.kill)
                         {
                             trace("Monster was killed!");
-                            map.swapTile(tmpPoint," ");
-                            invalidate();
+                            map.swapTile(tmpPoint,"X");
+                            tileInstanceManager.removeInstance(uID);
+
                         }
                         else if(player.getLife() == 0)
                         {
                             trace("Player Died");
                         }
-
-                    }
-                    else if(tmpTile is ITreasure)
-                    {
-                        trace("Treasure");
-                        //TODO pickup Treasure
-                        movementHelper.move(value.x, value.y);
                         invalidate();
-
                     }
+
+                }
+                else if(tileTypes.isTreasure(tile))
+                {
+                    map.swapTile(tmpPoint,"$");
+                    invalidate();
                 }
             }
         }

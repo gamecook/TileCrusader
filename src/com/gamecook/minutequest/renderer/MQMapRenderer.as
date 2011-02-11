@@ -9,8 +9,10 @@ package com.gamecook.minutequest.renderer
 {
     import com.gamecook.frogue.renderer.MapDrawingRenderer;
 
+    import com.gamecook.minutequest.combat.IFight;
     import com.gamecook.minutequest.managers.TileInstanceManager;
     import com.gamecook.minutequest.tiles.BaseTile;
+    import com.gamecook.minutequest.tiles.MonsterTile;
     import com.gamecook.minutequest.tiles.TileTypes;
 
     import flash.display.Graphics;
@@ -32,22 +34,30 @@ package com.gamecook.minutequest.renderer
         override protected function renderTile(j:int, i:int, currentTile:String, tileID:int):void
         {
             super.renderTile(j, i, currentTile, tileID);
-            if(currentTile == "@")
+
+            var isPlayer:Boolean = currentTile == "@";
+            if(instances.hasInstance(tileID.toString()) || isPlayer)
             {
-                trace("@ Tile ID", tileID);
+                var tile:BaseTile = instances.getInstance(isPlayer ? "@" : tileID.toString());
+                if(tile is IFight)
+                {
+                    var fighterTile:IFight = tile as IFight;
+                    var life:Number = fighterTile.getLife() / fighterTile.getMaxLife();
+                    if(life != 1)
+                    {
+                        var xOffset:int = tileRect.x+tileRect.width-2;
+                        target.beginFill(0xff0000);
+                        target.drawRect(xOffset, tileRect.y+1, 2, tileRect.height-1);
+
+                        var lifeBarHeight:Number = tileRect.height * life -1;
+                        var lifeBarY:Number = Math.round((tileRect.y + tileRect.height) - lifeBarHeight);
+                        target.beginFill(0x00ff00);
+                        target.drawRect(xOffset, lifeBarY, 2, lifeBarHeight);
+
+                        target.endFill();
+                    }
+                }
             }
-            // Check to see if tile has instance and render Tile UI
-            /*var uiID:String = i+":"+j;
-            if(instances.hasInstance(uiID))
-            {
-                var tile:BaseTile = instances.getInstance(uiID);
-                trace("Render Tile");
-                var xOffset:int = tileRect.x;
-                target.beginFill(0x00ff00);
-                target.drawRect(tileRect.x, tileRect.y, tileRect.width, tileRect.height);
-                target.endFill();
-                trace(tileRect);
-            }*/
 
         }
 

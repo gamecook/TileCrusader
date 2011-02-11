@@ -22,6 +22,8 @@ package com.gamecook.minutequest.views
         private var lifeLabel:TextField;
         private var hitLabel:TextField;
         private var defenseLabel:TextField;
+        private var goldLabel:TextField;
+        private var potionLabel:TextField;
 
         public function CharacterSheetView(player:PlayerTile)
         {
@@ -72,11 +74,27 @@ package com.gamecook.minutequest.views
             defenseLabel.y = 70;
             defenseLabel.text = "Defense: "+player.getDefenceRolls().toString();
             addChild(defenseLabel);
+
+            goldLabel = new TextField();
+            goldLabel.autoSize = TextFieldAutoSize.LEFT;
+            goldLabel.defaultTextFormat = tfx;
+            goldLabel.y = 85;
+            goldLabel.text = "Gold: "+player.getGold().toString();
+            addChild(goldLabel);
+
+            potionLabel = new TextField();
+            potionLabel.autoSize = TextFieldAutoSize.LEFT;
+            potionLabel.defaultTextFormat = tfx;
+            potionLabel.y = 100;
+            potionLabel.text = "Potions: "+player.getPotions().toString();
+            addChild(potionLabel);
         }
 
         public function refresh():void
         {
             lifeLabel.text = "Life: "+player.getLife().toString() +"/"+player.getMaxLife();
+            goldLabel.text = "Gold: "+player.getGold();
+            potionLabel.text = "Potions: "+player.getPotions();
         }
 
     }

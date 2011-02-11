@@ -48,5 +48,10 @@ package com.gamecook.minutequest.managers
         {
             return singletons[uniqueID]
         }
+
+        public function removeInstance(uID:String):void
+        {
+            singletons[uID] = null;
+        }
     }
 }
