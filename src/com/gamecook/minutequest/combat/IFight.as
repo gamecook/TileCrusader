@@ -9,9 +9,11 @@ package com.gamecook.minutequest.combat
 {
     import com.gamecook.minutequest.items.BaseArmor;
     import com.gamecook.minutequest.items.BaseWeapon;
+    import com.gamecook.minutequest.tiles.ITile;
 
-    public interface IFight
+    public interface IFight extends ITile
     {
+
         function getLife():int;
 
         function subtractLife(value:int):void;

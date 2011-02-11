@@ -8,6 +8,8 @@
 package com.gamecook.minutequest.combat
 {
     import com.gamecook.minutequest.combat.IFight;
+    import com.gamecook.minutequest.status.AttackStatus;
+    import com.gamecook.minutequest.status.DoubleAttackStatus;
 
     public class CombatHelper
     {
@@ -21,12 +23,11 @@ package com.gamecook.minutequest.combat
             var statusB:AttackStatus;
             if(!statusA.kill)
             {
-                trace("Monster Was Not Killed");
                 statusB = attack(attackerB, attackerA);
             }
             else
             {
-                trace("Monster Was Killed");
+                // Monster Was Killed
             }
 
             return new DoubleAttackStatus(statusA, statusB);

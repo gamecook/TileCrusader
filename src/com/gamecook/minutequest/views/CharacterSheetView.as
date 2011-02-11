@@ -7,6 +7,7 @@
  */
 package com.gamecook.minutequest.views
 {
+    import com.gamecook.minutequest.status.IStatus;
     import com.gamecook.minutequest.tiles.PlayerTile;
 
     import flash.display.Sprite;
@@ -24,12 +25,12 @@ package com.gamecook.minutequest.views
         private var defenseLabel:TextField;
         private var goldLabel:TextField;
         private var potionLabel:TextField;
+        private var status:String;
+        private var statusLabel:TextField;
 
-        public function CharacterSheetView(player:PlayerTile)
+        public function CharacterSheetView()
         {
-            this.player = player;
 
-            init();
         }
 
         private function init():void
@@ -88,14 +89,41 @@ package com.gamecook.minutequest.views
             potionLabel.y = 100;
             potionLabel.text = "Potions: "+player.getPotions().toString();
             addChild(potionLabel);
+
+            statusLabel = new TextField();
+            statusLabel.width = 150;
+            statusLabel.height = 300;
+            statusLabel.multiline = true;
+            statusLabel.wordWrap = true;
+            statusLabel.defaultTextFormat = tfx;
+            statusLabel.y = 300;
+            addChild(statusLabel);
         }
 
         public function refresh():void
         {
-            lifeLabel.text = "Life: "+player.getLife().toString() +"/"+player.getMaxLife();
-            goldLabel.text = "Gold: "+player.getGold();
-            potionLabel.text = "Potions: "+player.getPotions();
+            if(player)
+            {
+                lifeLabel.text = "Life: "+player.getLife().toString() +"/"+player.getMaxLife();
+                goldLabel.text = "Gold: "+player.getGold();
+                potionLabel.text = "Potions: "+player.getPotions();
+                statusLabel.text = "Status:\n"+status;
+                //clear status
+                status = "";
+            }
         }
 
+        public function addStatusMessage(value:String, clear:Boolean = true):void
+        {
+            if(clear)
+                status = "";
+            status += value
+        }
+
+        public function setPlayer(player:PlayerTile):void
+        {
+            this.player = player;
+            init();
+        }
     }
 }

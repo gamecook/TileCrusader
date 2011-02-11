@@ -5,8 +5,9 @@
  * Time: 8:36 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.minutequest.combat
+package com.gamecook.minutequest.status
 {
+    import com.gamecook.minutequest.combat.*;
     public class AttackStatus
     {
         protected var _attacker:IFight;
@@ -62,6 +63,15 @@ package com.gamecook.minutequest.combat
         public function get kill():Boolean
         {
             return _kill;
+        }
+
+        public function toString():String
+        {
+            var message:String = "Attack was "+success ? "successful" : "not successful"+"!\n";
+
+            message = attacker.getName()+" rolled "+hit+" point"+((hit != 1) ? "s" : "")+" of damage against "+defender.getName() +"\n";
+
+            return message;
         }
     }
 }

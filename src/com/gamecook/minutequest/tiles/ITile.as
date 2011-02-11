@@ -11,7 +11,7 @@ package com.gamecook.minutequest.tiles
 
     public interface ITile
     {
-        function get name():String;
+        function getName():String;
         function get id():int;
         function get type():String;
     }

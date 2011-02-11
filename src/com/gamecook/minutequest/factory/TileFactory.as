@@ -16,6 +16,7 @@ package com.gamecook.minutequest.factory
     {
 
         private var tileTypes:TileTypes;
+        private const TILE_PACKAGE:String = "com.gamecook.minutequest.tiles.";
 
         public function TileFactory(tileTypes:TileTypes)
         {
@@ -31,7 +32,7 @@ package com.gamecook.minutequest.factory
             var classReference:Class;
             try
             {
-                classReference = getDefinitionByName(template.classPath) as Class;
+                classReference = getDefinitionByName(TILE_PACKAGE + template.classPath) as Class;
             }
             catch(error:Error)
             {

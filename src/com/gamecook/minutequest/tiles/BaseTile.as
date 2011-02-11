@@ -12,7 +12,7 @@ package com.gamecook.minutequest.tiles
 
     public class BaseTile implements ITile
     {
-        private var _name:String;
+        private var name:String = "undefined";
         private var _type:String;
         private var _id:int;
 
@@ -20,14 +20,14 @@ package com.gamecook.minutequest.tiles
         {
         }
 
-        public function get name():String
+        public function getName():String
         {
-            return _name;
+            return name;
         }
 
-        public function set name(value:String):void
+        public function setName(value:String):void
         {
-            _name = value;
+            name = value;
         }
 
         public function get type():String
@@ -52,7 +52,8 @@ package com.gamecook.minutequest.tiles
 
         public function parseObject(obj:Object):void
         {
-
+            if(obj.hasOwnProperty("name"))
+                name = obj.name;
         }
 
     }

@@ -105,5 +105,6 @@ package com.gamecook.minutequest.tiles
             life += value;
             if(life > maxLife) life = maxLife;
         }
+
     }
 }

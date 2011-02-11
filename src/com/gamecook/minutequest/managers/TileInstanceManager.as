@@ -53,5 +53,10 @@ package com.gamecook.minutequest.managers
         {
             singletons[uID] = null;
         }
+
+        public function clear():void
+        {
+            singletons.length = 0;
+        }
     }
 }

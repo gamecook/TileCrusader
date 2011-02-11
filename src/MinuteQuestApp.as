@@ -7,32 +7,30 @@
  */
 package
 {
-        import com.gamecook.frogue.helpers.MovementHelper;
+    import com.gamecook.frogue.helpers.MovementHelper;
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.io.IControl;
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
-
     import com.gamecook.frogue.renderer.MapDrawingRenderer;
-
-    import com.gamecook.minutequest.combat.AttackStatus;
     import com.gamecook.minutequest.combat.CombatHelper;
-    import com.gamecook.minutequest.combat.DoubleAttackStatus;
+    import com.gamecook.minutequest.enum.GameModes;
+    import com.gamecook.minutequest.status.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
     import com.gamecook.minutequest.factory.TileFactory;
+    import com.gamecook.minutequest.factory.TreasureFactory;
     import com.gamecook.minutequest.managers.TileInstanceManager;
+    import com.gamecook.minutequest.renderer.MQMapRenderer;
     import com.gamecook.minutequest.tiles.BaseTile;
-    import com.gamecook.minutequest.tiles.ITreasure;
     import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
-    import com.gamecook.minutequest.renderer.MQMapRenderer;
     import com.gamecook.minutequest.views.CharacterSheetView;
     import com.gamecook.util.TimeMethodExecutionUtil;
 
+    import flash.display.Sprite;
+    import flash.display.StageAlign;
     import flash.display.StageScaleMode;
-	import flash.display.StageAlign;
-	import flash.display.Sprite;
     import flash.events.Event;
     import flash.geom.Point;
     import flash.geom.Rectangle;
@@ -43,8 +41,8 @@ package
     {
         public var map:RandomMap;
         private var renderer:MapDrawingRenderer;
-        private var renderWidth:int = Math.floor(650/20);
-        private var renderHeight:int = 480/20;
+        private var renderWidth:int = Math.floor(650 / 20);
+        private var renderHeight:int = 460 / 20;
         private var controls:Controls;
 
         private var populateMapHelper:PopulateMapHelper;
@@ -56,57 +54,86 @@ package
         private var characterSheet:CharacterSheetView;
         private var mapSelection:MapSelection;
         private var tileTypes:TileTypes;
+        private var treasureFactory:TreasureFactory;
+        private var monsters:Array;
+        private var chests:Array;
+        private var gameMode:String;
+        private var hasArtifact:Boolean;
 
         /**
-		 *
-		 */
+         *
+         */
         public function MinuteQuestApp()
-		{
+        {
 
-			configureStage();
+            configureStage();
 
-            var tmpSize:int = 30;
+            map = new RandomMap();
+            mapSelection = new MapSelection(map, renderWidth, renderHeight);
+            populateMapHelper = new PopulateMapHelper(map);
+            treasureFactory = new TreasureFactory();
+            movementHelper = new MovementHelper(map);
+            tileTypes = new TileTypes();
+            tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
+            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
+            controls = new Controls(this);
+            combatHelper = new CombatHelper();
+            characterSheet = new CharacterSheetView();
+            characterSheet.x = 650;
+            addChild(characterSheet);
+            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+            configureGame();
+        }
+
+        private function configureGame():void
+        {
+            tileInstanceManager.clear();
+
+            var tmpSize:int = 20;
 
             var t:Number = getTimer();
-            map = new RandomMap();
-            TimeMethodExecutionUtil.execute("generateMap",map.generateMap, tmpSize);
+
+            TimeMethodExecutionUtil.execute("generateMap", map.generateMap, tmpSize);
             trace("Map Size", map.width, map.height);
             trace("Render Size", renderWidth, renderHeight);
 
-            mapSelection = new MapSelection(map, renderWidth, renderHeight);
+            gameMode = GameModes.KILL_BOSS;
 
-            populateMapHelper = new PopulateMapHelper(map);
-            populateMapHelper.populateMap("G","G","G","O","O","O","F","F","F","C","C","C","S","S","S","Z","Z","Z","M","M","M","L","L","L","T","T","T","T","T","T","T","T","T");
 
-            movementHelper = new MovementHelper(map, populateMapHelper.getRandomEmptyPoint());
 
-            tileInstanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
-            tileTypes = new TileTypes();
-            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
 
-            controls = new Controls(this);
+            monsters = ["1", "1", "9"];//, "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
+            chests = ["T", "T", "T", "T", "T", "T", "T", "T", "T"];
+
+            populateMapHelper.indexMap();
+            populateMapHelper.populateMap.apply(this, monsters);
+            populateMapHelper.populateMap.apply(this, chests);
+
+
+            treasureFactory.addTreasure("$","$","$","$","P","P","P","P"," "," "," ");
+
+
+            movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
+
 
             player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
-            combatHelper = new CombatHelper();
 
-            characterSheet = new CharacterSheetView(player);
-            characterSheet.x = 650;
-            addChild(characterSheet);
+            characterSheet.setPlayer(player);
 
-            addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
-		}
+        }
 
         private function onEnterFrame(event:Event):void
         {
             render();
         }
 
-		private function configureStage() : void
-		{
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-		}
+        private function configureStage():void
+        {
+            stage.align = StageAlign.TOP_LEFT;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
+        }
 
         public function up():void
         {
@@ -130,7 +157,7 @@ package
 
         public function render():void
         {
-            if(invalid)
+            if (invalid)
             {
                 //TODO there is a bug in renderer that doesn't let you see the last row
                 mapSelection.setCenter(movementHelper.playerPosition);
@@ -145,63 +172,136 @@ package
 
             var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
 
-            if(tmpPoint != null)
+            if (tmpPoint != null)
             {
                 var tile:String = map.getTileType(tmpPoint);
-                if (tileTypes.isPassable(tile) || tileTypes.isPickupable(tile))
+
+                switch (tileTypes.getTileType(tile))
                 {
+                    case TileTypes.IMPASSABLE:
+                        return;
+                    case TileTypes.MONSTER: case TileTypes.BOSS:
+                        var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
 
-                    if(tileTypes.isPickupable(tile))
-                    {
-                        //var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
-                        if(tile == "$")
+                        var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
+
+                        if (tmpTile is IFight)
                         {
-                            player.addGold(100);
+                            fight(tmpTile, tmpPoint, uID);
                         }
-                        else if (tile == "P")
+                        break;
+                    case TileTypes.TREASURE:
+                        openTreasure(tmpPoint);
+                        break;
+                    case TileTypes.PICKUP: case TileTypes.ARTIFACT:
+                        pickup(tile, tmpPoint, value);
+                        break;
+                    case TileTypes.EXIT:
+                        movePlayer(value);
+                        if(canFinishLevel())
                         {
-                            player.addPotion(1);
+                            //TODO gameover
+                            trace("Level Done");
+                            configureGame();
                         }
-
-                        map.swapTile(tmpPoint," ");
-                    }
-
-                    movementHelper.move(value.x, value.y);
-
-                    invalidate();
+                        else
+                        {
+                            characterSheet.addStatusMessage("You can not exit the level you, you have not completed the goal.");
+                        }
+                        break;
+                    default:
+                        movePlayer(value);
+                        break;
                 }
-                else if(tileTypes.isMonster(tile))
-                {
-                    var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
-
-                    var tmpTile:BaseTile = tileInstanceManager.getInstance(uID, tile);
-
-                    if(tmpTile is IFight)
-                    {
-                        trace("Fight");
-                        var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
-                        trace(status);
-                        if(status.attackStatus.kill)
-                        {
-                            trace("Monster was killed!");
-                            map.swapTile(tmpPoint,"X");
-                            tileInstanceManager.removeInstance(uID);
-
-                        }
-                        else if(player.getLife() == 0)
-                        {
-                            trace("Player Died");
-                        }
-                        invalidate();
-                    }
-
-                }
-                else if(tileTypes.isTreasure(tile))
-                {
-                    map.swapTile(tmpPoint,"$");
-                    invalidate();
-                }
+                invalidate();
             }
+        }
+
+        private function canFinishLevel():Boolean
+        {
+            var success:Boolean;
+
+            switch(gameMode)
+            {
+                case GameModes.FIND_ALL_TREASURE:
+                    success = treasureFactory.hasNext();
+                break;
+                case GameModes.FIND_ARTIFACT:
+                    success = hasArtifact;
+                break;
+                case GameModes.KILL_ALL_MONSTERS:
+                    success = (monsters.length == 0);
+                break;
+                case GameModes.KILL_BOSS:
+                    success = (monsters.indexOf("9") == -1);
+                break;
+
+            }
+
+            return success;
+        }
+
+        private function fight(tmpTile:BaseTile, tmpPoint:Point, uID:String):void
+        {
+            var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
+
+            characterSheet.addStatusMessage(status.toString());
+
+            if (status.attackStatus.kill)
+            {
+                var tile:String = map.getTileType(tmpPoint);
+                monsters.splice(monsters.indexOf(tile),1);
+                trace("Monsters Left", monsters.length, "Removed", tile, monsters);
+
+                map.swapTile(tmpPoint, "X");
+                tileInstanceManager.removeInstance(uID);
+
+            }
+            else if (player.getLife() == 0)
+            {
+                trace("Restart Game");
+                characterSheet.addStatusMessage("Player was killed!", false);
+            }
+        }
+
+        private function openTreasure(tmpPoint:Point):void
+        {
+
+            var treasure:String = treasureFactory.nextTreasure();
+
+            characterSheet.addStatusMessage(player.getName() +" has opened a treasure chest.");
+
+            map.swapTile(tmpPoint, treasure);
+        }
+
+        private function pickup(tile:String, tmpPoint:Point, value:Point):void
+        {
+            if (tile == "$")
+            {
+                player.addGold(100);
+            }
+            else if (tile == "P")
+            {
+                player.addPotion(1);
+                characterSheet.addStatusMessage(player.getName() +" has picked up a health potion.");
+            }
+            else if (tile == "T")
+            {
+                trace("Trap");
+            }
+            else if (tile == "A")
+            {
+                hasArtifact = true;
+                characterSheet.addStatusMessage(player.getName() +" has found an Artifact.");
+            }
+
+            map.swapTile(tmpPoint, " ");
+            movePlayer(value);
+        }
+
+        private function movePlayer(value:Point):void
+        {
+            movementHelper.move(value.x, value.y);
         }
 
         protected function invalidate():void
