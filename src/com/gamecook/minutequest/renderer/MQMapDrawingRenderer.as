@@ -18,12 +18,12 @@ package com.gamecook.minutequest.renderer
     import flash.display.Graphics;
     import flash.geom.Rectangle;
 
-    public class MQMapRenderer extends MapDrawingRenderer
+    public class MQMapDrawingRenderer extends MapDrawingRenderer
     {
         private var tileMap:TileTypes;
         private var instances:TileInstanceManager;
 
-        public function MQMapRenderer(target:Graphics, tileSize:Rectangle, tileMap:TileTypes, instances:TileInstanceManager)
+        public function MQMapDrawingRenderer(target:Graphics, tileSize:Rectangle, tileMap:TileTypes, instances:TileInstanceManager)
         {
             this.instances = instances;
             this.tileMap = tileMap;

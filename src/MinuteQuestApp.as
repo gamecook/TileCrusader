@@ -13,21 +13,27 @@ package
     import com.gamecook.frogue.io.IControl;
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.frogue.renderer.AbstractMapRenderer;
+    import com.gamecook.frogue.renderer.MapBitmapRenderer;
     import com.gamecook.frogue.renderer.MapDrawingRenderer;
     import com.gamecook.minutequest.combat.CombatHelper;
     import com.gamecook.minutequest.enum.GameModes;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.minutequest.renderer.MQMapBitmapRenderer;
     import com.gamecook.minutequest.status.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
     import com.gamecook.minutequest.factory.TileFactory;
     import com.gamecook.minutequest.factory.TreasureFactory;
     import com.gamecook.minutequest.managers.TileInstanceManager;
-    import com.gamecook.minutequest.renderer.MQMapRenderer;
+    import com.gamecook.minutequest.renderer.MQMapDrawingRenderer;
     import com.gamecook.minutequest.tiles.BaseTile;
     import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
     import com.gamecook.minutequest.views.CharacterSheetView;
     import com.gamecook.util.TimeMethodExecutionUtil;
 
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
     import flash.display.Sprite;
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
@@ -39,8 +45,11 @@ package
     [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
     public class MinuteQuestApp extends Sprite implements IControl
     {
+        [Embed(source="../build/assets/spritesheet_template.png")]
+        public static var SpriteSheetImage:Class;
+
         public var map:RandomMap;
-        private var renderer:MapDrawingRenderer;
+        private var renderer:AbstractMapRenderer;
         private var renderWidth:int = Math.floor(650 / 20);
         private var renderHeight:int = 460 / 20;
         private var controls:Controls;
@@ -59,6 +68,8 @@ package
         private var chests:Array;
         private var gameMode:String;
         private var hasArtifact:Boolean;
+        private var spriteSheet:SpriteSheet;
+        private var mapBitmap:Bitmap;
 
         /**
          *
@@ -75,22 +86,52 @@ package
             movementHelper = new MovementHelper(map);
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
-            renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
+
+
+            spriteSheet = new SpriteSheet();
+
+            // Renderer
+            //renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
+            mapBitmap = new Bitmap(new BitmapData(650,460, false, 0xff0000));
+            addChild(mapBitmap);
+            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
             controls = new Controls(this);
             combatHelper = new CombatHelper();
             characterSheet = new CharacterSheetView();
             characterSheet.x = 650;
             addChild(characterSheet);
-            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
 
             configureGame();
+
+
         }
 
         private function configureGame():void
         {
             tileInstanceManager.clear();
 
-            var tmpSize:int = 20;
+            // create sprite sheet
+            var bitmap:Bitmap = new SpriteSheetImage();
+            spriteSheet.bitmapData = bitmap.bitmapData;
+            spriteSheet.registerSprite("splash", new Rectangle(0,0,800, 480));
+
+            var i:int;
+            var rows:int = Math.floor(bitmap.height/20);
+            var total:int = Math.floor((bitmap.width - 800) / 20) * (bitmap.height / 20);
+            var spriteRect:Rectangle = new Rectangle(800,0, 20, 20);
+            for(i = 0; i < total; ++i)
+            {
+                spriteSheet.registerSprite("sprite"+i, spriteRect.clone());
+                spriteRect.y += 20;
+                if(i%rows == (rows-1))
+                {
+                    spriteRect.x += 20;
+                    spriteRect.y = 0;
+                }
+            }
+
+            var tmpSize:int = 40;
 
             var t:Number = getTimer();
 
@@ -100,10 +141,7 @@ package
 
             gameMode = GameModes.KILL_BOSS;
 
-
-
-
-            monsters = ["1", "1", "9"];//, "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
+            monsters = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
             chests = ["T", "T", "T", "T", "T", "T", "T", "T", "T"];
 
             populateMapHelper.indexMap();
@@ -121,7 +159,7 @@ package
 
             characterSheet.setPlayer(player);
 
-
+            addEventListener(Event.ENTER_FRAME, onEnterFrame);
         }
 
         private function onEnterFrame(event:Event):void
