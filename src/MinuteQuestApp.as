@@ -50,8 +50,8 @@ package
 
         public var map:RandomMap;
         private var renderer:AbstractMapRenderer;
-        private var renderWidth:int = Math.floor(650 / 20);
-        private var renderHeight:int = 460 / 20;
+        private var renderWidth:int = Math.floor(650 / 40);
+        private var renderHeight:int = 460 / 40;
         private var controls:Controls;
 
         private var populateMapHelper:PopulateMapHelper;
@@ -93,6 +93,7 @@ package
             // Renderer
             //renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
             mapBitmap = new Bitmap(new BitmapData(650,460, false, 0xff0000));
+            mapBitmap.scaleX = mapBitmap.scaleY = 2;
             addChild(mapBitmap);
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
             controls = new Controls(this);
