@@ -19,6 +19,7 @@ package
     import com.gamecook.minutequest.combat.CombatHelper;
     import com.gamecook.minutequest.enum.GameModes;
     import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.minutequest.map.MapFogOfWar;
     import com.gamecook.minutequest.renderer.MQMapBitmapRenderer;
     import com.gamecook.minutequest.status.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
@@ -50,8 +51,10 @@ package
 
         public var map:RandomMap;
         private var renderer:AbstractMapRenderer;
-        private var renderWidth:int = Math.floor(650 / 40);
-        private var renderHeight:int = 460 / 40;
+        private var renderWidth:int;
+        private var renderHeight:int;
+        private var darknessWidth:int;
+        private var darknessHeight:int;
         private var controls:Controls;
 
         private var populateMapHelper:PopulateMapHelper;
@@ -70,6 +73,7 @@ package
         private var hasArtifact:Boolean;
         private var spriteSheet:SpriteSheet;
         private var mapBitmap:Bitmap;
+        private var mapDarkness:MapFogOfWar;
 
         /**
          *
@@ -79,8 +83,16 @@ package
 
             configureStage();
 
+            renderWidth = Math.floor(650 / 40);
+            renderHeight = 460 / 40;
+            darknessWidth = 4;
+            darknessHeight = 4;
+
+
             map = new RandomMap();
             mapSelection = new MapSelection(map, renderWidth, renderHeight);
+            mapDarkness = new MapFogOfWar(map, mapSelection, darknessWidth, darknessHeight);
+
             populateMapHelper = new PopulateMapHelper(map);
             treasureFactory = new TreasureFactory();
             movementHelper = new MovementHelper(map);
@@ -199,7 +211,7 @@ package
             if (invalid)
             {
                 //TODO there is a bug in renderer that doesn't let you see the last row
-                mapSelection.setCenter(movementHelper.playerPosition);
+                mapDarkness.setCenter(movementHelper.playerPosition);
                 TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap, mapSelection);
                 characterSheet.refresh();
                 invalid = false;
