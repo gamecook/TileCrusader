@@ -44,7 +44,7 @@ package com.gamecook.minutequest.renderer
 
         override protected function tileBitmap(value:String):BitmapData
         {
-            var bitmapData:BitmapData = spriteSheet.getSprite(tileMap.getTileSprite(value), tileMap.getTileSprite(" "));
+            var bitmapData:BitmapData = spriteSheet.getSprite(tileMap.getTileSprite(" "), tileMap.getTileSprite(value));
 
             var isPlayer:Boolean = value == "@";
             if(instances.hasInstance(currentTileID.toString()) || isPlayer)

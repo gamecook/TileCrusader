@@ -55,7 +55,7 @@ package com.gamecook.minutequest.tiles
             return life;
         }
 
-        public function setLife(value:int)
+        public function setLife(value:int):void
         {
             life = value;
         }

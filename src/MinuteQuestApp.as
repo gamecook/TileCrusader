@@ -41,6 +41,7 @@ package
     import flash.events.Event;
     import flash.geom.Point;
     import flash.geom.Rectangle;
+    import flash.text.Font;
     import flash.utils.getTimer;
 
     [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
@@ -144,6 +145,11 @@ package
                 }
             }
 
+
+            characterSheet.setPortrait(new Bitmap(spriteSheet.getSprite("sprite5").clone()));
+            characterSheet.setGoldIcon(new Bitmap(spriteSheet.getSprite("sprite16").clone()));
+            characterSheet.setPotionIcon(new Bitmap(spriteSheet.getSprite("sprite17").clone()));
+
             var tmpSize:int = 40;
 
             var t:Number = getTimer();
@@ -177,6 +183,7 @@ package
 
         private function onEnterFrame(event:Event):void
         {
+
             render();
         }
 
@@ -210,11 +217,16 @@ package
         {
             if (invalid)
             {
+                var t:int = getTimer();
+
                 //TODO there is a bug in renderer that doesn't let you see the last row
                 mapDarkness.setCenter(movementHelper.playerPosition);
-                TimeMethodExecutionUtil.execute("renderMap", renderer.renderMap, mapSelection);
+                renderer.renderMap(mapSelection);
                 characterSheet.refresh();
                 invalid = false;
+
+                t = (getTimer()-t);
+                trace("Render executed in " + t + " ms\n");
             }
         }
 
