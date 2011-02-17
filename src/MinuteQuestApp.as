@@ -83,6 +83,13 @@ package
         private var delayRemoveSplashScreen:Number = 2000;
         private var statusLabel:TextField;
         private var status:String = "";
+        private static const TILE_SIZE:int = 20;
+        private var scale:int = 2;
+        private var tileWidth:int;
+        private var tileHeight:int;
+        private const SIDEBAR_WIDTH:int = 200;
+        private var viewPortWidth:int = 0;
+        private var viewPortHeight:int = 0;
 
         /**
          *
@@ -100,13 +107,17 @@ package
             splashScreen = new Bitmap(spriteSheet.getSprite("splashScreen").clone());
 
 
+            // Configure Tile, Render and Darkness size
+            tileWidth = tileHeight = TILE_SIZE * scale;
+            viewPortWidth = (stage.stageWidth - SIDEBAR_WIDTH);
+            viewPortHeight = stage.stageHeight;
 
 
-            renderWidth = Math.floor(620 / 40);
-            renderHeight = 460 / 40;
+            renderWidth = Math.floor( viewPortWidth / tileWidth);
+            renderHeight = Math.floor(viewPortHeight / tileHeight);
+
             darknessWidth = 5;
             darknessHeight = 4;
-
 
             map = new RandomMap();
             mapSelection = new MapSelection(map, renderWidth, renderHeight);
@@ -115,34 +126,35 @@ package
             populateMapHelper = new PopulateMapHelper(map);
             treasureFactory = new TreasureFactory();
             movementHelper = new MovementHelper(map);
+
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
 
-            mapBitmap = new Bitmap(new BitmapData(800,460, false, 0xff0000));
-            mapBitmap.scaleX = mapBitmap.scaleY = 2;
+            mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0xff0000));
+            mapBitmap.scaleX = mapBitmap.scaleY = scale;
             display.addChild(mapBitmap);
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
 
             controls = new Controls(this);
-            //touchControls = new TouchControls(this, 40, 40, mapSelection);
+//            touchControls = new TouchControls(this, 40, 40, mapSelection);
 
             combatHelper = new CombatHelper();
 
             characterSheet = new CharacterSheetView();
-            characterSheet.x = 620;
+            characterSheet.x = viewPortWidth;
 
             display.addChild(characterSheet);
 
             statusLabel = new TextField();
             statusLabel.autoSize = TextFieldAutoSize.LEFT;
-            statusLabel.width = characterSheet.x;
+            statusLabel.width = viewPortWidth;
             statusLabel.multiline = true;
             statusLabel.wordWrap = true;
             statusLabel.embedFonts = true;
             statusLabel.background = true;
             statusLabel.backgroundColor = 0x000000;
-            statusLabel.defaultTextFormat = new TextFormat("system", 16, 0xffffff);
+            statusLabel.defaultTextFormat = new TextFormat("system", 18, 0xffffff);
             addChild(statusLabel);
 
             configureGame();
@@ -158,8 +170,6 @@ package
 
 
             characterSheet.setPortrait(new Bitmap(spriteSheet.getSprite("sprite5").clone()));
-            characterSheet.setGoldIcon(new Bitmap(spriteSheet.getSprite("sprite16").clone()));
-            characterSheet.setPotionIcon(new Bitmap(spriteSheet.getSprite("sprite17").clone()));
 
             var tmpSize:int = 40;
 
