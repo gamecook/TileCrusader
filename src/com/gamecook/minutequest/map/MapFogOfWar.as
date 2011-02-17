@@ -22,6 +22,7 @@ package com.gamecook.minutequest.map
         private var height:int;
         private var exploredTiles:Array = [];
         private var visibleSelection:IMapSelection;
+        private var saveExploredTiles:Boolean = true;
 
         public function MapFogOfWar(map:IMap, selection:IMapSelection, width:int, height:int)
         {
@@ -93,11 +94,19 @@ package com.gamecook.minutequest.map
                 }
 
             }
+
+            if(!saveExploredTiles)
+                exploredTiles.length = 0;
         }
 
         public function clear():void
         {
             exploredTiles.length = 0;
+        }
+
+        public function getCenter():Point
+        {
+            return selection.getCenter();
         }
     }
 }

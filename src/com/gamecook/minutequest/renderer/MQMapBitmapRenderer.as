@@ -18,6 +18,9 @@ package com.gamecook.minutequest.renderer
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.geom.Matrix;
+    import flash.text.TextField;
+    import flash.text.TextFieldAutoSize;
+    import flash.text.TextFormat;
 
     public class MQMapBitmapRenderer extends MapBitmapRenderer
     {
@@ -54,6 +57,7 @@ package com.gamecook.minutequest.renderer
                 {
                     var fighterTile:IFight = tile as IFight;
                     var life:Number = fighterTile.getLife() / fighterTile.getMaxLife();
+                    var matrix:Matrix = new Matrix();
                     if(life != 1)
                     {
                         bitmapData = bitmapData.clone();
@@ -66,13 +70,14 @@ package com.gamecook.minutequest.renderer
                         if(lifeBarHeight <=0) lifeBarHeight = 1;
                         var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
 
-                        var matrix:Matrix = new Matrix();
                         matrix.translate(xOffset, 0);
                         bitmapData.draw(bg, matrix);
 
                         matrix.translate(0, lifeBarY);
                         bitmapData.draw(bar, matrix);
+
                     }
+
                 }
             }
 

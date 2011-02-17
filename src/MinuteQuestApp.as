@@ -14,8 +14,6 @@ package
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
-    import com.gamecook.frogue.renderer.MapBitmapRenderer;
-    import com.gamecook.frogue.renderer.MapDrawingRenderer;
     import com.gamecook.minutequest.combat.CombatHelper;
     import com.gamecook.minutequest.enum.GameModes;
     import com.gamecook.frogue.sprites.SpriteSheet;
@@ -26,7 +24,6 @@ package
     import com.gamecook.minutequest.factory.TileFactory;
     import com.gamecook.minutequest.factory.TreasureFactory;
     import com.gamecook.minutequest.managers.TileInstanceManager;
-    import com.gamecook.minutequest.renderer.MQMapDrawingRenderer;
     import com.gamecook.minutequest.tiles.BaseTile;
     import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
@@ -39,9 +36,14 @@ package
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
+    import flash.events.TimerEvent;
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.text.Font;
+    import flash.text.TextField;
+    import flash.text.TextFieldAutoSize;
+    import flash.text.TextFormat;
+    import flash.utils.Timer;
     import flash.utils.getTimer;
 
     [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
@@ -75,6 +77,12 @@ package
         private var spriteSheet:SpriteSheet;
         private var mapBitmap:Bitmap;
         private var mapDarkness:MapFogOfWar;
+        private var splashScreen:Bitmap;
+        private var display:Sprite;
+        private var overlayLayer:Sprite;
+        private var delayRemoveSplashScreen:Number = 2000;
+        private var statusLabel:TextField;
+        private var status:String = "";
 
         /**
          *
@@ -84,9 +92,19 @@ package
 
             configureStage();
 
-            renderWidth = Math.floor(650 / 40);
+            parseSpriteSheet();
+
+            display = addChild(new Sprite()) as Sprite;
+            overlayLayer = addChild(new Sprite()) as Sprite;
+
+            splashScreen = new Bitmap(spriteSheet.getSprite("splashScreen").clone());
+
+
+
+
+            renderWidth = Math.floor(620 / 40);
             renderHeight = 460 / 40;
-            darknessWidth = 4;
+            darknessWidth = 5;
             darknessHeight = 4;
 
 
@@ -100,21 +118,32 @@ package
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
 
-
-            spriteSheet = new SpriteSheet();
-
-            // Renderer
-            //renderer = new MQMapRenderer(this.graphics, new Rectangle(0, 0, 20, 20), tileTypes, tileInstanceManager);
-            mapBitmap = new Bitmap(new BitmapData(650,460, false, 0xff0000));
+            mapBitmap = new Bitmap(new BitmapData(800,460, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = 2;
-            addChild(mapBitmap);
-            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
-            controls = new Controls(this);
-            combatHelper = new CombatHelper();
-            characterSheet = new CharacterSheetView();
-            characterSheet.x = 650;
-            addChild(characterSheet);
+            display.addChild(mapBitmap);
 
+            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
+
+            controls = new Controls(this);
+            //touchControls = new TouchControls(this, 40, 40, mapSelection);
+
+            combatHelper = new CombatHelper();
+
+            characterSheet = new CharacterSheetView();
+            characterSheet.x = 620;
+
+            display.addChild(characterSheet);
+
+            statusLabel = new TextField();
+            statusLabel.autoSize = TextFieldAutoSize.LEFT;
+            statusLabel.width = characterSheet.x;
+            statusLabel.multiline = true;
+            statusLabel.wordWrap = true;
+            statusLabel.embedFonts = true;
+            statusLabel.background = true;
+            statusLabel.backgroundColor = 0x000000;
+            statusLabel.defaultTextFormat = new TextFormat("system", 16, 0xffffff);
+            addChild(statusLabel);
 
             configureGame();
 
@@ -123,27 +152,9 @@ package
 
         private function configureGame():void
         {
+            addChild(splashScreen);
+
             tileInstanceManager.clear();
-
-            // create sprite sheet
-            var bitmap:Bitmap = new SpriteSheetImage();
-            spriteSheet.bitmapData = bitmap.bitmapData;
-            spriteSheet.registerSprite("splash", new Rectangle(0,0,800, 480));
-
-            var i:int;
-            var rows:int = Math.floor(bitmap.height/20);
-            var total:int = Math.floor((bitmap.width - 800) / 20) * (bitmap.height / 20);
-            var spriteRect:Rectangle = new Rectangle(800,0, 20, 20);
-            for(i = 0; i < total; ++i)
-            {
-                spriteSheet.registerSprite("sprite"+i, spriteRect.clone());
-                spriteRect.y += 20;
-                if(i%rows == (rows-1))
-                {
-                    spriteRect.x += 20;
-                    spriteRect.y = 0;
-                }
-            }
 
 
             characterSheet.setPortrait(new Bitmap(spriteSheet.getSprite("sprite5").clone()));
@@ -167,9 +178,7 @@ package
             populateMapHelper.populateMap.apply(this, monsters);
             populateMapHelper.populateMap.apply(this, chests);
 
-
             treasureFactory.addTreasure("$","$","$","$","P","P","P","P"," "," "," ");
-
 
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
 
@@ -178,7 +187,51 @@ package
 
             characterSheet.setPlayer(player);
 
+            render();
+
+            removeSplashScreen();
+
+        }
+
+        private function removeSplashScreen():void
+        {
+            var timer:Timer = new Timer(delayRemoveSplashScreen, 1);
+            timer.addEventListener(TimerEvent.TIMER_COMPLETE, onRemoveSplashScreen);
+            timer.start();
+        }
+
+        private function onRemoveSplashScreen(event:TimerEvent):void
+        {
+            event.target.addEventListener(TimerEvent.TIMER_COMPLETE, onRemoveSplashScreen);
+
+            removeChild(splashScreen);
+
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        }
+
+        private function parseSpriteSheet():void
+        {
+            spriteSheet = new SpriteSheet();
+
+            // create sprite sheet
+            var bitmap:Bitmap = new SpriteSheetImage();
+            spriteSheet.bitmapData = bitmap.bitmapData;
+            spriteSheet.registerSprite("splashScreen", new Rectangle(0, 0, 800, 480));
+
+            var i:int;
+            var rows:int = Math.floor(bitmap.height / 20);
+            var total:int = Math.floor((bitmap.width - 800) / 20) * (bitmap.height / 20);
+            var spriteRect:Rectangle = new Rectangle(800, 0, 20, 20);
+            for (i = 0; i < total; ++i)
+            {
+                spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
+                spriteRect.y += 20;
+                if (i % rows == (rows - 1))
+                {
+                    spriteRect.x += 20;
+                    spriteRect.y = 0;
+                }
+            }
         }
 
         private function onEnterFrame(event:Event):void
@@ -223,6 +276,16 @@ package
                 mapDarkness.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapSelection);
                 characterSheet.refresh();
+
+                if(status != "")
+                {
+                    statusLabel.text = status;
+                    status = "";
+                }
+                else
+                {
+                    statusLabel.text = "";
+                }
                 invalid = false;
 
                 t = (getTimer()-t);
@@ -269,7 +332,7 @@ package
                         }
                         else
                         {
-                            characterSheet.addStatusMessage("You can not exit the level you, you have not completed the goal.");
+                            addStatusMessage("You can not exit the level you, you have not completed the goal.");
                         }
                         break;
                     default:
@@ -280,6 +343,13 @@ package
             }
         }
 
+        public function addStatusMessage(value:String, clear:Boolean = true):void
+        {
+            if(clear)
+                status = "";
+            status += value
+        }
+        
         private function canFinishLevel():Boolean
         {
             var success:Boolean;
@@ -308,7 +378,7 @@ package
         {
             var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
 
-            characterSheet.addStatusMessage(status.toString());
+            addStatusMessage(status.toString());
 
             if (status.attackStatus.kill)
             {
@@ -323,7 +393,7 @@ package
             else if (player.getLife() == 0)
             {
                 trace("Restart Game");
-                characterSheet.addStatusMessage("Player was killed!", false);
+                addStatusMessage("Player was killed!", false);
             }
         }
 
@@ -332,7 +402,7 @@ package
 
             var treasure:String = treasureFactory.nextTreasure();
 
-            characterSheet.addStatusMessage(player.getName() +" has opened a treasure chest.");
+            addStatusMessage(player.getName() +" has opened a treasure chest.");
 
             map.swapTile(tmpPoint, treasure);
         }
@@ -346,7 +416,7 @@ package
             else if (tile == "P")
             {
                 player.addPotion(1);
-                characterSheet.addStatusMessage(player.getName() +" has picked up a health potion.");
+                addStatusMessage(player.getName() +" has picked up a health potion.");
             }
             else if (tile == "T")
             {
@@ -355,7 +425,7 @@ package
             else if (tile == "A")
             {
                 hasArtifact = true;
-                characterSheet.addStatusMessage(player.getName() +" has found an Artifact.");
+                addStatusMessage(player.getName() +" has found an Artifact.");
             }
 
             map.swapTile(tmpPoint, " ");

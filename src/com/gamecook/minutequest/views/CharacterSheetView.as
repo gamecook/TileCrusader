@@ -21,115 +21,84 @@ package com.gamecook.minutequest.views
     public class CharacterSheetView extends Sprite
     {
 
-        [Embed(source='../../../../../build/assets/nokiafc22.ttf', fontName="Font", embedAsCFF=false, mimeType="application/x-font-truetype")]
+        [Embed(source='../../../../../build/assets/nokiafc22.ttf', fontName="system", embedAsCFF=false, mimeType="application/x-font-truetype")]
         private static var EMBEDDED_FONT:String;
 
         private var player:PlayerTile;
         private var nameLabel:TextField;
-        private var characterLabel:TextField;
         private var lifeLabel:TextField;
         private var hitLabel:TextField;
         private var defenseLabel:TextField;
         private var goldLabel:TextField;
         private var potionLabel:TextField;
         private var status:String;
-        private var statusLabel:TextField;
 
         public function CharacterSheetView()
         {
-            var embeddedFonts:Array = Font.enumerateFonts(false);
-            embeddedFonts.sortOn("fontName", Array.CASEINSENSITIVE);
-            trace("\n\n----- Enumerate Fonts -----");
-            for(var i:int = 0; i<embeddedFonts.length; i++) {
-                trace(Font(embeddedFonts[i]).fontName);
-            }
+
         }
 
         private function init():void
         {
-        // TextFormat object
-                    var format :TextFormat = new TextFormat();
-                    format.font = "Font"; // Here is where the magic happens
-                    format.color = 0xff0000;
-                    format.size = 30;
-
-        // TextField object
-                    var txt :TextField = new TextField();
-                    txt.embedFonts = true;
-                    txt.autoSize = TextFieldAutoSize.LEFT;
-                    txt.antiAliasType = flash.text.AntiAliasType.ADVANCED;
-                    txt.defaultTextFormat = format;
-                    txt.text = "Testing my embedded Calibri font";
-
-                    addChild(txt);
-
-
             registerUI();
         }
 
         private function registerUI():void
         {
 
-            var tfx:TextFormat = new TextFormat("system", 10, 0xffffff);
+            var tfx:TextFormat = new TextFormat("system", 16, 0xffffff);
 
             nameLabel = new TextField();
             nameLabel.autoSize = TextFieldAutoSize.LEFT;
-
+            nameLabel.x = 0;
             nameLabel.y = 10;
             nameLabel.embedFonts = true;
-            nameLabel.defaultTextFormat = new TextFormat("system", 10, 0xffffff);
-            nameLabel.text = "Name: "+"BitchAss";
+            nameLabel.defaultTextFormat = tfx;
+            nameLabel.text = "BitchAss";
             addChild(nameLabel);
-
-            characterLabel = new TextField();
-            characterLabel.autoSize = TextFieldAutoSize.LEFT;
-            characterLabel.defaultTextFormat = tfx;
-            characterLabel.y = 25;
-            characterLabel.text = "Character: "+"Hero"
-            addChild(characterLabel);
 
             lifeLabel = new TextField();
             lifeLabel.autoSize = TextFieldAutoSize.LEFT;
             lifeLabel.defaultTextFormat = tfx;
             lifeLabel.y = 40;
-            addChild(lifeLabel);
+            //addChild(lifeLabel);
 
             hitLabel = new TextField();
             hitLabel.autoSize = TextFieldAutoSize.LEFT;
             hitLabel.defaultTextFormat = tfx;
-            hitLabel.y = 55;
-            hitLabel.text = "Hit: "+player.getAttackRolls().toString();
+            hitLabel.embedFonts = true;
+            hitLabel.x = 80;
+            hitLabel.y = 40;
+            hitLabel.text = "H: "+player.getAttackRolls().toString();
             addChild(hitLabel);
 
             defenseLabel = new TextField();
             defenseLabel.autoSize = TextFieldAutoSize.LEFT;
             defenseLabel.defaultTextFormat = tfx;
-            defenseLabel.y = 70;
-            defenseLabel.text = "Defense: "+player.getDefenceRolls().toString();
+            defenseLabel.embedFonts = true;
+            defenseLabel.x = 80;
+            defenseLabel.y = 60;
+            defenseLabel.text = "D: "+player.getDefenceRolls().toString();
             addChild(defenseLabel);
 
-            goldLabel = new TextField();
+            /*goldLabel = new TextField();
             goldLabel.autoSize = TextFieldAutoSize.LEFT;
             goldLabel.defaultTextFormat = tfx;
-            goldLabel.y = 85;
+
             goldLabel.text = "Gold: "+player.getGold().toString();
-            addChild(goldLabel);
+            goldLabel.y = 85;
+            //addChild(goldLabel);
 
             potionLabel = new TextField();
             potionLabel.autoSize = TextFieldAutoSize.LEFT;
             potionLabel.defaultTextFormat = tfx;
             potionLabel.y = 100;
             potionLabel.text = "Potions: "+player.getPotions().toString();
-            addChild(potionLabel);
+            //addChild(potionLabel);*/
 
-            statusLabel = new TextField();
-            statusLabel.width = 150;
-            statusLabel.height = 300;
-            statusLabel.multiline = true;
-            statusLabel.wordWrap = true;
-            statusLabel.defaultTextFormat = tfx;
-            statusLabel.y = 300;
-            addChild(statusLabel);
+
+
+
         }
 
         public function refresh():void
@@ -137,20 +106,14 @@ package com.gamecook.minutequest.views
             if(player)
             {
                 lifeLabel.text = "Life: "+player.getLife().toString() +"/"+player.getMaxLife();
-                goldLabel.text = "Gold: "+player.getGold();
-                potionLabel.text = "Potions: "+player.getPotions();
-                statusLabel.text = "Status:\n"+status;
+                //goldLabel.text = "Gold: "+player.getGold();
+                //potionLabel.text = "Potions: "+player.getPotions();
+                //statusLabel.text = "Status:\n"+status;
                 //clear status
                 status = "";
             }
         }
 
-        public function addStatusMessage(value:String, clear:Boolean = true):void
-        {
-            if(clear)
-                status = "";
-            status += value
-        }
 
         public function setPlayer(player:PlayerTile):void
         {
@@ -161,24 +124,26 @@ package com.gamecook.minutequest.views
         public function setPortrait(bitmap:Bitmap):void
         {
             bitmap.scaleX = bitmap.scaleY = 4;
-            bitmap.x = bitmap.y = 5;
+            bitmap.x = 0;
+            bitmap.y = 40;
             addChild(bitmap);
         }
 
         public function setGoldIcon(bitmap:Bitmap):void
         {
-            bitmap.scaleX = bitmap.scaleY = 2;
+            bitmap.scaleX = bitmap.scaleY = 3;
             bitmap.x = 5;
-            bitmap.y = 90;
-            addChild(bitmap);
+            bitmap.y = 110;
+            //addChild(bitmap);
         }
 
         public function setPotionIcon(bitmap:Bitmap):void
         {
-            bitmap.scaleX = bitmap.scaleY = 2;
+            bitmap.scaleX = bitmap.scaleY = 3;
             bitmap.x = 5;
-            bitmap.y = 140;
-            addChild(bitmap);
+            bitmap.y = 160;
+            //addChild(bitmap);
         }
+
     }
 }
