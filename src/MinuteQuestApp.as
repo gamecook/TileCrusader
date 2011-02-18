@@ -92,6 +92,8 @@ package
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
         private const MESSAGE_HEIGHT:int = 40;
+        private var cashPool:int = 0;
+        private var cashRange:int = 10;
 
         /**
          *
@@ -177,7 +179,7 @@ package
             tileInstanceManager.clear();
 
 
-            characterSheet.setPortrait(new Bitmap(spriteSheet.getSprite("sprite5").clone()));
+            characterSheet.setPortrait(spriteSheet.getSprite("sprite5").clone());
 
             var tmpSize:int = 40;
 
@@ -200,6 +202,8 @@ package
 
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
 
+            cashPool = 100;
+            cashRange = 10;
 
             player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
 
@@ -442,7 +446,16 @@ package
         {
             if (tile == "$")
             {
-                player.addGold(100);
+                var foundGold:int = Math.random() * cashRange;
+
+                if(foundGold > cashPool)
+                    foundGold = cashPool;
+
+                cashPool -= foundGold;
+
+                player.addGold(foundGold);
+
+                addStatusMessage(player.getName() +" has picked up $"+foundGold+" gold.");
             }
             else if (tile == "P")
             {

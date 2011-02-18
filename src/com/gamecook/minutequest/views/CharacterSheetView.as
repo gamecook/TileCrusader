@@ -12,6 +12,7 @@ package com.gamecook.minutequest.views
     import com.gamecook.minutequest.tiles.PlayerTile;
 
     import flash.display.Bitmap;
+    import flash.display.BitmapData;
     import flash.display.Shape;
     import flash.display.Sprite;
     import flash.text.AntiAliasType;
@@ -39,10 +40,11 @@ package com.gamecook.minutequest.views
         private var classLabel:TextField;
         private var lifeBarBG:Shape;
         private var lifeBar:Shape;
+        private var portraitBitmap:Bitmap;
 
         public function CharacterSheetView()
         {
-
+            init();
         }
 
         private function init():void
@@ -52,6 +54,11 @@ package com.gamecook.minutequest.views
 
         private function registerUI():void
         {
+            portraitBitmap = new Bitmap();
+            portraitBitmap.scaleX = portraitBitmap.scaleY = 4;
+            portraitBitmap.x = 12;
+            portraitBitmap.y = 115;
+            addChild(portraitBitmap)
 
             helpLabel = TextFieldFactory.createTextField(6,5,"[ Help ]");
             addChild(helpLabel);
@@ -88,16 +95,16 @@ package com.gamecook.minutequest.views
             goldLabel = TextFieldFactory.createTextField(13, 225, "G: $0");
             addChild(goldLabel);
 
-            hitLabel = TextFieldFactory.createTextField(102, 110, "H: "+player.getAttackRolls().toString());
+            hitLabel = TextFieldFactory.createTextField(102, 110, "H: 0");
             addChild(hitLabel);
 
-            defenseLabel = TextFieldFactory.createTextField(102, 130, "D: "+player.getDefenceRolls().toString());
+            defenseLabel = TextFieldFactory.createTextField(102, 130, "D: 0");
             addChild(defenseLabel);
 
-            potionLabel = TextFieldFactory.createTextField(102, 150, "P: "+player.getPotions().toString());
+            potionLabel = TextFieldFactory.createTextField(102, 150, "P: 0");
             addChild(potionLabel);
 
-            killLabel = TextFieldFactory.createTextField(102, 170, "K: "+player.getKills().toString());
+            killLabel = TextFieldFactory.createTextField(102, 170, "K: 0");
             addChild(killLabel);
 
         }
@@ -109,25 +116,24 @@ package com.gamecook.minutequest.views
                 goldLabel.text = "G: $"+player.getGold();
                 potionLabel.text = "P: "+player.getPotions();
                 killLabel.text = "K: "+player.getKills();
-
                 lifeBar.scaleX = player.getLife()/player.getMaxLife();
+                hitLabel.text = "H: "+player.getAttackRolls().toString();
+                defenseLabel.text = "D: "+player.getDefenceRolls().toString();
+                potionLabel.text = "P: "+player.getPotions().toString();
+                killLabel = TextFieldFactory.createTextField(102, 170, "K: "+player.getKills().toString());
             }
         }
-
 
         public function setPlayer(player:PlayerTile):void
         {
             this.player = player;
-            init();
         }
 
-        public function setPortrait(bitmap:Bitmap):void
+        public function setPortrait(bitmap:BitmapData):void
         {
-            bitmap.scaleX = bitmap.scaleY = 4;
-            bitmap.x = 12;
-            bitmap.y = 115;
-            addChild(bitmap);
+            portraitBitmap.bitmapData = bitmap;
         }
+
 
     }
 }
