@@ -39,6 +39,7 @@ package
     import flash.events.TimerEvent;
     import flash.geom.Point;
     import flash.geom.Rectangle;
+    import flash.text.AntiAliasType;
     import flash.text.Font;
     import flash.text.TextField;
     import flash.text.TextFieldAutoSize;
@@ -90,6 +91,7 @@ package
         private const SIDEBAR_WIDTH:int = 200;
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
+        private const MESSAGE_HEIGHT:int = 40;
 
         /**
          *
@@ -110,10 +112,10 @@ package
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
             viewPortWidth = (stage.stageWidth - SIDEBAR_WIDTH);
-            viewPortHeight = stage.stageHeight;
+            viewPortHeight = stage.stageHeight - tileHeight;
 
 
-            renderWidth = Math.floor( viewPortWidth / tileWidth);
+            renderWidth = Math.floor(viewPortWidth / tileWidth);
             renderHeight = Math.floor(viewPortHeight / tileHeight);
 
             darknessWidth = 5;
@@ -132,6 +134,7 @@ package
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
+            mapBitmap.y = MESSAGE_HEIGHT;
             display.addChild(mapBitmap);
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
@@ -146,15 +149,18 @@ package
 
             display.addChild(characterSheet);
 
+            //TODO need to make this it's own class
             statusLabel = new TextField();
-            statusLabel.autoSize = TextFieldAutoSize.LEFT;
-            statusLabel.width = viewPortWidth;
+            statusLabel.width = viewPortWidth - 5;
+            statusLabel.height = MESSAGE_HEIGHT;
             statusLabel.multiline = true;
             statusLabel.wordWrap = true;
             statusLabel.embedFonts = true;
             statusLabel.background = true;
             statusLabel.backgroundColor = 0x000000;
-            statusLabel.defaultTextFormat = new TextFormat("system", 18, 0xffffff);
+            statusLabel.x = 5;
+            statusLabel.y = 2;
+            statusLabel.defaultTextFormat = new TextFormat("system", 14, 0xffffff);
             addChild(statusLabel);
 
             configureGame();
@@ -164,7 +170,9 @@ package
 
         private function configureGame():void
         {
-            addChild(splashScreen);
+            //addChild(splashScreen);
+
+            mapDarkness.clear();
 
             tileInstanceManager.clear();
 
@@ -199,8 +207,9 @@ package
 
             render();
 
-            removeSplashScreen();
+            //removeSplashScreen();
 
+            addEventListener(Event.ENTER_FRAME, onEnterFrame);
         }
 
         private function removeSplashScreen():void
@@ -394,7 +403,8 @@ package
             {
                 var tile:String = map.getTileType(tmpPoint);
                 monsters.splice(monsters.indexOf(tile),1);
-                trace("Monsters Left", monsters.length, "Removed", tile, monsters);
+
+                player.addKill();
 
                 map.swapTile(tmpPoint, "X");
                 tileInstanceManager.removeInstance(uID);
@@ -402,8 +412,19 @@ package
             }
             else if (player.getLife() == 0)
             {
-                trace("Restart Game");
-                addStatusMessage("Player was killed!", false);
+
+                if(player.getPotions() == 0)
+                {
+                    trace("Restart Game");
+                    addStatusMessage("Player was killed!", true);
+                    configureGame();
+                }
+                else
+                {
+                    player.setLife(player.getMaxLife());
+                    player.subtractPotion();
+                    addStatusMessage("You have taken a potion and restored your health.", true);
+                }
             }
         }
 

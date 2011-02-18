@@ -7,10 +7,12 @@
  */
 package com.gamecook.minutequest.views
 {
+    import com.gamecook.minutequest.factory.TextFieldFactory;
     import com.gamecook.minutequest.status.IStatus;
     import com.gamecook.minutequest.tiles.PlayerTile;
 
     import flash.display.Bitmap;
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.text.AntiAliasType;
     import flash.text.Font;
@@ -31,7 +33,12 @@ package com.gamecook.minutequest.views
         private var defenseLabel:TextField;
         private var goldLabel:TextField;
         private var potionLabel:TextField;
-        private var status:String;
+        private var helpLabel:TextField;
+        private var quitLabel:TextField;
+        private var killLabel:TextField;
+        private var classLabel:TextField;
+        private var lifeBarBG:Shape;
+        private var lifeBar:Shape;
 
         public function CharacterSheetView()
         {
@@ -46,58 +53,52 @@ package com.gamecook.minutequest.views
         private function registerUI():void
         {
 
-            var tfx:TextFormat = new TextFormat("system", 16, 0xffffff);
+            helpLabel = TextFieldFactory.createTextField(6,5,"[ Help ]");
+            addChild(helpLabel);
 
-            nameLabel = new TextField();
-            nameLabel.autoSize = TextFieldAutoSize.LEFT;
-            nameLabel.x = 0;
-            nameLabel.y = 10;
-            nameLabel.embedFonts = true;
-            nameLabel.defaultTextFormat = tfx;
-            nameLabel.text = "BitchAss";
+            quitLabel = TextFieldFactory.createTextField(110,5,"[ Quit ]");
+            addChild(quitLabel);
+
+            nameLabel = TextFieldFactory.createTextField(13, 64, "BitchAss");
             addChild(nameLabel);
 
-            lifeLabel = new TextField();
-            lifeLabel.autoSize = TextFieldAutoSize.LEFT;
-            lifeLabel.defaultTextFormat = tfx;
-            lifeLabel.y = 40;
-            //addChild(lifeLabel);
+            classLabel = TextFieldFactory.createTextField(13, 86, "The Knight");
+            classLabel.textColor = 0x999999;
+            addChild(classLabel);
 
-            hitLabel = new TextField();
-            hitLabel.autoSize = TextFieldAutoSize.LEFT;
-            hitLabel.defaultTextFormat = tfx;
-            hitLabel.embedFonts = true;
-            hitLabel.x = 80;
-            hitLabel.y = 40;
-            hitLabel.text = "H: "+player.getAttackRolls().toString();
+            lifeLabel = TextFieldFactory.createTextField(13, 200, "L");
+            addChild(lifeLabel);
+
+            lifeBarBG = new Shape();
+            lifeBarBG.graphics.beginFill(0xff0000);
+            lifeBarBG.graphics.drawRect(0,0, 155, 18);
+            lifeBarBG.graphics.endFill();
+            lifeBarBG.x = 33;
+            lifeBarBG.y = 202;
+            addChild(lifeBarBG);
+
+            lifeBar = new Shape();
+            lifeBar.graphics.beginFill(0x00ff00);
+            lifeBar.graphics.drawRect(0,0, lifeBarBG.width, lifeBarBG.height);
+            lifeBar.graphics.endFill();
+            lifeBar.x = lifeBarBG.x;
+            lifeBar.y = lifeBarBG.y;
+            addChild(lifeBar);
+
+            goldLabel = TextFieldFactory.createTextField(13, 225, "G: $0");
+            addChild(goldLabel);
+
+            hitLabel = TextFieldFactory.createTextField(102, 110, "H: "+player.getAttackRolls().toString());
             addChild(hitLabel);
 
-            defenseLabel = new TextField();
-            defenseLabel.autoSize = TextFieldAutoSize.LEFT;
-            defenseLabel.defaultTextFormat = tfx;
-            defenseLabel.embedFonts = true;
-            defenseLabel.x = 80;
-            defenseLabel.y = 60;
-            defenseLabel.text = "D: "+player.getDefenceRolls().toString();
+            defenseLabel = TextFieldFactory.createTextField(102, 130, "D: "+player.getDefenceRolls().toString());
             addChild(defenseLabel);
 
-            /*goldLabel = new TextField();
-            goldLabel.autoSize = TextFieldAutoSize.LEFT;
-            goldLabel.defaultTextFormat = tfx;
+            potionLabel = TextFieldFactory.createTextField(102, 150, "P: "+player.getPotions().toString());
+            addChild(potionLabel);
 
-            goldLabel.text = "Gold: "+player.getGold().toString();
-            goldLabel.y = 85;
-            //addChild(goldLabel);
-
-            potionLabel = new TextField();
-            potionLabel.autoSize = TextFieldAutoSize.LEFT;
-            potionLabel.defaultTextFormat = tfx;
-            potionLabel.y = 100;
-            potionLabel.text = "Potions: "+player.getPotions().toString();
-            //addChild(potionLabel);*/
-
-
-
+            killLabel = TextFieldFactory.createTextField(102, 170, "K: "+player.getKills().toString());
+            addChild(killLabel);
 
         }
 
@@ -105,12 +106,11 @@ package com.gamecook.minutequest.views
         {
             if(player)
             {
-                lifeLabel.text = "Life: "+player.getLife().toString() +"/"+player.getMaxLife();
-                //goldLabel.text = "Gold: "+player.getGold();
-                //potionLabel.text = "Potions: "+player.getPotions();
-                //statusLabel.text = "Status:\n"+status;
-                //clear status
-                status = "";
+                goldLabel.text = "G: $"+player.getGold();
+                potionLabel.text = "P: "+player.getPotions();
+                killLabel.text = "K: "+player.getKills();
+
+                lifeBar.scaleX = player.getLife()/player.getMaxLife();
             }
         }
 
@@ -124,25 +124,9 @@ package com.gamecook.minutequest.views
         public function setPortrait(bitmap:Bitmap):void
         {
             bitmap.scaleX = bitmap.scaleY = 4;
-            bitmap.x = 0;
-            bitmap.y = 40;
+            bitmap.x = 12;
+            bitmap.y = 115;
             addChild(bitmap);
-        }
-
-        public function setGoldIcon(bitmap:Bitmap):void
-        {
-            bitmap.scaleX = bitmap.scaleY = 3;
-            bitmap.x = 5;
-            bitmap.y = 110;
-            //addChild(bitmap);
-        }
-
-        public function setPotionIcon(bitmap:Bitmap):void
-        {
-            bitmap.scaleX = bitmap.scaleY = 3;
-            bitmap.x = 5;
-            bitmap.y = 160;
-            //addChild(bitmap);
         }
 
     }

@@ -38,7 +38,7 @@ package com.gamecook.minutequest.status
             }
             else
             {
-                message += attackStatus.defender.getName() +" attacks back!\n";
+                //message += attackStatus.defender.getName() +" attacks back!\n";
                 message += attackStatus2.toString();
             }
             return message;

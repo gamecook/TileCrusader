@@ -13,6 +13,7 @@ package com.gamecook.minutequest.tiles
         protected var armor:String;
         private var gold:int = 0;
         private var potions:int = 0;
+        private var kills:int = 0;
 
         public function PlayerTile()
         {
@@ -86,6 +87,21 @@ package com.gamecook.minutequest.tiles
         public function addPotion(value:int):void
         {
             potions += value;
+        }
+
+        public function getKills():int
+        {
+            return kills;
+        }
+
+        public function addKill():void
+        {
+            kills ++;
+        }
+
+        public function subtractPotion():void
+        {
+            potions --;
         }
     }
 }
