@@ -47,7 +47,7 @@ package
     import flash.utils.Timer;
     import flash.utils.getTimer;
 
-    [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
+    [SWF(width="1024",height="786",backgroundColor="#000000",frameRate="60")]
     public class MinuteQuestApp extends Sprite implements IControl
     {
         [Embed(source="../build/assets/spritesheet_template.png")]
@@ -108,8 +108,10 @@ package
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
+            //TODO need to clean this up so it covers up the display correctly.
             splashScreen = new Bitmap(spriteSheet.getSprite("splashScreen").clone());
-
+            splashScreen.scaleX = splashScreen.scaleY = stage.stageWidth / splashScreen.width;
+            splashScreen.y = (stage.stageHeight - splashScreen.height) * .5;
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -172,7 +174,7 @@ package
 
         private function configureGame():void
         {
-            //addChild(splashScreen);
+            addChild(splashScreen);
 
             mapDarkness.clear();
 
@@ -211,9 +213,9 @@ package
 
             render();
 
-            //removeSplashScreen();
+            removeSplashScreen();
 
-            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+            //
         }
 
         private function removeSplashScreen():void
