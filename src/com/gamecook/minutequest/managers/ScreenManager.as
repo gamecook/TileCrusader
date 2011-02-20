@@ -7,7 +7,7 @@
  */
 package com.gamecook.minutequest.managers
 {
-    import com.gamecook.minutequest.screens.BaseScreen;
+    import com.gamecook.minutequest.states.BaseScreen;
 
     import flash.display.DisplayObjectContainer;
 

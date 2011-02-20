@@ -5,11 +5,13 @@
  * Time: 9:59 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.minutequest.screens
+package com.gamecook.minutequest.states
 {
-    public class HiScoreScreen extends BaseScreen
+    import com.gamecook.lib.states.BaseState;
+
+    public class HiScoreState extends BaseState
     {
-        public function HiScoreScreen()
+        public function HiScoreState()
         {
         }
     }

@@ -11,13 +11,14 @@ package
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.io.IControl;
+    import com.gamecook.frogue.maps.FogOfWarMapSelection;
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
+    import com.gamecook.lib.utils.TimeMethodExecutionUtil;
     import com.gamecook.minutequest.combat.CombatHelper;
     import com.gamecook.minutequest.enum.GameModes;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.minutequest.map.FogOfWarMapSelection;
     import com.gamecook.minutequest.renderer.MQMapBitmapRenderer;
     import com.gamecook.minutequest.status.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
@@ -28,7 +29,6 @@ package
     import com.gamecook.minutequest.tiles.PlayerTile;
     import com.gamecook.minutequest.tiles.TileTypes;
     import com.gamecook.minutequest.views.CharacterSheetView;
-    import com.gamecook.util.TimeMethodExecutionUtil;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;

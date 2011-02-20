@@ -5,11 +5,13 @@
  * Time: 9:57 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.minutequest.screens
+package com.gamecook.minutequest.states
 {
-    public class RandomMapGeneratorScreen extends BaseScreen
+    import com.gamecook.lib.states.BaseState;
+
+    public class NewGameState extends BaseState
     {
-        public function RandomMapGeneratorScreen()
+        public function NewGameState()
         {
         }
     }

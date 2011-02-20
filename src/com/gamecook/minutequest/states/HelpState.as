@@ -5,11 +5,13 @@
  * Time: 9:58 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.minutequest.screens
+package com.gamecook.minutequest.states
 {
-    public class HelpScreen extends BaseScreen
+    import com.gamecook.lib.states.BaseState;
+
+    public class HelpState extends BaseState
     {
-        public function HelpScreen()
+        public function HelpState()
         {
         }
     }

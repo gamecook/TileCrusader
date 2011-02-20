@@ -5,13 +5,13 @@
  * Time: 9:56 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.minutequest.screens
+package com.gamecook.minutequest.states
 {
-    import flash.display.Sprite;
+    import com.gamecook.lib.states.BaseState;
 
-    public class BaseScreen extends Sprite
+    public class StartState extends BaseState
     {
-        public function BaseScreen()
+        public function StartState()
         {
         }
     }
