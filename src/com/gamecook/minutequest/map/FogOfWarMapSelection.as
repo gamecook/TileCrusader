@@ -14,7 +14,7 @@ package com.gamecook.minutequest.map
 
     import flash.geom.Point;
 
-    public class MapFogOfWar implements IMapSelection
+    public class FogOfWarMapSelection implements IMapSelection
     {
         private var map:IMap;
         private var selection:IMapSelection;
@@ -24,7 +24,7 @@ package com.gamecook.minutequest.map
         private var visibleSelection:IMapSelection;
         private var saveExploredTiles:Boolean = true;
 
-        public function MapFogOfWar(map:IMap, selection:IMapSelection, width:int, height:int)
+        public function FogOfWarMapSelection(map:IMap, selection:IMapSelection, width:int, height:int)
         {
             this.height = height;
             this.width = width;

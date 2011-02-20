@@ -17,12 +17,12 @@ package
     import com.gamecook.minutequest.combat.CombatHelper;
     import com.gamecook.minutequest.enum.GameModes;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.minutequest.map.MapFogOfWar;
+    import com.gamecook.minutequest.map.FogOfWarMapSelection;
     import com.gamecook.minutequest.renderer.MQMapBitmapRenderer;
     import com.gamecook.minutequest.status.DoubleAttackStatus;
     import com.gamecook.minutequest.combat.IFight;
     import com.gamecook.minutequest.factory.TileFactory;
-    import com.gamecook.minutequest.factory.TreasureFactory;
+    import com.gamecook.minutequest.iterators.TreasureIterator;
     import com.gamecook.minutequest.managers.TileInstanceManager;
     import com.gamecook.minutequest.tiles.BaseTile;
     import com.gamecook.minutequest.tiles.PlayerTile;
@@ -47,7 +47,7 @@ package
     import flash.utils.Timer;
     import flash.utils.getTimer;
 
-    [SWF(width="1024",height="786",backgroundColor="#000000",frameRate="60")]
+    [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
     public class MinuteQuestApp extends Sprite implements IControl
     {
         [Embed(source="../build/assets/spritesheet_template.png")]
@@ -70,14 +70,14 @@ package
         private var characterSheet:CharacterSheetView;
         private var mapSelection:MapSelection;
         private var tileTypes:TileTypes;
-        private var treasureFactory:TreasureFactory;
+        private var treasureIterator:TreasureIterator;
         private var monsters:Array;
         private var chests:Array;
         private var gameMode:String;
         private var hasArtifact:Boolean;
         private var spriteSheet:SpriteSheet;
         private var mapBitmap:Bitmap;
-        private var mapDarkness:MapFogOfWar;
+        private var mapDarkness:FogOfWarMapSelection;
         private var splashScreen:Bitmap;
         private var display:Sprite;
         private var overlayLayer:Sprite;
@@ -127,10 +127,10 @@ package
 
             map = new RandomMap();
             mapSelection = new MapSelection(map, renderWidth, renderHeight);
-            mapDarkness = new MapFogOfWar(map, mapSelection, darknessWidth, darknessHeight);
+            mapDarkness = new FogOfWarMapSelection(map, mapSelection, darknessWidth, darknessHeight);
 
             populateMapHelper = new PopulateMapHelper(map);
-            treasureFactory = new TreasureFactory();
+
             movementHelper = new MovementHelper(map);
 
             tileTypes = new TileTypes();
@@ -200,7 +200,7 @@ package
             populateMapHelper.populateMap.apply(this, monsters);
             populateMapHelper.populateMap.apply(this, chests);
 
-            treasureFactory.addTreasure("$","$","$","$","P","P","P","P"," "," "," ");
+            treasureIterator = new TreasureIterator(["$","$","$","$","P","P","P","P"," "," "," "]);
 
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
 
@@ -382,7 +382,7 @@ package
             switch(gameMode)
             {
                 case GameModes.FIND_ALL_TREASURE:
-                    success = treasureFactory.hasNext();
+                    success = treasureIterator.hasNext();
                 break;
                 case GameModes.FIND_ARTIFACT:
                     success = hasArtifact;
@@ -437,9 +437,10 @@ package
         private function openTreasure(tmpPoint:Point):void
         {
 
-            var treasure:String = treasureFactory.nextTreasure();
 
             addStatusMessage(player.getName() +" has opened a treasure chest.");
+
+            var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : " ";
 
             map.swapTile(tmpPoint, treasure);
         }

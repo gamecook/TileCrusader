@@ -19,6 +19,8 @@ package com.gamecook.minutequest.combat
 
         public function doubleAttack(attackerA:IFight, attackerB:IFight):DoubleAttackStatus
         {
+            //TODO find out how has attack first
+
             var statusA:AttackStatus = attack(attackerA, attackerB);
             var statusB:AttackStatus;
             if(!statusA.kill)
@@ -53,6 +55,8 @@ package com.gamecook.minutequest.combat
                     kill = true;
                 }
             }
+
+            //TODO check for special attributes
 
             return new AttackStatus(attacker, defender, success, hit, defense, difference, kill);
         }

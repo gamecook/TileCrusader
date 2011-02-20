@@ -7,14 +7,16 @@
  */
 package com.gamecook.minutequest.views
 {
-    import com.gamecook.minutequest.factory.TextFieldFactory;
+    import com.gamecook.minutequest.factory.UIFactory;
     import com.gamecook.minutequest.status.IStatus;
     import com.gamecook.minutequest.tiles.PlayerTile;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Shape;
+    import flash.display.SimpleButton;
     import flash.display.Sprite;
+    import flash.events.MouseEvent;
     import flash.text.AntiAliasType;
     import flash.text.Font;
     import flash.text.TextField;
@@ -34,8 +36,8 @@ package com.gamecook.minutequest.views
         private var defenseLabel:TextField;
         private var goldLabel:TextField;
         private var potionLabel:TextField;
-        private var helpLabel:TextField;
-        private var quitLabel:TextField;
+        private var helpLabel:SimpleButton;
+        private var quitLabel:SimpleButton;
         private var killLabel:TextField;
         private var classLabel:TextField;
         private var lifeBarBG:Shape;
@@ -60,20 +62,20 @@ package com.gamecook.minutequest.views
             portraitBitmap.y = 115;
             addChild(portraitBitmap)
 
-            helpLabel = TextFieldFactory.createTextField(6,5,"[ Help ]");
+            helpLabel = UIFactory.createTextFieldButton(onHelpClick, 6,5,"Help");
             addChild(helpLabel);
 
-            quitLabel = TextFieldFactory.createTextField(110,5,"[ Quit ]");
+            quitLabel = UIFactory.createTextFieldButton(onQuitClick, 110,5,"Quit");
             addChild(quitLabel);
 
-            nameLabel = TextFieldFactory.createTextField(13, 64, "BitchAss");
+            nameLabel = UIFactory.createTextField(13, 64, "BitchAss");
             addChild(nameLabel);
 
-            classLabel = TextFieldFactory.createTextField(13, 86, "The Knight");
+            classLabel = UIFactory.createTextField(13, 86, "The Knight");
             classLabel.textColor = 0x999999;
             addChild(classLabel);
 
-            lifeLabel = TextFieldFactory.createTextField(13, 200, "L");
+            lifeLabel = UIFactory.createTextField(13, 200, "L");
             addChild(lifeLabel);
 
             lifeBarBG = new Shape();
@@ -92,21 +94,31 @@ package com.gamecook.minutequest.views
             lifeBar.y = lifeBarBG.y;
             addChild(lifeBar);
 
-            goldLabel = TextFieldFactory.createTextField(13, 225, "G: $0");
+            goldLabel = UIFactory.createTextField(13, 225, "G: $0");
             addChild(goldLabel);
 
-            hitLabel = TextFieldFactory.createTextField(102, 110, "H: 0");
+            hitLabel = UIFactory.createTextField(102, 110, "H: 0");
             addChild(hitLabel);
 
-            defenseLabel = TextFieldFactory.createTextField(102, 130, "D: 0");
+            defenseLabel = UIFactory.createTextField(102, 130, "D: 0");
             addChild(defenseLabel);
 
-            potionLabel = TextFieldFactory.createTextField(102, 150, "P: 0");
+            potionLabel = UIFactory.createTextField(102, 150, "P: 0");
             addChild(potionLabel);
 
-            killLabel = TextFieldFactory.createTextField(102, 170, "K: 0");
+            killLabel = UIFactory.createTextField(102, 170, "K: 0");
             addChild(killLabel);
 
+        }
+
+        private function onQuitClick(event:MouseEvent):void
+        {
+            trace("Quit Game.")
+        }
+
+        private function onHelpClick(event:MouseEvent):void
+        {
+            trace("Open Help.");
         }
 
         public function refresh():void
@@ -120,7 +132,7 @@ package com.gamecook.minutequest.views
                 hitLabel.text = "H: "+player.getAttackRolls().toString();
                 defenseLabel.text = "D: "+player.getDefenceRolls().toString();
                 potionLabel.text = "P: "+player.getPotions().toString();
-                killLabel = TextFieldFactory.createTextField(102, 170, "K: "+player.getKills().toString());
+                killLabel = UIFactory.createTextField(102, 170, "K: "+player.getKills().toString());
             }
         }
 
