@@ -11,8 +11,9 @@ package com.gamecook.tilecrusader.states
 
     public class RandomMapGeneratorState extends BaseState
     {
-        public function RandomMapGeneratorState()
+        public function RandomMapGeneratorState(data:* = null)
         {
+            super(data);
         }
     }
 }

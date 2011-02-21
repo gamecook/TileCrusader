@@ -15,9 +15,9 @@ package com.gamecook.tilecrusader.states
 
     public class GameOverState extends BaseState
     {
-        public function GameOverState()
+        public function GameOverState(data:* = null)
         {
-            super();
+            super(data);
         }
 
         override public function create():void

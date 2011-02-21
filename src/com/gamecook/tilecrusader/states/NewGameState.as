@@ -9,10 +9,18 @@ package com.gamecook.tilecrusader.states
 {
     import com.gamecook.lib.states.BaseState;
 
-    public class NewGameState extends BaseState
+    public class NewGameState extends RandomMapState
     {
-        public function NewGameState()
+        public function NewGameState(data:* = null)
         {
+            super(data);
+        }
+
+
+        override public function create():void
+        {
+
+            super.create();
         }
     }
 }

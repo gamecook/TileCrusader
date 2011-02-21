@@ -7,8 +7,7 @@
  */
 package com.gamecook.tilecrusader.combat
 {
-    import com.gamecook.tilecrusader.items.BaseArmor;
-    import com.gamecook.tilecrusader.items.BaseWeapon;
+
     import com.gamecook.tilecrusader.tiles.ITile;
 
     public interface IFight extends ITile

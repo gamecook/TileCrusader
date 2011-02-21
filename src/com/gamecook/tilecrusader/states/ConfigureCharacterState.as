@@ -11,8 +11,9 @@ package com.gamecook.tilecrusader.states
 
     public class ConfigureCharacterState extends BaseState
     {
-        public function ConfigureCharacterState()
+        public function ConfigureCharacterState(data:* = null)
         {
+            super(data);
         }
     }
 }

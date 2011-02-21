@@ -88,9 +88,9 @@ package com.gamecook.tilecrusader.states
         private var cashPool:int = 0;
         private var cashRange:int = 10;
 
-        public function GameState()
+        public function GameState(data:* = null)
         {
-            super();
+            super(data);
         }
 
 
@@ -196,12 +196,6 @@ package com.gamecook.tilecrusader.states
 
             characterSheet.setPlayer(player);
 
-        }
-
-        private function configureStage():void
-        {
-            stage.align = StageAlign.TOP_LEFT;
-            stage.scaleMode = StageScaleMode.NO_SCALE;
         }
 
         //TODO need to clean up movement so it only happens once per second
@@ -330,7 +324,7 @@ package com.gamecook.tilecrusader.states
                 if(player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
-                    stateManager.state = GameOverState;
+                    stateManager.setState(GameOverState);
                 }
                 else
                 {

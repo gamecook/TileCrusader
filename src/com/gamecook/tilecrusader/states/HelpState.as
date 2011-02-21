@@ -11,8 +11,9 @@ package com.gamecook.tilecrusader.states
 
     public class HelpState extends BaseState
     {
-        public function HelpState()
+        public function HelpState(data:* = null)
         {
+            super(data);
         }
     }
 }

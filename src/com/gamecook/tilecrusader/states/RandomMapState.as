@@ -23,37 +23,58 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 9:51 AM
+ * Date: 2/21/11
+ * Time: 9:34 AM
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.states
 {
     import com.gamecook.lib.states.BaseState;
+    import com.gamecook.tilecrusader.views.AutoPlayMap;
 
-    import com.gamecook.tilecrusader.factory.UIFactory;
-
-    import flash.text.TextField;
-
-    public class GameCookSplashState extends BaseState
+    public class RandomMapState extends BaseState
     {
-        public function GameCookSplashState(data:* = null)
+        protected var randMap:AutoPlayMap;
+        protected var movementCounter:int = 0;
+        protected var nextMovement:int = 500;
+        protected var mapViewPortWidth = 500;
+        protected var mapViewPortHeight = 200;
+        protected var mapViewPortX = 260;
+        protected var mapViewPortY = 150;
+
+        public function RandomMapState(data:* = null)
         {
             super(data);
         }
-
 
         override public function create():void
         {
             super.create();
 
-            var tf:TextField = UIFactory.createTextField(200,200, "Game Cook Presents");
-            tf.textColor = 0xffffff;
-            tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y = (fullSizeHeight - tf.height) * .5;
-            addChild(tf);
+            randMap = new AutoPlayMap(mapViewPortWidth, mapViewPortHeight);
+            randMap.x = mapViewPortX;
+            randMap.y = mapViewPortY;
+            addChild(randMap);
 
-            startNextScreenTimer(TileCrusaderSplashState, 3);
+        }
+
+        override public function update(elapsed:Number = 0):void
+        {
+            super.update(elapsed);
+
+            movementCounter += elapsed;
+            if (movementCounter >= nextMovement)
+            {
+                randMap.nextMove();
+                movementCounter = 0;
+            }
+
+        }
+
+        override protected function render():void
+        {
+            super.render();
+            randMap.render();
         }
     }
 }

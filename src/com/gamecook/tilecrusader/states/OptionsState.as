@@ -31,11 +31,21 @@ package com.gamecook.tilecrusader.states
 {
     import com.gamecook.lib.states.BaseState;
 
-    public class OptionsState extends BaseState
+    public class OptionsState extends RandomMapState
     {
-        public function OptionsState()
+        public function OptionsState(data:* = null)
         {
-            super();
+            super(data);
+        }
+
+        override public function create():void
+        {
+            mapViewPortWidth = fullSizeWidth - 80;
+            mapViewPortHeight = 120;
+            mapViewPortX = 40;
+            mapViewPortY = fullSizeHeight - 160;
+
+            super.create();
         }
     }
 }

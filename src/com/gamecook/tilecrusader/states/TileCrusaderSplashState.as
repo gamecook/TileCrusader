@@ -37,9 +37,9 @@ package com.gamecook.tilecrusader.states
 
     public class TileCrusaderSplashState extends BaseState
     {
-        public function TileCrusaderSplashState()
+        public function TileCrusaderSplashState(data:* = null)
         {
-            super();
+            super(data);
         }
 
         override public function create():void

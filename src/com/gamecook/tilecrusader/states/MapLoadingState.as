@@ -44,9 +44,9 @@ package com.gamecook.tilecrusader.states
         private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
 
-        public function MapLoadingState()
+        public function MapLoadingState(data:* = null)
         {
-            super();
+            super(data);
         }
 
 

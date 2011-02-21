@@ -11,8 +11,9 @@ package com.gamecook.tilecrusader.states
 
     public class HiScoreState extends BaseState
     {
-        public function HiScoreState()
+        public function HiScoreState(data:* = null)
         {
+            super(data);
         }
     }
 }

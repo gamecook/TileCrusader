@@ -12,15 +12,18 @@ package com.gamecook.tilecrusader.states
     import com.gamecook.lib.ui.containers.StackLayout;
     import com.gamecook.tilecrusader.factory.UIFactory;
 
+    import com.gamecook.tilecrusader.views.AutoPlayMap;
+
     import flash.display.SimpleButton;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class StartState extends BaseState
+    public class StartState extends RandomMapState
     {
-        public function StartState()
+
+        public function StartState(data:* = null)
         {
-                super();
+            super(data);
         }
 
         override public function create():void
@@ -40,21 +43,22 @@ package com.gamecook.tilecrusader.states
             layout.addChild(UIFactory.createTextFieldButton(onOptions, 0,0, "Options"));
 
             addChild(layout);
+
         }
 
         private function onStart(event:MouseEvent):void
         {
-            stateManager.state = MapLoadingState;
+            stateManager.setState(MapLoadingState);
         }
 
         private function onHelp(event:MouseEvent):void
         {
-            stateManager.state = HelpState;
+            stateManager.setState(HelpState);
         }
 
         private function onOptions(event:MouseEvent):void
         {
-            stateManager.state = OptionsState;
+            stateManager.setState(OptionsState);
         }
     }
 }
