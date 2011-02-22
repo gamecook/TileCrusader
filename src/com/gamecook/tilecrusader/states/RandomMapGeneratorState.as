@@ -7,13 +7,22 @@
  */
 package com.gamecook.tilecrusader.states
 {
+    import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.lib.states.BaseState;
 
-    public class RandomMapGeneratorState extends BaseState
+    public class RandomMapGeneratorState extends RandomBackgroundMapState
     {
         public function RandomMapGeneratorState(data:* = null)
         {
             super(data);
+        }
+
+
+        override public function create():void
+        {
+            super.create();
+
+
         }
     }
 }

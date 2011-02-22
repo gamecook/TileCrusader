@@ -31,7 +31,7 @@ package com.gamecook.tilecrusader.states
 {
     import com.gamecook.lib.states.BaseState;
 
-    public class OptionsState extends RandomMapState
+    public class OptionsState extends RandomBackgroundMapState
     {
         public function OptionsState(data:* = null)
         {

@@ -18,7 +18,7 @@ package com.gamecook.tilecrusader.states
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class StartState extends RandomMapState
+    public class StartState extends RandomBackgroundMapState
     {
 
         public function StartState(data:* = null)

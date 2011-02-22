@@ -32,7 +32,7 @@ package com.gamecook.tilecrusader.states
     import com.gamecook.lib.states.BaseState;
     import com.gamecook.tilecrusader.views.AutoPlayMap;
 
-    public class RandomMapState extends BaseState
+    public class RandomBackgroundMapState extends BaseState
     {
         protected var randMap:AutoPlayMap;
         protected var movementCounter:int = 0;
@@ -42,7 +42,7 @@ package com.gamecook.tilecrusader.states
         protected var mapViewPortX = 260;
         protected var mapViewPortY = 150;
 
-        public function RandomMapState(data:* = null)
+        public function RandomBackgroundMapState(data:* = null)
         {
             super(data);
         }

@@ -32,6 +32,8 @@ package com.gamecook.tilecrusader.states
     import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.gamecook.tilecrusader.views.CharacterSheetView;
 
+    import com.gamecook.tilecrusader.views.VirtualKeysView;
+
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Sprite;
@@ -87,6 +89,7 @@ package com.gamecook.tilecrusader.states
         private const MESSAGE_HEIGHT:int = 40;
         private var cashPool:int = 0;
         private var cashRange:int = 10;
+        private var virtualKeys:VirtualKeysView;
 
         public function GameState(data:* = null)
         {
@@ -157,6 +160,11 @@ package com.gamecook.tilecrusader.states
             addChild(statusLabel);
 
             configureGame();
+
+            virtualKeys = new VirtualKeysView(this);
+            addChild(virtualKeys);
+            virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
+            virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
         }
 
         private function configureGame():void

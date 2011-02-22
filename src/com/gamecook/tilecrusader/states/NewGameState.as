@@ -9,7 +9,7 @@ package com.gamecook.tilecrusader.states
 {
     import com.gamecook.lib.states.BaseState;
 
-    public class NewGameState extends RandomMapState
+    public class NewGameState extends RandomBackgroundMapState
     {
         public function NewGameState(data:* = null)
         {

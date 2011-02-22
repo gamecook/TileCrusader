@@ -60,12 +60,12 @@ package com.gamecook.tilecrusader.views
             portraitBitmap.y = 115;
             addChild(portraitBitmap)
 
-            helpLabel = UIFactory.createTextFieldButton(onHelpClick, 6,5,"Help");
+           /* helpLabel = UIFactory.createTextFieldButton(onHelpClick, 6,5,"Help");
             addChild(helpLabel);
 
             quitLabel = UIFactory.createTextFieldButton(onQuitClick, 110,5,"Quit");
             addChild(quitLabel);
-
+*/
             nameLabel = UIFactory.createTextField(13, 64, "BitchAss");
             addChild(nameLabel);
 

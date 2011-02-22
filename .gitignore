@@ -1,5 +1,5 @@
 /.settings/*
- 
+
 /html-template/*
 /bin-debug/*
 /bin-release/*
@@ -11,7 +11,7 @@
 /apks/*
 /tmp/*
 /bin-air/*
- 
+/chrome/*
 /.actionScriptProperties
 /.flexProperties
 /.flexLibProperties
@@ -19,7 +19,7 @@
 /.as3_classpath
 /com.adobe.flexbuilder.project.prefs
 /org.eclipse.core.resources.prefs
- 
+
 Icon
 Thumbs.db
 .DS_Store

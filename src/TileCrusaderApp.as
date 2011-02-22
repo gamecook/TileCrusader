@@ -34,6 +34,7 @@ package
     import com.gamecook.tilecrusader.states.GameCookSplashState;
     import com.gamecook.tilecrusader.states.StartState;
 
+    import flash.display.DisplayObject;
     import flash.display.Sprite;
 
     import flash.display.StageAlign;
@@ -67,7 +68,8 @@ package
             trace("Hello");
             game.activate();
 
-            addChild( new Stats() );
+            var dobj:DisplayObject = addChild( new Stats() );
+            dobj.scaleX = dobj.scaleY = 2;
         }
 
         private function configureStage():void {
