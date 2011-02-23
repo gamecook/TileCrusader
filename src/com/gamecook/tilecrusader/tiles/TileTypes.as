@@ -75,5 +75,21 @@ package com.gamecook.tilecrusader.tiles
         {
             return TYPES[tile].sprite;
         }
+
+        public function isMonster(tile:String):Boolean
+        {
+            return (TYPES[tile].type == MONSTER);
+        }
+
+        public function getStats(tile:String):Object
+        {
+            var obj:Object = TYPES[tile];
+            return {hit:obj.attackRoll, defense:obj.defenseRoll};
+        }
+
+        public function isBoss(tile:String):Boolean
+        {
+            return (TYPES[tile].type == BOSS);
+        }
     }
 }

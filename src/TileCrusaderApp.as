@@ -48,6 +48,9 @@ package
         [Embed(source='../build/assets/nokiafc22.ttf', fontName="system", embedAsCFF=false, mimeType="application/x-font-truetype")]
         private static var EMBEDDED_FONT:String;
 
+        [Embed(source='../build/assets/fonts/slkscr.ttf', fontName="system2", embedAsCFF=false, mimeType="application/x-font-truetype")]
+        private static var EMBEDDED_FONT2:String;
+
         private var game:TileCrusaderGame;
         public function TileCrusaderApp()
         {
@@ -68,8 +71,9 @@ package
             trace("Hello");
             game.activate();
 
-            var dobj:DisplayObject = addChild( new Stats() );
-            dobj.scaleX = dobj.scaleY = 2;
+            var stats:DisplayObject = addChild( new Stats() );
+            stats.scaleX = stats.scaleY = 2;
+            stats.y = stage.stageHeight - stats.height;
         }
 
         private function configureStage():void {

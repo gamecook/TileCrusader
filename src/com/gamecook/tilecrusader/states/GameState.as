@@ -267,7 +267,7 @@ package com.gamecook.tilecrusader.states
                         }
                         else
                         {
-                            addStatusMessage("You can not exit the level you, you have not completed the goal.");
+                            addStatusMessage("You can not leave until you "+GameModes.getGameModeDescription(gameMode))+".";
                         }
                         break;
                     default:
@@ -429,6 +429,9 @@ package com.gamecook.tilecrusader.states
 
                 t = (getTimer()-t);
                 trace("Render executed in " + t + " ms\n");
+
+                if(status == "")
+                    addStatusMessage("Render executed in " + t + " ms\n", true);
             }
         }
 

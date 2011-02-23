@@ -13,5 +13,24 @@ package com.gamecook.tilecrusader.enum
         public static const FIND_ALL_TREASURE:String = "findAllTreasure";
         public static const FIND_ARTIFACT:String = "findArtifact";
         public static const KILL_BOSS:String = "killBoss";
+
+        public static function getGameModeDescription(gameMode:String):String
+        {
+            var message:String;
+
+            switch(gameMode)
+            {
+                case KILL_ALL_MONSTERS:
+                    message = "kill all monsters";
+                    break;
+                case FIND_ALL_TREASURE:
+                    message = "find all treasure";
+                case FIND_ARTIFACT:
+                    message = "find artifact";
+                case KILL_BOSS:
+                    message = "kill the boss";
+            }
+            return message;
+        }
     }
 }
