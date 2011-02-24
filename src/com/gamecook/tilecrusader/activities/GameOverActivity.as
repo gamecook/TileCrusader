@@ -5,24 +5,26 @@
  * Time: 9:59 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.lib.states.BaseState;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.gamecook.tilecrusader.factory.UIFactory;
 
+    import com.jessefreeman.factivity.managers.ActivityManager;
+
     import flash.text.TextField;
 
-    public class GameOverState extends BaseState
+    public class GameOverActivity extends BaseActivity
     {
-        public function GameOverState(data:* = null)
+        public function GameOverActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
-        override public function create():void
+        override protected function init():void
         {
-            super.create();
+            super.init();
 
             var tf:TextField = UIFactory.createTextField(200,200, "You were killed!");
             tf.textColor = 0xffffff;
@@ -30,7 +32,7 @@ package com.gamecook.tilecrusader.states
             tf.y = (fullSizeHeight - tf.height) * .5;
             addChild(tf);
 
-            startNextScreenTimer(StartState, 3);
+            startNextScreenTimer(StartActivity, 3);
         }
     }
 }

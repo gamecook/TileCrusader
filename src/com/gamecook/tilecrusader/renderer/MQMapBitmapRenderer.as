@@ -81,6 +81,11 @@ package com.gamecook.tilecrusader.renderer
             if(tileMap.isMonster(value) || tileMap.isBoss(value))
             {
                 var stats:Object = tileMap.getStats(value);
+                if(tileMap.isBoss(value))
+                    statsTF.textColor = 0xffff00;
+                else
+                    statsTF.textColor = 0xffffff;
+
                 statsTF.htmlText = stats.hit+"|"+stats.defense;
                 bitmapData.draw(statsTF, statsMatrix);
             }

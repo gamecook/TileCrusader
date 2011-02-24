@@ -24,28 +24,36 @@
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
  * Date: 2/20/11
- * Time: 10:07 PM
+ * Time: 9:52 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.lib.states.BaseState;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
-    public class OptionsState extends RandomBackgroundMapState
+    import com.gamecook.tilecrusader.factory.UIFactory;
+
+    import com.jessefreeman.factivity.managers.ActivityManager;
+
+    import flash.text.TextField;
+
+    public class TileCrusaderSplashActivity extends BaseActivity
     {
-        public function OptionsState(data:* = null)
+        public function TileCrusaderSplashActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
-        override public function create():void
+        override protected function init():void
         {
-            mapViewPortWidth = fullSizeWidth - 80;
-            mapViewPortHeight = 120;
-            mapViewPortX = 40;
-            mapViewPortY = fullSizeHeight - 160;
+            super.init();
 
-            super.create();
+            var tf:TextField = UIFactory.createTextField(200,200, "Tile Crusader");
+            tf.x = (fullSizeWidth - tf.width) * .5;
+            tf.y = (fullSizeHeight - tf.height) * .5;
+            addChild(tf);
+
+            startNextScreenTimer(StartActivity, 3);
         }
     }
 }

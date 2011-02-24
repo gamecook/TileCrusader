@@ -27,12 +27,13 @@
  * Time: 9:34 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.lib.states.BaseState;
+    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.views.AutoPlayMap;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-    public class RandomBackgroundMapState extends BaseState
+    public class RandomMapBGActivity extends BaseActivity
     {
         protected var randMap:AutoPlayMap;
         protected var movementCounter:int = 0;
@@ -42,14 +43,14 @@ package com.gamecook.tilecrusader.states
         protected var mapViewPortX = 260;
         protected var mapViewPortY = 150;
 
-        public function RandomBackgroundMapState(data:* = null)
+        public function RandomMapBGActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
-        override public function create():void
+        override protected function init():void
         {
-            super.create();
+            super.init();
 
             randMap = new AutoPlayMap(mapViewPortWidth, mapViewPortHeight);
             randMap.x = mapViewPortX;

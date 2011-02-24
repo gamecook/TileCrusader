@@ -17,35 +17,45 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
- * /
+ *
  */
 
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
  * Date: 2/20/11
- * Time: 5:26 PM
+ * Time: 9:51 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader
+package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.AbstractApplication;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+
+    import com.gamecook.tilecrusader.factory.UIFactory;
+
     import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.events.Event;
+    import flash.text.TextField;
 
-    public class TileCrusaderGame extends AbstractApplication
+    public class GameCookSplashActivity extends BaseActivity
     {
-        public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
+        public function GameCookSplashActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(new ActivityManager(), state, x, y, scale);
+            super(activityManager, data);
         }
 
 
-        override protected function onAddedToStage(event:Event):void
+        override protected function init():void
         {
-            super.onAddedToStage(event);
-            trace("Added to stage.");
+            super.init();
+
+            var tf:TextField = UIFactory.createTextField(200,200, "Game Cook Presents:");
+            tf.textColor = 0xffffff;
+            tf.x = (fullSizeWidth - tf.width) * .5;
+            tf.y = (fullSizeHeight - tf.height) * .5;
+            addChild(tf);
+
+            startNextScreenTimer(TileCrusaderSplashActivity, 3);
         }
     }
 }

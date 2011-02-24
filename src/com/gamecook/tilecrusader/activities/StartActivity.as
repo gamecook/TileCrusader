@@ -5,30 +5,32 @@
  * Time: 9:56 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.lib.states.BaseState;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
-    import com.gamecook.lib.ui.containers.StackLayout;
+    import com.gamecook.tilecrusader.views.StackLayout;
     import com.gamecook.tilecrusader.factory.UIFactory;
 
     import com.gamecook.tilecrusader.views.AutoPlayMap;
+
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.SimpleButton;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class StartState extends RandomBackgroundMapState
+    public class StartActivity extends RandomMapBGActivity
     {
 
-        public function StartState(data:* = null)
+        public function StartActivity(activityManager:ActivityManager,data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
-        override public function create():void
+        override protected function init():void
         {
-            super.create();
+            super.init();
 
             var tf:TextField = UIFactory.createTextField(0,100, "Tile Crusader");
             tf.x = fullSizeWidth - (tf.width + 50);
@@ -48,17 +50,17 @@ package com.gamecook.tilecrusader.states
 
         private function onStart(event:MouseEvent):void
         {
-            stateManager.setState(MapLoadingState);
+            nextActivity(MapLoadingActivity);
         }
 
         private function onHelp(event:MouseEvent):void
         {
-            stateManager.setState(HelpState);
+            stateManager.setCurrentActivity(HelpActivity);
         }
 
         private function onOptions(event:MouseEvent):void
         {
-            stateManager.setState(OptionsState);
+            stateManager.setCurrentActivity(OptionsActivity);
         }
     }
 }

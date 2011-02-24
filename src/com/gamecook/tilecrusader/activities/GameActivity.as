@@ -5,10 +5,10 @@
  * Time: 9:58 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.lib.managers.SingletonManager;
-    import com.gamecook.lib.states.BaseState;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.frogue.helpers.MovementHelper;
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.io.Controls;
@@ -17,7 +17,7 @@ package com.gamecook.tilecrusader.states
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
-    import com.gamecook.lib.utils.TimeMethodExecutionUtil;
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.gamecook.tilecrusader.combat.CombatHelper;
     import com.gamecook.tilecrusader.enum.GameModes;
     import com.gamecook.frogue.sprites.SpriteSheet;
@@ -34,6 +34,8 @@ package com.gamecook.tilecrusader.states
 
     import com.gamecook.tilecrusader.views.VirtualKeysView;
 
+    import com.jessefreeman.factivity.managers.ActivityManager;
+
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Sprite;
@@ -45,7 +47,7 @@ package com.gamecook.tilecrusader.states
     import flash.text.TextFormat;
     import flash.utils.getTimer;
 
-    public class GameState extends BaseState implements IControl
+    public class GameActivity extends BaseActivity implements IControl
     {
 
 
@@ -91,15 +93,15 @@ package com.gamecook.tilecrusader.states
         private var cashRange:int = 10;
         private var virtualKeys:VirtualKeysView;
 
-        public function GameState(data:* = null)
+        public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
 
-        override public function create():void
+        override protected function init():void
         {
-            super.create();
+            super.init();
 
 
 
@@ -332,7 +334,7 @@ package com.gamecook.tilecrusader.states
                 if(player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
-                    stateManager.setState(GameOverState);
+                    stateManager.setCurrentActivity(GameOverActivity);
                 }
                 else
                 {

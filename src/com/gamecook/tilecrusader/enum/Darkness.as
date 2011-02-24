@@ -23,37 +23,17 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 9:51 AM
+ * Date: 2/23/11
+ * Time: 10:27 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.enum
 {
-    import com.gamecook.lib.states.BaseState;
-
-    import com.gamecook.tilecrusader.factory.UIFactory;
-
-    import flash.text.TextField;
-
-    public class GameCookSplashState extends BaseState
+    public class Darkness
     {
-        public function GameCookSplashState(data:* = null)
-        {
-            super(data);
-        }
+        public static const NONE:String = "none";
+        public static var REVEAL:String = "reveal";
+        public static const TORCH:String = "torch";
 
-
-        override public function create():void
-        {
-            super.create();
-
-            var tf:TextField = UIFactory.createTextField(200,200, "Game Cook Presents");
-            tf.textColor = 0xffffff;
-            tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y = (fullSizeHeight - tf.height) * .5;
-            addChild(tf);
-
-            startNextScreenTimer(TileCrusaderSplashState, 3);
-        }
     }
 }

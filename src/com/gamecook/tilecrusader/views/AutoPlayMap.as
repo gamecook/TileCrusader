@@ -37,7 +37,7 @@ package com.gamecook.tilecrusader.views
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.lib.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.combat.CombatHelper;
     import com.gamecook.tilecrusader.factory.TileFactory;
     import com.gamecook.tilecrusader.iterators.TreasureIterator;

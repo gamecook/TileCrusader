@@ -27,16 +27,18 @@
  * Time: 9:56 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states
+package com.gamecook.tilecrusader.activities
 {
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.lib.managers.SingletonManager;
-    import com.gamecook.lib.states.BaseState;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.Bitmap;
     import flash.geom.Rectangle;
 
-    public class MapLoadingState extends BaseState
+    public class MapLoadingActivity extends BaseActivity
     {
         [Embed(source="../../../../../build/assets/spritesheet_template.png")]
         public static var SpriteSheetImage:Class;
@@ -44,15 +46,15 @@ package com.gamecook.tilecrusader.states
         private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
 
-        public function MapLoadingState(data:* = null)
+        public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
-            super(data);
+            super(activityManager, data);
         }
 
 
-        override public function create():void
+        override protected function init():void
         {
-            super.create();
+            super.init();
 
             parseSpriteSheet();
 
@@ -63,7 +65,7 @@ package com.gamecook.tilecrusader.states
 
             addChild(splashScreen);
 
-           startNextScreenTimer(GameState, 4);
+           startNextScreenTimer(GameActivity, 4);
         }
 
         private function parseSpriteSheet():void

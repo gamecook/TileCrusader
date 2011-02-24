@@ -19,7 +19,7 @@ package com.gamecook.tilecrusader.combat
 
         public function doubleAttack(attackerA:IFight, attackerB:IFight):DoubleAttackStatus
         {
-            //TODO find out how has attack first
+            //TODO find out who has attack first
 
             var statusA:AttackStatus = attack(attackerA, attackerB);
             var statusB:AttackStatus;

@@ -29,10 +29,10 @@
  */
 package
 {
-    import com.gamecook.lib.states.BaseState;
+    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.TileCrusaderGame;
-    import com.gamecook.tilecrusader.states.GameCookSplashState;
-    import com.gamecook.tilecrusader.states.StartState;
+    import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
+    import com.gamecook.tilecrusader.activities.StartActivity;
 
     import flash.display.DisplayObject;
     import flash.display.Sprite;
@@ -56,23 +56,20 @@ package
         {
             configureStage();
 
-            BaseState.fullSizeWidth = stage.stageWidth;
-            BaseState.fullSizeHeight = stage.stageHeight;
+            BaseActivity.fullSizeWidth = stage.stageWidth > 1280 ? 1280 : stage.stageWidth;
+            BaseActivity.fullSizeHeight = stage.stageHeight > 800 ? 800 : stage.stageHeight;
 
-            game = new TileCrusaderGame(0,0, GameCookSplashState);
-
-            /*CONFIG::mobile
-            {
-                //if (stage.fullScreenWidth > 480)
-                    //game.scaleX = game.scaleY = stage.fullScreenWidth / 480;
-            }*/
-
-            addChild(game);
-            trace("Hello");
+            game = new TileCrusaderGame(0,0, GameCookSplashActivity);
             game.activate();
+            addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );
-            stats.scaleX = stats.scaleY = 2;
+
+            CONFIG::mobile
+            {
+                stats.scaleX = stats.scaleY = 2;
+            }
+
             stats.y = stage.stageHeight - stats.height;
         }
 

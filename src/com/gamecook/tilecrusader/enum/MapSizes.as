@@ -23,29 +23,17 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 5:26 PM
+ * Date: 2/23/11
+ * Time: 10:25 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader
+package com.gamecook.tilecrusader.enum
 {
-    import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.events.Event;
-
-    public class TileCrusaderGame extends AbstractApplication
+    public class MapSizes
     {
-        public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
-        {
-            super(new ActivityManager(), state, x, y, scale);
-        }
+        public static const SMALL:int = 30;
+        public static const MEDIUM:int = 60;
+        public static const LARGE:int = 90;
 
-
-        override protected function onAddedToStage(event:Event):void
-        {
-            super.onAddedToStage(event);
-            trace("Added to stage.");
-        }
     }
 }
