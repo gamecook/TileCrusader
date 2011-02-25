@@ -50,7 +50,8 @@ package com.gamecook.tilecrusader.activities
 
         private function onStart(event:MouseEvent):void
         {
-            nextActivity(MapLoadingActivity);
+            //nextActivity(MapLoadingActivity);
+            nextActivity(RandomMapGeneratorActivity);
         }
 
         private function onHelp(event:MouseEvent):void

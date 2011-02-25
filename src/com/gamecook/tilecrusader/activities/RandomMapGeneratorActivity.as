@@ -16,8 +16,15 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
+    import flash.display.SimpleButton;
+    import flash.events.MouseEvent;
+    import flash.text.TextField;
+
     public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
+        private var mapConfig:Object;
+        private var settingsLayout:StackLayout;
+
         public function RandomMapGeneratorActivity(activityManager:ActivityManager, data:* = null)
         {
             super(activityManager, data);
@@ -29,23 +36,57 @@ package com.gamecook.tilecrusader.activities
             super.init();
 
 
-            var mapConfig:Object = {};
+            mapConfig = {};
+
+
+
+            settingsLayout = new StackLayout();
+
+            addChild(settingsLayout);
+
+            generateMapConfig();
+
+            var buttonLayout:StackLayout = new StackLayout(10, StackLayout.HORIZONTAL);
+
+            var redo:SimpleButton = UIFactory.createTextFieldButton(generateMapConfig, 0,0, "New Map");
+            buttonLayout.addChild(redo);
+
+            var submit:SimpleButton = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
+            buttonLayout.addChild(submit);
+
+            buttonLayout.x = fullSizeWidth - buttonLayout.width + 50;
+            buttonLayout.y = fullSizeHeight - buttonLayout.height + 50;
+
+            addChild(buttonLayout);
+        }
+
+        private function generateMapConfig(event:MouseEvent = null):void
+        {
             mapConfig.size = generateRandomMapSize();
             mapConfig.gameType = generateRandomGameType();
             mapConfig.darkness = generateRandomDarkness();
             mapConfig.monstersDropTreature = randomBoolean();
             mapConfig.showMonsters = randomBoolean();
 
-            var layout:StackLayout = new StackLayout();
-
+            var index:int = 0;
             for ( var prop:String in mapConfig ) {
-                layout.addChild(UIFactory.createTextField(0,0,  prop + ": " + mapConfig[prop] ));
+                if(settingsLayout.numChildren > index)
+                {
+                    var label:TextField = settingsLayout.getChildAt(index) as TextField;
+
+                }
+                else
+                {
+                    label = settingsLayout.addChild(UIFactory.createTextField(0,0, "" )) as TextField;
+                }
+                label.text =  prop + ": " + mapConfig[prop];
+                index ++;
             }
+        }
 
-            addChild(layout);
-
-
-
+        private function onSubmit(event:MouseEvent):void
+        {
+            nextActivity(MapLoadingActivity, mapConfig);
         }
 
         private function generateRandomDarkness():String
@@ -68,7 +109,9 @@ package com.gamecook.tilecrusader.activities
 
         protected function pickRandomArrayElement(value:Array):*
         {
-            return value[Math.round((Math.random() * value.length))];
+            var randNum:Number = Math.floor((Math.random() * value.length));
+            trace("Random Number", randNum, value.length, value);
+            return value[randNum];
         }
 
         protected function randomBoolean():Boolean

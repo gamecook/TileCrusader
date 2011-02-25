@@ -56,8 +56,8 @@ package
         {
             configureStage();
 
-            BaseActivity.fullSizeWidth = stage.stageWidth > 1280 ? 1280 : stage.stageWidth;
-            BaseActivity.fullSizeHeight = stage.stageHeight > 800 ? 800 : stage.stageHeight;
+            BaseActivity.fullSizeWidth = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
+            BaseActivity.fullSizeHeight = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
 
             game = new TileCrusaderGame(0,0, GameCookSplashActivity);
             game.activate();
@@ -70,7 +70,7 @@ package
                 stats.scaleX = stats.scaleY = 2;
             }
 
-            stats.y = stage.stageHeight - stats.height;
+            stats.y =  BaseActivity.fullSizeHeight - stats.height;
         }
 
         private function configureStage():void {

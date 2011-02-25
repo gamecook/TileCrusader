@@ -23,37 +23,43 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 9:52 AM
+ * Date: 2/25/11
+ * Time: 12:15 AM
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.activities.BaseActivity;
-
     import com.gamecook.tilecrusader.factory.UIFactory;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
+    import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class TileCrusaderSplashActivity extends BaseActivity
+    import mx.core.UIComponent;
+
+    public class WarningActivity extends BaseActivity
     {
-        public function TileCrusaderSplashActivity(activityManager:ActivityManager, data:* = null)
+        public function WarningActivity(stateManager:IActivityManager, date:*)
         {
-            super(activityManager, data);
+            super(stateManager, date);
         }
+
 
         override protected function init():void
         {
             super.init();
+            var warning:String = "WARNING!!!\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \nPlease take that into consideration as you play the game." ;
 
-            var tf:TextField = UIFactory.createTextField(200,200, "Tile Crusader");
-            tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y = (fullSizeHeight - tf.height) * .5;
-            addChild(tf);
+            var tf:TextField = addChild(UIFactory.createTextField(50,50,warning)) as TextField;
+            tf.width = fullSizeWidth - 50;
 
-            startNextScreenTimer(WarningActivity, 3);
+            addChild(UIFactory.createTextFieldButton(onAccept, fullSizeWidth - 70, tf.y + tf.height+30, "Ok, I get it!"))
+        }
+
+        private function onAccept(event:MouseEvent):void
+        {
+            nextActivity(StartActivity);
         }
     }
 }
