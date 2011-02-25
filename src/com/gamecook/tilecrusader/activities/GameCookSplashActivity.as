@@ -55,7 +55,7 @@ package com.gamecook.tilecrusader.activities
             tf.y = (fullSizeHeight - tf.height) * .5;
             addChild(tf);
 
-            startNextScreenTimer(TileCrusaderSplashActivity, 3);
+            startNextActivityTimer(TileCrusaderSplashActivity, 3);
         }
     }
 }

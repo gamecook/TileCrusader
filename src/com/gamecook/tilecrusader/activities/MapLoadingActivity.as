@@ -29,8 +29,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.gamecook.frogue.helpers.PopulateMapHelper;
+    import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.jessefreeman.factivity.managers.ActivityManager;
@@ -65,7 +68,36 @@ package com.gamecook.tilecrusader.activities
 
             addChild(splashScreen);
 
-           startNextScreenTimer(GameActivity, 4);
+            createMap();
+
+            startNextActivityTimer(GameActivity, 2, data);
+        }
+
+        private function createMap():void
+        {
+            var map:RandomMap = new RandomMap();
+            TimeMethodExecutionUtil.execute("generateMap", map.generateMap, data.size);
+            trace("Map Size", map.width, map.height, "was generated");
+
+
+
+
+            data.map = map;
+
+            data.monsters = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
+            data.chests = ["T", "T", "T", "T", "T", "T", "T", "T", "T"];
+            data.treasuePool = ["$","$","$","$","P","P","P","P"," "," "," "];
+
+
+
+            var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
+            populateMapHelper.populateMap.apply(this, data.monsters);
+            populateMapHelper.populateMap.apply(this, data.chests);
+
+            data.startPosition = populateMapHelper.getRandomEmptyPoint();
+
+            data.cashPool = 100;
+            data.cashRange = 10;
         }
 
         private function parseSpriteSheet():void

@@ -129,8 +129,6 @@ package com.gamecook.tilecrusader.views
             // Configure
             map.generateMap(30);
 
-            populateMapHelper.indexMap();
-
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
             player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
 

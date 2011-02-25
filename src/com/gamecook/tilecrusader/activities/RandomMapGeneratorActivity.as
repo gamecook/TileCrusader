@@ -38,8 +38,6 @@ package com.gamecook.tilecrusader.activities
 
             mapConfig = {};
 
-
-
             settingsLayout = new StackLayout();
 
             addChild(settingsLayout);

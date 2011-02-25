@@ -7,6 +7,7 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.frogue.helpers.MovementHelper;
@@ -58,8 +59,6 @@ package com.gamecook.tilecrusader.activities
         private var darknessWidth:int;
         private var darknessHeight:int;
         private var controls:Controls;
-
-        private var populateMapHelper:PopulateMapHelper;
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         private var player:PlayerTile;
@@ -92,6 +91,8 @@ package com.gamecook.tilecrusader.activities
         private var cashPool:int = 0;
         private var cashRange:int = 10;
         private var virtualKeys:VirtualKeysView;
+        private var treasurePool:Array;
+        private var quakeEffect:Quake;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -103,11 +104,15 @@ package com.gamecook.tilecrusader.activities
         {
             super.init();
 
-
-
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
+            map = data.map;
+            gameMode = data.gameType;
+            monsters = data.monsters;
+            treasurePool = data.treasuePool;
+            cashPool = data.cashPool;
+            cashRange = data.cashRange;
 
 
             // Configure Tile, Render and Darkness size
@@ -122,11 +127,11 @@ package com.gamecook.tilecrusader.activities
             darknessWidth = 5;
             darknessHeight = 4;
 
-            map = new RandomMap();
+
             mapSelection = new MapSelection(map, renderWidth, renderHeight);
             mapDarkness = new FogOfWarMapSelection(map, mapSelection, darknessWidth, darknessHeight);
 
-            populateMapHelper = new PopulateMapHelper(map);
+
 
             movementHelper = new MovementHelper(map);
 
@@ -137,6 +142,9 @@ package com.gamecook.tilecrusader.activities
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = MESSAGE_HEIGHT;
             display.addChild(mapBitmap);
+
+
+            quakeEffect = new Quake(mapBitmap);
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
 
@@ -175,32 +183,14 @@ package com.gamecook.tilecrusader.activities
 
             tileInstanceManager.clear();
 
-
             characterSheet.setPortrait(spriteSheet.getSprite("sprite5").clone());
 
-            var tmpSize:int = 40;
 
-            var t:Number = getTimer();
+            treasureIterator = new TreasureIterator(treasurePool);
 
-            TimeMethodExecutionUtil.execute("generateMap", map.generateMap, tmpSize);
-            trace("Map Size", map.width, map.height);
-            trace("Render Size", renderWidth, renderHeight);
+            movementHelper.startPosition(data.startPosition);
 
-            gameMode = GameModes.KILL_BOSS;
 
-            monsters = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
-            chests = ["T", "T", "T", "T", "T", "T", "T", "T", "T"];
-
-            populateMapHelper.indexMap();
-            populateMapHelper.populateMap.apply(this, monsters);
-            populateMapHelper.populateMap.apply(this, chests);
-
-            treasureIterator = new TreasureIterator(["$","$","$","$","P","P","P","P"," "," "," "]);
-
-            movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
-
-            cashPool = 100;
-            cashRange = 10;
 
             player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
 
@@ -315,6 +305,8 @@ package com.gamecook.tilecrusader.activities
         {
             var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
 
+            quakeEffect.start();
+
             addStatusMessage(status.toString());
 
             if (status.attackStatus.kill)
@@ -326,6 +318,8 @@ package com.gamecook.tilecrusader.activities
 
                 map.swapTile(tmpPoint, "X");
                 tileInstanceManager.removeInstance(uID);
+
+
 
             }
             else if (player.getLife() == 0)
@@ -403,6 +397,7 @@ package com.gamecook.tilecrusader.activities
         override public function update(elapsed:Number = 0):void
         {
             super.update(elapsed);
+            quakeEffect.update(elapsed);
         }
 
         override protected function render():void

@@ -32,7 +32,7 @@ package com.gamecook.tilecrusader.activities
             tf.y = (fullSizeHeight - tf.height) * .5;
             addChild(tf);
 
-            startNextScreenTimer(StartActivity, 3);
+            startNextActivityTimer(StartActivity, 3);
         }
     }
 }

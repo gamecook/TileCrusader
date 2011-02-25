@@ -130,7 +130,6 @@ package com.gamecook.tilecrusader.views
                 hitLabel.text = "H: "+player.getAttackRolls().toString();
                 defenseLabel.text = "D: "+player.getDefenceRolls().toString();
                 potionLabel.text = "P: "+player.getPotions().toString();
-                killLabel = UIFactory.createTextField(102, 170, "K: "+player.getKills().toString());
             }
         }
 
