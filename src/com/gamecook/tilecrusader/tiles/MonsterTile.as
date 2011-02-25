@@ -84,12 +84,16 @@ package com.gamecook.tilecrusader.tiles
         {
             super.parseObject(obj);
 
+            // By default life is always set to same value as maxLife
+            if(obj.hasOwnProperty("maxLife"))
+                maxLife = life = obj.maxLife;
+
             if(obj.hasOwnProperty("life"))
                 life = obj.life;
-            if(obj.hasOwnProperty("maxLife"))
-                maxLife = obj.maxLife;
+
             if(obj.hasOwnProperty("attackRoll"))
                 attackRoll = obj.attackRoll;
+
             if(obj.hasOwnProperty("defenseRoll"))
                 defenseRoll = obj.defenseRoll;
         }

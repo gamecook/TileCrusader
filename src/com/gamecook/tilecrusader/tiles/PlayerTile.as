@@ -9,34 +9,13 @@ package com.gamecook.tilecrusader.tiles
 {
     public class PlayerTile extends MonsterTile
     {
-        protected var weapon:String;
-        protected var armor:String;
+
         private var gold:int = 0;
         private var potions:int = 0;
         private var kills:int = 0;
 
         public function PlayerTile()
         {
-        }
-
-        public function setWeapon(value:String):void
-        {
-            weapon = value;
-        }
-
-        public function getWeapon(value:String):String
-        {
-            return weapon;
-        }
-
-        public function setArmor(value:String):void
-        {
-            armor = value;
-        }
-
-        public function getArmor():String
-        {
-            return armor;
         }
 
         public function setGold(value:int):void
@@ -74,10 +53,6 @@ package com.gamecook.tilecrusader.tiles
         {
             super.parseObject(obj);
 
-            if(obj.hasOwnProperty("weapon"))
-                weapon = obj.weapon;
-            if(obj.hasOwnProperty("armor"))
-                armor = obj.armor;
             if(obj.hasOwnProperty("gold"))
                 gold = obj.gold;
             if(obj.hasOwnProperty("potions"))

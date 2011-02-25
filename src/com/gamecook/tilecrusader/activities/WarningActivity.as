@@ -33,6 +33,7 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
+    import flash.display.SimpleButton;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
@@ -49,12 +50,16 @@ package com.gamecook.tilecrusader.activities
         override protected function init():void
         {
             super.init();
-            var warning:String = "WARNING!!!\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \nPlease take that into consideration as you play the game." ;
+            var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game." ;
 
             var tf:TextField = addChild(UIFactory.createTextField(50,50,warning)) as TextField;
-            tf.width = fullSizeWidth - 50;
+            tf.multiline = true;
+            tf.wordWrap = true;
+            tf.width = 600;
+            tf.x = (fullSizeWidth - tf.width) * .5;
 
-            addChild(UIFactory.createTextFieldButton(onAccept, fullSizeWidth - 70, tf.y + tf.height+30, "Ok, I get it!"))
+            var btn:SimpleButton = addChild(UIFactory.createTextFieldButton(onAccept, 0, tf.y + tf.height+30, "Ok, I get it!")) as SimpleButton;
+            btn.x = (fullSizeWidth - btn.width) * .5;
         }
 
         private function onAccept(event:MouseEvent):void

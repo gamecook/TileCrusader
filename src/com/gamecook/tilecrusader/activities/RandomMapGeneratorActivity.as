@@ -54,8 +54,8 @@ package com.gamecook.tilecrusader.activities
             var submit:SimpleButton = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
             buttonLayout.addChild(submit);
 
-            buttonLayout.x = fullSizeWidth - buttonLayout.width + 50;
-            buttonLayout.y = fullSizeHeight - buttonLayout.height + 50;
+            buttonLayout.x = settingsLayout.x;
+            buttonLayout.y = settingsLayout.y + settingsLayout.height + 30;
 
             addChild(buttonLayout);
         }
