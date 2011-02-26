@@ -31,9 +31,9 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
 
             mapConfig = {};

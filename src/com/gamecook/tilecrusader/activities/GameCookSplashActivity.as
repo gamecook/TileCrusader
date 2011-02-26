@@ -45,9 +45,9 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             var tf:TextField = UIFactory.createTextField(200,200, "Game Cook Presents:");
             tf.textColor = 0xffffff;

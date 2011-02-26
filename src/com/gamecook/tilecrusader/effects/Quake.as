@@ -7,31 +7,31 @@
  */
 package com.gamecook.tilecrusader.effects
 {
+    import com.jessefreeman.factivity.threads.GreenThread;
+
     import flash.display.DisplayObject;
 
-    public class Quake
+    public class Quake extends GreenThread
     {
         private var target:DisplayObject;
-        public function Quake(target:DisplayObject, Zoom:uint = 1)
+        public function Quake(target:DisplayObject, intensity:Number=0.05,duration:Number=0.5, updateCallback:Function = null, finishCallback:Function = null)
 		{
+            super(updateCallback, finishCallback);
+            defaultIntensity = intensity;
+			defaultTime = duration * 1000;
             this.target = target;
-
-            _zoom = Zoom;
-			start(0);
 		}
 
-        /**
-		 * The game's level of zoom.
-		 */
-		protected var _zoom:uint;
-		/**
+       /**
 		 * The intensity of the quake effect: a percentage of the screen's size.
 		 */
 		protected var _intensity:Number;
+		private var _defaultIntensity:Number;
 		/**
 		 * Set to countdown the quake time.
 		 */
 		protected var _timer:Number;
+		private var _defaultTime:Number;
 
 		/**
 		 * The amount of X distortion to apply to the screen.
@@ -46,31 +46,36 @@ package com.gamecook.tilecrusader.effects
 		/**
 		 * Reset and trigger this special effect.
 		 *
-		 * @param	Intensity	Percentage of screen size representing the maximum distance that the screen can move during the 'quake'.
-		 * @param	Duration	The length in seconds that the "quake" should last.
+		 * @param	intensity	Percentage of screen size representing the maximum distance that the screen can move during the 'quake'.
+		 * @param	duration	The length in seconds that the "quake" should last.
 		 */
-		public function start(Intensity:Number=0.05,Duration:Number=0.5):void
+		override public function start():void
 		{
-			stop();
-			_intensity = Intensity;
-			_timer = Duration * 1000;
-		}
+            super.start();
+            clearValues();
+        }
 
 		/**
 		 * Stops this screen effect.
 		 */
-		public function stop():void
+		override protected function finish():void
 		{
-			x = 0;
-			y = 0;
-			_intensity = 0;
-			_timer = 0;
+            clearValues();
+            super.finish();
 		}
 
+        private function clearValues():void
+        {
+            x = 0;
+            y = 0;
+            _intensity = _defaultIntensity;
+            _timer = _defaultTime;
+        }
+
 		/**
-		 * Updates and/or animates this special effect.
+		 * Runs the Quake thread
 		 */
-		public function update(elapsed:Number):void
+		override public function run(elapsed:Number = 0):void
 		{
 			if(_timer > 0)
 			{
@@ -83,10 +88,24 @@ package com.gamecook.tilecrusader.effects
 				}
 				else
 				{
-					target.x = (Math.random()*_intensity*target.width*.5)*_zoom;
-					target.y = (Math.random()*_intensity*target.height*.5)*_zoom;
+					target.x = (Math.random()*_intensity*target.width*.5);
+					target.y = (Math.random()*_intensity*target.height*.5);
 				}
 			}
+            else
+            {
+                finish();
+            }
 		}
+
+        public function set defaultIntensity(value:Number):void
+        {
+            _defaultIntensity = value;
+        }
+
+        public function set defaultTime(value:Number):void
+        {
+            _defaultTime = value;
+        }
     }
 }

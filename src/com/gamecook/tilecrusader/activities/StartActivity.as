@@ -28,9 +28,9 @@ package com.gamecook.tilecrusader.activities
             super(activityManager, data);
         }
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             var tf:TextField = UIFactory.createTextField(0,100, "Tile Crusader");
             tf.x = fullSizeWidth - (tf.width + 50);
@@ -40,7 +40,7 @@ package com.gamecook.tilecrusader.activities
             layout.x = 50;
             layout.y = 150;
 
-            layout.addChild(UIFactory.createTextFieldButton(onStart, 0,0, "New Crusade"));
+            layout.addChild(UIFactory.createTextFieldButton(onStartGame, 0,0, "New Crusade"));
             layout.addChild(UIFactory.createTextFieldButton(onHelp, 0,0, "Help"));
             layout.addChild(UIFactory.createTextFieldButton(onOptions, 0,0, "Options"));
 
@@ -48,7 +48,7 @@ package com.gamecook.tilecrusader.activities
 
         }
 
-        private function onStart(event:MouseEvent):void
+        private function onStartGame(event:MouseEvent):void
         {
             //nextActivity(MapLoadingActivity);
             nextActivity(RandomMapGeneratorActivity);

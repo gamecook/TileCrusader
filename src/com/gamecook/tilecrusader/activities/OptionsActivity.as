@@ -39,14 +39,14 @@ package com.gamecook.tilecrusader.activities
             super(activityManager, data);
         }
 
-        override protected function init():void
+        override protected function onCreate():void
         {
             mapViewPortWidth = fullSizeWidth - 80;
             mapViewPortHeight = 120;
             mapViewPortX = 40;
             mapViewPortY = fullSizeHeight - 160;
 
-            super.init();
+            super.onCreate();
         }
     }
 }

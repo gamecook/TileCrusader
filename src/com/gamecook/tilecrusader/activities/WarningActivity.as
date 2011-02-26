@@ -47,9 +47,9 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
             var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game." ;
 
             var tf:TextField = addChild(UIFactory.createTextField(50,50,warning)) as TextField;

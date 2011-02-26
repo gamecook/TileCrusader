@@ -38,19 +38,19 @@ package com.gamecook.tilecrusader.activities
         protected var randMap:AutoPlayMap;
         protected var movementCounter:int = 0;
         protected var nextMovement:int = 500;
-        protected var mapViewPortWidth = 500;
-        protected var mapViewPortHeight = 200;
-        protected var mapViewPortX = 260;
-        protected var mapViewPortY = 150;
+        protected var mapViewPortWidth:int = 500;
+        protected var mapViewPortHeight:int = 200;
+        protected var mapViewPortX:int = 260;
+        protected var mapViewPortY:int = 150;
 
         public function RandomMapBGActivity(activityManager:ActivityManager, data:* = null)
         {
             super(activityManager, data);
         }
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             randMap = new AutoPlayMap(mapViewPortWidth, mapViewPortHeight);
             randMap.x = mapViewPortX;

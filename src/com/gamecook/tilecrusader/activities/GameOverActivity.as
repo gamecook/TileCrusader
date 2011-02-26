@@ -22,9 +22,9 @@ package com.gamecook.tilecrusader.activities
             super(activityManager, data);
         }
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             var tf:TextField = UIFactory.createTextField(200,200, "You were killed!");
             tf.textColor = 0xffffff;

@@ -44,9 +44,9 @@ package com.gamecook.tilecrusader.activities
             super(activityManager, data);
         }
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             var tf:TextField = UIFactory.createTextField(200,200, "Tile Crusader");
             tf.x = (fullSizeWidth - tf.width) * .5;

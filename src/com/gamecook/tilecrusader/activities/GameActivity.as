@@ -100,9 +100,9 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override protected function init():void
+        override protected function onCreate():void
         {
-            super.init();
+            super.onCreate();
 
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
@@ -175,6 +175,7 @@ package com.gamecook.tilecrusader.activities
             addChild(virtualKeys);
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
+
         }
 
         private function configureGame():void
@@ -305,7 +306,7 @@ package com.gamecook.tilecrusader.activities
         {
             var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
 
-            quakeEffect.start();
+            addThread(quakeEffect);
 
             addStatusMessage(status.toString());
 
@@ -397,7 +398,6 @@ package com.gamecook.tilecrusader.activities
         override public function update(elapsed:Number = 0):void
         {
             super.update(elapsed);
-            quakeEffect.update(elapsed);
         }
 
         override protected function render():void
@@ -432,9 +432,9 @@ package com.gamecook.tilecrusader.activities
             }
         }
 
-        override protected function onAddedToStage(event:Event):void
+        override public function onStart():void
         {
-            super.onAddedToStage(event);
+            super.onStart();
 
             controls = new Controls(this);
         }
