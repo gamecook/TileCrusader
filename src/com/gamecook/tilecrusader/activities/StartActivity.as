@@ -7,16 +7,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.activities.BaseActivity;
-
     import com.gamecook.tilecrusader.views.StackLayout;
     import com.gamecook.tilecrusader.factory.UIFactory;
 
-    import com.gamecook.tilecrusader.views.AutoPlayMap;
-
     import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.display.SimpleButton;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
@@ -48,18 +43,18 @@ package com.gamecook.tilecrusader.activities
 
         }
 
-        private function onStartGame(event:MouseEvent):void
+        private function onStartGame():void
         {
             //nextActivity(MapLoadingActivity);
             nextActivity(RandomMapGeneratorActivity);
         }
 
-        private function onHelp(event:MouseEvent):void
+        private function onHelp():void
         {
             stateManager.setCurrentActivity(HelpActivity);
         }
 
-        private function onOptions(event:MouseEvent):void
+        private function onOptions():void
         {
             stateManager.setCurrentActivity(OptionsActivity);
         }

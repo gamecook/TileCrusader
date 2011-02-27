@@ -8,20 +8,14 @@
 package com.gamecook.tilecrusader.views
 {
     import com.gamecook.tilecrusader.factory.UIFactory;
-    import com.gamecook.tilecrusader.status.IStatus;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Shape;
-    import flash.display.SimpleButton;
     import flash.display.Sprite;
     import flash.events.MouseEvent;
-    import flash.text.AntiAliasType;
-    import flash.text.Font;
     import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-    import flash.text.TextFormat;
 
     public class CharacterSheetView extends Sprite
     {
@@ -33,14 +27,14 @@ package com.gamecook.tilecrusader.views
         private var defenseLabel:TextField;
         private var goldLabel:TextField;
         private var potionLabel:TextField;
-        private var helpLabel:SimpleButton;
-        private var quitLabel:SimpleButton;
+        private var quitLabel:Button;
         private var killLabel:TextField;
         private var classLabel:TextField;
         private var lifeBarBG:Shape;
         private var lifeBar:Shape;
         private var portraitBitmap:Bitmap;
 
+        //TODO maybe have this extend Activity and run it in to the game loop for update
         public function CharacterSheetView()
         {
             init();
@@ -58,14 +52,11 @@ package com.gamecook.tilecrusader.views
             portraitBitmap.scaleX = portraitBitmap.scaleY = 4;
             portraitBitmap.x = 12;
             portraitBitmap.y = 115;
-            addChild(portraitBitmap)
-
-           /* helpLabel = UIFactory.createTextFieldButton(onHelpClick, 6,5,"Help");
-            addChild(helpLabel);
+            addChild(portraitBitmap);
 
             quitLabel = UIFactory.createTextFieldButton(onQuitClick, 110,5,"Quit");
             addChild(quitLabel);
-*/
+
             nameLabel = UIFactory.createTextField(13, 64, "BitchAss");
             addChild(nameLabel);
 
@@ -109,9 +100,9 @@ package com.gamecook.tilecrusader.views
 
         }
 
-        private function onQuitClick(event:MouseEvent):void
+        private function onQuitClick():void
         {
-            trace("Quit Game.")
+            // TODO Need a way to quit here.
         }
 
         private function onHelpClick(event:MouseEvent):void

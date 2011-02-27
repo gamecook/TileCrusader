@@ -8,6 +8,7 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.gamecook.tilecrusader.effects.Quake;
+    import com.gamecook.tilecrusader.effects.TypeTextEffect;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.frogue.helpers.MovementHelper;
@@ -93,6 +94,11 @@ package com.gamecook.tilecrusader.activities
         private var virtualKeys:VirtualKeysView;
         private var treasurePool:Array;
         private var quakeEffect:Quake;
+        private var textEffect:TypeTextEffect;
+
+        private var pollKeyPressCounter:int = 0;
+        private var keyPressDelay:int = 0;
+        private var _nextMove:Point;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -144,7 +150,6 @@ package com.gamecook.tilecrusader.activities
             display.addChild(mapBitmap);
 
 
-            quakeEffect = new Quake(mapBitmap);
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
 
@@ -171,11 +176,22 @@ package com.gamecook.tilecrusader.activities
 
             configureGame();
 
+            //TODO May need to slow this down for mobile
+            keyPressDelay = .25 * MILLISECONDS;
+
             virtualKeys = new VirtualKeysView(this);
             addChild(virtualKeys);
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
+            quakeEffect = new Quake(mapBitmap);
+            textEffect = new TypeTextEffect(statusLabel, onTextEffectFinish);
+        }
+
+        private function onTextEffectFinish():void
+        {
+            // Clear status since it has been printed to the screen.
+            //status = "";
         }
 
         private function configureGame():void
@@ -184,7 +200,7 @@ package com.gamecook.tilecrusader.activities
 
             tileInstanceManager.clear();
 
-            characterSheet.setPortrait(spriteSheet.getSprite("sprite5").clone());
+            characterSheet.setPortrait(spriteSheet.getSprite("sprite6").clone());
 
 
             treasureIterator = new TreasureIterator(treasurePool);
@@ -202,23 +218,27 @@ package com.gamecook.tilecrusader.activities
         //TODO need to clean up movement so it only happens once per second
         public function up():void
         {
-            if(invalid == false)
-                move(MovementHelper.UP);
+            nextMove(MovementHelper.UP);
         }
 
         public function down():void
         {
-            if(invalid == false) move(MovementHelper.DOWN);
+            nextMove(MovementHelper.DOWN);
         }
 
         public function right():void
         {
-            if(invalid == false) move(MovementHelper.RIGHT);
+            nextMove(MovementHelper.RIGHT);
         }
 
         public function left():void
         {
-            if(invalid == false) move(MovementHelper.LEFT);
+            nextMove(MovementHelper.LEFT);
+        }
+
+        private function nextMove(value:Point):void
+        {
+            _nextMove = value;
         }
 
         public function move(value:Point):void
@@ -269,13 +289,23 @@ package com.gamecook.tilecrusader.activities
                 }
                 invalidate();
             }
+           if(status.length > 0)
+           {
+                textEffect.newMessage(status, 2);
+                 addThread(textEffect);
+                status = "";
+           }
+            else
+           {
+               statusLabel.text = status;
+           }
         }
 
         public function addStatusMessage(value:String, clear:Boolean = true):void
         {
             if(clear)
                 status = "";
-            status += value
+            status += value;
         }
 
         private function canFinishLevel():Boolean
@@ -397,7 +427,22 @@ package com.gamecook.tilecrusader.activities
 
         override public function update(elapsed:Number = 0):void
         {
+            if(virtualKeys)
+                virtualKeys.update(elapsed);
+
+            pollKeyPressCounter += elapsed;
+            if(pollKeyPressCounter >= keyPressDelay)
+            {
+                pollKeyPressCounter = 0;
+                if(_nextMove)
+                {
+                    move(_nextMove);
+                    _nextMove = null
+                }
+            }
+
             super.update(elapsed);
+
         }
 
         override protected function render():void
@@ -413,19 +458,9 @@ package com.gamecook.tilecrusader.activities
                 renderer.renderMap(mapSelection);
                 characterSheet.refresh();
 
-                if(status != "")
-                {
-                    statusLabel.text = status;
-                    status = "";
-                }
-                else
-                {
-                    statusLabel.text = "";
-                }
                 invalid = false;
 
                 t = (getTimer()-t);
-                trace("Render executed in " + t + " ms\n");
 
                 if(status == "")
                     addStatusMessage("Render executed in " + t + " ms\n", true);

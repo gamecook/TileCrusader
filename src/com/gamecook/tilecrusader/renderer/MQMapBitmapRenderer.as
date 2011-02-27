@@ -95,7 +95,7 @@ package com.gamecook.tilecrusader.renderer
             if(instances.hasInstance(currentTileID.toString()) || isPlayer)
             {
                 var tile:BaseTile = instances.getInstance(isPlayer ? "@" : currentTileID.toString());
-                if(tile is IFight)
+                if(tile is IFight && value != "?")
                 {
                     var fighterTile:IFight = tile as IFight;
                     var life:Number = fighterTile.getLife() / fighterTile.getMaxLife();
@@ -120,6 +120,14 @@ package com.gamecook.tilecrusader.renderer
 
                     }
 
+                }
+                else
+                {
+                    //TODO make sure this works, should remove monster instance one it's out of site.
+                    if(tileMap.isBoss(value))
+                    {
+                        instances.removeInstance(currentTileID.toString());
+                    }
                 }
             }
 

@@ -7,8 +7,11 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import flash.display.SimpleButton;
+    import com.gamecook.tilecrusader.views.Button;
+
+    import flash.display.DisplayObject;
     import flash.events.MouseEvent;
+    import flash.geom.Rectangle;
     import flash.text.AntiAliasType;
     import flash.text.TextField;
     import flash.text.TextFieldAutoSize;
@@ -33,7 +36,7 @@ package com.gamecook.tilecrusader.factory
             return tmpTF;
         }
 
-        public static function createTextFieldButton(click:Function, x:int = 0, y:int = 0, text:String = ""):SimpleButton
+        public static function createTextFieldButton(click:Function, x:int = 0, y:int = 0, text:String = ""):Button
         {
             var upTF:TextField = createTextField(0,0,"[ "+text+" ]");
 
@@ -43,11 +46,18 @@ package com.gamecook.tilecrusader.factory
             var overTF:TextField = createTextField(0,0,"[ "+text+" ]");
             overTF.textColor = 0x333333;
 
-            var btn:SimpleButton = new SimpleButton(upTF, overTF, downTF, upTF);
+            var btn:Button = new Button(upTF, click, overTF, downTF, new Rectangle(-5, -5, upTF.width + 10, upTF.height + 10), true);
             btn.x = x;
             btn.y = y;
 
             btn.addEventListener(MouseEvent.CLICK, click);
+
+            return btn;
+        }
+
+        public static function createKeyButton(up:DisplayObject, pressAction:Function):Button
+        {
+            var btn:Button = new Button(up, pressAction, null, null, new Rectangle(0,0,up.width, up.height));
 
             return btn;
         }

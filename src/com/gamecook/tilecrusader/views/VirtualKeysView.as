@@ -31,12 +31,15 @@ package com.gamecook.tilecrusader.views
 {
     import com.gamecook.frogue.io.IControl;
 
+    import com.gamecook.tilecrusader.factory.UIFactory;
+
+    import com.jessefreeman.factivity.activities.IUpdate;
+
     import flash.display.Bitmap;
-    import flash.display.SimpleButton;
     import flash.display.Sprite;
     import flash.events.MouseEvent;
 
-    public class VirtualKeysView extends Sprite
+    public class VirtualKeysView extends Sprite implements IUpdate
     {
         [Embed(source="../../../../../build/assets/arrow_up.gif")]
         public static var ArrowUp:Class;
@@ -50,67 +53,83 @@ package com.gamecook.tilecrusader.views
         [Embed(source="../../../../../build/assets/arrow_left.gif")]
         public static var ArrowLeft:Class;
 
-        private var upBTN:Sprite;
-        private var downBTN:Sprite;
-        private var leftBTN:Sprite;
-        private var rightBTN:Sprite;
+        private var upBTN:Button;
+        private var downBTN:Button;
+        private var leftBTN:Button;
+        private var rightBTN:Button;
         private var target:IControl;
+        private var pressedButton:Button;
 
         public function VirtualKeysView(target:IControl)
         {
             this.target = target;
 
-            upBTN = new Sprite();
-            upBTN.addChild(new ArrowUp() as Bitmap);
-            upBTN.addEventListener(MouseEvent.MOUSE_DOWN, onUp);
+            upBTN = addChild(UIFactory.createKeyButton(new ArrowUp(), onUp)) as Button;
             upBTN.x = upBTN.width;
-            addChild(upBTN);
 
-            downBTN = new Sprite();
-            downBTN.addChild(new ArrowDown() as Bitmap);
-            downBTN.addEventListener(MouseEvent.MOUSE_DOWN, onDown);
+            downBTN = addChild(UIFactory.createKeyButton(new ArrowDown(), onDown)) as Button;
             downBTN.x = upBTN.x;
             downBTN.y = upBTN.height;
-            addChild(downBTN);
 
-            rightBTN = new Sprite();
-            rightBTN.addChild(new ArrowRight() as Bitmap);
-            rightBTN.addEventListener(MouseEvent.MOUSE_DOWN, onRight);
+            rightBTN = addChild(UIFactory.createKeyButton(new ArrowRight(), onRight)) as Button;
             rightBTN.x = downBTN.x + downBTN.width;
             rightBTN.y = downBTN.y;
-            addChild(rightBTN);
 
-            leftBTN = new Sprite();
-            leftBTN.addChild(new ArrowLeft() as Bitmap);
-            leftBTN.addEventListener(MouseEvent.MOUSE_DOWN, onLeft);
+            leftBTN = addChild(UIFactory.createKeyButton(new ArrowLeft(), onLeft)) as Button;
             leftBTN.y = downBTN.y;
-            addChild(leftBTN);
 
         }
 
-        private function onLeft(event:MouseEvent):void
+        private function onLeft():void
         {
-            event.stopImmediatePropagation();
-            target.left();
+            pressedButton = leftBTN;
+            //target.left();
         }
 
-        private function onRight(event:MouseEvent):void
+        private function onRight():void
         {
-            event.stopImmediatePropagation();
-            target.right();
+            pressedButton = rightBTN;
+            //target.right();
         }
 
-        private function onUp(event:MouseEvent):void
+        private function onUp():void
         {
-            event.stopImmediatePropagation();
-            target.up();
+            pressedButton = upBTN;
+            //target.up();
         }
 
-        private function onDown(event:MouseEvent):void
+        private function onDown():void
         {
-            event.stopImmediatePropagation();
-            target.down();
+            pressedButton = downBTN;
+            //target.down();
         }
 
+
+        public function update(elapsed:Number = 0):void
+        {
+            if(pressedButton)
+            {
+                switch(pressedButton)
+                {
+                    case leftBTN:
+                        target.left();
+                        break;
+                    case rightBTN:
+                        target.right();
+                        break;
+                    case downBTN:
+                        target.down();
+                        break;
+                    case upBTN:
+                        target.up();
+                        break;
+                }
+
+                if(!pressedButton.isDown())
+                    pressedButton = null
+
+            }
+
+        }
     }
 }

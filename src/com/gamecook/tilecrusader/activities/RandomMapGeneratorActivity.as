@@ -7,17 +7,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.tilecrusader.views.Button;
     import com.gamecook.tilecrusader.views.StackLayout;
     import com.gamecook.tilecrusader.enum.Darkness;
     import com.gamecook.tilecrusader.enum.GameModes;
     import com.gamecook.tilecrusader.enum.MapSizes;
     import com.gamecook.tilecrusader.factory.UIFactory;
-    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.display.SimpleButton;
-    import flash.events.MouseEvent;
     import flash.text.TextField;
 
     public class RandomMapGeneratorActivity extends RandomMapBGActivity
@@ -46,10 +43,10 @@ package com.gamecook.tilecrusader.activities
 
             var buttonLayout:StackLayout = new StackLayout(10, StackLayout.HORIZONTAL);
 
-            var redo:SimpleButton = UIFactory.createTextFieldButton(generateMapConfig, 0,0, "New Map");
+            var redo:Button = UIFactory.createTextFieldButton(generateMapConfig, 0,0, "New Map");
             buttonLayout.addChild(redo);
 
-            var submit:SimpleButton = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
+            var submit:Button = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
             buttonLayout.addChild(submit);
 
             buttonLayout.x = settingsLayout.x;
@@ -58,7 +55,7 @@ package com.gamecook.tilecrusader.activities
             addChild(buttonLayout);
         }
 
-        private function generateMapConfig(event:MouseEvent = null):void
+        private function generateMapConfig():void
         {
             mapConfig.size = generateRandomMapSize();
             mapConfig.gameType = generateRandomGameType();
@@ -82,7 +79,7 @@ package com.gamecook.tilecrusader.activities
             }
         }
 
-        private function onSubmit(event:MouseEvent):void
+        private function onSubmit():void
         {
             nextActivity(MapLoadingActivity, mapConfig);
         }

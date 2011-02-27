@@ -30,10 +30,10 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.gamecook.tilecrusader.factory.UIFactory;
+    import com.gamecook.tilecrusader.views.Button;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import flash.display.SimpleButton;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
@@ -58,11 +58,11 @@ package com.gamecook.tilecrusader.activities
             tf.width = 600;
             tf.x = (fullSizeWidth - tf.width) * .5;
 
-            var btn:SimpleButton = addChild(UIFactory.createTextFieldButton(onAccept, 0, tf.y + tf.height+30, "Ok, I get it!")) as SimpleButton;
+            var btn:Button = addChild(UIFactory.createTextFieldButton(onAccept, 0, tf.y + tf.height+30, "Ok, I get it!")) as Button;
             btn.x = (fullSizeWidth - btn.width) * .5;
         }
 
-        private function onAccept(event:MouseEvent):void
+        private function onAccept():void
         {
             nextActivity(StartActivity);
         }
