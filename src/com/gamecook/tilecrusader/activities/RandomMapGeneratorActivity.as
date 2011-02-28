@@ -60,7 +60,7 @@ package com.gamecook.tilecrusader.activities
             mapConfig.size = generateRandomMapSize();
             mapConfig.gameType = generateRandomGameType();
             mapConfig.darkness = generateRandomDarkness();
-            mapConfig.monstersDropTreature = randomBoolean();
+            mapConfig.monstersDropTreasure = randomBoolean();
             mapConfig.showMonsters = randomBoolean();
 
             var index:int = 0;

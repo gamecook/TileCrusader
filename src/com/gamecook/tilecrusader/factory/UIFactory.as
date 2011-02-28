@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.factory
             downTF.textColor = 0xff0000;
 
             var overTF:TextField = createTextField(0,0,"[ "+text+" ]");
-            overTF.textColor = 0x333333;
+            overTF.textColor = 0xdddddd;
 
             var btn:Button = new Button(upTF, click, overTF, downTF, new Rectangle(-5, -5, upTF.width + 10, upTF.height + 10), true);
             btn.x = x;

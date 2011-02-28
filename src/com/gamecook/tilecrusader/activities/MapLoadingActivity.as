@@ -84,11 +84,10 @@ package com.gamecook.tilecrusader.activities
 
             data.map = map;
 
-            data.monsters = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "4", "4", "4", "5", "5", "5", "6", "6", "6", "7", "7", "7", "8", "8", "9"];
-            data.chests = ["T", "T", "T", "T", "T", "T", "T", "T", "T"];
-            data.treasuePool = ["$","$","$","$","P","P","P","P"," "," "," "];
 
+            generateMonsters();
 
+            generateTreasure();
 
             var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
             populateMapHelper.populateMap.apply(this, data.monsters);
@@ -98,6 +97,80 @@ package com.gamecook.tilecrusader.activities
 
             data.cashPool = 100;
             data.cashRange = 10;
+        }
+
+        private function generateTreasure():void
+        {
+
+            // Config stuff
+            var emptyTreasureChests:Boolean = true;
+            var trapTreasureChests:Boolean = false;
+
+            var totalChests:int = Math.floor((Math.random() * data.monsters.length) + .1);
+            var chests:Array = [];
+            var treasurePool:Array = [];
+
+            // These are the types of treasure in the game
+            var treasureTypes:Array = ["$","P"];
+
+            if(emptyTreasureChests)
+                treasureTypes.push("K");
+
+            if(emptyTreasureChests)
+                treasureTypes.push(" ");
+
+            var treasureTypesTotal:int = treasureTypes.length;
+
+            // Calculate the amount of treasure based on the total monsters in the game
+            var treasurePoolTotal:int = Math.floor((Math.random() * data.monsters.length) + .1);
+
+            var i:int;
+            //var treasureChestTotal:int = treasurePoolTotal *
+            for(i =0; i < treasurePoolTotal; i ++)
+            {
+
+                treasurePool.push(treasureTypes[Math.floor((Math.random() * treasureTypesTotal))]);
+                if(i < totalChests)
+                {
+                    chests.push("T");
+                }
+            }
+
+
+            data.chests = chests;
+            data.treasurePool = treasurePool;
+            trace("Treasure Pool", treasurePool.length, "in", chests.length, "values", treasurePool.toString());
+
+        }
+
+        private function generateMonsters():void
+        {
+            var monsterTypes:Array = ["1","2","3","4","5","6","7","8"];
+            var monsterPercentage:Array = [.3,.2,.1, .1, .05, .02, .02, .01];
+            var monsters:Array = [];
+            var totalMonsterPercent:Number = .05;
+            var i:int = 0;
+            var j:int = 0;
+            var total:int = monsterTypes.length;
+            var monsterValues:Number;
+            var monsterType:int;
+            var totalTiles:int = Math.floor(RandomMap(data.map).getOpenTiles().length * totalMonsterPercent);
+
+            for(i = 0; i < total; i++)
+            {
+                monsterValues = Math.ceil(monsterPercentage[i] * totalTiles);
+                monsterType = monsterTypes[i] ;
+
+                for(j = 0; j < monsterValues; j++)
+                {
+
+                    monsters.push(monsterType);
+                }
+            }
+
+            data.monsters = monsters;
+
+            trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(data.map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
         }
 
         private function parseSpriteSheet():void

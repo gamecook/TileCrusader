@@ -99,6 +99,7 @@ package com.gamecook.tilecrusader.activities
         private var pollKeyPressCounter:int = 0;
         private var keyPressDelay:int = 0;
         private var _nextMove:Point;
+        private var monstersDropTreasure:Boolean;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -116,10 +117,10 @@ package com.gamecook.tilecrusader.activities
             map = data.map;
             gameMode = data.gameType;
             monsters = data.monsters;
-            treasurePool = data.treasuePool;
+            treasurePool = data.treasurePool;
             cashPool = data.cashPool;
             cashRange = data.cashRange;
-
+            monstersDropTreasure = data.monstersDropTreasure;
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -210,10 +211,6 @@ package com.gamecook.tilecrusader.activities
             treasureIterator = new TreasureIterator(treasurePool);
 
             movementHelper.startPosition(data.startPosition);
-
-
-
-
 
             characterSheet.setPlayer(player);
 
@@ -352,25 +349,19 @@ package com.gamecook.tilecrusader.activities
                 player.addKill();
 
                 map.swapTile(tmpPoint, "X");
+
+                if(monstersDropTreasure){
+                    var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
+                    if(treasure == "K")
+                        treasurePool.push(treasure);
+                    else
+                        map.swapTile(tmpPoint, treasure);
+                }
+
                 tileInstanceManager.removeInstance(uID);
 
 
 
-            }
-            else if (player.getLife() == 0)
-            {
-
-                if(player.getPotions() == 0)
-                {
-                    addStatusMessage("Player was killed!", true);
-                    stateManager.setCurrentActivity(GameOverActivity);
-                }
-                else
-                {
-                    player.setLife(player.getMaxLife());
-                    player.subtractPotion();
-                    addStatusMessage("You have taken a potion and restored your health.", true);
-                }
             }
         }
 
@@ -381,6 +372,13 @@ package com.gamecook.tilecrusader.activities
             addStatusMessage(player.getName() +" has opened a treasure chest.");
 
             var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : " ";
+            if(treasure == "K")
+            {
+                addStatusMessage("\nA trap was sprung dealing 1 point of damage.", false);
+                player.subtractLife(1);
+                addThread(quakeEffect);
+                treasure = " ";
+            }
 
             map.swapTile(tmpPoint, treasure);
         }
@@ -404,10 +402,6 @@ package com.gamecook.tilecrusader.activities
             {
                 player.addPotion(1);
                 addStatusMessage(player.getName() +" has picked up a health potion.");
-            }
-            else if (tile == "T")
-            {
-                trace("Trap");
             }
             else if (tile == "A")
             {
@@ -453,6 +447,22 @@ package com.gamecook.tilecrusader.activities
         {
             super.render();
 
+            if (player.getLife() == 0)
+            {
+
+                if(player.getPotions() == 0)
+                {
+                    addStatusMessage("Player was killed!", true);
+                    stateManager.setCurrentActivity(GameOverActivity);
+                }
+                else
+                {
+                    player.setLife(player.getMaxLife());
+                    player.subtractPotion();
+                    addStatusMessage("You have taken a potion and restored your health.", true);
+                }
+            }
+
             if (invalid)
             {
                 var t:int = getTimer();
@@ -467,7 +477,7 @@ package com.gamecook.tilecrusader.activities
                 t = (getTimer()-t);
 
                 if(status == "")
-                    addStatusMessage("Render executed in " + t + " ms\n", true);
+                    statusLabel.text = "Render executed in " + t + " ms\n", true;
             }
         }
 

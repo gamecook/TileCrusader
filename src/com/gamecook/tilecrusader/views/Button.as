@@ -108,7 +108,8 @@ package com.gamecook.tilecrusader.views
         public function onMouseUp(event:MouseEvent):void
         {
             //TODO this may need to test if mouse is in the button before going to over.
-            swapDisplayObject(over);
+            if(over)
+                swapDisplayObject(over);
             _isDown = false;
 
             if(clickOnUp)

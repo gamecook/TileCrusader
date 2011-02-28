@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/2.6">
+    <id>com.johnlindquist.ipad</id>
+    <filename>iPad</filename>
+    <name>iPad</name>
+    <versionNumber>1</versionNumber>
+    <initialWindow>
+        <renderMode>gpu</renderMode>
+        <content>deploy/iPad.swf</content>
+        <fullScreen>true</fullScreen>
+        <aspectRatio>landscape</aspectRatio>
+        <autoOrients>false</autoOrients>
+        <visible>true</visible>
+    </initialWindow>
+    <supportedProfiles>mobileDevice</supportedProfiles>
+    <icon>
+<!--        <image29x29>icons/icon29.png</image29x29> -->
+        <image57x57>build/57.png</image57x57>
+<!--        <image512x512>icons/icon512.png</image512x512> -->
+    </icon>
+    <iPhone>
+        <InfoAdditions>
+            <![CDATA[
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleBlackOpaque</string>
+                <key>UIRequiresPersistentWiFi</key>
+                <string>YES</string>
+
+                <key>UIDeviceFamily</key>
+                    <array>
+                        <string>2</string>
+                    </array>
+            ]]>
+        </InfoAdditions>
+    </iPhone>
+</application>
