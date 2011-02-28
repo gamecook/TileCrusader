@@ -23,24 +23,39 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 5:26 PM
+ * Date: 2/27/11
+ * Time: 5:22 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader
+package com.gamecook.tilecrusader.views.popups
 {
-    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
-    import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.gamecook.tilecrusader.views.AbstractPopUp;
 
-    import flash.events.Event;
-
-    public class TileCrusaderGame extends AbstractApplication
+    public class BasePopUp extends AbstractPopUp
     {
-        public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
+        protected var paddingTop:int = 0;
+        protected var paddingLeft:int = 0;
+        protected var paddingRight:int = 0;
+        protected var paddingBottom:int = 0;
+
+        public function BasePopUp()
         {
-            super(new ActivityManager(), state, x, y, scale);
+            super(this);
         }
 
+        override protected function init():void
+        {
+            super.init();
+
+            drawBorder();
+        }
+
+        private function drawBorder():void
+        {
+            graphics.beginFill(0x000000);
+            graphics.lineStyle(4, 0xffffff);
+            graphics.drawRect(paddingTop, paddingLeft, width + paddingRight, height+paddingBottom);
+            graphics.endFill();
+        }
     }
 }

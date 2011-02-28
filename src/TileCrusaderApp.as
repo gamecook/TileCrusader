@@ -29,6 +29,7 @@
  */
 package
 {
+    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
@@ -58,6 +59,8 @@ package
 
             BaseActivity.fullSizeWidth = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             BaseActivity.fullSizeHeight = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
+
+            PopUpOverlayManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             game = new TileCrusaderGame(0,0, GameCookSplashActivity);
             game.activate();

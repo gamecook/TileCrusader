@@ -83,25 +83,21 @@ package com.gamecook.tilecrusader.views
         private function onLeft():void
         {
             pressedButton = leftBTN;
-            //target.left();
         }
 
         private function onRight():void
         {
             pressedButton = rightBTN;
-            //target.right();
         }
 
         private function onUp():void
         {
             pressedButton = upBTN;
-            //target.up();
         }
 
         private function onDown():void
         {
             pressedButton = downBTN;
-            //target.down();
         }
 
 

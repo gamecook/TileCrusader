@@ -155,7 +155,11 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            characterSheet = new CharacterSheetView();
+            player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
+
+            var characterSheetData:Object = {player:player};
+
+            characterSheet = new CharacterSheetView(stateManager, characterSheetData);
             characterSheet.x = viewPortWidth;
 
             display.addChild(characterSheet);
@@ -209,7 +213,7 @@ package com.gamecook.tilecrusader.activities
 
 
 
-            player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
+
 
             characterSheet.setPlayer(player);
 

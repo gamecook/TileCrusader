@@ -7,8 +7,14 @@
  */
 package com.gamecook.tilecrusader.views
 {
+    import com.gamecook.tilecrusader.activities.StartActivity;
     import com.gamecook.tilecrusader.factory.UIFactory;
+    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
+
+    import com.jessefreeman.factivity.activities.BaseActivity;
+
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
@@ -17,7 +23,9 @@ package com.gamecook.tilecrusader.views
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class CharacterSheetView extends Sprite
+    import mx.managers.PopUpManager;
+
+    public class CharacterSheetView extends BaseActivity
     {
 
         private var player:PlayerTile;
@@ -35,13 +43,16 @@ package com.gamecook.tilecrusader.views
         private var portraitBitmap:Bitmap;
 
         //TODO maybe have this extend Activity and run it in to the game loop for update
-        public function CharacterSheetView()
+        public function CharacterSheetView(stateManager:IActivityManager, data:* = null)
         {
-            init();
+            super(stateManager, data);
         }
 
-        private function init():void
+
+        override protected function onCreate():void
         {
+            player = data.player;
+            super.onCreate();
             registerUI();
         }
 
@@ -103,6 +114,12 @@ package com.gamecook.tilecrusader.views
         private function onQuitClick():void
         {
             // TODO Need a way to quit here.
+            PopUpOverlayManager.showOverlay(new QuitPopUp(onQuit));
+        }
+
+        private function onQuit():void
+        {
+            nextActivity(StartActivity);
         }
 
         private function onHelpClick(event:MouseEvent):void
