@@ -11,6 +11,7 @@ package com.gamecook.tilecrusader.factory
 
     import com.gamecook.tilecrusader.views.forms.InputField;
 
+    import com.gamecook.tilecrusader.views.forms.NumberStepper;
     import com.gamecook.tilecrusader.views.forms.PopUpPicker;
 
     import flash.display.DisplayObject;
@@ -22,26 +23,41 @@ package com.gamecook.tilecrusader.factory
     import flash.text.TextFieldType;
     import flash.text.TextFormat;
 
+    import flashx.textLayout.formats.TextAlign;
+
     public class UIFactory
     {
         private static var tfx:TextFormat = new TextFormat("system", 18, 0xffffff);
 
-        public static function createTextField(x:int = 0, y:int = 0, text:String = ""):TextField
+        public static function createTextField(x:int = 0, y:int = 0, text:String = "", width:int = 0, height:int = 20, align:String = TextAlign.LEFT):TextField
         {
             var tmpTF:TextField = new TextField();
             tmpTF.autoSize = TextFieldAutoSize.LEFT;
             tmpTF.embedFonts = true;
             tmpTF.x = x;
             tmpTF.y = y;
+
+            if(width > 0)
+            {
+                tmpTF.width = width;
+                tmpTF.height = height;
+                tmpTF.autoSize = TextFieldAutoSize.NONE;
+            }
+            tfx.align = align;
             tmpTF.defaultTextFormat = tfx;
             tmpTF.selectable = false;
             tmpTF.antiAliasType = AntiAliasType.ADVANCED;
             tmpTF.sharpness = 500;
             tmpTF.text = text;
+
+
+            // Reset TFX
+            tfx.align = TextAlign.LEFT;
+
             return tmpTF;
         }
 
-        public static function createTextFieldButton(click:Function, x:int = 0, y:int = 0, text:String = ""):Button
+        public static function createTextFieldButton(click:Function, x:int = 0, y:int = 0, text:String = "", leftDecoration:String = "[", rightDecoration:String = "]"):Button
         {
             var states:Object = createButtonStates(text);
             var upTF = states.up;
@@ -58,14 +74,14 @@ package com.gamecook.tilecrusader.factory
             return btn;
         }
 
-        public static function createButtonStates(text:String):Object
+        public static function createButtonStates(text:String,leftDecoration:String = "[", rightDecoration:String = "]"):Object
         {
-            var upTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+            var upTF:TextField = createTextField(0, 0, leftDecoration + text + rightDecoration);
 
-            var downTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+            var downTF:TextField = createTextField(0, 0, leftDecoration + text + rightDecoration);
             downTF.textColor = 0xff0000;
 
-            var overTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+            var overTF:TextField = createTextField(0, 0, leftDecoration + text + rightDecoration);
             overTF.textColor = 0xdddddd;
 
             var rect:Rectangle = new Rectangle(-5, -5, upTF.width + 10, upTF.height + 10);
@@ -97,6 +113,12 @@ package com.gamecook.tilecrusader.factory
             var picker:PopUpPicker = new PopUpPicker(data, 0);
 
             return picker;
+        }
+
+        public static function createNumberStepper(minValue:int, maxValue:int, startValue:int):NumberStepper
+        {
+            var numStepper:NumberStepper = new NumberStepper(minValue, maxValue, startValue);
+            return numStepper;
         }
     }
 }

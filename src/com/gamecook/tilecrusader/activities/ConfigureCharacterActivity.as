@@ -11,6 +11,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.views.Button;
     import com.gamecook.tilecrusader.views.StackLayout;
     import com.gamecook.tilecrusader.views.forms.InputField;
+    import com.gamecook.tilecrusader.views.forms.NumberStepper;
     import com.gamecook.tilecrusader.views.forms.PopUpPicker;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.ActivityManager;
@@ -81,6 +82,22 @@ package com.gamecook.tilecrusader.activities
             attributeBlock.addChild(attributeInput);
 
             characterBioLayout.addChild(attributeBlock);
+
+
+            // Stats Block
+            var statsBlock:StackLayout = new StackLayout(10);
+            characterBioLayout.addChild(statsBlock);
+
+            // Life Block
+            var lifeBlock:StackLayout = new StackLayout(5, StackLayout.HORIZONTAL);
+            // Life
+            var lifeLabel:TextField = UIFactory.createTextField(0,0,"Life:");
+            lifeBlock.addChild(lifeLabel);
+
+            var lifeNumberStepper:NumberStepper = UIFactory.createNumberStepper(1, 20, 1);
+            lifeBlock.addChild(lifeNumberStepper);
+
+            statsBlock.addChild(lifeBlock);
         }
     }
 }

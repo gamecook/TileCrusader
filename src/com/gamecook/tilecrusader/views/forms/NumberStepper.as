@@ -29,17 +29,82 @@
  */
 package com.gamecook.tilecrusader.views.forms
 {
+    import com.gamecook.tilecrusader.factory.UIFactory;
+
+    import com.gamecook.tilecrusader.views.Button;
+    import com.gamecook.tilecrusader.views.StackLayout;
+
     import flash.display.Sprite;
+    import flash.events.Event;
+    import flash.text.TextField;
+
+    import flashx.textLayout.formats.TextAlign;
 
     public class NumberStepper extends Sprite
     {
         private var maxValue:int;
-        private var startValue:int;
+        private var value:int;
+        private var layout:StackLayout;
+        private var increaseBtn:Button;
+        private var decreaseBtn:Button;
+        private var field:TextField;
+        private var minValue:int;
 
-        public function NumberStepper(maxValue:int, startValue:int = 0)
+        public function NumberStepper(minValue:int, maxValue:int, startValue:int = 0)
         {
-            this.startValue = startValue;
+            this.minValue = minValue;
+            this.value = startValue;
             this.maxValue = maxValue;
+
+            init();
+        }
+
+        protected function init():void
+        {
+            layout = new StackLayout(5, StackLayout.HORIZONTAL);
+            addChild(layout);
+            decreaseBtn = UIFactory.createTextFieldButton(onDecrease,0,0,"-");
+            layout.addChild(decreaseBtn);
+
+            field = UIFactory.createTextField(0,0,value.toString(),100, 80, TextAlign.LEFT);
+
+            layout.addChild(field);
+
+            increaseBtn = UIFactory.createTextFieldButton(onIncrease,0,0,"+");
+            layout.addChild(increaseBtn);
+        }
+
+        private function onIncrease():void
+        {
+            var tmpValue:int = value +1;
+
+            if(tmpValue > maxValue)
+                tmpValue = minValue;
+
+            setValue(tmpValue);
+        }
+
+        private function onDecrease():void
+        {
+            var tmpValue:int = value -1;
+
+            if(tmpValue < minValue)
+               tmpValue = maxValue;
+
+             setValue(tmpValue);
+        }
+
+        public function setValue(value:int):void
+        {
+            this.value = value;
+            field.text = value.toString();
+
+            trace("Value", value);
+        }
+
+        public function getValue():int
+        {
+            return value;
         }
     }
 }

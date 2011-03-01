@@ -36,13 +36,13 @@ package com.gamecook.tilecrusader.views.forms
 
     public class InputField extends Sprite
     {
-        private var textField:TextField;
+        private var _textField:TextField;
         private var defaultText:String;
 
         public function InputField(target:TextField, defaultText:String = " ")
         {
             this.defaultText = defaultText;
-            textField = target;
+            _textField = target;
             addChild(textField);
             textField.text = defaultText;
             drawDecoration(FocusEvent.FOCUS_OUT);
@@ -100,6 +100,11 @@ package com.gamecook.tilecrusader.views.forms
         public function getValue():String
         {
             return textField.text;
+        }
+
+        public function get textField():TextField
+        {
+            return _textField;
         }
     }
 }
