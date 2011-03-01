@@ -52,12 +52,7 @@ package com.gamecook.tilecrusader.views
         {
             this.clickOnUp = clickOnUp;
             this.pressAction = pressAction;
-            this.up = up;
-            this.over = over;
-            this.down = down;
-
-            if(hitArea)
-                drawHitArea(hitArea);
+            changeStates(up, over, down, hitArea);
 
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         }
@@ -79,6 +74,7 @@ package com.gamecook.tilecrusader.views
 
         private function drawHitArea(hitArea:Rectangle):void
         {
+            graphics.clear();
             graphics.beginFill(0xff0000, 0);
             graphics.drawRect(hitArea.x,hitArea.y,hitArea.width, hitArea.height);
             graphics.endFill();
@@ -128,6 +124,16 @@ package com.gamecook.tilecrusader.views
         public function isDown():Boolean
         {
             return _isDown;
+        }
+
+        public function changeStates(up:DisplayObject, over:DisplayObject = null, down:DisplayObject = null, hitArea:Rectangle = null):void
+        {
+            this.up = up;
+            this.over = over;
+            this.down = down;
+
+            if(hitArea)
+                drawHitArea(hitArea);
         }
 
     }

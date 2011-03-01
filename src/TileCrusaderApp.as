@@ -63,7 +63,6 @@ package
             PopUpOverlayManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             game = new TileCrusaderGame(0,0, GameCookSplashActivity);
-            game.activate();
             addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );

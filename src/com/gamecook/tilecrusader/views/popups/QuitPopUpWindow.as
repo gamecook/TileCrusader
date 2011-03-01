@@ -27,8 +27,9 @@
  * Time: 9:51 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.views
+package com.gamecook.tilecrusader.views.popups
 {
+    import com.gamecook.tilecrusader.views.*;
     import com.gamecook.tilecrusader.activities.StartActivity;
     import com.gamecook.tilecrusader.factory.UIFactory;
 
@@ -40,10 +41,10 @@ package com.gamecook.tilecrusader.views
     import flash.text.TextField;
     import flash.text.TextFieldAutoSize;
 
-    public class QuitPopUp extends BasePopUp
+    public class QuitPopUpWindow extends BasePopUp
     {
         private var onAcceptCallback:Function;
-        public function QuitPopUp(onAcceptCallback:Function)
+        public function QuitPopUpWindow(onAcceptCallback:Function)
         {
             this.onAcceptCallback = onAcceptCallback;
         }

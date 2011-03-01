@@ -27,7 +27,7 @@
  * Time: 9:08 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.views
+package com.gamecook.tilecrusader.views.popups
 {
     public interface IPopUp
     {

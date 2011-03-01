@@ -30,7 +30,7 @@
 package com.gamecook.tilecrusader.managers
 {
     import com.gamecook.tilecrusader.views.AbstractPopUp;
-    import com.gamecook.tilecrusader.views.IPopUp;
+    import com.gamecook.tilecrusader.views.popups.IPopUp;
 
     import flash.display.Sprite;
     import flash.display.Stage;

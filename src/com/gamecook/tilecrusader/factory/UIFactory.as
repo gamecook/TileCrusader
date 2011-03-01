@@ -9,12 +9,17 @@ package com.gamecook.tilecrusader.factory
 {
     import com.gamecook.tilecrusader.views.Button;
 
+    import com.gamecook.tilecrusader.views.forms.InputField;
+
+    import com.gamecook.tilecrusader.views.forms.PopUpPicker;
+
     import flash.display.DisplayObject;
     import flash.events.MouseEvent;
     import flash.geom.Rectangle;
     import flash.text.AntiAliasType;
     import flash.text.TextField;
     import flash.text.TextFieldAutoSize;
+    import flash.text.TextFieldType;
     import flash.text.TextFormat;
 
     public class UIFactory
@@ -38,15 +43,13 @@ package com.gamecook.tilecrusader.factory
 
         public static function createTextFieldButton(click:Function, x:int = 0, y:int = 0, text:String = ""):Button
         {
-            var upTF:TextField = createTextField(0,0,"[ "+text+" ]");
+            var states:Object = createButtonStates(text);
+            var upTF = states.up;
+            var downTF = states.down;
+            var overTF:DisplayObject = states.over;
+            var rect:Rectangle = states.rect;
 
-            var downTF:TextField = createTextField(0,0,"[ "+text+" ]");
-            downTF.textColor = 0xff0000;
-
-            var overTF:TextField = createTextField(0,0,"[ "+text+" ]");
-            overTF.textColor = 0xdddddd;
-
-            var btn:Button = new Button(upTF, click, overTF, downTF, new Rectangle(-5, -5, upTF.width + 10, upTF.height + 10), true);
+            var btn:Button = new Button(upTF, click, overTF, downTF, rect, true);
             btn.x = x;
             btn.y = y;
 
@@ -55,11 +58,45 @@ package com.gamecook.tilecrusader.factory
             return btn;
         }
 
+        public static function createButtonStates(text:String):Object
+        {
+            var upTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+
+            var downTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+            downTF.textColor = 0xff0000;
+
+            var overTF:TextField = createTextField(0, 0, "[ " + text + " ]");
+            overTF.textColor = 0xdddddd;
+
+            var rect:Rectangle = new Rectangle(-5, -5, upTF.width + 10, upTF.height + 10);
+
+            return {up:upTF, down:downTF, over:overTF, rect:rect};
+        }
+
         public static function createKeyButton(up:DisplayObject, pressAction:Function):Button
         {
             var btn:Button = new Button(up, pressAction, null, null, new Rectangle(0,0,up.width, up.height));
 
             return btn;
+        }
+
+        public static function createInputField(x:int, y:int, text:String, width:int = 200):InputField
+        {
+            var tf:TextField = createTextField(x,y,text);
+            tf.type = TextFieldType.INPUT;
+            tf.selectable = true;
+            tf.width = width;
+            tf.autoSize = TextFieldAutoSize.NONE;
+
+            var inputField:InputField = new InputField(tf, text);
+            return inputField;
+        }
+
+        public static function createPopUpPicker(x:int, y:int, data:Array):PopUpPicker
+        {
+            var picker:PopUpPicker = new PopUpPicker(data, 0);
+
+            return picker;
         }
     }
 }

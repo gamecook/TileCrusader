@@ -46,7 +46,8 @@ package com.gamecook.tilecrusader.activities
         private function onStartGame():void
         {
             //nextActivity(MapLoadingActivity);
-            nextActivity(RandomMapGeneratorActivity);
+            //nextActivity(RandomMapGeneratorActivity);
+            nextActivity(ConfigureCharacterActivity);
         }
 
         private function onHelp():void
