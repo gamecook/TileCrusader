@@ -7,6 +7,8 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.components.Label;
+    import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.views.StackLayout;
     import com.gamecook.tilecrusader.factory.UIFactory;
 
@@ -17,6 +19,7 @@ package com.gamecook.tilecrusader.activities
 
     public class StartActivity extends RandomMapBGActivity
     {
+        public var title:Label;
 
         public function StartActivity(activityManager:ActivityManager,data:* = null)
         {
@@ -25,37 +28,38 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            mapViewPortWidth = fullSizeWidth - mapViewPortX;
+
             super.onCreate();
 
-            var tf:TextField = UIFactory.createTextField(0,100, "Tile Crusader");
-            tf.x = fullSizeWidth - (tf.width + 50);
-            addChild(tf);
+            var xml:XML = <comps>
+                <Label id="title" x="0" y="100" scaleX="4" scaleY="4" text="Tile Crusader"/>
 
-            var layout:StackLayout = new StackLayout(20);
-            layout.x = 50;
-            layout.y = 150;
+                <VBox x="50" y="150" scaleX="2" scaleY="2">
+                            <PushButton id="NewGame" label="New Crusade" event="click:onStartGame"/>
+                            <PushButton id="Help" label="Help" event="click:onHelp"/>
+                            <PushButton id="Options" label="Options" event="click:onOptions"/>
+                    </VBox>
 
-            layout.addChild(UIFactory.createTextFieldButton(onStartGame, 0,0, "New Crusade"));
-            layout.addChild(UIFactory.createTextFieldButton(onHelp, 0,0, "Help"));
-            layout.addChild(UIFactory.createTextFieldButton(onOptions, 0,0, "Options"));
+                    </comps>;
 
-            addChild(layout);
+            var config:MinimalConfigurator = new MinimalConfigurator(this);
+            config.parseXML(xml);
 
+            title.x = fullSizeWidth - 300;
         }
 
-        private function onStartGame():void
+        public function onStartGame(event:MouseEvent):void
         {
-            //nextActivity(MapLoadingActivity);
-            //nextActivity(RandomMapGeneratorActivity);
             nextActivity(ConfigureCharacterActivity);
         }
 
-        private function onHelp():void
+        public function onHelp(event:MouseEvent):void
         {
             stateManager.setCurrentActivity(HelpActivity);
         }
 
-        private function onOptions():void
+        public function onOptions(event:MouseEvent):void
         {
             stateManager.setCurrentActivity(OptionsActivity);
         }

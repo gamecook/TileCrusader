@@ -19,7 +19,6 @@ package com.gamecook.tilecrusader.activities
 
     public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
-        private var mapConfig:Object;
         private var settingsLayout:StackLayout;
 
         public function RandomMapGeneratorActivity(activityManager:ActivityManager, data:* = null)
@@ -32,18 +31,15 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
-
-            mapConfig = {};
-
             settingsLayout = new StackLayout();
 
             addChild(settingsLayout);
 
-            generateMapConfig();
+            generatedata();
 
             var buttonLayout:StackLayout = new StackLayout(10, StackLayout.HORIZONTAL);
 
-            var redo:Button = UIFactory.createTextFieldButton(generateMapConfig, 0,0, "New Map");
+            var redo:Button = UIFactory.createTextFieldButton(generatedata, 0,0, "New Map");
             buttonLayout.addChild(redo);
 
             var submit:Button = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
@@ -55,16 +51,16 @@ package com.gamecook.tilecrusader.activities
             addChild(buttonLayout);
         }
 
-        private function generateMapConfig():void
+        private function generatedata():void
         {
-            mapConfig.size = generateRandomMapSize();
-            mapConfig.gameType = generateRandomGameType();
-            mapConfig.darkness = generateRandomDarkness();
-            mapConfig.monstersDropTreasure = randomBoolean();
-            mapConfig.showMonsters = randomBoolean();
+            data.size = generateRandomMapSize();
+            data.gameType = generateRandomGameType();
+            data.darkness = generateRandomDarkness();
+            data.monstersDropTreasure = randomBoolean();
+            data.showMonsters = randomBoolean();
 
             var index:int = 0;
-            for ( var prop:String in mapConfig ) {
+            for ( var prop:String in data ) {
                 if(settingsLayout.numChildren > index)
                 {
                     var label:TextField = settingsLayout.getChildAt(index) as TextField;
@@ -74,14 +70,14 @@ package com.gamecook.tilecrusader.activities
                 {
                     label = settingsLayout.addChild(UIFactory.createTextField(0,0, "" )) as TextField;
                 }
-                label.text =  prop + ": " + mapConfig[prop];
+                label.text =  prop + ": " + data[prop];
                 index ++;
             }
         }
 
         private function onSubmit():void
         {
-            nextActivity(MapLoadingActivity, mapConfig);
+            nextActivity(MapLoadingActivity, data);
         }
 
         private function generateRandomDarkness():String

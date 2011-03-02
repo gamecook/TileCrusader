@@ -156,7 +156,7 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
 
             var characterSheetData:Object = {player:player};
 
@@ -400,8 +400,15 @@ package com.gamecook.tilecrusader.activities
             }
             else if (tile == "P")
             {
-                player.addPotion(1);
-                addStatusMessage(player.getName() +" has picked up a health potion.");
+                if(player.getPotions() != player.getPotions())
+                {
+                    player.addPotion(1);
+                    addStatusMessage(player.getName() +" has picked up a health potion.");
+                }
+                else
+                {
+                    addStatusMessage(player.getName() +" can not carry any more health potions.\n This one was thrown away.");
+                }
             }
             else if (tile == "A")
             {

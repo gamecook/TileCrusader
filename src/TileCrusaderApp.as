@@ -29,6 +29,7 @@
  */
 package
 {
+    import com.gamecook.tilecrusader.activities.MinimalCompsTestActivity;
     import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.TileCrusaderGame;

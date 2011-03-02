@@ -47,7 +47,7 @@ package com.gamecook.tilecrusader.tiles
 
         public function getDefenceRolls():int
        {
-           return attackRoll;
+           return defenseRoll;
        }
 
         public function getLife():int

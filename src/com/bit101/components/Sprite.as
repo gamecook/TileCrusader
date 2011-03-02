@@ -23,34 +23,22 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 5:26 PM
+ * Date: 3/1/11
+ * Time: 11:22 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader
+package com.bit101.components
 {
-    import com.bit101.components.Component;
-    import com.bit101.components.Style;
-    import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.events.Event;
-
-    public class TileCrusaderGame extends AbstractApplication
+    public class Sprite extends Component
     {
-        public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
+        public function Sprite()
         {
-            super(new ActivityManager(), state, x, y, scale);
         }
 
-        override protected function onAddedToStage(event:Event):void
-        {
-            super.onAddedToStage(event);
+        override protected function init():void
+		{
 
-            // Configure Minimal Comps
-            Style.setStyle(Style.DARK);
-            Style.fontName = "system"
-            Component.initStage(stage);
+            super.init();
         }
     }
 }

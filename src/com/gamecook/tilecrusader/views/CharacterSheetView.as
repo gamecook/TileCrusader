@@ -12,6 +12,7 @@ package com.gamecook.tilecrusader.views
     import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
 
+    import com.gamecook.tilecrusader.views.popups.QuitPopUpWindow;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.jessefreeman.factivity.managers.IActivityManager;
@@ -114,7 +115,7 @@ package com.gamecook.tilecrusader.views
         private function onQuitClick():void
         {
             // TODO Need a way to quit here.
-            PopUpOverlayManager.showOverlay(new QuitPopUp(onQuit));
+            PopUpOverlayManager.showOverlay(new QuitPopUpWindow(onQuit));
         }
 
         private function onQuit():void

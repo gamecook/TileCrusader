@@ -23,34 +23,50 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 5:26 PM
+ * Date: 3/1/11
+ * Time: 7:45 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader
+package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Component;
-    import com.bit101.components.Style;
-    import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.bit101.utils.MinimalConfigurator;
 
-    import flash.events.Event;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
-    public class TileCrusaderGame extends AbstractApplication
+    import com.jessefreeman.factivity.managers.IActivityManager;
+    import flash.events.MouseEvent;
+
+    public class MinimalCompsTestActivity extends BaseActivity
     {
-        public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
+        public var myLabel:Label;
+
+        public function MinimalCompsTestActivity(stateManager:IActivityManager, data:*)
         {
-            super(new ActivityManager(), state, x, y, scale);
+            super(stateManager, data);
         }
 
-        override protected function onAddedToStage(event:Event):void
+        override public function onStart():void
         {
-            super.onAddedToStage(event);
+            super.onStart();
 
-            // Configure Minimal Comps
-            Style.setStyle(Style.DARK);
-            Style.fontName = "system"
-            Component.initStage(stage);
+            var xml:XML = <comps>
+            <HBox x="10" y="10" scaleX="3" scaleY="3">
+                <PushButton label="File" width="60"/>
+                <PushButton label="Edit" width="60"/>
+                <PushButton label="View" width="60"/>
+                <PushButton label="Settings" width="60"/>
+                <PushButton label="Help" width="60"/>
+            </HBox>
+        </comps>;
+
+            var config:MinimalConfigurator = new MinimalConfigurator(this);
+            config.parseXML(xml);
+        }
+
+        public function onClick(event:MouseEvent):void
+        {
+            myLabel.text = "You did it";
         }
     }
 }
