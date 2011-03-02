@@ -29,6 +29,7 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.components.Label;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.gamecook.tilecrusader.factory.UIFactory;
@@ -49,11 +50,10 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
-            var tf:TextField = UIFactory.createTextField(200,200, "Game Cook Presents:");
-            tf.textColor = 0xffffff;
+            var tf:Label = new Label(this,0, 0, "Game Cook Presents:");
             tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y = (fullSizeHeight - tf.height) * .5;
-            addChild(tf);
+            tf.y  = (fullSizeHeight - tf.height) * .5;
+            tf.scaleX = tf.scaleY = 2;
 
             startNextActivityTimer(TileCrusaderSplashActivity, 3);
         }

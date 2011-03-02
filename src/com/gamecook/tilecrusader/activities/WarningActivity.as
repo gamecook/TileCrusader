@@ -29,8 +29,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.tilecrusader.factory.UIFactory;
-    import com.gamecook.tilecrusader.views.Button;
+    import com.bit101.components.Label;
+    import com.bit101.components.PushButton;
+    import com.bit101.components.TextArea;
+
+    import com.bit101.components.VBox;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
@@ -50,19 +53,25 @@ package com.gamecook.tilecrusader.activities
         override protected function onCreate():void
         {
             super.onCreate();
+
             var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game." ;
 
-            var tf:TextField = addChild(UIFactory.createTextField(50,50,warning)) as TextField;
-            tf.multiline = true;
-            tf.wordWrap = true;
-            tf.width = 600;
+            var tf:Label = new Label(this, 0, 50, warning);
+            tf.textField.wordWrap = true;
+            tf.textField.multiline = true;
+            tf.textField.width = 400;
+            tf.scaleX = tf.scaleY = 2;
             tf.x = (fullSizeWidth - tf.width) * .5;
 
-            var btn:Button = addChild(UIFactory.createTextFieldButton(onAccept, 0, tf.y + tf.height+30, "Ok, I get it!")) as Button;
+            var btn:PushButton = new PushButton(this, 0, 300, "Ok, I get it!", onAccept);
+            btn.scaleX = btn.scaleY = 2;
             btn.x = (fullSizeWidth - btn.width) * .5;
+
+
+
         }
 
-        private function onAccept():void
+        private function onAccept(event:MouseEvent):void
         {
             nextActivity(StartActivity);
         }

@@ -43,14 +43,5 @@ package com.gamecook.tilecrusader
             super(new ActivityManager(), state, x, y, scale);
         }
 
-        override protected function onAddedToStage(event:Event):void
-        {
-            super.onAddedToStage(event);
-
-            // Configure Minimal Comps
-            Style.setStyle(Style.DARK);
-            Style.fontName = "system"
-            Component.initStage(stage);
-        }
     }
 }

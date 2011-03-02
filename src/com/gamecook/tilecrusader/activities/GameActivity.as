@@ -400,14 +400,14 @@ package com.gamecook.tilecrusader.activities
             }
             else if (tile == "P")
             {
-                if(player.getPotions() != player.getPotions())
+                if(player.getPotions() < player.getMaxPotion())
                 {
                     player.addPotion(1);
                     addStatusMessage(player.getName() +" has picked up a health potion.");
                 }
                 else
                 {
-                    addStatusMessage(player.getName() +" can not carry any more health potions.\n This one was thrown away.");
+                    addStatusMessage(player.getName() +" can not carry any more health potions.\nThis one was thrown away.");
                 }
             }
             else if (tile == "A")

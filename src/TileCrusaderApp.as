@@ -29,6 +29,8 @@
  */
 package
 {
+    import com.bit101.components.Component;
+    import com.bit101.components.Style;
     import com.gamecook.tilecrusader.activities.MinimalCompsTestActivity;
     import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
@@ -57,6 +59,7 @@ package
         public function TileCrusaderApp()
         {
             configureStage();
+            configureComponents();
 
             BaseActivity.fullSizeWidth = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             BaseActivity.fullSizeHeight = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
@@ -74,6 +77,14 @@ package
             }
 
             stats.y =  BaseActivity.fullSizeHeight - stats.height;
+        }
+
+        private function configureComponents():void
+        {
+            // Configure Minimal Comps
+            Style.setStyle(Style.DARK);
+            Style.fontName = "system";
+            Component.initStage(stage);
         }
 
         private function configureStage():void {
