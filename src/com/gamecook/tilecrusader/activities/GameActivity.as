@@ -100,6 +100,7 @@ package com.gamecook.tilecrusader.activities
         private var keyPressDelay:int = 0;
         private var _nextMove:Point;
         private var monstersDropTreasure:Boolean;
+        private var isPlayerDead:Boolean;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -244,6 +245,9 @@ package com.gamecook.tilecrusader.activities
 
         public function move(value:Point):void
         {
+
+            if(isPlayerDead)
+                return;
 
             var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
 
@@ -407,7 +411,15 @@ package com.gamecook.tilecrusader.activities
                 }
                 else
                 {
+                    if(player.getLife() < player.getMaxLife())
+                    {
+                        player.setLife(player.getMaxLife());
+                        addStatusMessage(player.getName() +" can not carry any more health potions.\nHe was able to drink it now and restore his health.");
+                    }
+                    else
+                    {
                     addStatusMessage(player.getName() +" can not carry any more health potions.\nThis one was thrown away.");
+                    }
                 }
             }
             else if (tile == "A")
@@ -460,7 +472,10 @@ package com.gamecook.tilecrusader.activities
                 if(player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
-                    stateManager.setCurrentActivity(GameOverActivity);
+                    //stateManager(GameOverActivity);
+                    isPlayerDead = true;
+                    //TODO build stat Data Object
+                    startNextActivityTimer(GameOverActivity, 1);
                 }
                 else
                 {

@@ -71,10 +71,6 @@ package
 
             var stats:DisplayObject = addChild( new Stats() );
 
-            CONFIG::mobile
-            {
-                stats.scaleX = stats.scaleY = 2;
-            }
 
             stats.y =  BaseActivity.fullSizeHeight - stats.height;
         }

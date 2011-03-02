@@ -64,7 +64,6 @@ package com.gamecook.tilecrusader.activities
                 if(settingsLayout.numChildren > index)
                 {
                     var label:TextField = settingsLayout.getChildAt(index) as TextField;
-
                 }
                 else
                 {

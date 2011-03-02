@@ -59,7 +59,7 @@ package com.gamecook.tilecrusader.tiles
                 gold = obj.gold;
 
             if(obj.hasOwnProperty("maxPotions"))
-                maxPotions = obj.potions;
+                maxPotions = obj.maxPotions;
 
             if(obj.hasOwnProperty("potions"))
                 potions = obj.potions;

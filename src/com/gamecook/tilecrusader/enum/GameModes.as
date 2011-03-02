@@ -13,6 +13,7 @@ package com.gamecook.tilecrusader.enum
         public static const FIND_ALL_TREASURE:String = "findAllTreasure";
         public static const FIND_ARTIFACT:String = "findArtifact";
         public static const KILL_BOSS:String = "killBoss";
+        public static const POISONED:String = "poisoned";
 
         public static function getGameModeDescription(gameMode:String):String
         {
@@ -29,6 +30,9 @@ package com.gamecook.tilecrusader.enum
                     message = "find artifact";
                 case KILL_BOSS:
                     message = "kill the boss";
+                case POISONED:
+                    message = "find the cure";
+
             }
             return message;
         }

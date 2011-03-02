@@ -93,7 +93,7 @@ package com.gamecook.tilecrusader.activities
                         <VBox spacing="10">
                         <VBox spacing="-5">
                             <Label id="name" text="Name:"/>
-                            <InputText id="nameInput" width="75" text="Not Sure" scaleX="1.3" scaleY="1.3" event="focusIn:onNameFocus"/>
+                            <InputText id="nameInput" width="75" text="Not Sure"event="focusIn:onNameFocus"/>
                         </VBox>
                         <!--<VBox spacing="-5">
                             <Label id="race" text="Race:"/>
@@ -106,31 +106,32 @@ package com.gamecook.tilecrusader.activities
                         </VBox>
                     </VBox>
                     <VBox spacing="20">
-                    <HBox spacing="40">
+                        <Label id="pointTotal" width="400" align="center" text="Character Points"/>
+
+                        <HBox spacing="40">
                         <VBox spacing="10">
                             <VBox spacing="-5">
                                 <Label id="life" text="Life:"/>
-                                <NumericStepper id="lifeNumStepper" minimum="1" maximum="20" scaleX="1.3" scaleY="1.3" event="change:onPointChange"/>
+                                <NumericStepper id="lifeNumStepper" minimum="1" maximum="20"event="change:onPointChange"/>
                             </VBox>
                             <VBox spacing="-5">
                                 <Label id="hit" text="Attack:"/>
-                                <NumericStepper id="hitNumStepper" minimum="1" maximum="9" scaleX="1.3" scaleY="1.3" event="change:onPointChange"/>
+                                <NumericStepper id="hitNumStepper" minimum="1" maximum="9"event="change:onPointChange"/>
                             </VBox>
                         </VBox>
                         <VBox spacing="10">
                             <VBox spacing="-5">
                                 <Label id="def" text="Defense:"/>
-                                <NumericStepper id="defNumStepper" minimum="1" maximum="9" scaleX="1.3" scaleY="1.3" event="change:onPointChange"/>
+                                <NumericStepper id="defNumStepper" minimum="1" maximum="9"event="change:onPointChange"/>
                             </VBox>
                             <VBox spacing="-5">
                                 <Label id="potions" text="Potions:"/>
-                                <NumericStepper id="potionsNumStepper" minimum="1" maximum="20" scaleX="1.3" scaleY="1.3" event="change:onPointChange"/>
+                                <NumericStepper id="potionsNumStepper" minimum="1" maximum="20"event="change:onPointChange"/>
                             </VBox>
 
                         </VBox>
 
                     </HBox>
-                        <Label id="pointTotal" width="400" align="center" text="Character Points" scaleX="2" scaleY="2"/>
                         <HBox>
                             <PushButton label="Go Back" event="click:onBack"/>
                             <PushButton label="I Like It" event="click:onDone"/>
@@ -155,7 +156,7 @@ package com.gamecook.tilecrusader.activities
 
         private function updateTotalLabel():void
         {
-            pointTotal.text = "Character Points: " + characterPoints;
+            pointTotal.text = "Character Points: " + characterPoints +" out of "+DEFAULT_POINTS;
             if(characterPoints < 0)
                 pointTotal.textField.textColor = 0xFF0000;
             else
