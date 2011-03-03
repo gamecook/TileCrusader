@@ -29,7 +29,7 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
 
     import flash.display.Sprite;
 
@@ -52,7 +52,7 @@ package com.gamecook.tilecrusader.views
 
         public function close():void
         {
-            PopUpOverlayManager.close();
+            PopUpManager.close();
         }
 
     }

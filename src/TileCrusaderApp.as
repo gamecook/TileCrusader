@@ -31,12 +31,10 @@ package
 {
     import com.bit101.components.Component;
     import com.bit101.components.Style;
-    import com.gamecook.tilecrusader.activities.MinimalCompsTestActivity;
-    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
-    import com.gamecook.tilecrusader.activities.StartActivity;
 
     import flash.display.DisplayObject;
     import flash.display.Sprite;
@@ -64,13 +62,17 @@ package
             BaseActivity.fullSizeWidth = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             BaseActivity.fullSizeHeight = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
 
-            PopUpOverlayManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
+            PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             game = new TileCrusaderGame(0,0, GameCookSplashActivity);
             addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );
 
+            CONFIG::mobile
+            {
+                stats.scaleX = stats.scaleY = 2;
+            }
 
             stats.y =  BaseActivity.fullSizeHeight - stats.height;
         }

@@ -31,7 +31,7 @@ package com.gamecook.tilecrusader.views.forms
 {
     import com.gamecook.tilecrusader.factory.UIFactory;
 
-    import com.gamecook.tilecrusader.managers.PopUpOverlayManager;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.gamecook.tilecrusader.views.Button;
 
     import com.gamecook.tilecrusader.views.popups.PopUpPickerWindow;
@@ -57,7 +57,7 @@ package com.gamecook.tilecrusader.views.forms
 
         private function onClick():void
         {
-            PopUpOverlayManager.showOverlay(new PopUpPickerWindow(data, selectedID), onClose, true);
+            com.gamecook.tilecrusader.managers.PopUpManager.showOverlay(new PopUpPickerWindow(data, selectedID), onClose, true);
         }
 
         private function onClose():void
