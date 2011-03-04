@@ -216,7 +216,8 @@ package com.gamecook.tilecrusader.activities
                             attackRoll: hitNumStepper.value,
                             defenseRoll: defNumStepper.value,
                             maxPotions: potionsNumStepper.value,
-                            points:characterPoints};
+                            points:characterPoints,
+                            characterPoints:DEFAULT_POINTS};
 
             nextActivity(RandomMapGeneratorActivity, data);
         }

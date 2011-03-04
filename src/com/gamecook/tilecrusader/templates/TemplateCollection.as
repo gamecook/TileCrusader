@@ -29,6 +29,8 @@
  */
 package com.gamecook.tilecrusader.templates
 {
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
+
     public class TemplateCollection implements ITemplateCollection
     {
         private var templates:Array = [];
@@ -45,7 +47,11 @@ package com.gamecook.tilecrusader.templates
 
         public function getRandomTemplate():ITemplate
         {
-            return null;
+            //TODO need to look into why this would return a null template
+            var id:String = ArrayUtil.pickRandomArrayElement(templateNames);
+            if(!templates[id])
+                id = templateNames[0];
+            return templates[id];
         }
 
         public function addTemplate(id:String, template:ITemplate, weight:int = 1)

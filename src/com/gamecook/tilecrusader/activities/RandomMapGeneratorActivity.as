@@ -100,7 +100,6 @@ package com.gamecook.tilecrusader.activities
         protected function pickRandomArrayElement(value:Array):*
         {
             var randNum:Number = Math.floor((Math.random() * value.length));
-            trace("Random Number", randNum, value.length, value);
             return value[randNum];
         }
 

@@ -32,5 +32,9 @@ package com.gamecook.tilecrusader.combat
         function getCharacterPoints():int;
 
         function setCharacterPoints(value:int):void;
+
+        function getAttackRolls():int;
+
+        function getDefenseRolls():int;
     }
 }

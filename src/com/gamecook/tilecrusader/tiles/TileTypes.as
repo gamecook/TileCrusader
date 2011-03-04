@@ -22,26 +22,26 @@ package com.gamecook.tilecrusader.tiles
 
         private static const TYPES : Object = new Object();
 		{
-		TYPES['*'] = { name: 'Darkness', sprite: "sprite0", color: 0x000000, type: PASSABLE},
-		TYPES[' '] = { name: 'Floor', sprite: "sprite1", color: 0xffffff, type: PASSABLE},
-		TYPES['?'] = { name: 'DarkFloor', sprite: "sprite2", color: 0xffffff, type: PASSABLE},
-		TYPES['X'] = { name: 'Blood', sprite: "sprite3", color: 0xff0000, type: PASSABLE},
-		TYPES['#'] = { name: 'Wall', sprite: "sprite4", color: 0x666666, type: IMPASSABLE},
-		TYPES['E'] = { name: 'Exit', sprite: "sprite5", color: 0x39BF17, type: EXIT},
-		TYPES['@'] = { name: 'Player', sprite: "sprite6", color: 0x00ff00, type: PLAYER, classPath:"PlayerTile"},
-		TYPES['1'] = { name: 'Monster 1', sprite: "sprite7", maxLife:1, attackRoll: 1, defenseRoll: 0, color: 0x009124, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['2'] = { name: 'Monster 2', sprite: "sprite8", maxLife:1, attackRoll: 1, defenseRoll: 1, color: 0x014512, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['3'] = { name: 'Monster 3', sprite: "sprite9", maxLife:2, attackRoll: 2, defenseRoll: 1, color: 0x669175, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['4'] = { name: 'Monster 4', sprite: "sprite10", maxLife:2, attackRoll: 3, defenseRoll: 2, color: 0x7D7D7D, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['5'] = { name: 'Monster 5', sprite: "sprite11", maxLife:3, attackRoll: 4, defenseRoll: 2, color: 0xE8E5C1, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['6'] = { name: 'Monster 6', sprite: "sprite12", maxLife:3, attackRoll: 4, defenseRoll: 2, color: 0xF0E548, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['7'] = { name: 'Monster 7', sprite: "sprite13", maxLife:4, attackRoll: 5, defenseRoll: 3, color: 0x736B00, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['8'] = { name: 'Monster 8', sprite: "sprite14", maxLife:4, attackRoll: 5, defenseRoll: 4, color: 0x9193B5, type: MONSTER, classPath:"MonsterTile"},
-		TYPES['9'] = { name: 'Monster 9', sprite: "sprite15", maxLife:6, attackRoll: 6, defenseRoll: 5, color: 0x9193B5, type: BOSS, classPath:"MonsterTile"},
-        TYPES['T'] = { name: 'Treasure', sprite: "sprite16", color: 0x333333, type: TREASURE},
-        TYPES['$'] = { name: 'Gold', sprite: "sprite17", color: 0xffff00, type: PICKUP},
-        TYPES['P'] = { name: 'Potion', sprite: "sprite18", color: 0x1100ee, type: PICKUP},
-        TYPES['A'] = { name: 'Artifact', sprite: "sprite19", color: 0x333333, type: ARTIFACT}
+		TYPES['*'] = { name: 'Darkness', sprite: "sprite0", type: PASSABLE},
+		TYPES[' '] = { name: 'Floor', sprite: "sprite1", type: PASSABLE},
+		TYPES['?'] = { name: 'DarkFloor', sprite: "sprite2", type: PASSABLE},
+		TYPES['X'] = { name: 'Blood', sprite: "sprite3", type: PASSABLE},
+		TYPES['#'] = { name: 'Wall', sprite: "sprite4", type: IMPASSABLE},
+		TYPES['E'] = { name: 'Exit', sprite: "sprite5", type: EXIT},
+		TYPES['@'] = { name: 'Player', sprite: "sprite6", type: PLAYER, classPath:"PlayerTile"},
+		TYPES['1'] = { name: 'Monster 1', sprite: "sprite7", type: MONSTER, classPath:"MonsterTile", pointPercent:".1"},
+		TYPES['2'] = { name: 'Monster 2', sprite: "sprite8", type: MONSTER, classPath:"MonsterTile", pointPercent:".2"},
+		TYPES['3'] = { name: 'Monster 3', sprite: "sprite9", type: MONSTER, classPath:"MonsterTile", pointPercent:".4"},
+		TYPES['4'] = { name: 'Monster 4', sprite: "sprite10", type: MONSTER, classPath:"MonsterTile", pointPercent:".6"},
+		TYPES['5'] = { name: 'Monster 5', sprite: "sprite11", type: MONSTER, classPath:"MonsterTile", pointPercent:".8"},
+		TYPES['6'] = { name: 'Monster 6', sprite: "sprite12", type: MONSTER, classPath:"MonsterTile", pointPercent:"1"},
+		TYPES['7'] = { name: 'Monster 7', sprite: "sprite13", type: MONSTER, classPath:"MonsterTile", pointPercent:"1.2"},
+		TYPES['8'] = { name: 'Monster 8', sprite: "sprite14", type: MONSTER, classPath:"MonsterTile", pointPercent:"1.4"},
+		TYPES['9'] = { name: 'Monster 9', sprite: "sprite15", type: BOSS, classPath:"MonsterTile", pointPercent:"1.8"},
+        TYPES['T'] = { name: 'Treasure', sprite: "sprite16", type: TREASURE},
+        TYPES['$'] = { name: 'Gold', sprite: "sprite17", type: PICKUP},
+        TYPES['P'] = { name: 'Potion', sprite: "sprite18", type: PICKUP},
+        TYPES['A'] = { name: 'Artifact', sprite: "sprite19", type: ARTIFACT}
         }
 
         public static function registerTile(id:String, template:Object):void
@@ -90,6 +90,11 @@ package com.gamecook.tilecrusader.tiles
         public function isBoss(tile:String):Boolean
         {
             return (TYPES[tile].type == BOSS);
+        }
+
+        public function isPlayer(value:String):Boolean
+        {
+            return (TYPES[value].type == PLAYER);
         }
     }
 }

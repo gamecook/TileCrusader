@@ -11,7 +11,7 @@ package com.gamecook.tilecrusader.tiles
     import com.gamecook.tilecrusader.dice.CombatDice;
     import com.gamecook.tilecrusader.dice.ICombatDice;
 
-    public class MonsterTile extends BaseTile implements IFight
+    public class MonsterTile extends BaseTile implements IFight, IMonster
     {
         protected var life:int = 1;
         protected var maxLife:int = 1;
@@ -19,6 +19,7 @@ package com.gamecook.tilecrusader.tiles
         protected var attackRoll:int = 1;
         protected var defenseRoll:int = 1;
         protected var characterPoints:int = 0;
+        private var pointPercent:Number = 0;
 
         public function MonsterTile()
         {
@@ -100,6 +101,10 @@ package com.gamecook.tilecrusader.tiles
 
             if(obj.hasOwnProperty("characterPoints"))
                 characterPoints = obj.characterPoints;
+
+            if(obj.hasOwnProperty("pointPercent"))
+                pointPercent = Number(obj.pointPercent);
+
         }
 
         public function subtractLife(value:int):void
@@ -132,6 +137,16 @@ package com.gamecook.tilecrusader.tiles
         public function setCharacterPoints(value:int):void
         {
             characterPoints = value;
+        }
+
+        public function getCharacterPointPercent():Number
+        {
+            return pointPercent;
+        }
+
+        public function getDefenseRolls():int
+        {
+            return defenseRoll;
         }
     }
 }

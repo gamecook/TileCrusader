@@ -7,9 +7,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.components.Label;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
+    import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.Template;
@@ -83,7 +85,7 @@ package com.gamecook.tilecrusader.activities
 
         private var display:Sprite;
         private var overlayLayer:Sprite;
-        private var statusLabel:TextField;
+        private var statusLabel:Label;
         private var status:String = "";
         private static const TILE_SIZE:int = 20;
         private var scale:int = 2;
@@ -106,7 +108,7 @@ package com.gamecook.tilecrusader.activities
         private var monstersDropTreasure:Boolean;
         private var isPlayerDead:Boolean;
         private var templateApplicator:TemplateApplicator;
-        private var monsterTemplate:TemplateCollection;
+        private var monsterTemplates:TemplateCollection;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -136,22 +138,26 @@ package com.gamecook.tilecrusader.activities
 
 
             renderWidth = Math.floor(viewPortWidth / tileWidth);
-            renderHeight = Math.floor(viewPortHeight / tileHeight);
+            renderHeight = Math.floor((viewPortHeight- tileHeight) / tileHeight) ;
 
             darknessWidth = 5;
             darknessHeight = 4;
 
 
             mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
-
+            //mapDarkness.revealAll(true);
 
 
             movementHelper = new MovementHelper(map);
 
-            tileTypes = new TileTypes();
-            tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
+            configureMonsterTemplates();
 
-            mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0xff0000));
+
+            tileTypes = new TileTypes();
+            //tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, data.player.characterPoints, 1));
+
+            mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = MESSAGE_HEIGHT;
             display.addChild(mapBitmap);
@@ -169,25 +175,25 @@ package com.gamecook.tilecrusader.activities
             characterSheet = new CharacterSheetView(stateManager, characterSheetData);
             characterSheet.x = viewPortWidth;
 
-            display.addChild(characterSheet);
+            overlayLayer.addChild(characterSheet);
 
             //TODO need to make this it's own class
-            statusLabel = new TextField();
-            statusLabel.width = viewPortWidth - 5;
-            statusLabel.height = MESSAGE_HEIGHT;
-            statusLabel.multiline = true;
-            statusLabel.wordWrap = true;
-            statusLabel.embedFonts = true;
-            statusLabel.background = true;
-            statusLabel.backgroundColor = 0x000000;
+            statusLabel = new Label(this, 5, 2, "");
+            statusLabel.textField.width = viewPortWidth - 5;
+            statusLabel.textField.autoSize = "none";
+            statusLabel.textField.height = MESSAGE_HEIGHT;
+            statusLabel.textField.multiline = true;
+            statusLabel.textField.wordWrap = true;
             statusLabel.x = 5;
             statusLabel.y = 2;
-            statusLabel.defaultTextFormat = new TextFormat("system", 14, 0xffffff);
-            addChild(statusLabel);
+            statusLabel.scaleX = statusLabel.scaleY = 1.5;
+            overlayLayer.addChild(statusLabel);
+
+            addStatusMessage(data.startMessage);
 
             configureGame();
 
-            configureMonsterTemplates();
+
 
             //TODO May need to slow this down for mobile
             keyPressDelay = .25 * MILLISECONDS;
@@ -197,23 +203,26 @@ package com.gamecook.tilecrusader.activities
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
-            quakeEffect = new Quake(mapBitmap);
-            textEffect = new TypeTextEffect(statusLabel, onTextEffectFinish);
+            quakeEffect = new Quake(display);
+            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectFinish);
+
+
+
         }
 
         private function configureMonsterTemplates():void
         {
             templateApplicator = new TemplateApplicator();
-            monsterTemplate = new TemplateCollection();
+            monsterTemplates = new TemplateCollection();
 
-            monsterTemplate.addTemplate("1", new Template("Regular", [TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 10);
-            monsterTemplate.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
-            monsterTemplate.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]));
-            monsterTemplate.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]));
-            monsterTemplate.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]));
-            monsterTemplate.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]));
-            monsterTemplate.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
-            monsterTemplate.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]));
+            monsterTemplates.addTemplate("1", new Template("Regular", [TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 10);
+            monsterTemplates.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
+            monsterTemplates.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]));
+            monsterTemplates.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]));
+            monsterTemplates.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]));
+            monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]));
+            monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
+            monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]));
 
         }
 
@@ -286,9 +295,6 @@ package com.gamecook.tilecrusader.activities
                         var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
 
                         var tmpTile:IFight = tileInstanceManager.getInstance(uID, tile) as IFight;
-                        //TODO need to connect up the template stuff here
-                        /*var template:ITemplate = monsterTemplate.getRandomTemplate();
-                        templateApplicator.apply(tmpTile, template, tmpTile.getCharacterPoints());*/
 
                         if (tmpTile is IFight)
                         {
@@ -323,7 +329,7 @@ package com.gamecook.tilecrusader.activities
            if(status.length > 0)
            {
                 textEffect.newMessage(status, 2);
-                 addThread(textEffect);
+                addThread(textEffect);
                 status = "";
            }
             else

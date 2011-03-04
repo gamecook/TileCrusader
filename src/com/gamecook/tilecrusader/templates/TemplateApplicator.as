@@ -41,7 +41,7 @@ package com.gamecook.tilecrusader.templates
         public function apply(target:IFight, template:ITemplate, points:int):void
         {
             var property:String;
-
+            trace("Apply", target.id, template, points);
             while(points > 0)
             {
                 property = template.nextProperty();

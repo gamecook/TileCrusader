@@ -24,6 +24,7 @@ package com.gamecook.tilecrusader.managers
         {
             if(!singletons[uniqueID])
             {
+                trace("Create new Tile for", type, uniqueID);
                 singletons[uniqueID] = factory.createTile(type);
             }
 

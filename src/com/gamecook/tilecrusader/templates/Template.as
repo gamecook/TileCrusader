@@ -58,7 +58,7 @@ package com.gamecook.tilecrusader.templates
             return attribute;
         }
 
-        public function get name():String
+        public function getName():String
         {
             return _name;
         }

@@ -78,47 +78,65 @@ package com.gamecook.tilecrusader.renderer
         {
             var bitmapData:BitmapData = spriteSheet.getSprite(tileMap.getTileSprite(" "), tileMap.getTileSprite(value));
 
-            if(tileMap.isMonster(value) || tileMap.isBoss(value))
+            if(tileMap.isMonster(value) || tileMap.isPlayer(value))
             {
-                var stats:Object = tileMap.getStats(value);
-                if(tileMap.isBoss(value))
-                    statsTF.textColor = 0xffff00;
-                else
-                    statsTF.textColor = 0xffffff;
+                var tile:IFight = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as IFight;
+                bitmapData = bitmapData.clone();
 
-                statsTF.htmlText = stats.hit+"|"+stats.defense;
+                statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font><font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
+
+                if(!tileMap.isBoss(value))
+                    statsTF.htmlText = "<i>"+statsTF.htmlText+"</i>";
+
                 bitmapData.draw(statsTF, statsMatrix);
+
+                var life:Number = tile.getLife() / tile.getMaxLife();
+
+                if(life < 1)
+                {
+                    var matrix:Matrix = new Matrix();
+
+                    bitmapData = bitmapData.clone();
+                    var xOffset:int = bitmapData.width-2;
+
+                    var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
+
+                    var lifeBarHeight:Number = bitmapData.height * life -1;
+                    var lifeBarY:Number = Math.round( bitmapData.height - lifeBarHeight);
+                    if(lifeBarHeight <=0) lifeBarHeight = 1;
+                    var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
+
+                    matrix.translate(xOffset, 0);
+                    bitmapData.draw(bg, matrix);
+
+                    matrix.translate(0, lifeBarY);
+                    bitmapData.draw(bar, matrix);
+
+                }
             }
 
-            var isPlayer:Boolean = value == "@";
+           /* var isPlayer:Boolean = (value == "@");
 
-            if(instances.hasInstance(currentTileID.toString()) || isPlayer)
+            if(tileMap.isMonster(value) || tileMap.isBoss(value) || isPlayer)
             {
                 var tile:BaseTile = instances.getInstance(isPlayer ? "@" : currentTileID.toString());
+
+
                 if(tile is IFight && value != "?")
                 {
                     var fighterTile:IFight = tile as IFight;
+
+
+                    statsTF.htmlText = "<font color='#ffffff'>"+fighterTile.getHitValue()+"</font><font color='#ffff00'>"+fighterTile.getDefenseValue()+"</font>";
+
+                    if(!tileMap.isBoss(value))
+                        statsTF.htmlText = "<u>"+statsTF.htmlText+"</u>";
+
+                    bitmapData.draw(statsTF, statsMatrix);
+
                     var life:Number = fighterTile.getLife() / fighterTile.getMaxLife();
                     var matrix:Matrix = new Matrix();
-                    if(life != 1)
-                    {
-                        bitmapData = bitmapData.clone();
-                        var xOffset:int = bitmapData.width-2;
 
-                        var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
-
-                        var lifeBarHeight:Number = bitmapData.height * life -1;
-                        var lifeBarY:Number = Math.round( bitmapData.height - lifeBarHeight);
-                        if(lifeBarHeight <=0) lifeBarHeight = 1;
-                        var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
-
-                        matrix.translate(xOffset, 0);
-                        bitmapData.draw(bg, matrix);
-
-                        matrix.translate(0, lifeBarY);
-                        bitmapData.draw(bar, matrix);
-
-                    }
 
                 }
                 else
@@ -129,8 +147,7 @@ package com.gamecook.tilecrusader.renderer
                         instances.removeInstance(currentTileID.toString());
                     }
                 }
-            }
-
+             }*/
             return bitmapData;
         }
 

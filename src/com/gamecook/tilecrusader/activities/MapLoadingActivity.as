@@ -32,6 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.enum.GameModes;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.BaseActivity;
@@ -81,6 +82,7 @@ package com.gamecook.tilecrusader.activities
 
 
 
+            data.startMessage = "You enter the dark dungeon.";
 
             data.map = map;
 
@@ -166,6 +168,12 @@ package com.gamecook.tilecrusader.activities
 
                     monsters.push(monsterType);
                 }
+            }
+
+            if(data.gameType == GameModes.KILL_BOSS)
+            {
+                monsters.push("9");
+                trace("Boss was added to level");
             }
 
             data.monsters = monsters;
