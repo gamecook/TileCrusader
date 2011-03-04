@@ -14,7 +14,6 @@ package com.gamecook.tilecrusader.tiles
         private var potions:int = 0;
         private var maxPotions:int = 0;
         private var kills:int = 0;
-        private var characterPoints:int = 0;
 
         public function PlayerTile()
         {
@@ -63,9 +62,6 @@ package com.gamecook.tilecrusader.tiles
 
             if(obj.hasOwnProperty("potions"))
                 potions = obj.potions;
-
-            if(obj.hasOwnProperty("characterPoints"))
-                characterPoints = obj.characterPoints;
 
         }
 

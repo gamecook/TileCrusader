@@ -70,7 +70,6 @@ package com.gamecook.tilecrusader.views
         private var invalid:Boolean = true;
         private var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
-        private var mapSelection:MapSelection;
         private var tileTypes:TileTypes;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
@@ -80,7 +79,6 @@ package com.gamecook.tilecrusader.views
         private var scale:int = 2;
         private var tileWidth:int;
         private var tileHeight:int;
-        private const SIDEBAR_WIDTH:int = 200;
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
         private var blocked:Boolean = true;
@@ -108,8 +106,7 @@ package com.gamecook.tilecrusader.views
             darknessHeight = 4;
 
             map = new RandomMap();
-            mapSelection = new MapSelection(map, renderWidth, renderHeight);
-            mapDarkness = new FogOfWarMapSelection(map, mapSelection, darknessWidth, darknessHeight);
+            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
             mapDarkness.revealAll(true);
 
             populateMapHelper = new PopulateMapHelper(map);

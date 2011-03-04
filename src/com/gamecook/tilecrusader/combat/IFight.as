@@ -24,5 +24,13 @@ package com.gamecook.tilecrusader.combat
         function getDefenseValue():int;
 
         function getMaxLife():int;
+
+        function addAttackRoll(i:int):void;
+
+        function addDefenseRoll(i:int):void;
+
+        function getCharacterPoints():int;
+
+        function setCharacterPoints(value:int):void;
     }
 }

@@ -18,6 +18,7 @@ package com.gamecook.tilecrusader.tiles
         protected var dice:ICombatDice;
         protected var attackRoll:int = 1;
         protected var defenseRoll:int = 1;
+        protected var characterPoints:int = 0;
 
         public function MonsterTile()
         {
@@ -32,7 +33,7 @@ package com.gamecook.tilecrusader.tiles
 
         public function setAttackRolls(value:int):void
         {
-            attackRoll;
+            attackRoll = value;
         }
 
         public function getAttackRolls():int
@@ -42,7 +43,7 @@ package com.gamecook.tilecrusader.tiles
 
         public function setDefenseRolls(value:int):void
         {
-            defenseRoll;
+            defenseRoll = value;
         }
 
         public function getDefenceRolls():int
@@ -96,6 +97,9 @@ package com.gamecook.tilecrusader.tiles
 
             if(obj.hasOwnProperty("defenseRoll"))
                 defenseRoll = obj.defenseRoll;
+
+            if(obj.hasOwnProperty("characterPoints"))
+                characterPoints = obj.characterPoints;
         }
 
         public function subtractLife(value:int):void
@@ -110,5 +114,24 @@ package com.gamecook.tilecrusader.tiles
             if(life > maxLife) life = maxLife;
         }
 
+        public function addAttackRoll(i:int):void
+        {
+            attackRoll ++;
+        }
+
+        public function addDefenseRoll(i:int):void
+        {
+            defenseRoll ++;
+        }
+
+        public function getCharacterPoints():int
+        {
+            return characterPoints;
+        }
+
+        public function setCharacterPoints(value:int):void
+        {
+            characterPoints = value;
+        }
     }
 }
