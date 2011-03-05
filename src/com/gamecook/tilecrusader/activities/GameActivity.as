@@ -10,6 +10,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
+    import com.gamecook.tilecrusader.enum.Darkness;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
@@ -145,8 +146,17 @@ package com.gamecook.tilecrusader.activities
 
 
             mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
-            //mapDarkness.revealAll(true);
 
+            // Apply darkness setting
+            switch (data.darkness)
+            {
+                case Darkness.NONE:
+                    mapDarkness.fullLineOfSite(true);
+                break;
+                case Darkness.TORCH:
+                    mapDarkness.tourchMode(true);
+                break;
+            }
 
             movementHelper = new MovementHelper(map);
 
@@ -155,7 +165,7 @@ package com.gamecook.tilecrusader.activities
 
             tileTypes = new TileTypes();
             //tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
-            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, data.player.characterPoints, 1));
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, data.player.characterPoints, 0));
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
@@ -193,8 +203,6 @@ package com.gamecook.tilecrusader.activities
 
             configureGame();
 
-
-
             //TODO May need to slow this down for mobile
             keyPressDelay = .25 * MILLISECONDS;
 
@@ -206,8 +214,6 @@ package com.gamecook.tilecrusader.activities
             quakeEffect = new Quake(display);
             textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectFinish);
 
-
-
         }
 
         private function configureMonsterTemplates():void
@@ -215,14 +221,14 @@ package com.gamecook.tilecrusader.activities
             templateApplicator = new TemplateApplicator();
             monsterTemplates = new TemplateCollection();
 
-            monsterTemplates.addTemplate("1", new Template("Regular", [TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 10);
-            monsterTemplates.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
-            monsterTemplates.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]));
-            monsterTemplates.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]));
-            monsterTemplates.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]));
-            monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]));
-            monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]));
-            monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]));
+            monsterTemplates.addTemplate("1", new Template("Regular", [TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 30);
+            monsterTemplates.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]),4);
+            monsterTemplates.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]),1);
+            monsterTemplates.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]),3);
+            monsterTemplates.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]),2);
+            monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]),2);
+            monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]),3);
+            monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]),1);
 
         }
 

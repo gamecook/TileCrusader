@@ -87,7 +87,7 @@ package com.gamecook.tilecrusader.activities
 
         private function generateRandomGameType():String
         {
-            var types:Array = [GameModes.FIND_ALL_TREASURE, GameModes.FIND_ARTIFACT, GameModes.KILL_ALL_MONSTERS, GameModes.KILL_BOSS];
+            var types:Array = [GameModes.KILL_ALL_MONSTERS, GameModes.KILL_BOSS];/*, GameModes.FIND_ALL_TREASURE, GameModes.FIND_ARTIFACT];*/
             return pickRandomArrayElement(types);
         }
 

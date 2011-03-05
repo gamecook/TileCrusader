@@ -20,9 +20,16 @@ package com.gamecook.tilecrusader.combat
         public function doubleAttack(attackerA:IFight, attackerB:IFight):DoubleAttackStatus
         {
             //TODO find out who has attack first
+            if(Math.random() >= 0.5)
+            {
+                var tmpInstance:IFight = attackerA;
+                attackerA = attackerB;
+                attackerB = tmpInstance;
+            }
 
             var statusA:AttackStatus = attack(attackerA, attackerB);
             var statusB:AttackStatus;
+
             if(!statusA.kill)
             {
                 statusB = attack(attackerB, attackerA);
@@ -40,6 +47,7 @@ package com.gamecook.tilecrusader.combat
         {
             var hit:int = attacker.getHitValue();
             var defense:int = defender.getDefenseValue();
+
             var difference:int;
             var success:Boolean;
 

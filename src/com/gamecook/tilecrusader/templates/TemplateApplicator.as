@@ -41,7 +41,6 @@ package com.gamecook.tilecrusader.templates
         public function apply(target:IFight, template:ITemplate, points:int):void
         {
             var property:String;
-            trace("Apply", target.id, template, points);
             while(points > 0)
             {
                 property = template.nextProperty();
@@ -58,7 +57,7 @@ package com.gamecook.tilecrusader.templates
             switch (property)
             {
                 case TemplateProperties.LIFE:
-                    target.addLife(1);
+                    target.addMaxLife(1);
                     break;
                 case TemplateProperties.ATTACK:
                     target.addAttackRoll(1);

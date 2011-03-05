@@ -23,17 +23,39 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/23/11
- * Time: 10:27 PM
+ * Date: 3/4/11
+ * Time: 11:12 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.enum
+package com.gamecook.tilecrusader.scores
 {
-    public class Darkness
-    {
-        public static const NONE:String = "long range";
-        public static var REVEAL:String = "reveal";
-        public static const TORCH:String = "torch";
+    import com.gamecook.scores.FScoreboard;
 
+    public class TileCrusaderScoreboard extends FScoreboard
+    {
+        public static const ID:String = "TileCrusaderScoreboard"
+        public static const MAX_SCORES:int = 5;
+
+        public function TileCrusaderScoreboard()
+        {
+            super(ID, MAX_SCORES);
+
+            //TODO need to remove this is just for testing
+            //clearScoreboard();
+
+            if (total == 0)
+            {
+                var defaultScores:Array = [
+                    {initials:"BUM", score: 1000},
+                    {initials:"Wil", score: 900},
+                    {initials:"CDE", score: 500},
+                    {initials:"FOR", score: 400},
+                    {initials:"FOD", score: 100}
+                ];
+
+                scores = defaultScores;
+            }
+
+        }
     }
 }

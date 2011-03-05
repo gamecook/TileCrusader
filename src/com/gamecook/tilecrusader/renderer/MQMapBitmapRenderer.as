@@ -46,23 +46,21 @@ package com.gamecook.tilecrusader.renderer
             statsTF.thickness = 0;
             statsTF.sharpness = 100;
             var tfx:TextFormat = new TextFormat("system2", 8, 0xffffff);
-            tfx.letterSpacing = -1;
+            tfx.letterSpacing = -1.2;
             statsTF.defaultTextFormat = tfx;
-
-
 
             var outline:GlowFilter = new GlowFilter();
             outline.blurX = outline.blurY = 1;
             outline.color = 0x000000;
             outline.quality = BitmapFilterQuality.HIGH;
-            outline.strength = 200;
+            outline.strength = 600;
 
             var filterArray:Array = new Array();
             filterArray.push(outline);
             statsTF.filters = filterArray;
 
             statsMatrix = new Matrix();
-            statsMatrix.translate(-2, 12);
+            statsMatrix.translate(-3, 12);
             //statsMatrix.scale(.8,.8);
         }
 
@@ -78,15 +76,12 @@ package com.gamecook.tilecrusader.renderer
         {
             var bitmapData:BitmapData = spriteSheet.getSprite(tileMap.getTileSprite(" "), tileMap.getTileSprite(value));
 
-            if(tileMap.isMonster(value) || tileMap.isPlayer(value))
+            if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
             {
                 var tile:IFight = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as IFight;
                 bitmapData = bitmapData.clone();
 
-                statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font><font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
-
-                if(!tileMap.isBoss(value))
-                    statsTF.htmlText = "<i>"+statsTF.htmlText+"</i>";
+                statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font> <font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
 
                 bitmapData.draw(statsTF, statsMatrix);
 
@@ -101,9 +96,9 @@ package com.gamecook.tilecrusader.renderer
 
                     var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
 
-                    var lifeBarHeight:Number = bitmapData.height * life -1;
-                    var lifeBarY:Number = Math.round( bitmapData.height - lifeBarHeight);
+                    var lifeBarHeight:Number = Math.floor(bitmapData.height * life -1);
                     if(lifeBarHeight <=0) lifeBarHeight = 1;
+                    var lifeBarY:Number = bitmapData.height - lifeBarHeight;
                     var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
 
                     matrix.translate(xOffset, 0);
@@ -115,39 +110,6 @@ package com.gamecook.tilecrusader.renderer
                 }
             }
 
-           /* var isPlayer:Boolean = (value == "@");
-
-            if(tileMap.isMonster(value) || tileMap.isBoss(value) || isPlayer)
-            {
-                var tile:BaseTile = instances.getInstance(isPlayer ? "@" : currentTileID.toString());
-
-
-                if(tile is IFight && value != "?")
-                {
-                    var fighterTile:IFight = tile as IFight;
-
-
-                    statsTF.htmlText = "<font color='#ffffff'>"+fighterTile.getHitValue()+"</font><font color='#ffff00'>"+fighterTile.getDefenseValue()+"</font>";
-
-                    if(!tileMap.isBoss(value))
-                        statsTF.htmlText = "<u>"+statsTF.htmlText+"</u>";
-
-                    bitmapData.draw(statsTF, statsMatrix);
-
-                    var life:Number = fighterTile.getLife() / fighterTile.getMaxLife();
-                    var matrix:Matrix = new Matrix();
-
-
-                }
-                else
-                {
-                    //TODO make sure this works, should remove monster instance one it's out of site.
-                    if(tileMap.isBoss(value))
-                    {
-                        instances.removeInstance(currentTileID.toString());
-                    }
-                }
-             }*/
             return bitmapData;
         }
 

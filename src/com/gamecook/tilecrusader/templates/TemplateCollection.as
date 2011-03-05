@@ -49,8 +49,7 @@ package com.gamecook.tilecrusader.templates
         {
             //TODO need to look into why this would return a null template
             var id:String = ArrayUtil.pickRandomArrayElement(templateNames);
-            if(!templates[id])
-                id = templateNames[0];
+
             return templates[id];
         }
 
@@ -60,7 +59,7 @@ package com.gamecook.tilecrusader.templates
 
             while(weight > 0)
             {
-                templateNames.push(weight);
+                templateNames.push(id);
                 weight --;
             }
         }

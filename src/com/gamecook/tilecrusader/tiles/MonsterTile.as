@@ -148,5 +148,11 @@ package com.gamecook.tilecrusader.tiles
         {
             return defenseRoll;
         }
+
+        public function addMaxLife(value:int):void
+        {
+            maxLife ++;
+            life = maxLife;
+        }
     }
 }
