@@ -52,9 +52,12 @@ package com.gamecook.tilecrusader.activities
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
+    import flash.events.KeyboardEvent;
     import flash.geom.Point;
     import flash.text.TextField;
     import flash.text.TextFormat;
+    import flash.ui.Keyboard;
+    import flash.ui.KeyboardType;
     import flash.utils.getTimer;
 
     public class GameActivity extends BaseActivity implements IControl
@@ -150,13 +153,14 @@ package com.gamecook.tilecrusader.activities
             // Apply darkness setting
             switch (data.darkness)
             {
-                case Darkness.NONE:
+                case Darkness.LONG_RANGE:
                     mapDarkness.fullLineOfSite(true);
                 break;
                 case Darkness.TORCH:
                     mapDarkness.tourchMode(true);
                 break;
             }
+
 
             movementHelper = new MovementHelper(map);
 
@@ -182,7 +186,7 @@ package com.gamecook.tilecrusader.activities
 
             var characterSheetData:Object = {player:player};
 
-            characterSheet = new CharacterSheetView(stateManager, characterSheetData);
+            characterSheet = new CharacterSheetView(activityManager, characterSheetData);
             characterSheet.x = viewPortWidth;
 
             overlayLayer.addChild(characterSheet);
@@ -216,6 +220,52 @@ package com.gamecook.tilecrusader.activities
 
         }
 
+        private function onKeyDown(event:KeyboardEvent):void
+        {
+            switch(event.keyCode)
+            {
+                case Keyboard.L:
+                    cycleThroughLighting();
+                    break;
+                case Keyboard.P:
+                    player.setLife(player.getMaxLife());
+                    break;
+            }
+
+            invalidate();
+        }
+
+        private function cycleThroughLighting():void
+        {
+            var types:Array = [Darkness.LONG_RANGE, Darkness.REVEAL, Darkness.TORCH, Darkness.NONE];
+            var id:int = types.indexOf(data.darkness);
+            id ++;
+            if(id >= types.length)
+                id = 0;
+            var lightingFlags:Array;
+            data.darkness = types[id];
+            if(id == 0)
+            {
+                lightingFlags = [false, false, false];
+            }else if (id == 1)
+            {
+                lightingFlags = [false, true, false];
+            }
+            else if (id == 2)
+            {
+               lightingFlags = [true, false, false];
+            }
+            else
+            {
+                lightingFlags = [false, false, true];
+            }
+
+            mapDarkness.tourchMode(lightingFlags[0]);
+            mapDarkness.fullLineOfSite(lightingFlags[1]);
+            mapDarkness.revealAll(lightingFlags[2]);
+
+            statusLabel.text = "Changing lighting mode "+data.darkness;
+        }
         private function configureMonsterTemplates():void
         {
             templateApplicator = new TemplateApplicator();
@@ -319,7 +369,16 @@ package com.gamecook.tilecrusader.activities
                         {
                             //TODO gameover
                             trace("Level Done");
-                            configureGame();
+                            isPlayerDead = true;
+                            var newData:Object = {player:{name:player.getName(),
+                            maxLife: player.getMaxLife(),
+                            attackRoll: player.getAttackRolls(),
+                            defenseRoll: player.getDefenceRolls(),
+                            maxPotions: player.getMaxPotion(),
+                            potions: player.getPotions(),
+                            characterPoints:player.getCharacterPoints()}};
+
+                            startNextActivityTimer(FinishMapActivity, 1, newData);
                         }
                         else
                         {
@@ -381,12 +440,26 @@ package com.gamecook.tilecrusader.activities
 
             addThread(quakeEffect);
 
+            // Run the check to see if the player is dead
+            checkIfPlayerIsDead();
+
+            //Check the isPlayerDead flag, if dead exit out of the fight update
+            if(isPlayerDead)
+                return;
+
+            // Player is still alive so display combat message
+            //TODO this may need to cleaned up and only show combat message when monster is not dead and do different message once killed
             addStatusMessage(status.toString());
 
-            if (status.attackStatus.kill)
+            // Test to see if the monster is dead
+            if (tmpTile.getLife() <= 0)
             {
+
                 var tile:String = map.getTileType(tmpPoint);
-                monsters.splice(monsters.indexOf(tile),1);
+                var index:int = monsters.indexOf(Number(tile));
+                monsters.splice(index,1);
+
+                trace("Monster", tile, "was killed", monsters.length, "left index",index,  monsters);
 
                 player.addKill();
 
@@ -402,9 +475,8 @@ package com.gamecook.tilecrusader.activities
 
                 tileInstanceManager.removeInstance(uID);
 
-
-
             }
+
         }
 
         private function openTreasure(tmpPoint:Point):void
@@ -504,24 +576,7 @@ package com.gamecook.tilecrusader.activities
         {
             super.render();
 
-            if (player.getLife() == 0)
-            {
-
-                if(player.getPotions() == 0)
-                {
-                    addStatusMessage("Player was killed!", true);
-                    //stateManager(GameOverActivity);
-                    isPlayerDead = true;
-                    //TODO build stat Data Object
-                    startNextActivityTimer(GameOverActivity, 1);
-                }
-                else
-                {
-                    player.setLife(player.getMaxLife());
-                    player.subtractPotion();
-                    addStatusMessage("You have taken a potion and restored your health.", true);
-                }
-            }
+            checkIfPlayerIsDead();
 
             if (invalid)
             {
@@ -541,9 +596,33 @@ package com.gamecook.tilecrusader.activities
             }
         }
 
+        private function checkIfPlayerIsDead():void
+        {
+            if (player.getLife() == 0)
+            {
+
+                if (player.getPotions() == 0)
+                {
+                    addStatusMessage("Player was killed!", true);
+                    //stateManager(GameOverActivity);
+                    isPlayerDead = true;
+                    //TODO build stat Data Object
+                    startNextActivityTimer(GameOverActivity, 1);
+                }
+                else
+                {
+                    player.setLife(player.getMaxLife());
+                    player.subtractPotion();
+                    addStatusMessage("You have taken a potion and restored your health.", true);
+                }
+            }
+        }
+
         override public function onStart():void
         {
             super.onStart();
+            //This needs to be a compiler argument for debug
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 
             controls = new Controls(this);
         }

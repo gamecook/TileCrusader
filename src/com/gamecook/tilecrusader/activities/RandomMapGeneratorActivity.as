@@ -35,11 +35,11 @@ package com.gamecook.tilecrusader.activities
 
             addChild(settingsLayout);
 
-            generatedata();
+            generateData();
 
             var buttonLayout:StackLayout = new StackLayout(10, StackLayout.HORIZONTAL);
 
-            var redo:Button = UIFactory.createTextFieldButton(generatedata, 0,0, "New Map");
+            var redo:Button = UIFactory.createTextFieldButton(generateData, 0,0, "New Map");
             buttonLayout.addChild(redo);
 
             var submit:Button = UIFactory.createTextFieldButton(onSubmit, 0,0, "Play Map");
@@ -51,7 +51,7 @@ package com.gamecook.tilecrusader.activities
             addChild(buttonLayout);
         }
 
-        private function generatedata():void
+        private function generateData():void
         {
             data.size = generateRandomMapSize();
             data.gameType = generateRandomGameType();
@@ -81,7 +81,7 @@ package com.gamecook.tilecrusader.activities
 
         private function generateRandomDarkness():String
         {
-            var types:Array = [Darkness.NONE, Darkness.REVEAL, Darkness.TORCH];
+            var types:Array = [Darkness.LONG_RANGE, Darkness.REVEAL, Darkness.TORCH];
             return pickRandomArrayElement(types);
         }
 

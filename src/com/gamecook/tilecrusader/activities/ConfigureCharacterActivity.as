@@ -112,21 +112,21 @@ package com.gamecook.tilecrusader.activities
                         <VBox spacing="10">
                             <VBox spacing="-5">
                                 <Label id="life" text="Life:"/>
-                                <NumericStepper id="lifeNumStepper" minimum="1" maximum="20" value="8" event="change:onPointChange"/>
+                                <NumericStepper id="lifeNumStepper" minimum="1" maximum="99" value="8" event="change:onPointChange"/>
                             </VBox>
                             <VBox spacing="-5">
                                 <Label id="hit" text="Attack:"/>
-                                <NumericStepper id="hitNumStepper" minimum="1" maximum="9" value="4" event="change:onPointChange"/>
+                                <NumericStepper id="hitNumStepper" minimum="1" maximum="99" value="4" event="change:onPointChange"/>
                             </VBox>
                         </VBox>
                         <VBox spacing="10">
                             <VBox spacing="-5">
                                 <Label id="def" text="Defense:"/>
-                                <NumericStepper id="defNumStepper" minimum="1" maximum="9"  value="2" event="change:onPointChange"/>
+                                <NumericStepper id="defNumStepper" minimum="1" maximum="99"  value="2" event="change:onPointChange"/>
                             </VBox>
                             <VBox spacing="-5">
                                 <Label id="potions" text="Potions:"/>
-                                <NumericStepper id="potionsNumStepper" minimum="1" maximum="20"event="change:onPointChange"/>
+                                <NumericStepper id="potionsNumStepper" minimum="1" maximum="99"event="change:onPointChange"/>
                             </VBox>
 
                         </VBox>

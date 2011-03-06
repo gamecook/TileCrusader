@@ -56,12 +56,12 @@ package com.gamecook.tilecrusader.activities
 
         public function onHelp(event:MouseEvent):void
         {
-            stateManager.setCurrentActivity(HelpActivity);
+            activityManager.setCurrentActivity(HelpActivity);
         }
 
         public function onOptions(event:MouseEvent):void
         {
-            stateManager.setCurrentActivity(OptionsActivity);
+            activityManager.setCurrentActivity(OptionsActivity);
         }
     }
 }

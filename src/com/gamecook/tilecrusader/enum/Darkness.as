@@ -31,9 +31,10 @@ package com.gamecook.tilecrusader.enum
 {
     public class Darkness
     {
-        public static const NONE:String = "long range";
+        public static const LONG_RANGE:String = "longRange";
         public static var REVEAL:String = "reveal";
         public static const TORCH:String = "torch";
+        public static var NONE:String = "none";
 
     }
 }
