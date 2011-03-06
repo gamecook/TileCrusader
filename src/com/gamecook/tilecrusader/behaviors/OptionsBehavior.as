@@ -23,32 +23,47 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 3/5/11
- * Time: 10:57 PM
+ * Date: 3/6/11
+ * Time: 12:01 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.iterators
+package com.gamecook.tilecrusader.behaviors
 {
-    public class ClassIterator implements IIterate
+    import com.gamecook.tilecrusader.iterators.IIterator;
+    import com.gamecook.tilecrusader.iterators.OptionsIterator;
+
+    public class OptionsBehavior
     {
-        private var array:Array;
-        private var index:int = -1;
-        public function ClassIterator(array:Array)
+        private var target:*;
+        private var options:Array;
+        private var startIndex:int;
+        private var iterator:IIterator;
+
+        public function OptionsBehavior(target:*, options:Array, startIndex:int = -1)
         {
-            this.array = array;
+            this.startIndex = startIndex;
+            this.options = options;
+            this.target = target;
+            iterator = new OptionsIterator(options, startIndex);
         }
 
-        public function hasNext():Boolean
+        public function nextOption():*
         {
-            return true;
+            var value:* = iterator.getNext();
+
+            //TODO may need an option to put clean text in vs a value
+            if(target.hasOwnProperty("text"))
+                target.text = value;
+            else if(target.hasOwnProperty("label"))
+                target.label = value;
+
+            return value;
         }
 
-        public function getNext():*
+        public function reset():void
         {
-            index ++;
-            if(index >= array.length)
-                index = 0;
-            return array[index];
+            iterator.setIndex(startIndex);
+            nextOption();
         }
     }
 }

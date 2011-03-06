@@ -23,17 +23,40 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/23/11
- * Time: 10:25 PM
+ * Date: 3/6/11
+ * Time: 12:39 PM
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.enum
 {
-    public class MapSizes
+    public class BooleanOptions
     {
-        public static const SMALL:int = 30;
-        public static const MEDIUM:int = 40;
-        public static const LARGE:int = 50;
+        public static const TRUE:Boolean = true;
+        public static const FALSE:Boolean = false;
+        public static const YES:String = "Yes";
+        public static const NO:String = "No";
+
+        public static function getTFOptions():Array
+        {
+            return  [TRUE, FALSE];
+        }
+
+        public static function getFTOptions():Array
+        {
+            return  [FALSE, TRUE];
+        }
+
+        public static function getYNOptions():Array
+        {
+            return  [YES, NO];
+        }
+
+        public static function getNYOptions():Array
+        {
+            return  [NO, YES];
+        }
 
     }
+
+
 }

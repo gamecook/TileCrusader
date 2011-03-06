@@ -29,15 +29,155 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.components.PushButton;
+    import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+    import com.gamecook.tilecrusader.enum.BooleanOptions;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class RandomMapGeneratorFilterActivity extends BaseActivity
+    import flash.events.MouseEvent;
+
+    public class RandomMapGeneratorFilterActivity extends RandomMapBGActivity
     {
+        public var mapSizeButton:PushButton;
+        private var mapOptionIterator:OptionsBehavior;
+        private const RANDOM:String = "Random";
+        private var showMonstersOptionIterator:OptionsBehavior;
+        public var showMonstersButton:PushButton;
+        public var treasureButton:PushButton;
+        private var dropTreasureOptionIterator:OptionsBehavior;
+        private var darknessOptionIterator:OptionsBehavior;
+        public var darknessButton:PushButton;
+        public var gameModeButton:PushButton;
+        private var gameOptionIterator:OptionsBehavior;
 
         public function RandomMapGeneratorFilterActivity(activityManager:IActivityManager, data:*)
         {
             super(activityManager, data);
+        }
+
+        override protected function onCreate():void
+        {
+            super.onCreate();
+
+            var xml:XML = <comps>
+                    <VBox spacing="10" x="20" y="20" scaleX="2" scaleY="2">
+                      <HBox spacing="10">
+
+                            <VBox spacing="10">
+                            <VBox spacing="-5">
+                                <Label id="map" text="mapSize:"/>
+                                <PushButton id="mapSizeButton" width="100" event="click:onMapSizeChange"/>
+                            </VBox>
+                            <VBox spacing="-5">
+                                <Label id="darkness" text="Darkness:"/>
+                                <PushButton id="darknessButton" width="100" event="click:onDarknessChange"/>
+                            </VBox>
+                        </VBox>
+                        <VBox spacing="10">
+                            <VBox spacing="-5">
+                                <Label id="showMonsters" text="Show Monsters:"/>
+                                <PushButton id="showMonstersButton" width="100"event="click:onShowMonstersChange"/>
+                            </VBox>
+                            <VBox spacing="-5">
+                                <Label id="treasure" text="Dropped Treasure:"/>
+                                <PushButton id="treasureButton" width="100" event="click:onDropTreasureChange"/>
+                            </VBox>
+
+                        </VBox>
+
+                    </HBox>
+                         <PushButton id="gameModeButton" label="This is the game mode" width="210" event="click:onGameModeChange"/>
+                            <HBox spacing="10">
+                                <PushButton id="resetButton" label="Reset" event="click:onReset"/>
+                                <PushButton id="saveButton" label="Save & Close" event="click:onSave"/>
+                            </HBox>
+                    </VBox>
+                    </comps>
+
+            var config:MinimalConfigurator = new MinimalConfigurator(this);
+            config.parseXML(xml);
+
+            var startIndex:int;
+
+            // Setup Map Size behavior
+            var mapOptions:Array = MapSizeOptions.getValues();
+            startIndex = mapOptions.length - 1;
+            mapOptions.push(RANDOM);
+            mapOptionIterator = new OptionsBehavior(mapSizeButton, mapOptions, startIndex);
+            mapOptionIterator.nextOption();
+
+            // Setup Show Monster behavior
+            var showMonsterOptions:Array = BooleanOptions.getYNOptions();
+            startIndex = showMonsterOptions.length - 1;
+            showMonsterOptions.push(RANDOM);
+            showMonstersOptionIterator = new OptionsBehavior(showMonstersButton, showMonsterOptions, startIndex);
+            showMonstersOptionIterator.nextOption();
+
+            // Setup Darkness Behavior
+            var darknessOptions:Array = DarknessOptions.getValues();
+            startIndex = darknessOptions.length - 1;
+            darknessOptions.push(RANDOM);
+            darknessOptionIterator = new OptionsBehavior(darknessButton, darknessOptions, startIndex);
+            darknessOptionIterator.nextOption();
+
+            // Setup Drop Treasure
+             var dropTreasureOptions:Array = BooleanOptions.getYNOptions();
+            startIndex = dropTreasureOptions.length - 1;
+            dropTreasureOptions.push(RANDOM);
+            dropTreasureOptionIterator = new OptionsBehavior(treasureButton, dropTreasureOptions, startIndex);
+            dropTreasureOptionIterator.nextOption();
+
+            // Game Mode
+            var gameModeOptions:Array = GameModeOptions.getValues();
+            startIndex = gameModeOptions.length - 1;
+            gameModeOptions.push(RANDOM);
+            gameOptionIterator = new OptionsBehavior(gameModeButton, gameModeOptions, startIndex);
+            gameOptionIterator.nextOption();
+
+        }
+
+        public function onMapSizeChange(event:MouseEvent):void
+        {
+            mapOptionIterator.nextOption();
+        }
+
+        public function onShowMonstersChange(event:MouseEvent):void
+        {
+            showMonstersOptionIterator.nextOption();
+        }
+
+        public function onDropTreasureChange(event:MouseEvent):void
+        {
+            dropTreasureOptionIterator.nextOption();
+        }
+
+        public function onDarknessChange(event:MouseEvent):void
+        {
+            darknessOptionIterator.nextOption();
+        }
+
+         public function onGameModeChange(event:MouseEvent):void
+        {
+            gameOptionIterator.nextOption();
+        }
+
+        public function onReset(event:MouseEvent):void
+        {
+            mapOptionIterator.reset();
+            showMonstersOptionIterator.reset();
+            dropTreasureOptionIterator.reset();
+            darknessOptionIterator.reset();
+            gameOptionIterator.reset();
+        }
+
+        public function onSave(event:MouseEvent):void
+        {
+            nextActivity(RandomMapGeneratorActivity, data);
         }
     }
 }

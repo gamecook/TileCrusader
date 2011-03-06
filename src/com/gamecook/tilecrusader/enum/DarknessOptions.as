@@ -29,12 +29,16 @@
  */
 package com.gamecook.tilecrusader.enum
 {
-    public class Darkness
+    public class DarknessOptions
     {
         public static const LONG_RANGE:String = "longRange";
         public static var REVEAL:String = "reveal";
         public static const TORCH:String = "torch";
         public static var NONE:String = "none";
 
+        public static function getValues():Array
+        {
+            return [NONE, REVEAL, LONG_RANGE, TORCH];
+        }
     }
 }

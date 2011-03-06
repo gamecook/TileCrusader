@@ -10,7 +10,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
-    import com.gamecook.tilecrusader.enum.Darkness;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
@@ -29,7 +29,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.gamecook.tilecrusader.combat.CombatHelper;
-    import com.gamecook.tilecrusader.enum.GameModes;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.status.DoubleAttackStatus;
@@ -153,10 +153,10 @@ package com.gamecook.tilecrusader.activities
             // Apply darkness setting
             switch (data.darkness)
             {
-                case Darkness.LONG_RANGE:
+                case DarknessOptions.LONG_RANGE:
                     mapDarkness.fullLineOfSite(true);
                 break;
-                case Darkness.TORCH:
+                case DarknessOptions.TORCH:
                     mapDarkness.tourchMode(true);
                 break;
             }
@@ -237,7 +237,7 @@ package com.gamecook.tilecrusader.activities
 
         private function cycleThroughLighting():void
         {
-            var types:Array = [Darkness.LONG_RANGE, Darkness.REVEAL, Darkness.TORCH, Darkness.NONE];
+            var types:Array = [DarknessOptions.LONG_RANGE, DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
             var id:int = types.indexOf(data.darkness);
             id ++;
             if(id >= types.length)
@@ -382,7 +382,7 @@ package com.gamecook.tilecrusader.activities
                         }
                         else
                         {
-                            addStatusMessage("You can not leave until you "+GameModes.getGameModeDescription(gameMode))+".";
+                            addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
                     default:
@@ -416,16 +416,16 @@ package com.gamecook.tilecrusader.activities
 
             switch(gameMode)
             {
-                case GameModes.FIND_ALL_TREASURE:
+                case GameModeOptions.FIND_ALL_TREASURE:
                     success = treasureIterator.hasNext();
                 break;
-                case GameModes.FIND_ARTIFACT:
+                case GameModeOptions.FIND_ARTIFACT:
                     success = hasArtifact;
                 break;
-                case GameModes.KILL_ALL_MONSTERS:
+                case GameModeOptions.KILL_ALL_MONSTERS:
                     success = (monsters.length == 0);
                 break;
-                case GameModes.KILL_BOSS:
+                case GameModeOptions.KILL_BOSS:
                     success = (monsters.indexOf("9") == -1);
                 break;
 

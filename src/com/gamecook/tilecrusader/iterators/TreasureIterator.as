@@ -10,7 +10,7 @@ package com.gamecook.tilecrusader.iterators
     import com.gamecook.tilecrusader.tiles.BaseTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    public class TreasureIterator implements IIterate
+    public class TreasureIterator implements IIterator
     {
         private var pool:Array = [];
 
@@ -42,6 +42,10 @@ package com.gamecook.tilecrusader.iterators
 
             randomizePool();
             return pool.pop();
+        }
+
+        public function setIndex(value:int = -1):void
+        {
         }
     }
 }

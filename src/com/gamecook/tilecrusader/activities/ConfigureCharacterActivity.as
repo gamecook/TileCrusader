@@ -14,9 +14,10 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.VBox;
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.enum.Races;
+    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+    import com.gamecook.tilecrusader.enum.RacesOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
-    import com.gamecook.tilecrusader.iterators.ClassIterator;
+    import com.gamecook.tilecrusader.iterators.OptionsIterator;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
@@ -44,17 +45,14 @@ package com.gamecook.tilecrusader.activities
         public var hitNumStepper:NumericStepper;
         public var defNumStepper:NumericStepper;
         public var potionsNumStepper:NumericStepper;
-        public var title:Label;
         public var nameInput:InputText;
         private var defaultTotalTextColor:uint;
         private var spriteSheet:SpriteSheet;
-        private var classIterator:ClassIterator;
         public var classButton:PushButton;
-        private var templateApplicator:TemplateApplicator;
-        private var playerTemplates:TemplateCollection;
         private var classTemplates:Array;
         public var layout:VBox;
         private var defaultName:String;
+        private var classOptionIterator:OptionsBehavior;
 
         public function ConfigureCharacterActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -158,22 +156,23 @@ package com.gamecook.tilecrusader.activities
             defaultName = nameInput.text;
             defaultTotalTextColor = pointTotal.textField.textColor;
 
+            //classIterator = new OptionsIterator();
+
+            classTemplates = [];
+            classTemplates[RacesOptions.KNIGHT] = {life:10, attackRoll:3, defense:2, potions:5};
+            classTemplates[RacesOptions.MAGE] = {life:5, attackRoll:2, defense:1, potions:12};
+            classTemplates[RacesOptions.THIEF] = {life:7, attackRoll:2, defense:1, potions:10};
+            classTemplates[RacesOptions.NECROMANCER] = {life:13, attackRoll:3, defense:2, potions:2};
+            classTemplates[RacesOptions.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2};
+            classTemplates[RacesOptions.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10};
+
+            classOptionIterator = new OptionsBehavior(classButton, [RacesOptions.KNIGHT, RacesOptions.MAGE, RacesOptions.THIEF, RacesOptions.NECROMANCER, RacesOptions.BARBARIAN, RacesOptions.DARK_MAGE]);
+            layout.x = fullSizeWidth - 450;
+
+            onChangeClass();
             calculatePoints();
             updateTotalLabel();
 
-            classIterator = new ClassIterator([Races.KNIGHT, Races.MAGE, Races.THIEF, Races.NECROMANCER, Races.BARBARIAN, Races.DARK_MAGE]);
-
-            classTemplates = []
-            classTemplates[Races.KNIGHT] = {life:10, attackRoll:3, defense:2, potions:5};
-            classTemplates[Races.MAGE] = {life:5, attackRoll:2, defense:1, potions:12};
-            classTemplates[Races.THIEF] = {life:7, attackRoll:2, defense:1, potions:10};
-            classTemplates[Races.NECROMANCER] = {life:13, attackRoll:3, defense:2, potions:2};
-            classTemplates[Races.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2};
-            classTemplates[Races.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10};
-
-            onChangeClass();
-
-            layout.x = fullSizeWidth - 450;
         }
 
         private function updateTotalLabel():void
@@ -211,21 +210,17 @@ package com.gamecook.tilecrusader.activities
             characterPoints -= Number(hitNumStepper.value);
             characterPoints -= Number(defNumStepper.value);
             characterPoints -= Number(potionsNumStepper.value);
-
-
         }
 
         public function onChangeClass(event:MouseEvent = null):void
         {
-            var race:String = classIterator.getNext();
-            classButton.label = race;
-            var template:Object = classTemplates[race];
+            var race:String = classOptionIterator.nextOption();
 
+            var template:Object = classTemplates[race];
 
             lifeNumStepper.value = template.life;
             hitNumStepper.value = template.attackRoll;
             defNumStepper.value = template.defense;
-
             potionsNumStepper.value = template.potions;
 
             updateRandomMapPlayer();

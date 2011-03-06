@@ -7,13 +7,14 @@
  */
 package com.gamecook.tilecrusader.enum
 {
-    public class GameModes
+    public class GameModeOptions
     {
-        public static const KILL_ALL_MONSTERS:String = "killAllMonsters";
-        public static const FIND_ALL_TREASURE:String = "findAllTreasure";
-        public static const FIND_ARTIFACT:String = "findArtifact";
-        public static const KILL_BOSS:String = "killBoss";
-        public static const POISONED:String = "poisoned";
+        public static const KILL_ALL_MONSTERS:String = "Kill All Monsters";
+        public static const FIND_ALL_TREASURE:String = "Find All Treasure";
+        public static const FIND_ARTIFACT:String = "Find Artifact";
+        public static const KILL_BOSS:String = "Kill Boss";
+        public static const POISONED:String = "Find A Cure";
+        public static var EXPLORE:String = "Explore Map";
 
         public static function getGameModeDescription(gameMode:String):String
         {
@@ -32,9 +33,16 @@ package com.gamecook.tilecrusader.enum
                     message = "kill the boss";
                 case POISONED:
                     message = "find the cure";
+                case EXPLORE:
+                    message = "explore map";
 
             }
             return message;
+        }
+
+        public static function getValues():Array
+        {
+            return [EXPLORE, FIND_ALL_TREASURE, FIND_ARTIFACT, POISONED, KILL_ALL_MONSTERS, KILL_ALL_MONSTERS];
         }
     }
 }
