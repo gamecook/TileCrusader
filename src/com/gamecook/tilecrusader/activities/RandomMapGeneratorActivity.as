@@ -9,6 +9,7 @@ package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
     import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.BooleanOptions;
     import com.gamecook.tilecrusader.utils.ArrayUtil;
     import com.gamecook.tilecrusader.views.Button;
@@ -20,20 +21,23 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.events.MouseEvent;
+    import flash.net.SharedObject;
     import flash.text.TextField;
 
     public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
         private var settingsLayout:StackLayout;
-        private var darknessTypes:Array;
-        private var gameModeTypes:Array;
-        private var mapSizeTypes:Array;
+        private var darknessOptions:Array;
+        private var gameModeOptions:Array;
+        private var mapSizeOptions:Array;
         public var mapSizeLabel:Label;
         public var darknessLabel:Label;
         public var showMonsters:Label;
         public var dropTreasure:Label;
-        private var showMonsterTypes:Array;
+        public var gameMode:Label;
+        private var showMonsterOptions:Array;
         private var dropTreasureOptions:Array;
+        private var mapOptionsSO:SharedObject;
 
         public function RandomMapGeneratorActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -45,12 +49,17 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
-            darknessTypes = (data.darknessTypes) ? data.darknessTypes : DarknessOptions.getValues();
-            gameModeTypes = (data.gameTypes) ? data.gameTypes : GameModeOptions.getValues();
-            mapSizeTypes = (data.mapSizes) ? data.mapSizes : MapSizeOptions.getValues();
-            showMonsterTypes = (data.showMonsterTypes) ? data.showMonsterTypes : BooleanOptions.getNYOptions();
-            dropTreasureOptions = (data.dropTreasureOptions) ? data.dropTreasureOptions : BooleanOptions.getNYOptions();
+            //Get Map Option Settings
+            mapOptionsSO = SharedObject.getLocal(ApplicationShareObjects.MAP_OPTIONS);
+            var mapOptionsSOData:Object = mapOptionsSO.data;
 
+            trace("Has Shared Object", mapOptionsSOData);
+
+            darknessOptions = (mapOptionsSOData.darknessOptions) ? mapOptionsSOData.darknessOptions : DarknessOptions.getValues();
+            gameModeOptions = (mapOptionsSOData.gameModeOptions) ? mapOptionsSOData.gameModeOptions : GameModeOptions.getValues();
+            mapSizeOptions = (mapOptionsSOData.mapSizeOptions) ? mapOptionsSOData.mapSizeOptions : MapSizeOptions.getValues();
+            showMonsterOptions = (mapOptionsSOData.showMonsterOptions) ? mapOptionsSOData.showMonsterOptions : BooleanOptions.getNYOptions();
+            dropTreasureOptions = (mapOptionsSOData.dropTreasureOptions) ? mapOptionsSOData.dropTreasureOptions : BooleanOptions.getNYOptions();
 
             var xml:XML = <comps>
 
@@ -59,6 +68,7 @@ package com.gamecook.tilecrusader.activities
                       <Label id="darknessLabel"/>
                       <Label id="showMonsters"/>
                       <Label id="dropTreasure"/>
+                      <Label id="gameMode"/>
 
                       <PushButton id="generateDataButton" label="New Map" event="click:generateData"/>
                       <PushButton id="submitButton" label="Play Map" event="click:onSubmit"/>
@@ -86,6 +96,7 @@ package com.gamecook.tilecrusader.activities
             darknessLabel.text = "Darkness: "+data.darkness;
             showMonsters.text = "Show Monsters: "+data.showMonsters;
             dropTreasure.text = "Drop Treasure: "+data.monstersDropTreasure;
+            gameMode.text = "Game Mode: "+data.gameType;
         }
 
         public function onSubmit(event:MouseEvent):void
@@ -96,22 +107,22 @@ package com.gamecook.tilecrusader.activities
         private function generateRandomDarkness():String
         {
 
-            return ArrayUtil.pickRandomArrayElement(darknessTypes);
+            return ArrayUtil.pickRandomArrayElement(darknessOptions);
         }
 
         private function generateRandomGameType():String
         {
-            return ArrayUtil.pickRandomArrayElement(gameModeTypes);
+            return ArrayUtil.pickRandomArrayElement(gameModeOptions);
         }
 
         private function generateRandomMapSize():int
         {
-            return ArrayUtil.pickRandomArrayElement(mapSizeTypes);
+            return ArrayUtil.pickRandomArrayElement(mapSizeOptions);
         }
 
         private function generateRandomShowMonsters():Boolean
         {
-            return generateRandomBooleanFromString(showMonsterTypes);
+            return generateRandomBooleanFromString(showMonsterOptions);
         }
 
         private function generateDropTreasure():Boolean

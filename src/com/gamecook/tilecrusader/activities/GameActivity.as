@@ -113,6 +113,7 @@ package com.gamecook.tilecrusader.activities
         private var isPlayerDead:Boolean;
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
+        private var exploredTiles:Number;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -154,7 +155,7 @@ package com.gamecook.tilecrusader.activities
             switch (data.darkness)
             {
                 case DarknessOptions.LONG_RANGE:
-                    mapDarkness.fullLineOfSite(true);
+                    mapDarkness.fullLineOfSight(true);
                 break;
                 case DarknessOptions.TORCH:
                     mapDarkness.tourchMode(true);
@@ -261,7 +262,7 @@ package com.gamecook.tilecrusader.activities
             }
 
             mapDarkness.tourchMode(lightingFlags[0]);
-            mapDarkness.fullLineOfSite(lightingFlags[1]);
+            mapDarkness.fullLineOfSight(lightingFlags[1]);
             mapDarkness.revealAll(lightingFlags[2]);
 
             statusLabel.text = "Changing lighting mode "+data.darkness;
@@ -428,7 +429,9 @@ package com.gamecook.tilecrusader.activities
                 case GameModeOptions.KILL_BOSS:
                     success = (monsters.indexOf("9") == -1);
                 break;
-
+                case GameModeOptions.EXPLORE:
+                    success = (exploredTiles == 1);
+                 break;
             }
 
             return success;
@@ -570,6 +573,8 @@ package com.gamecook.tilecrusader.activities
 
             super.update(elapsed);
 
+
+
         }
 
         override protected function render():void
@@ -591,8 +596,11 @@ package com.gamecook.tilecrusader.activities
 
                 t = (getTimer()-t);
 
+                exploredTiles = mapDarkness.getVisitedTiles()/map.getOpenTiles().length;
                 if(status == "")
-                    statusLabel.text = "Render executed in " + t + " ms\n", true;
+                    statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
+
+                trace("Explored Tiles", mapDarkness.getVisitedTiles(), "/", map.getOpenTiles().length);
             }
         }
 

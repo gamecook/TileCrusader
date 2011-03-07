@@ -29,8 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.ActivityManager;
+
+    import flash.events.MouseEvent;
+    import flash.net.SharedObject;
+    import flash.ui.Mouse;
 
     public class OptionsActivity extends RandomMapBGActivity
     {
@@ -47,6 +53,32 @@ package com.gamecook.tilecrusader.activities
             mapViewPortY = fullSizeHeight - 160;
 
             super.onCreate();
+
+
+             var xml:XML = <comps>
+
+                      <VBox x="20" y="20" scaleX="2" scaleY="2">
+
+                      <PushButton id="clearMapFilter" label="Clear Random Map Filter" event="click:onClearRandomMapFilter"/>
+                      <PushButton id="back" label="Back" event="click:onBack"/>
+                    </VBox>
+
+                    </comps>
+
+            var config:MinimalConfigurator = new MinimalConfigurator(this);
+            config.parseXML(xml);
+        }
+
+        public function onClearRandomMapFilter(event:MouseEvent):void
+        {
+            var mapOptionsSO:SharedObject = SharedObject.getLocal(ApplicationShareObjects.MAP_OPTIONS);
+            var mapOptionsSOData:Object = mapOptionsSO.data;
+            mapOptionsSO.clear();
+        }
+
+        public function onBack(event:MouseEvent):void
+        {
+            nextActivity(StartActivity);
         }
     }
 }

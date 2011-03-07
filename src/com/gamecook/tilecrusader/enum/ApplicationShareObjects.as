@@ -23,22 +23,16 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/23/11
- * Time: 10:27 PM
+ * Date: 3/6/11
+ * Time: 8:38 PM
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.enum
 {
-    public class DarknessOptions
+    public class ApplicationShareObjects
     {
-        public static const LONG_RANGE:String = "Long Range";
-        public static var REVEAL:String = "Reveal";
-        public static const TORCH:String = "Torch";
-        public static var NONE:String = "None";
-
-        public static function getValues():Array
-        {
-            return [NONE, REVEAL, LONG_RANGE, TORCH];
-        }
+        public static const APPLICATION_NAME:String = "TileCrusader";
+        public static const SETTINGS:String = "Settings";
+        public static const MAP_OPTIONS:String = APPLICATION_NAME+"."+SETTINGS+".MapOptions";
     }
 }

@@ -190,7 +190,7 @@ package com.gamecook.tilecrusader.activities
         {
             trace("Has Focus");
             var input:TextField = event.target as TextField;
-            addEventListener(FocusEvent.FOCUS_OUT, onNameFocusOut);
+            input.addEventListener(FocusEvent.FOCUS_OUT, onNameFocusOut);
             if(input.text == defaultName)
                 input.text = "";
         }
