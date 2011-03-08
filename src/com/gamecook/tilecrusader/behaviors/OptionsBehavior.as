@@ -65,5 +65,10 @@ package com.gamecook.tilecrusader.behaviors
             iterator.setIndex(startIndex);
             nextOption();
         }
+
+        public function setIndex(value:int):void
+        {
+            iterator.setIndex(value);
+        }
     }
 }

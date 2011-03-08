@@ -15,6 +15,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.RacesOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.iterators.OptionsIterator;
@@ -29,6 +30,7 @@ package com.gamecook.tilecrusader.activities
     import flash.events.FocusEvent;
     import flash.events.MouseEvent;
     import flash.geom.Rectangle;
+    import flash.net.SharedObject;
     import flash.text.TextField;
 
 
@@ -53,6 +55,9 @@ package com.gamecook.tilecrusader.activities
         public var layout:VBox;
         private var defaultName:String;
         private var classOptionIterator:OptionsBehavior;
+        private var stateSO:SharedObject;
+        private var stateSOData:Object;
+        public var classLabel:Label;
 
         public function ConfigureCharacterActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -63,6 +68,7 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            loadState(null);
             mapViewPortX = 20;
             mapViewPortWidth = fullSizeWidth - 480;
             mapViewPortY = 100
@@ -112,7 +118,7 @@ package com.gamecook.tilecrusader.activities
 
                         </VBox>
                                 <VBox spacing="-5">
-                            <Label id="race" text="Class:"/>
+                            <Label id="classLabel" text="Class:"/>
                             <PushButton id="classButton" label="Knight" event="click:onChangeClass"/>
                         </VBox>
                                 </HBox>
@@ -142,9 +148,10 @@ package com.gamecook.tilecrusader.activities
                         </VBox>
 
                     </HBox>
+                        <PushButton id="accept" label="I Like It" width="210" event="click:onDone"/>
                         <HBox spacing="10">
-                            <PushButton label="Go Back" event="click:onBack"/>
-                            <PushButton label="I Like It" event="click:onDone"/>
+                            <PushButton id="cancel" label="Cancel" event="click:onBack"/>
+                            <PushButton id="saveButton" label="Save As Default" event="click:onSave"/>
                         </HBox>
                     </VBox>
 
@@ -166,10 +173,24 @@ package com.gamecook.tilecrusader.activities
             classTemplates[RacesOptions.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2};
             classTemplates[RacesOptions.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10};
 
-            classOptionIterator = new OptionsBehavior(classButton, [RacesOptions.KNIGHT, RacesOptions.MAGE, RacesOptions.THIEF, RacesOptions.NECROMANCER, RacesOptions.BARBARIAN, RacesOptions.DARK_MAGE]);
+            classOptionIterator = new OptionsBehavior(classButton, RacesOptions.getValues());
             layout.x = fullSizeWidth - 450;
 
-            onChangeClass();
+            if(stateSOData.customTemplate)
+            {
+                applyTemplate(stateSOData.customTemplate);
+                classButton.label = stateSOData.customTemplate.className;
+                nameInput.text = stateSOData.customTemplate.name;
+                classLabel.text = "Class(Custom):";
+
+                var index:int = RacesOptions.getValues().indexOf(stateSOData.customTemplate.className);
+                classOptionIterator.setIndex(index);
+
+            }
+            else
+            {
+                onChangeClass();
+            }
             calculatePoints();
             updateTotalLabel();
 
@@ -214,10 +235,16 @@ package com.gamecook.tilecrusader.activities
 
         public function onChangeClass(event:MouseEvent = null):void
         {
+            classLabel.text = "Class:";
             var race:String = classOptionIterator.nextOption();
 
             var template:Object = classTemplates[race];
 
+            applyTemplate(template);
+        }
+
+        private function applyTemplate(template:Object):void
+        {
             lifeNumStepper.value = template.life;
             hitNumStepper.value = template.attackRoll;
             defNumStepper.value = template.defense;
@@ -266,6 +293,24 @@ package com.gamecook.tilecrusader.activities
                             characterPoints:DEFAULT_POINTS};
 
             nextActivity(RandomMapGeneratorActivity, data);
+        }
+
+        public function onSave(event:MouseEvent):void
+        {
+            stateSOData.customTemplate = {name: nameInput.text == "" ? "Not Sure" : nameInput.text, className: classButton.label, life:lifeNumStepper.value, attackRoll:hitNumStepper.value, defense:defNumStepper.value, potions:potionsNumStepper.value}
+            stateSO.flush();
+            classLabel.text = "Class(Custom):";
+            trace("Custom Template SO Size:", (stateSOData.size/1,024), "k");
+        }
+
+
+        override public function loadState(obj:Object):void
+        {
+            super.loadState(obj);
+
+            //Get Map Option Settings
+            stateSO = SharedObject.getLocal("ConfigureCharacterActivity");
+            stateSOData = stateSO.data;
         }
 
     }

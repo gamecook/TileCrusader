@@ -42,7 +42,7 @@ package com.gamecook.tilecrusader.enum
 
         public static function getValues():Array
         {
-            return [EXPLORE, FIND_ALL_TREASURE, FIND_ARTIFACT, POISONED, KILL_ALL_MONSTERS, KILL_ALL_MONSTERS];
+            return [EXPLORE, /*FIND_ALL_TREASURE, FIND_ARTIFACT, POISONED,*/ KILL_ALL_MONSTERS, KILL_BOSS];
         }
     }
 }

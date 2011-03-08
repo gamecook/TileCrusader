@@ -38,6 +38,12 @@ package com.gamecook.tilecrusader.enum
         public static const BARBARIAN:String = "Barbarian";
         public static const DARK_MAGE:String = "Dark Mage";
 
+        public static function getValues():Array
+        {
+            return [KNIGHT, MAGE, THIEF, NECROMANCER, BARBARIAN, DARK_MAGE];
+        }
 
     }
+
+
 }

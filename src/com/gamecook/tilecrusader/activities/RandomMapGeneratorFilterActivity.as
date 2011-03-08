@@ -181,6 +181,7 @@ package com.gamecook.tilecrusader.activities
 
         public function onGameModeChange(event:MouseEvent):void
         {
+            //TODO need to add in logic to dissable options that will not work for game mode
             gameOptionIterator.nextOption();
         }
 
