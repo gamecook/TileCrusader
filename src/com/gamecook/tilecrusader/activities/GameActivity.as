@@ -10,10 +10,12 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
@@ -54,6 +56,7 @@ package com.gamecook.tilecrusader.activities
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.geom.Point;
+    import flash.net.SharedObject;
     import flash.text.TextField;
     import flash.text.TextFormat;
     import flash.ui.Keyboard;
@@ -85,7 +88,7 @@ package com.gamecook.tilecrusader.activities
         private var hasArtifact:Boolean;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
-        private var mapDarkness:FogOfWarMapSelection;
+        private var mapSelection:TCMapSelection;
 
         private var display:Sprite;
         private var overlayLayer:Sprite;
@@ -149,16 +152,16 @@ package com.gamecook.tilecrusader.activities
             darknessHeight = 4;
 
 
-            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 5);
 
             // Apply darkness setting
             switch (data.darkness)
             {
                 case DarknessOptions.LONG_RANGE:
-                    mapDarkness.fullLineOfSight(true);
+                    mapSelection.fullLineOfSight(true);
                 break;
                 case DarknessOptions.TORCH:
-                    mapDarkness.tourchMode(true);
+                    mapSelection.tourchMode(true);
                 break;
             }
 
@@ -183,7 +186,15 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
+            if(!data.tileInstanceManager)
+            {
+                player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
+            }
+            else
+            {
+                tileInstanceManager.parseObject(data.tileInstanceManager);
+                player = tileInstanceManager.getInstance("@", "@") as PlayerTile;
+            }
 
             var characterSheetData:Object = {player:player};
 
@@ -261,9 +272,9 @@ package com.gamecook.tilecrusader.activities
                 lightingFlags = [false, false, true];
             }
 
-            mapDarkness.tourchMode(lightingFlags[0]);
-            mapDarkness.fullLineOfSight(lightingFlags[1]);
-            mapDarkness.revealAll(lightingFlags[2]);
+            mapSelection.tourchMode(lightingFlags[0]);
+            mapSelection.fullLineOfSight(lightingFlags[1]);
+            mapSelection.revealAll(lightingFlags[2]);
 
             statusLabel.text = "Changing lighting mode "+data.darkness;
         }
@@ -291,7 +302,7 @@ package com.gamecook.tilecrusader.activities
 
         private function configureGame():void
         {
-            mapDarkness.clear();
+            mapSelection.clear();
 
             tileInstanceManager.clear();
 
@@ -588,19 +599,19 @@ package com.gamecook.tilecrusader.activities
                 var t:int = getTimer();
 
                 //TODO there is a bug in renderer that doesn't let you see the last row
-                mapDarkness.setCenter(movementHelper.playerPosition);
-                renderer.renderMap(mapDarkness);
+                mapSelection.setCenter(movementHelper.playerPosition);
+                renderer.renderMap(mapSelection);
                 characterSheet.refresh();
 
                 invalid = false;
 
                 t = (getTimer()-t);
 
-                exploredTiles = mapDarkness.getVisitedTiles()/map.getOpenTiles().length;
+                exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
                 if(status == "")
                     statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
 
-                trace("Explored Tiles", mapDarkness.getVisitedTiles(), "/", map.getOpenTiles().length);
+                trace("Explored Tiles", mapSelection.getVisitedTiles(), "/", map.getOpenTiles().length);
             }
         }
 
@@ -633,6 +644,21 @@ package com.gamecook.tilecrusader.activities
             stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 
             controls = new Controls(this);
+        }
+
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            //super.saveState(obj, activeState);
+            var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            var activeGameSO:Object = activeStateSO.data;
+            activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
+            activeGameSO.mapSelection = mapSelection.toObject();
+            activeGameSO.startPosition = movementHelper.playerPosition;
+            activeGameSO.map = map.tiles;
+
+            activeStateSO.flush();
+
         }
     }
 }

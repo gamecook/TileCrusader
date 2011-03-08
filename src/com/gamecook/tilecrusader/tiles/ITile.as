@@ -14,5 +14,6 @@ package com.gamecook.tilecrusader.tiles
         function getName():String;
         function get id():int;
         function get type():String;
+
     }
 }

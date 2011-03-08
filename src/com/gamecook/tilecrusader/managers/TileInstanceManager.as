@@ -8,9 +8,10 @@
 package com.gamecook.tilecrusader.managers
 {
     import com.gamecook.tilecrusader.factory.ITileFactory;
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
     import com.gamecook.tilecrusader.tiles.BaseTile;
 
-    public class TileInstanceManager
+    public class TileInstanceManager implements ISerializeToObject
     {
         protected var singletons:Array = [];
         private var factory:ITileFactory;
@@ -44,7 +45,6 @@ package com.gamecook.tilecrusader.managers
             return "TileInstanceManager[]";
         }
 
-
         public function hasInstance(uniqueID:String):Boolean
         {
             return singletons[uniqueID]
@@ -58,6 +58,33 @@ package com.gamecook.tilecrusader.managers
         public function clear():void
         {
             singletons.length = 0;
+        }
+
+        public function parseObject(value:Object):void
+        {
+            var tmpInstances = value.instances;
+            var total:int = tmpInstances;
+            var i:int;
+            var instanceTemplate:Object;
+
+            for(i = 0; i < total; i++)
+            {
+                instanceTemplate = tmpInstances[i];
+                getInstance[tmpInstances.id,  tmpInstances.type, instanceTemplate];
+            }
+        }
+
+        public function toObject():Object
+        {
+            var obj:Object = {};
+            obj.instances = [];
+            var baseTile:BaseTile;
+            for (baseTile in singletons)
+            {
+                obj.instances.push(baseTile.toObject());
+                trace(baseTile);
+            }
+            return obj;
         }
     }
 }

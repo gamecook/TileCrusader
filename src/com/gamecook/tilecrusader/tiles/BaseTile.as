@@ -7,17 +7,21 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
 
     import flash.geom.Point;
+    import flash.utils.getQualifiedClassName;
 
-    public class BaseTile implements ITile
+    public class BaseTile implements ITile, ISerializeToObject
     {
         private var name:String = "undefined";
         private var _type:String;
         private var _id:int;
+        private var className:String;
 
         public function BaseTile()
         {
+            className = getQualifiedClassName(this).split("::")[1];
         }
 
         public function getName():String
@@ -54,6 +58,11 @@ package com.gamecook.tilecrusader.tiles
         {
             if(obj.hasOwnProperty("name"))
                 name = obj.name;
+        }
+
+        public function toObject():Object
+        {
+            return {name:name, type:type, id: id, classPath:className};
         }
 
     }

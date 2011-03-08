@@ -89,5 +89,16 @@ package com.gamecook.tilecrusader.tiles
         {
             return maxPotions;
         }
+
+        override public function toObject():Object
+        {
+            var obj:Object = super.toObject();
+
+            obj.gold = gold;
+            obj.maxPotions = maxPotions;
+            obj.potions = potions;
+
+            return obj;
+        }
     }
 }
