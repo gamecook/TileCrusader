@@ -198,7 +198,7 @@ package com.gamecook.tilecrusader.activities
 
             var characterSheetData:Object = {player:player};
 
-            characterSheet = new CharacterSheetView(activityManager, characterSheetData);
+            characterSheet = new CharacterSheetView(activityManager, characterSheetData, onQuit);
             characterSheet.x = viewPortWidth;
 
             overlayLayer.addChild(characterSheet);
@@ -230,6 +230,11 @@ package com.gamecook.tilecrusader.activities
             quakeEffect = new Quake(display);
             textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectFinish);
 
+        }
+
+        private function onQuit():void
+        {
+            saveState(null);
         }
 
         private function onKeyDown(event:KeyboardEvent):void
@@ -659,6 +664,12 @@ package com.gamecook.tilecrusader.activities
 
             activeStateSO.flush();
 
+        }
+
+        override public function onStop():void
+        {
+            saveState(null);
+            super.onStop();
         }
     }
 }

@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.views
         private var portraitBitmap:Bitmap;
 
         //TODO maybe have this extend Activity and run it in to the game loop for update
-        public function CharacterSheetView(stateManager:IActivityManager, data:* = null)
+        public function CharacterSheetView(stateManager:IActivityManager, data:* = null, onQuit:Function = null)
         {
             super(stateManager, data);
         }
@@ -120,6 +120,8 @@ package com.gamecook.tilecrusader.views
 
         private function onQuit():void
         {
+            if(onQuit)
+                onQuit();
             nextActivity(StartActivity);
         }
 
