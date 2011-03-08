@@ -32,6 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
@@ -41,6 +42,8 @@ package com.gamecook.tilecrusader.activities
 
     import flash.display.Bitmap;
     import flash.geom.Rectangle;
+    import flash.net.SharedObject;
+    import flash.utils.getQualifiedClassName;
 
     public class MapLoadingActivity extends BaseActivity
     {
@@ -49,6 +52,8 @@ package com.gamecook.tilecrusader.activities
 
         private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
+        private var activeStateSO:SharedObject;
+        private var map:RandomMap;
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -59,6 +64,9 @@ package com.gamecook.tilecrusader.activities
         override protected function onCreate():void
         {
             super.onCreate();
+
+            activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            data = activeStateSO.data;
 
             parseSpriteSheet();
 
@@ -71,34 +79,45 @@ package com.gamecook.tilecrusader.activities
 
             createMap();
 
+            data.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            activeStateSO.flush();
+
+            data.mapInstance = map;
+
             startNextActivityTimer(GameActivity, 2, data);
         }
 
         private function createMap():void
         {
-            var map:RandomMap = new RandomMap();
-            TimeMethodExecutionUtil.execute("generateMap", map.generateMap, data.size);
+            map = new RandomMap();
+
+            if (data.map)
+            {
+                map.tiles = data.map.tiles;
+            }
+            else
+            {
+                TimeMethodExecutionUtil.execute("generateMap", map.generateMap, data.size);
+
+                data.startMessage = "You enter the dark dungeon.";
+
+                generateMonsters();
+                generateTreasure();
+
+                var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
+                populateMapHelper.populateMap.apply(this, data.monsters);
+                populateMapHelper.populateMap.apply(this, data.chests);
+
+                data.startPosition = populateMapHelper.getRandomEmptyPoint();
+
+                data.cashPool = 100;
+                data.cashRange = 10;
+
+                data.map = map.toObject();
+            }
+
             trace("Map Size", map.width, map.height, "was generated");
 
-
-
-            data.startMessage = "You enter the dark dungeon.";
-
-            data.map = map;
-
-
-            generateMonsters();
-
-            generateTreasure();
-
-            var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
-            populateMapHelper.populateMap.apply(this, data.monsters);
-            populateMapHelper.populateMap.apply(this, data.chests);
-
-            data.startPosition = populateMapHelper.getRandomEmptyPoint();
-
-            data.cashPool = 100;
-            data.cashRange = 10;
         }
 
         private function generateTreasure():void
@@ -156,7 +175,7 @@ package com.gamecook.tilecrusader.activities
             var total:int = monsterTypes.length;
             var monsterValues:Number;
             var monsterType:int;
-            var totalTiles:int = Math.floor(RandomMap(data.map).getOpenTiles().length * totalMonsterPercent);
+            var totalTiles:int = Math.floor(RandomMap(map).getOpenTiles().length * totalMonsterPercent);
 
             for(i = 0; i < total; i++)
             {
@@ -178,7 +197,7 @@ package com.gamecook.tilecrusader.activities
 
             data.monsters = monsters;
 
-            trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(data.map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
+            trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
         }
 
         private function parseSpriteSheet():void

@@ -23,6 +23,7 @@ package com.gamecook.tilecrusader.activities
     import flash.events.MouseEvent;
     import flash.net.SharedObject;
     import flash.text.TextField;
+    import flash.utils.getQualifiedClassName;
 
     public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
@@ -38,6 +39,7 @@ package com.gamecook.tilecrusader.activities
         private var showMonsterOptions:Array;
         private var dropTreasureOptions:Array;
         private var mapOptionsSO:SharedObject;
+        private var activeStateSO:SharedObject;
 
         public function RandomMapGeneratorActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -52,6 +54,9 @@ package com.gamecook.tilecrusader.activities
             //Get Map Option Settings
             mapOptionsSO = SharedObject.getLocal(ApplicationShareObjects.MAP_OPTIONS);
             var mapOptionsSOData:Object = mapOptionsSO.data;
+
+            activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            data = activeStateSO.data;
 
             trace("Has Shared Object", mapOptionsSOData);
 
@@ -101,7 +106,9 @@ package com.gamecook.tilecrusader.activities
 
         public function onSubmit(event:MouseEvent):void
         {
-            nextActivity(MapLoadingActivity, data);
+            data.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            activeStateSO.flush();
+            nextActivity(MapLoadingActivity);
         }
 
         private function generateRandomDarkness():String

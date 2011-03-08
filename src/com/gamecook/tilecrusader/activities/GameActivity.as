@@ -128,7 +128,7 @@ package com.gamecook.tilecrusader.activities
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
-            map = data.map;
+            map = data.mapInstance;
             gameMode = data.gameType;
             monsters = data.monsters;
             treasurePool = data.treasurePool;
@@ -300,7 +300,7 @@ package com.gamecook.tilecrusader.activities
 
             treasureIterator = new TreasureIterator(treasurePool);
 
-            movementHelper.startPosition(data.startPosition);
+            movementHelper.startPosition(data.startPosition is Point ? data.startPosition : new Point(data.startPosition.x,data.startPosition.y));
 
             characterSheet.setPlayer(player);
 

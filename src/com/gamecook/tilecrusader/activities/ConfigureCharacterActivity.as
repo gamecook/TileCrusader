@@ -32,6 +32,7 @@ package com.gamecook.tilecrusader.activities
     import flash.geom.Rectangle;
     import flash.net.SharedObject;
     import flash.text.TextField;
+    import flash.utils.getQualifiedClassName;
 
 
     public class ConfigureCharacterActivity extends RandomMapBGActivity
@@ -71,7 +72,7 @@ package com.gamecook.tilecrusader.activities
             loadState(null);
             mapViewPortX = 20;
             mapViewPortWidth = fullSizeWidth - 480;
-            mapViewPortY = 100
+            mapViewPortY = 100;
             super.onCreate();
 
             parseSpriteSheet();
@@ -284,15 +285,22 @@ package com.gamecook.tilecrusader.activities
 
         public function  onDone(event:MouseEvent):void
         {
-            data.player = {name:nameInput.text,
+
+            var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            var activeGameSO:Object = activeStateSO.data;
+            activeGameSO.activeGame = true;
+            activeGameSO.player = {name:nameInput.text,
                             maxLife: lifeNumStepper.value,
                             attackRoll: hitNumStepper.value,
                             defenseRoll: defNumStepper.value,
                             maxPotions: potionsNumStepper.value,
                             points:characterPoints,
                             characterPoints:DEFAULT_POINTS};
-
-            nextActivity(RandomMapGeneratorActivity, data);
+            activeGameSO.lastActivity = getQualifiedClassName(RandomMapGeneratorActivity).replace("::", ".");
+            activeStateSO.flush();
+            trace("Active Game SO Size:", (activeStateSO.size/1,024), "k");
+            nextActivity(RandomMapGeneratorActivity);
+            nextActivity(RandomMapGeneratorActivity);
         }
 
         public function onSave(event:MouseEvent):void
@@ -300,13 +308,13 @@ package com.gamecook.tilecrusader.activities
             stateSOData.customTemplate = {name: nameInput.text == "" ? "Not Sure" : nameInput.text, className: classButton.label, life:lifeNumStepper.value, attackRoll:hitNumStepper.value, defense:defNumStepper.value, potions:potionsNumStepper.value}
             stateSO.flush();
             classLabel.text = "Class(Custom):";
-            trace("Custom Template SO Size:", (stateSOData.size/1,024), "k");
+            trace("Custom Template SO Size:", (stateSO.size/1,024), "k");
         }
 
 
         override public function loadState(obj:Object):void
         {
-            super.loadState(obj);
+            //super.loadState(obj);
 
             //Get Map Option Settings
             stateSO = SharedObject.getLocal("ConfigureCharacterActivity");

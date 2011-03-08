@@ -34,5 +34,6 @@ package com.gamecook.tilecrusader.enum
         public static const APPLICATION_NAME:String = "TileCrusader";
         public static const SETTINGS:String = "Settings";
         public static const MAP_OPTIONS:String = APPLICATION_NAME+"."+SETTINGS+".MapOptions";
+        public static var ACTIVE_GAME:String = APPLICATION_NAME+".ActiveGame";
     }
 }

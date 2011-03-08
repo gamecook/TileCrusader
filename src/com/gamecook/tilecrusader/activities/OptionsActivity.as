@@ -59,7 +59,8 @@ package com.gamecook.tilecrusader.activities
 
                       <VBox x="20" y="20" scaleX="2" scaleY="2">
 
-                      <PushButton id="clearMapFilter" label="Clear Random Map Filter" event="click:onClearRandomMapFilter"/>
+                      <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
+                      <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>
                       <PushButton id="back" label="Back" event="click:onBack"/>
                     </VBox>
 
@@ -72,8 +73,13 @@ package com.gamecook.tilecrusader.activities
         public function onClearRandomMapFilter(event:MouseEvent):void
         {
             var mapOptionsSO:SharedObject = SharedObject.getLocal(ApplicationShareObjects.MAP_OPTIONS);
-            var mapOptionsSOData:Object = mapOptionsSO.data;
             mapOptionsSO.clear();
+        }
+
+        public function onClearSavedGame(event:MouseEvent):void
+        {
+            var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            so.clear();
         }
 
         public function onBack(event:MouseEvent):void
