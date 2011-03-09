@@ -44,11 +44,23 @@ package com.gamecook.tilecrusader.maps
 
         public function parseObject(value:Object):void
         {
+            /*if(value.exploredTiles)
+            {
+                var tmpExploredTiles:Array = value.exploredTiles;
+                var total:int = tmpExploredTiles.length;
+                var i:int;
+                for(i = 0; i < total; i++)
+                {
+                    //exploredTilesHashMap[tmpExploredTiles[i]] = " ";
+                }
+            }*/
         }
 
         public function toObject():Object
         {
-            return {exploredTiles: exploredTiles};
+            var obj:Object = {};
+            //obj["exploredTiles"] = exploredTiles;
+            return obj;
         }
     }
 }

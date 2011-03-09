@@ -42,10 +42,12 @@ package com.gamecook.tilecrusader.views
         private var lifeBarBG:Shape;
         private var lifeBar:Shape;
         private var portraitBitmap:Bitmap;
+        private var onQuitCallback:Function;
 
         //TODO maybe have this extend Activity and run it in to the game loop for update
-        public function CharacterSheetView(stateManager:IActivityManager, data:* = null, onQuit:Function = null)
+        public function CharacterSheetView(stateManager:IActivityManager, data:* = null, onQuitCallback:Function = null)
         {
+            this.onQuitCallback = onQuitCallback;
             super(stateManager, data);
         }
 
@@ -120,8 +122,8 @@ package com.gamecook.tilecrusader.views
 
         private function onQuit():void
         {
-            if(onQuit)
-                onQuit();
+            if(onQuitCallback)
+                onQuitCallback();
             nextActivity(StartActivity);
         }
 

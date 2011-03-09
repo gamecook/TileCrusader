@@ -154,6 +154,11 @@ package com.gamecook.tilecrusader.activities
 
             mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 5);
 
+            if(data.mapSelection)
+            {
+                mapSelection.parseObject(data.mapSelection);
+            }
+
             // Apply darkness setting
             switch (data.darkness)
             {

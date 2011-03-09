@@ -33,6 +33,6 @@ package com.gamecook.tilecrusader.templates
     {
         function getTemplate(id:String):ITemplate;
         function getRandomTemplate():ITemplate;
-        function addTemplate(id:String, template:ITemplate, weight:int = 1);
+        function addTemplate(id:String, template:ITemplate, weight:int = 1):void;
     }
 }

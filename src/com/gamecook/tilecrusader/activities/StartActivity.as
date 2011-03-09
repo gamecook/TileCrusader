@@ -62,7 +62,9 @@ package com.gamecook.tilecrusader.activities
 
         public function onStartGame(event:MouseEvent):void
         {
-            //stateSO.clear();
+            var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            so.clear();
+            //TODO show a warning that this will overwrite the current game
             stateSOData.activeGame = true;
             nextActivity(ConfigureCharacterActivity);
         }

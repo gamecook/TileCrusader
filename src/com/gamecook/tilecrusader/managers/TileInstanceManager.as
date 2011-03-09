@@ -62,28 +62,28 @@ package com.gamecook.tilecrusader.managers
 
         public function parseObject(value:Object):void
         {
-            var tmpInstances = value.instances;
-            var total:int = tmpInstances;
+            /*var tmpInstances:Array = value.instances;
+            var total:int = tmpInstances.length;
             var i:int;
             var instanceTemplate:Object;
 
             for(i = 0; i < total; i++)
             {
                 instanceTemplate = tmpInstances[i];
-                getInstance[tmpInstances.id,  tmpInstances.type, instanceTemplate];
-            }
+                getInstance(tmpInstances.id,  tmpInstances.type, instanceTemplate);
+            }*/
         }
 
         public function toObject():Object
         {
             var obj:Object = {};
-            obj.instances = [];
+            /*obj.instances = [];
             var baseTile:BaseTile;
-            for (baseTile in singletons)
+            for each(baseTile in singletons)
             {
                 obj.instances.push(baseTile.toObject());
                 trace(baseTile);
-            }
+            }*/
             return obj;
         }
     }

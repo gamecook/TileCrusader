@@ -53,7 +53,7 @@ package com.gamecook.tilecrusader.templates
             return templates[id];
         }
 
-        public function addTemplate(id:String, template:ITemplate, weight:int = 1)
+        public function addTemplate(id:String, template:ITemplate, weight:int = 1):void
         {
             templates[id] = template;
 
