@@ -41,6 +41,7 @@
     <import file="${includes.loc}/compile-swc.xml" />
     <import file="${includes.loc}/android.xml" />
     <import file="${includes.loc}/chrome.xml" />
+    <import file="${includes.loc}/ios.xml" />
     <!--<import file="${includes.loc}/apparat.xml" />-->
 
     <target name="startlog" depends="logging.start"/>
@@ -123,6 +124,12 @@
         <var name="mobile" value="true" />
         <runtarget target="compile" />
         <runtarget target="android.package-apk" />
+    </target>
+
+    <target name="package-ipa" description="Packages up project for deployment to android">
+        <var name="mobile" value="true" />
+        <runtarget target="compile" />
+        <runtarget target="ios.package-ipa" />
     </target>
 
     <target name="package-chrome-app" description="Packages up project for deployment to Chrome Market">
