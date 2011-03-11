@@ -35,12 +35,12 @@
 
 
 
-        <target name="package-ipa" depends="prep-folders">
+    <target name="package-ipa" depends="prep-folders">
 
         <java jar="${FLEX_HOME}/lib/adt.jar" fork="true" failonerror="true">
             <arg value="-package"/>
             <arg value="-target"/>
-            <arg value="ipa-ad-hoc"/>
+            <arg value="ipa-test"/>
             <arg value="-provisioning-profile"/>
             <arg value="${basedir}/build/ios-resources/${ios.provision}"/>
             <arg value="-storetype"/>
@@ -60,7 +60,7 @@
     </target>
 
 
-    <!--<target name="package-for-iPad">
+    <!--<target name="package-for-iPad" depends="prep-folders">
         <exec executable="${IPHONE_PACKAGER}">
             <arg line="-package -target ipa-ad-hoc" />
             <arg line="-provisioning-profile '${MOBILE_PROVISION}'" />

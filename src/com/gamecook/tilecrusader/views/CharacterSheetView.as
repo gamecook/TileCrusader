@@ -24,8 +24,6 @@ package com.gamecook.tilecrusader.views
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    import mx.managers.PopUpManager;
-
     public class CharacterSheetView extends BaseActivity
     {
 

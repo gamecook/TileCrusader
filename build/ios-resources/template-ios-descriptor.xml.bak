@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/2.6">
+    <id>com.gamecook.*</id>
+    <filename>@project@</filename>
+    <name>@project@</name>
+    <versionNumber>@version@</versionNumber>
+    <supportedProfiles>mobileDevice</supportedProfiles>
+    <initialWindow>
+        <renderMode>gpu</renderMode>
+        <content>swfs/@projectversion@.swf</content>
+        <fullScreen>true</fullScreen>
+        <aspectRatio>landscape</aspectRatio>
+        <autoOrients>false</autoOrients>
+        <visible>true</visible>
+    </initialWindow>
+    <!--<icon>
+&lt;!&ndash;        <image29x29>icons/icon29.png</image29x29> &ndash;&gt;
+        <image57x57>build/57.png</image57x57>
+&lt;!&ndash;        <image512x512>icons/icon512.png</image512x512> &ndash;&gt;
+    </icon>
+    -->
+    <iPhone>
+        <InfoAdditions>
+            <![CDATA[
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleBlackOpaque</string>
+                <key>UIRequiresPersistentWiFi</key>
+                <string>YES</string>
+
+                <key>UIDeviceFamily</key>
+                    <array>
+                        <string>2</string>
+                    </array>
+            ]]>
+        </InfoAdditions>
+    </iPhone>
+</application>
