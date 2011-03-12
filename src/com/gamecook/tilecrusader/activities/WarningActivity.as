@@ -40,8 +40,6 @@ package com.gamecook.tilecrusader.activities
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    import mx.core.UIComponent;
-
     public class WarningActivity extends BaseActivity
     {
         public function WarningActivity(stateManager:IActivityManager, date:*)
