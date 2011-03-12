@@ -26,7 +26,10 @@ package com.gamecook.tilecrusader.managers
             if(!singletons[uniqueID])
             {
                 trace("Create new Tile for", type, uniqueID);
+
                 singletons[uniqueID] = factory.createTile(type);
+                singletons[uniqueID].id = uniqueID;
+                singletons[uniqueID].type = type;
             }
 
             if(values)
@@ -62,28 +65,31 @@ package com.gamecook.tilecrusader.managers
 
         public function parseObject(value:Object):void
         {
-            /*var tmpInstances:Array = value.instances;
-            var total:int = tmpInstances.length;
-            var i:int;
-            var instanceTemplate:Object;
-
-            for(i = 0; i < total; i++)
+            if(value.instances)
             {
-                instanceTemplate = tmpInstances[i];
-                getInstance(tmpInstances.id,  tmpInstances.type, instanceTemplate);
-            }*/
+                var tmpInstances:Array = value.instances;
+                var total:int = tmpInstances.length;
+                var i:int;
+                var instanceTemplate:Object;
+
+                for(i = 0; i < total; i++)
+                {
+                    instanceTemplate = tmpInstances[i];
+                    getInstance(instanceTemplate.id,  instanceTemplate.type, instanceTemplate);
+                }
+            }
         }
 
         public function toObject():Object
         {
             var obj:Object = {};
-            /*obj.instances = [];
+            obj.instances = [];
             var baseTile:BaseTile;
             for each(baseTile in singletons)
             {
-                obj.instances.push(baseTile.toObject());
-                trace(baseTile);
-            }*/
+                if(baseTile)
+                    obj.instances.push(baseTile.toObject());
+            }
             return obj;
         }
     }

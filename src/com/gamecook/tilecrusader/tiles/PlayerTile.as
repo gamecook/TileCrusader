@@ -63,6 +63,9 @@ package com.gamecook.tilecrusader.tiles
             if(obj.hasOwnProperty("potions"))
                 potions = obj.potions;
 
+            if(obj.hasOwnProperty("kills"))
+                kills = obj.kills;
+
         }
 
         public function addPotion(value:int):void
@@ -97,6 +100,7 @@ package com.gamecook.tilecrusader.tiles
             obj.gold = gold;
             obj.maxPotions = maxPotions;
             obj.potions = potions;
+            obj.kills = kills;
 
             return obj;
         }

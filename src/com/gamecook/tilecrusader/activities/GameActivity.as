@@ -191,15 +191,10 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            if(!data.tileInstanceManager)
-            {
-                player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
-            }
-            else
-            {
+            if(data.tileInstanceManager)
                 tileInstanceManager.parseObject(data.tileInstanceManager);
-                player = tileInstanceManager.getInstance("@", "@") as PlayerTile;
-            }
+
+            player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
 
             var characterSheetData:Object = {player:player};
 
@@ -239,7 +234,8 @@ package com.gamecook.tilecrusader.activities
 
         private function onQuit():void
         {
-            saveState(null);
+            //TODO Took this out since it got called twice. May not need this call back.
+            //saveState(null);
         }
 
         private function onKeyDown(event:KeyboardEvent):void
@@ -312,9 +308,9 @@ package com.gamecook.tilecrusader.activities
 
         private function configureGame():void
         {
-            mapSelection.clear();
+            //mapSelection.clear();
 
-            tileInstanceManager.clear();
+            //tileInstanceManager.clear();
 
             characterSheet.setPortrait(spriteSheet.getSprite("sprite6").clone());
 
@@ -659,15 +655,19 @@ package com.gamecook.tilecrusader.activities
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
-            //super.saveState(obj, activeState);
-            var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            var activeGameSO:Object = activeStateSO.data;
-            activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
-            activeGameSO.mapSelection = mapSelection.toObject();
-            activeGameSO.startPosition = movementHelper.playerPosition;
-            activeGameSO.map = map.tiles;
+            if(!isPlayerDead)
+            {
+                //super.saveState(obj, activeState);
+                var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+                var activeGameSO:Object = activeStateSO.data;
+                activeGameSO.player = player.toObject();
+                activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
+                activeGameSO.mapSelection = mapSelection.toObject();
+                activeGameSO.startPosition = movementHelper.playerPosition;
+                activeGameSO.map = map.toObject();
 
-            activeStateSO.flush();
+                activeStateSO.flush();
+            }
 
         }
 

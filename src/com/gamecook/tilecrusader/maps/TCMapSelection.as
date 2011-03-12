@@ -36,7 +36,6 @@ package com.gamecook.tilecrusader.maps
     public class TCMapSelection extends FogOfWarMapSelection implements ISerializeToObject
     {
 
-
         public function TCMapSelection(map:IMap, width:int, height:int, viewDistance:int)
         {
             super(map, width, height, viewDistance);
@@ -44,23 +43,23 @@ package com.gamecook.tilecrusader.maps
 
         public function parseObject(value:Object):void
         {
-            /*if(value.exploredTiles)
+            if(value.exploredTiles)
             {
-                var tmpExploredTiles:Array = value.exploredTiles;
-                var total:int = tmpExploredTiles.length;
+                trace("Parsing", value.exploredTiles);
+                exploredTiles = value.exploredTiles.slice();
+                var total:int = exploredTiles.length;
                 var i:int;
                 for(i = 0; i < total; i++)
                 {
-                    //exploredTilesHashMap[tmpExploredTiles[i]] = " ";
+                    exploredTilesHashMap[exploredTiles[i]] = " ";
                 }
-            }*/
+            }
         }
 
         public function toObject():Object
         {
-            var obj:Object = {};
-            //obj["exploredTiles"] = exploredTiles;
-            return obj;
+            trace("Saving", exploredTiles);
+            return {exploredTiles: exploredTiles.slice()};
         }
     }
 }

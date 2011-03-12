@@ -42,7 +42,7 @@ package com.gamecook.tilecrusader.templates
         [Test]
         public function nextPropertyTest():void
         {
-            var template:Template = new Template([TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE])
+            var template:Template = new Template("TestA",[TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE])
 
             Assert.assertEquals(template.nextProperty(), TemplateProperties.LIFE);
             Assert.assertEquals(template.nextProperty(), TemplateProperties.ATTACK);
@@ -53,7 +53,7 @@ package com.gamecook.tilecrusader.templates
         [Test]
         public function nextSinglePropertyTest():void
         {
-            var template:Template = new Template([TemplateProperties.LIFE])
+            var template:Template = new Template("TestB",[TemplateProperties.LIFE])
 
             Assert.assertEquals(template.nextProperty(), TemplateProperties.LIFE);
             Assert.assertEquals(template.nextProperty(), TemplateProperties.LIFE);
