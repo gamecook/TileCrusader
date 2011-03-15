@@ -9,11 +9,13 @@ package com.gamecook.tilecrusader.tools.generator {
 
     import com.gamecook.frogue.sprites.SpriteSheet;
 
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.geom.Rectangle;
 
-    public class CharacterGenerator {
+    public class CharacterGenerator implements ISerializeToObject{
 
         private static const SPRITE_SIZE:Rectangle = new Rectangle(0,0,32,32);
 
@@ -86,9 +88,34 @@ package com.gamecook.tilecrusader.tools.generator {
             return bitmapData.clone();
         }
 
-        public function toString():String
+        public function parseObject(value:Object):void
         {
-            return "CharacterGenerator";
+            if(value.hasProperty("body"))
+                changeBody(value.body);
+            if(value.hasProperty("face"))
+                changeBody(value.face);
+            if(value.hasProperty("outfit"))
+                changeBody(value.outfit);
+        }
+
+        public function toObject():Object
+        {
+            return {body:bodySpriteID, outfit:outfitSpriteID, face:faceSpriteID};
+        }
+
+        public function getBodySpriteNames():Array
+        {
+            return bodySpriteSheet.spriteNames.slice();
+        }
+
+        public function getOutfitSpriteNames():Array
+        {
+            return outfitSpriteSheet.spriteNames.slice();
+        }
+
+        public function getFaceSpriteNames():Array
+        {
+            return faceSpriteSheet.spriteNames.slice();
         }
     }
 }
