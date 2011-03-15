@@ -154,6 +154,7 @@ package com.gamecook.tilecrusader.activities
                             <PushButton id="cancel" label="Cancel" event="click:onBack"/>
                             <PushButton id="saveButton" label="Save As Default" event="click:onSave"/>
                         </HBox>
+                        <PushButton id="customPic" label="Custom Look" event="click:onCustomLook"/>
                     </VBox>
 
             </comps>;
@@ -319,6 +320,11 @@ package com.gamecook.tilecrusader.activities
             //Get Map Option Settings
             stateSO = SharedObject.getLocal("ConfigureCharacterActivity");
             stateSOData = stateSO.data;
+        }
+
+        public function onCustomLook(event:MouseEvent):void
+        {
+            nextActivity(GenerateCharacterActivity, null);
         }
 
     }

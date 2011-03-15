@@ -92,6 +92,7 @@
 	<autoOrients>false</autoOrients>
         <fullScreen>true</fullScreen>
         <visible>true</visible>
+        <aspectRatio>landscape</aspectRatio>
     </initialWindow>
 
 	<!-- We recommend omitting the supportedProfiles element, -->
