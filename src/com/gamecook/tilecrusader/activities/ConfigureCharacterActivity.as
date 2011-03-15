@@ -123,7 +123,10 @@ package com.gamecook.tilecrusader.activities
                             <PushButton id="classButton" label="Knight" event="click:onChangeClass"/>
                         </VBox>
                                 </HBox>
-                        <Label id="pointTotal" width="400" align="center" text="Character Points"/>
+                        <HBox spacing="20">
+                            <Label id="pointTotal" width="140" align="center" text="Character Points:\n 100 of 100"/>
+                            <PushButton id="customPic" label="Customize Look" event="click:onCustomLook"/>
+                        </HBox>
                         <HBox spacing="10">
 
                             <VBox spacing="10">
@@ -154,7 +157,6 @@ package com.gamecook.tilecrusader.activities
                             <PushButton id="cancel" label="Cancel" event="click:onBack"/>
                             <PushButton id="saveButton" label="Save As Default" event="click:onSave"/>
                         </HBox>
-                        <PushButton id="customPic" label="Custom Look" event="click:onCustomLook"/>
                     </VBox>
 
             </comps>;
@@ -200,7 +202,7 @@ package com.gamecook.tilecrusader.activities
 
         private function updateTotalLabel():void
         {
-            pointTotal.text = "Character Points: " + characterPoints +" out of "+DEFAULT_POINTS;
+            pointTotal.text = "Character Points:\n" + characterPoints +" out of "+DEFAULT_POINTS;
             if(characterPoints < 0)
                 pointTotal.textField.textColor = 0xFF0000;
             else

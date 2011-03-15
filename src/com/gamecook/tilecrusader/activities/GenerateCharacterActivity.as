@@ -6,21 +6,28 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.activities {
+    import com.bit101.components.Label;
     import com.bit101.components.PushButton;
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
     import com.gamecook.tilecrusader.tools.generator.CharacterGenerator;
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
     import flash.display.Bitmap;
     import flash.events.MouseEvent;
 
-    public class GenerateCharacterActivity extends BaseActivity{
+    public class GenerateCharacterActivity extends RandomMapBGActivity{
         private var character:Bitmap;
         private var generator:CharacterGenerator;
-        private var bodyButton:PushButton;
         private var bodyOptionBehavior:OptionsBehavior;
+        private var faceOptionBehavior:OptionsBehavior;
+        private var outfitOptionBehavior:OptionsBehavior;
+        public var bodyButton:PushButton;
+        public var faceButton:PushButton;
+        public var outfitButton:PushButton;
+        public var title:Label;
 
         public function GenerateCharacterActivity(activityManager:IActivityManager, data:*)
         {
@@ -30,12 +37,17 @@ package com.gamecook.tilecrusader.activities {
 
         override protected function onCreate():void
         {
+            mapViewPortX = 490;
+            mapViewPortWidth = 200;
+            mapViewPortY = 100;
+            mapViewPortHeight = fullSizeHeight - 40;
+
             super.onCreate();
 
             generator = new CharacterGenerator();
 
             character = new Bitmap();
-            character.scaleX = character.scaleY = 3;
+            character.scaleX = character.scaleY = 6;
             addChild(character);
 
             onUpdateCharacter();
@@ -47,9 +59,10 @@ package com.gamecook.tilecrusader.activities {
             super.onStart();
 
             var xml:XML = <comps>
-                <Label id="title" x="20" y="40" scaleX="4" scaleY="4" text="Customize Character's Appearance"/>
+                <Label id="title" x="40" y="40" scaleX="4" scaleY="4" text="Customize Character's Appearance"/>
 
-                <VBox id="layout" spacing="10" x="150" y="80" scaleX="2" scaleY="2">
+                <VBox id="layout" spacing="10" x="40" y="120" scaleX="2" scaleY="2">
+
                         <VBox spacing="10">
                               <VBox spacing="-5">
                             <Label text="Body:"/>
@@ -61,13 +74,14 @@ package com.gamecook.tilecrusader.activities {
                         </VBox>
                         <VBox spacing="-5">
                             <Label text="Outfit:"/>
-                            <PushButton id="classButton" label="Outfit 1" event="click:onChangeOutfit"/>
+                            <PushButton id="outfitButton" label="Outfit 1" event="click:onChangeOutfit"/>
                         </VBox>
 
                     </VBox>
+                        <PushButton id="accept" label="I Like It" width="210" event="click:onDone"/>
                         <HBox spacing="10">
                             <PushButton id="cancel" label="Cancel" event="click:onBack"/>
-                            <PushButton id="accept" label="Accept" event="click:onDone"/>
+                            <PushButton id="randomize" label="Randomize" event="click:onRandomize"/>
                         </HBox>
                     </VBox>
 
@@ -78,6 +92,33 @@ package com.gamecook.tilecrusader.activities {
 
             bodyOptionBehavior = new OptionsBehavior(bodyButton, generator.getBodySpriteNames());
             onChangeBody();
+
+            faceOptionBehavior = new OptionsBehavior(faceButton, generator.getFaceSpriteNames());
+            onChangeFace();
+
+            outfitOptionBehavior = new OptionsBehavior(outfitButton, generator.getOutfitSpriteNames());
+            onChangeOutfit();
+
+            character.x = 260;
+            character.y = 150;
+        }
+
+        public function onChangeOutfit(event:MouseEvent = null):void
+        {
+            var spriteName:String = outfitOptionBehavior.nextOption();
+
+            outfitButton.label = spriteName;
+            generator.changeOutfit(spriteName);
+            onUpdateCharacter();
+        }
+
+        public function onChangeFace(event:MouseEvent = null):void
+        {
+            var spriteName:String = faceOptionBehavior.nextOption();
+
+            faceButton.label = spriteName;
+            generator.changeFace(spriteName);
+            onUpdateCharacter();
         }
 
         public function onChangeBody(event:MouseEvent = null):void
@@ -94,7 +135,7 @@ package com.gamecook.tilecrusader.activities {
             character.bitmapData = generator.generateBitmapData();
         }
 
-        public function onCancel(event:MouseEvent):void
+        public function onBack(event:MouseEvent):void
         {
             nextActivity(ConfigureCharacterActivity);
         }
@@ -102,6 +143,15 @@ package com.gamecook.tilecrusader.activities {
         public function onDone(event:MouseEvent):void
         {
             //TODO need to add in support to save out current customization.
+        }
+
+        public function onRandomize(event:MouseEvent):void
+        {
+           generator.changeBody(ArrayUtil.pickRandomArrayElement(generator.getBodySpriteNames()));
+           generator.changeFace(ArrayUtil.pickRandomArrayElement(generator.getFaceSpriteNames()));
+           generator.changeOutfit(ArrayUtil.pickRandomArrayElement(generator.getOutfitSpriteNames()));
+
+           onUpdateCharacter();
         }
     }
 }

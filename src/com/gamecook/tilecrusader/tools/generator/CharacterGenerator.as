@@ -53,7 +53,8 @@ package com.gamecook.tilecrusader.tools.generator {
 
             for(i = 0; i < total; i ++)
             {
-                spriteSheet.registerSprite("Sprite"+i, rect);
+                rect.x = rect.width * i;
+                spriteSheet.registerSprite("Sprite"+i, rect.clone());
             }
 
             return spriteSheet;
