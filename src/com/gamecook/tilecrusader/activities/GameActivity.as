@@ -16,6 +16,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
@@ -63,7 +64,7 @@ package com.gamecook.tilecrusader.activities
     import flash.ui.KeyboardType;
     import flash.utils.getTimer;
 
-    public class GameActivity extends BaseActivity implements IControl
+    public class GameActivity extends AdvancedActivity implements IControl
     {
 
 
@@ -228,7 +229,7 @@ package com.gamecook.tilecrusader.activities
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
             quakeEffect = new Quake(display);
-            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectFinish);
+            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
 
         }
 
@@ -300,10 +301,9 @@ package com.gamecook.tilecrusader.activities
 
         }
 
-        private function onTextEffectFinish():void
+        private function onTextEffectUpdate():void
         {
-            // Clear status since it has been printed to the screen.
-            //status = "";
+            soundManager.play(TCSoundClasses.TypeSound);
         }
 
         private function configureGame():void
@@ -364,6 +364,7 @@ package com.gamecook.tilecrusader.activities
                 switch (tileTypes.getTileType(tile))
                 {
                     case TileTypes.IMPASSABLE:
+                            soundManager.play(TCSoundClasses.WallHit);
                         return;
                     case TileTypes.MONSTER: case TileTypes.BOSS:
                         var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
@@ -386,6 +387,7 @@ package com.gamecook.tilecrusader.activities
                         if(canFinishLevel())
                         {
                             //TODO gameover
+                            //TODO play heroic theme here?
                             trace("Level Done");
                             isPlayerDead = true;
                             var newData:Object = {player:{name:player.getName(),
@@ -467,6 +469,9 @@ package com.gamecook.tilecrusader.activities
             if(isPlayerDead)
                 return;
 
+            //TODO keep track of this sound, may need a player hit as well.
+            soundManager.play(TCSoundClasses.EnemyAttack);
+
             // Player is still alive so display combat message
             //TODO this may need to cleaned up and only show combat message when monster is not dead and do different message once killed
             addStatusMessage(status.toString());
@@ -482,6 +487,8 @@ package com.gamecook.tilecrusader.activities
                 trace("Monster", tile, "was killed", monsters.length, "left index",index,  monsters);
 
                 player.addKill();
+
+                soundManager.play(TCSoundClasses.WinBattle);
 
                 map.swapTile(tmpPoint, "X");
 
@@ -545,6 +552,7 @@ package com.gamecook.tilecrusader.activities
                     {
                         player.setLife(player.getMaxLife());
                         addStatusMessage(player.getName() +" can not carry any more health potions.\nHe was able to drink it now and restore his health.");
+                        soundManager.play(TCSoundClasses.PotionSound);
                     }
                     else
                     {
@@ -629,6 +637,7 @@ package com.gamecook.tilecrusader.activities
                 if (player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
+                    soundManager.play(TCSoundClasses.DeathTheme);
                     //stateManager(GameOverActivity);
                     isPlayerDead = true;
                     //TODO build stat Data Object
@@ -638,6 +647,7 @@ package com.gamecook.tilecrusader.activities
                 {
                     player.setLife(player.getMaxLife());
                     player.subtractPotion();
+                    soundManager.play(TCSoundClasses.PotionSound);
                     addStatusMessage("You have taken a potion and restored your health.", true);
                 }
             }
@@ -650,6 +660,8 @@ package com.gamecook.tilecrusader.activities
             stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 
             controls = new Controls(this);
+
+            soundManager.play(TCSoundClasses.WalkStairsSound);
         }
 
 

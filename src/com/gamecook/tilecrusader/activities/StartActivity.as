@@ -13,6 +13,9 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
 
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.SoundManager;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.events.MouseEvent;
@@ -22,6 +25,7 @@ package com.gamecook.tilecrusader.activities
 
     public class StartActivity extends RandomMapBGActivity
     {
+
         public var title:Label;
         public var continueButton:PushButton;
         public var buttonLayout:VBox;
@@ -35,6 +39,7 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+
             loadState(null);
             mapViewPortWidth = fullSizeWidth - mapViewPortX;
 
@@ -92,6 +97,14 @@ package com.gamecook.tilecrusader.activities
 
             stateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
             stateSOData = stateSO.data;
+        }
+
+        override public function onStart():void
+        {
+            super.onStart();
+
+            soundManager.playMusic(TCSoundClasses.MainTileCrusaderTheme, .5);
+
         }
     }
 }

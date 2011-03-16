@@ -35,6 +35,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
@@ -45,7 +46,7 @@ package com.gamecook.tilecrusader.activities
     import flash.net.SharedObject;
     import flash.utils.getQualifiedClassName;
 
-    public class MapLoadingActivity extends BaseActivity
+    public class MapLoadingActivity extends AdvancedActivity
     {
         [Embed(source="../../../../../build/assets/spritesheet_template.png")]
         public static var SpriteSheetImage:Class;
@@ -224,6 +225,12 @@ package com.gamecook.tilecrusader.activities
                     spriteRect.y = 0;
                 }
             }
+        }
+
+        override public function onStart():void
+        {
+            soundManager.playMusic(TCSoundClasses.DungeonLooper, .5);
+            super.onStart();
         }
     }
 }

@@ -34,7 +34,7 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.managers.ActivityManager;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class RandomMapBGActivity extends BaseActivity
+    public class RandomMapBGActivity extends AdvancedActivity
     {
         protected var randMap:AutoPlayMap;
         protected var movementCounter:int = 0;

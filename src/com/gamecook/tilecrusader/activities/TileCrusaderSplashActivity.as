@@ -30,6 +30,9 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.SoundManager;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.gamecook.tilecrusader.factory.UIFactory;
@@ -38,8 +41,9 @@ package com.gamecook.tilecrusader.activities
 
     import flash.text.TextField;
 
-    public class TileCrusaderSplashActivity extends BaseActivity
+    public class TileCrusaderSplashActivity extends AdvancedActivity
     {
+
         public function TileCrusaderSplashActivity(activityManager:ActivityManager, data:* = null)
         {
             super(activityManager, data);
@@ -47,6 +51,7 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+
             super.onCreate();
 
             var tf:Label = new Label(this,0, 0, "Tile Crusader");
