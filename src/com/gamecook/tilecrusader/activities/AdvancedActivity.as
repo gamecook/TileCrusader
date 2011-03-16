@@ -26,5 +26,6 @@ package com.gamecook.tilecrusader.activities {
             soundManager.destroySounds();
             super.onStop();
         }
+
     }
 }

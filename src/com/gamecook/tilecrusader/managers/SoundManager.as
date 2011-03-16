@@ -195,7 +195,7 @@ package com.gamecook.tilecrusader.managers {
 		/**
 		 * Internal helper, pauses all game sounds.
 		 */
-		protected function pauseSounds():void
+		public function pauseSounds():void
 		{
 			if((music != null) && music.active)
 				music.pause();
@@ -212,7 +212,7 @@ package com.gamecook.tilecrusader.managers {
 		/**
 		 * Internal helper, pauses all game sounds.
 		 */
-		protected function playSounds():void
+		public function playSounds():void
 		{
 			if((music != null) && music.active)
 				music.play();
