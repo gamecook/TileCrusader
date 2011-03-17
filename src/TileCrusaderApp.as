@@ -33,6 +33,7 @@ package
     import com.bit101.components.Label;
     import com.bit101.components.Style;
     import com.gamecook.tilecrusader.managers.PopUpManager;
+    import com.google.analytics.GATracker;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
@@ -62,11 +63,15 @@ package
         private static var EMBEDDED_FONT2:String;
 
         private var game:TileCrusaderGame;
+        private var tracker:GATracker;
 
         public function TileCrusaderApp()
         {
             configureStage();
             configureComponents();
+
+            tracker = new GATracker( this, "UA-18884514-4", "AS3", false );
+
 
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
@@ -113,6 +118,9 @@ package
             label.text += "Version: "+Capabilities.version+"\n";
             label.text += "DPI: "+Capabilities.screenDPI+"\n";
             label.text += "Display Mode: "+stage.displayState+"\n";
+
+            //tracker.trackEvent()
+
         }
 
         private function configureComponents():void
