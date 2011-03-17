@@ -31,6 +31,8 @@ package com.gamecook.tilecrusader
 {
     import com.bit101.components.Component;
     import com.bit101.components.Style;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.SoundManager;
     import com.jessefreeman.factivity.AbstractApplication;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
@@ -38,10 +40,23 @@ package com.gamecook.tilecrusader
 
     public class TileCrusaderGame extends AbstractApplication
     {
+        protected var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager) as SoundManager;
+
         public function TileCrusaderGame(x:int, y:int, state:Class, scale:Number = 1)
         {
             super(new ActivityManager(), state, x, y, scale);
         }
 
+        override public function resume():void
+        {
+            super.resume();
+            soundManager.playSounds();
+        }
+
+        override public function pause():void
+        {
+            super.pause();
+            soundManager.pauseSounds();
+        }
     }
 }

@@ -17,7 +17,7 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
- * /
+ *
  */
 
 /**
@@ -45,7 +45,7 @@ package com.gamecook.tilecrusader.maps
         {
             if(value.exploredTiles)
             {
-                trace("Parsing", value.exploredTiles);
+               // trace("Parsing", value.exploredTiles);
                 exploredTiles = value.exploredTiles.slice();
                 var total:int = exploredTiles.length;
                 var i:int;
@@ -58,7 +58,7 @@ package com.gamecook.tilecrusader.maps
 
         public function toObject():Object
         {
-            trace("Saving", exploredTiles);
+            //trace("Saving", exploredTiles);
             return {exploredTiles: exploredTiles.slice()};
         }
     }

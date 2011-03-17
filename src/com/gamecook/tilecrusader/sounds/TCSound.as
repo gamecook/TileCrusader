@@ -371,9 +371,13 @@ package com.gamecook.tilecrusader.sounds {
 		 */
 		public function updateTransform():void
 		{
-			_transform.volume = manager.getMuteValue()*manager.volume*_volume*_volumeAdjust;
-			if(_channel != null)
-				_channel.soundTransform = _transform;
+			//TDOO need to look into how to get a reference of the manager in the sound.
+            if(manager)
+            {
+                _transform.volume = manager.getMuteValue()*manager.volume*_volume*_volumeAdjust;
+                if(_channel != null)
+                  _channel.soundTransform = _transform;
+            }
 		}
 
 		/**
