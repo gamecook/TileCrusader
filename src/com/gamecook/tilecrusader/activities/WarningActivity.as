@@ -39,8 +39,7 @@ package com.gamecook.tilecrusader.activities
 
     import flash.events.MouseEvent;
     import flash.text.TextField;
-
-    import mx.core.UIComponent;
+    import flash.text.TextFieldAutoSize;
 
     public class WarningActivity extends BaseActivity
     {
@@ -57,9 +56,10 @@ package com.gamecook.tilecrusader.activities
             var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game." ;
 
             var tf:Label = new Label(this, 0, 50, warning);
+            tf.autoSize = TextFieldAutoSize
             tf.textField.wordWrap = true;
             tf.textField.multiline = true;
-            tf.textField.width = 400;
+            tf.textField.width = 300;
             tf.scaleX = tf.scaleY = 2;
             tf.x = (fullSizeWidth - tf.width) * .5;
 

@@ -154,5 +154,17 @@ package com.gamecook.tilecrusader.tiles
             maxLife ++;
             life = maxLife;
         }
+
+        override public function toObject():Object{
+            var tmpObject = super.toObject();
+            tmpObject.maxLife = maxLife;
+            tmpObject.life = life;
+            tmpObject.attackRoll = attackRoll;
+            tmpObject.defenseRoll = defenseRoll;
+            tmpObject.characterPoints = characterPoints
+            tmpObject.pointPercent = pointPercent
+
+            return tmpObject;
+        }
     }
 }

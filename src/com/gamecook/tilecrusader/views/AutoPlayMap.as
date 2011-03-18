@@ -68,7 +68,7 @@ package com.gamecook.tilecrusader.views
         private var populateMapHelper:PopulateMapHelper;
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
-        private var player:PlayerTile;
+        public var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
         private var tileTypes:TileTypes;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
@@ -106,7 +106,7 @@ package com.gamecook.tilecrusader.views
             darknessHeight = 4;
 
             map = new RandomMap();
-            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
+            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 3);
             mapDarkness.revealAll(true);
 
             populateMapHelper = new PopulateMapHelper(map);
@@ -128,7 +128,7 @@ package com.gamecook.tilecrusader.views
             map.generateMap(30);
 
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
-            player = tileInstanceManager.getInstance("@", "@", {life:8, maxLife:8, attackRoll: 3}) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", {life:0, maxLife:"", attackRoll: ""}) as PlayerTile;
 
             render();
         }

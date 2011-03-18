@@ -8,9 +8,10 @@
 package com.gamecook.tilecrusader.managers
 {
     import com.gamecook.tilecrusader.factory.ITileFactory;
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
     import com.gamecook.tilecrusader.tiles.BaseTile;
 
-    public class TileInstanceManager
+    public class TileInstanceManager implements ISerializeToObject
     {
         protected var singletons:Array = [];
         private var factory:ITileFactory;
@@ -25,7 +26,10 @@ package com.gamecook.tilecrusader.managers
             if(!singletons[uniqueID])
             {
                 trace("Create new Tile for", type, uniqueID);
+
                 singletons[uniqueID] = factory.createTile(type);
+                singletons[uniqueID].id = uniqueID;
+                singletons[uniqueID].type = type;
             }
 
             if(values)
@@ -44,7 +48,6 @@ package com.gamecook.tilecrusader.managers
             return "TileInstanceManager[]";
         }
 
-
         public function hasInstance(uniqueID:String):Boolean
         {
             return singletons[uniqueID]
@@ -58,6 +61,36 @@ package com.gamecook.tilecrusader.managers
         public function clear():void
         {
             singletons.length = 0;
+        }
+
+        public function parseObject(value:Object):void
+        {
+            if(value.instances)
+            {
+                var tmpInstances:Array = value.instances;
+                var total:int = tmpInstances.length;
+                var i:int;
+                var instanceTemplate:Object;
+
+                for(i = 0; i < total; i++)
+                {
+                    instanceTemplate = tmpInstances[i];
+                    getInstance(instanceTemplate.id,  instanceTemplate.type, instanceTemplate);
+                }
+            }
+        }
+
+        public function toObject():Object
+        {
+            var obj:Object = {};
+            obj.instances = [];
+            var baseTile:BaseTile;
+            for each(baseTile in singletons)
+            {
+                if(baseTile)
+                    obj.instances.push(baseTile.toObject());
+            }
+            return obj;
         }
     }
 }

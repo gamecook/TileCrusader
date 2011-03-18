@@ -12,7 +12,8 @@ package com.gamecook.tilecrusader.tiles
     public interface ITile
     {
         function getName():String;
-        function get id():int;
+        function get id():String;
         function get type():String;
+
     }
 }

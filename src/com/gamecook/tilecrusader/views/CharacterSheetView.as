@@ -24,8 +24,6 @@ package com.gamecook.tilecrusader.views
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    import mx.managers.PopUpManager;
-
     public class CharacterSheetView extends BaseActivity
     {
 
@@ -42,10 +40,12 @@ package com.gamecook.tilecrusader.views
         private var lifeBarBG:Shape;
         private var lifeBar:Shape;
         private var portraitBitmap:Bitmap;
+        private var onQuitCallback:Function;
 
         //TODO maybe have this extend Activity and run it in to the game loop for update
-        public function CharacterSheetView(stateManager:IActivityManager, data:* = null)
+        public function CharacterSheetView(stateManager:IActivityManager, data:* = null, onQuitCallback:Function = null)
         {
+            this.onQuitCallback = onQuitCallback;
             super(stateManager, data);
         }
 
@@ -120,6 +120,8 @@ package com.gamecook.tilecrusader.views
 
         private function onQuit():void
         {
+            if(onQuitCallback)
+                onQuitCallback();
             nextActivity(StartActivity);
         }
 

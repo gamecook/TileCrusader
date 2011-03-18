@@ -38,8 +38,6 @@ package com.gamecook.tilecrusader.views.forms
 
     import flash.display.Sprite;
 
-    import mx.managers.PopUpManager;
-
     public class PopUpPicker extends Sprite
     {
         private var data:Array;

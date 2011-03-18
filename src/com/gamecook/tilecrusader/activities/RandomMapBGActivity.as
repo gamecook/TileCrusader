@@ -32,8 +32,9 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.tilecrusader.views.AutoPlayMap;
     import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class RandomMapBGActivity extends BaseActivity
+    public class RandomMapBGActivity extends AdvancedActivity
     {
         protected var randMap:AutoPlayMap;
         protected var movementCounter:int = 0;
@@ -43,7 +44,7 @@ package com.gamecook.tilecrusader.activities
         protected var mapViewPortX:int = 260;
         protected var mapViewPortY:int = 150;
 
-        public function RandomMapBGActivity(activityManager:ActivityManager, data:* = null)
+        public function RandomMapBGActivity(activityManager:IActivityManager, data:* = null)
         {
             super(activityManager, data);
         }

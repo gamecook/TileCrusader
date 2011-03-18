@@ -10,10 +10,13 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
-    import com.gamecook.tilecrusader.enum.Darkness;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.maps.TCMapSelection;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
@@ -29,7 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.gamecook.tilecrusader.combat.CombatHelper;
-    import com.gamecook.tilecrusader.enum.GameModes;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.status.DoubleAttackStatus;
@@ -54,13 +57,14 @@ package com.gamecook.tilecrusader.activities
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.geom.Point;
+    import flash.net.SharedObject;
     import flash.text.TextField;
     import flash.text.TextFormat;
     import flash.ui.Keyboard;
     import flash.ui.KeyboardType;
     import flash.utils.getTimer;
 
-    public class GameActivity extends BaseActivity implements IControl
+    public class GameActivity extends AdvancedActivity implements IControl
     {
 
 
@@ -85,7 +89,7 @@ package com.gamecook.tilecrusader.activities
         private var hasArtifact:Boolean;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
-        private var mapDarkness:FogOfWarMapSelection;
+        private var mapSelection:TCMapSelection;
 
         private var display:Sprite;
         private var overlayLayer:Sprite;
@@ -113,6 +117,7 @@ package com.gamecook.tilecrusader.activities
         private var isPlayerDead:Boolean;
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
+        private var exploredTiles:Number;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -127,7 +132,7 @@ package com.gamecook.tilecrusader.activities
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
-            map = data.map;
+            map = data.mapInstance;
             gameMode = data.gameType;
             monsters = data.monsters;
             treasurePool = data.treasurePool;
@@ -148,16 +153,21 @@ package com.gamecook.tilecrusader.activities
             darknessHeight = 4;
 
 
-            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3);
+
+            if(data.mapSelection)
+            {
+                mapSelection.parseObject(data.mapSelection);
+            }
 
             // Apply darkness setting
             switch (data.darkness)
             {
-                case Darkness.LONG_RANGE:
-                    mapDarkness.fullLineOfSite(true);
+                case DarknessOptions.LONG_RANGE:
+                    mapSelection.fullLineOfSight(true);
                 break;
-                case Darkness.TORCH:
-                    mapDarkness.tourchMode(true);
+                case DarknessOptions.TORCH:
+                    mapSelection.tourchMode(true);
                 break;
             }
 
@@ -182,11 +192,14 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
+            if(data.tileInstanceManager)
+                tileInstanceManager.parseObject(data.tileInstanceManager);
+
             player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
 
             var characterSheetData:Object = {player:player};
 
-            characterSheet = new CharacterSheetView(activityManager, characterSheetData);
+            characterSheet = new CharacterSheetView(activityManager, characterSheetData, onQuit);
             characterSheet.x = viewPortWidth;
 
             overlayLayer.addChild(characterSheet);
@@ -216,8 +229,14 @@ package com.gamecook.tilecrusader.activities
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
             quakeEffect = new Quake(display);
-            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectFinish);
+            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
 
+        }
+
+        private function onQuit():void
+        {
+            //TODO Took this out since it got called twice. May not need this call back.
+            //saveState(null);
         }
 
         private function onKeyDown(event:KeyboardEvent):void
@@ -237,7 +256,7 @@ package com.gamecook.tilecrusader.activities
 
         private function cycleThroughLighting():void
         {
-            var types:Array = [Darkness.LONG_RANGE, Darkness.REVEAL, Darkness.TORCH, Darkness.NONE];
+            var types:Array = [DarknessOptions.LONG_RANGE, DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
             var id:int = types.indexOf(data.darkness);
             id ++;
             if(id >= types.length)
@@ -260,9 +279,9 @@ package com.gamecook.tilecrusader.activities
                 lightingFlags = [false, false, true];
             }
 
-            mapDarkness.tourchMode(lightingFlags[0]);
-            mapDarkness.fullLineOfSite(lightingFlags[1]);
-            mapDarkness.revealAll(lightingFlags[2]);
+            mapSelection.tourchMode(lightingFlags[0]);
+            mapSelection.fullLineOfSight(lightingFlags[1]);
+            mapSelection.revealAll(lightingFlags[2]);
 
             statusLabel.text = "Changing lighting mode "+data.darkness;
         }
@@ -282,24 +301,23 @@ package com.gamecook.tilecrusader.activities
 
         }
 
-        private function onTextEffectFinish():void
+        private function onTextEffectUpdate():void
         {
-            // Clear status since it has been printed to the screen.
-            //status = "";
+            soundManager.play(TCSoundClasses.TypeSound);
         }
 
         private function configureGame():void
         {
-            mapDarkness.clear();
+            //mapSelection.clear();
 
-            tileInstanceManager.clear();
+            //tileInstanceManager.clear();
 
             characterSheet.setPortrait(spriteSheet.getSprite("sprite6").clone());
 
 
             treasureIterator = new TreasureIterator(treasurePool);
 
-            movementHelper.startPosition(data.startPosition);
+            movementHelper.startPosition(data.startPosition is Point ? data.startPosition : new Point(data.startPosition.x,data.startPosition.y));
 
             characterSheet.setPlayer(player);
 
@@ -346,6 +364,7 @@ package com.gamecook.tilecrusader.activities
                 switch (tileTypes.getTileType(tile))
                 {
                     case TileTypes.IMPASSABLE:
+                            soundManager.play(TCSoundClasses.WallHit);
                         return;
                     case TileTypes.MONSTER: case TileTypes.BOSS:
                         var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
@@ -368,6 +387,7 @@ package com.gamecook.tilecrusader.activities
                         if(canFinishLevel())
                         {
                             //TODO gameover
+                            //TODO play heroic theme here?
                             trace("Level Done");
                             isPlayerDead = true;
                             var newData:Object = {player:{name:player.getName(),
@@ -382,7 +402,7 @@ package com.gamecook.tilecrusader.activities
                         }
                         else
                         {
-                            addStatusMessage("You can not leave until you "+GameModes.getGameModeDescription(gameMode))+".";
+                            addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
                     default:
@@ -416,19 +436,21 @@ package com.gamecook.tilecrusader.activities
 
             switch(gameMode)
             {
-                case GameModes.FIND_ALL_TREASURE:
+                case GameModeOptions.FIND_ALL_TREASURE:
                     success = treasureIterator.hasNext();
                 break;
-                case GameModes.FIND_ARTIFACT:
+                case GameModeOptions.FIND_ARTIFACT:
                     success = hasArtifact;
                 break;
-                case GameModes.KILL_ALL_MONSTERS:
+                case GameModeOptions.KILL_ALL_MONSTERS:
                     success = (monsters.length == 0);
                 break;
-                case GameModes.KILL_BOSS:
+                case GameModeOptions.KILL_BOSS:
                     success = (monsters.indexOf("9") == -1);
                 break;
-
+                case GameModeOptions.EXPLORE:
+                    success = (exploredTiles == 1);
+                 break;
             }
 
             return success;
@@ -447,6 +469,9 @@ package com.gamecook.tilecrusader.activities
             if(isPlayerDead)
                 return;
 
+            //TODO keep track of this sound, may need a player hit as well.
+            soundManager.play(TCSoundClasses.EnemyAttack);
+
             // Player is still alive so display combat message
             //TODO this may need to cleaned up and only show combat message when monster is not dead and do different message once killed
             addStatusMessage(status.toString());
@@ -462,6 +487,8 @@ package com.gamecook.tilecrusader.activities
                 trace("Monster", tile, "was killed", monsters.length, "left index",index,  monsters);
 
                 player.addKill();
+
+                soundManager.play(TCSoundClasses.WinBattle);
 
                 map.swapTile(tmpPoint, "X");
 
@@ -525,6 +552,7 @@ package com.gamecook.tilecrusader.activities
                     {
                         player.setLife(player.getMaxLife());
                         addStatusMessage(player.getName() +" can not carry any more health potions.\nHe was able to drink it now and restore his health.");
+                        soundManager.play(TCSoundClasses.PotionSound);
                     }
                     else
                     {
@@ -570,6 +598,8 @@ package com.gamecook.tilecrusader.activities
 
             super.update(elapsed);
 
+
+
         }
 
         override protected function render():void
@@ -583,16 +613,19 @@ package com.gamecook.tilecrusader.activities
                 var t:int = getTimer();
 
                 //TODO there is a bug in renderer that doesn't let you see the last row
-                mapDarkness.setCenter(movementHelper.playerPosition);
-                renderer.renderMap(mapDarkness);
+                mapSelection.setCenter(movementHelper.playerPosition);
+                renderer.renderMap(mapSelection);
                 characterSheet.refresh();
 
                 invalid = false;
 
                 t = (getTimer()-t);
 
+                exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
                 if(status == "")
-                    statusLabel.text = "Render executed in " + t + " ms\n", true;
+                    statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
+
+                trace("Explored Tiles", mapSelection.getVisitedTiles(), "/", map.getOpenTiles().length);
             }
         }
 
@@ -604,6 +637,7 @@ package com.gamecook.tilecrusader.activities
                 if (player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
+                    soundManager.play(TCSoundClasses.DeathTheme);
                     //stateManager(GameOverActivity);
                     isPlayerDead = true;
                     //TODO build stat Data Object
@@ -613,6 +647,7 @@ package com.gamecook.tilecrusader.activities
                 {
                     player.setLife(player.getMaxLife());
                     player.subtractPotion();
+                    soundManager.play(TCSoundClasses.PotionSound);
                     addStatusMessage("You have taken a potion and restored your health.", true);
                 }
             }
@@ -625,6 +660,33 @@ package com.gamecook.tilecrusader.activities
             stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 
             controls = new Controls(this);
+
+            soundManager.play(TCSoundClasses.WalkStairsSound);
+        }
+
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            if(!isPlayerDead)
+            {
+                //super.saveState(obj, activeState);
+                var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+                var activeGameSO:Object = activeStateSO.data;
+                activeGameSO.player = player.toObject();
+                activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
+                activeGameSO.mapSelection = mapSelection.toObject();
+                activeGameSO.startPosition = movementHelper.playerPosition;
+                activeGameSO.map = map.toObject();
+
+                activeStateSO.flush();
+            }
+
+        }
+
+        override public function onStop():void
+        {
+            saveState(null);
+            super.onStop();
         }
     }
 }

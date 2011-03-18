@@ -39,6 +39,7 @@ package com.gamecook.tilecrusader.effects
         private var message:String;
         private var speed:int;
         private var counter:int = 0;
+
         public function TypeTextEffect(target:TextField, updateCallback:Function = null, finishCallback:Function = null)
         {
             this.target = target;
@@ -67,6 +68,7 @@ package com.gamecook.tilecrusader.effects
                 counter = message.length;
 
             target.text = message.substr(0, counter);
+
 
             if(counter == message.length)
             finish();
