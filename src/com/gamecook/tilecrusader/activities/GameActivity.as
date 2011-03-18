@@ -17,6 +17,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
@@ -682,16 +683,14 @@ package com.gamecook.tilecrusader.activities
         {
             if(!isPlayerDead)
             {
-                //super.saveState(obj, activeState);
-                var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-                var activeGameSO:Object = activeStateSO.data;
-                activeGameSO.player = player.toObject();
-                activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
-                activeGameSO.mapSelection = mapSelection.toObject();
-                activeGameSO.startPosition = movementHelper.playerPosition;
-                activeGameSO.map = map.toObject();
-
-                activeStateSO.flush();
+                var activeGameState:ActiveGameState = new ActiveGameState();
+                activeGameState.load();
+                activeGameState.player = player.toObject();
+                activeGameState.tileInstanceManager = tileInstanceManager.toObject();
+                activeGameState.mapSelection = mapSelection.toObject();
+                activeGameState.startPosition = movementHelper.playerPosition;
+                activeGameState.map = map.toObject();
+                activeGameState.save();
             }
 
         }
