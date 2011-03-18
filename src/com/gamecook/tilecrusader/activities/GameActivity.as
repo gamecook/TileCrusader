@@ -153,7 +153,7 @@ package com.gamecook.tilecrusader.activities
             darknessHeight = 4;
 
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 5);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3);
 
             if(data.mapSelection)
             {

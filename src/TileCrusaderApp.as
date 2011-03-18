@@ -72,7 +72,6 @@ package
 
             tracker = new GATracker( this, "UA-18884514-4", "AS3", false );
 
-
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
 
@@ -95,7 +94,7 @@ package
 
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
-            game = new TileCrusaderGame(0,0, GameCookSplashActivity);
+            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity);
             addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );
@@ -119,8 +118,8 @@ package
             label.text += "DPI: "+Capabilities.screenDPI+"\n";
             label.text += "Display Mode: "+stage.displayState+"\n";
 
-            //tracker.trackEvent()
-
+            label.x = stats.width + 10;
+            label.y = stats.y;
         }
 
         private function configureComponents():void

@@ -34,6 +34,19 @@
         <aspectRatio>landscape</aspectRatio>
         <autoOrients>false</autoOrients>
     </initialWindow>
+    <android>
+		<manifestAdditions>
+		<![CDATA[
+			<manifest android:installLocation="auto">
+				<uses-permission android:name="android.permission.INTERNET"/>
+				<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+				<uses-configuration android:reqFiveWayNav="true"/>
+				<supports-screens android:normalScreens="true"/>
+				<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>
+			</manifest>
+		]]>
+		</manifestAdditions>
+	</android>
     <icon>
         <image72x72>images/icons/icon-72x72.png</image72x72>
         <image48x48>images/icons/icon-48x48.png</image48x48>

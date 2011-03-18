@@ -106,7 +106,7 @@ package com.gamecook.tilecrusader.views
             darknessHeight = 4;
 
             map = new RandomMap();
-            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 5);
+            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 3);
             mapDarkness.revealAll(true);
 
             populateMapHelper = new PopulateMapHelper(map);
