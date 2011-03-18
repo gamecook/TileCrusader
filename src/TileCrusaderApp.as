@@ -64,20 +64,22 @@ package
 
         private var game:TileCrusaderGame;
         private var tracker:GATracker;
+        private var os:String;
 
         public function TileCrusaderApp()
         {
             configureStage();
             configureComponents();
+            os = Capabilities.version.substr(0,3);
 
             tracker = new GATracker( this, "UA-18884514-4", "AS3", false );
 
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
-
+            var scale:Number = 1;
             if(stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
             {
-                if(Capabilities.version.substr(0,3) == "IOS")
+                if(os == "IOS")
                 {
                     screenHeight = stage.fullScreenWidth;
                     screenWidth = stage.fullScreenHeight;
@@ -94,7 +96,7 @@ package
 
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
-            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity);
+            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
             addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );

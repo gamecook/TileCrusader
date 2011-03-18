@@ -29,8 +29,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+    import com.bit101.components.Label;
     import com.gamecook.frogue.helpers.PopulateMapHelper;
+    import com.gamecook.frogue.maps.Map;
+    import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.frogue.renderer.MapDrawingRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
@@ -42,6 +46,8 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.Bitmap;
+    import flash.display.Shape;
+    import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.net.SharedObject;
     import flash.utils.getQualifiedClassName;
@@ -50,11 +56,14 @@ package com.gamecook.tilecrusader.activities
     {
         [Embed(source="../../../../../build/assets/spritesheet_template.png")]
         public static var SpriteSheetImage:Class;
-
+        protected var textCounter:Number = 0;
+        protected var textDelay:Number = 300;
         private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
         private var activeStateSO:SharedObject;
         private var map:RandomMap;
+        private var label:Label;
+        private const LOADING_TEXT:String = "Loading ";
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -66,17 +75,18 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
+            label = new Label(this, 0,0, LOADING_TEXT);
+            label.scaleX = label.scaleY = 2;
+            label.x = (fullSizeWidth - label.width) * .5
+            label.y = (fullSizeHeight - label.height) * .5
+            addChild(label);
+
+
             activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
             data = activeStateSO.data;
 
             parseSpriteSheet();
 
-            //TODO need to clean this up so it covers up the display correctly.
-            splashScreen = new Bitmap(spriteSheet.getSprite("splashScreen").clone());
-            splashScreen.scaleX = splashScreen.scaleY = fullSizeWidth / splashScreen.width;
-            splashScreen.y = (fullSizeHeight - splashScreen.height) * .5;
-
-            addChild(splashScreen);
 
             createMap();
 
@@ -231,6 +241,26 @@ package com.gamecook.tilecrusader.activities
         {
             soundManager.playMusic(TCSoundClasses.DungeonLooper, .5);
             super.onStart();
+        }
+
+        override public function update(elapsed:Number = 0):void
+        {
+            textCounter += elapsed;
+
+            if(label.text.length > 11)
+            {
+                label.text = LOADING_TEXT;
+            }
+
+
+            if (textCounter >= textDelay)
+            {
+                textCounter = 0;
+                label.text += ".";
+            }
+
+
+            super.update(elapsed);
         }
     }
 }

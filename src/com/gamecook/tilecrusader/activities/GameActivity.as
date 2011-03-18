@@ -58,6 +58,7 @@ package com.gamecook.tilecrusader.activities
     import flash.events.KeyboardEvent;
     import flash.geom.Point;
     import flash.net.SharedObject;
+    import flash.system.Capabilities;
     import flash.text.TextField;
     import flash.text.TextFormat;
     import flash.ui.Keyboard;
@@ -228,8 +229,11 @@ package com.gamecook.tilecrusader.activities
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
-            quakeEffect = new Quake(display);
-            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
+            if(Capabilities.version.substr(0,3) != "IOS")
+            {
+                quakeEffect = new Quake(display);
+                textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
+            }
 
         }
 
@@ -413,9 +417,16 @@ package com.gamecook.tilecrusader.activities
             }
            if(status.length > 0)
            {
-                textEffect.newMessage(status, 2);
-                addThread(textEffect);
-                status = "";
+                if(textEffect)
+                {
+                    textEffect.newMessage(status, 2);
+                    addThread(textEffect);
+                    status = "";
+                }
+                else
+                {
+                    statusLabel.text = status;
+                }
            }
             else
            {
@@ -460,7 +471,8 @@ package com.gamecook.tilecrusader.activities
         {
             var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
 
-            addThread(quakeEffect);
+            if(quakeEffect)
+                addThread(quakeEffect);
 
             // Run the check to see if the player is dead
             checkIfPlayerIsDead();
@@ -517,7 +529,8 @@ package com.gamecook.tilecrusader.activities
             {
                 addStatusMessage("\nA trap was sprung dealing 1 point of damage.", false);
                 player.subtractLife(1);
-                addThread(quakeEffect);
+                if(quakeEffect)
+                    addThread(quakeEffect);
                 treasure = " ";
             }
 
