@@ -407,6 +407,7 @@ package com.gamecook.tilecrusader.activities
                             potions: player.getPotions(),
                             characterPoints:player.getCharacterPoints()}};
 
+                            //TODO save out activeState but remove
                             startNextActivityTimer(FinishMapActivity, 1, newData);
                         }
                         else
@@ -592,6 +593,8 @@ package com.gamecook.tilecrusader.activities
         private function movePlayer(value:Point):void
         {
             movementHelper.move(value.x, value.y);
+            player.addStep();
+            trace("Player Steps", player.getSteps());
         }
 
         protected function invalidate():void
@@ -644,7 +647,7 @@ package com.gamecook.tilecrusader.activities
                 if(status == "")
                     statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
 
-                trace("Explored Tiles", mapSelection.getVisitedTiles(), "/", map.getOpenTiles().length);
+                trace("Explored Tiles", mapSelection.getVisitedTiles(), "/", map.getOpenTiles().length, "mapSelection.getVisitedTiles()", mapSelection.getVisitedTiles(), "map.getOpenTiles().length", map.getOpenTiles().length);
             }
         }
 

@@ -47,5 +47,10 @@ package com.gamecook.tilecrusader.activities
 
             activeGameState.clear();
         }
+
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
     }
 }
