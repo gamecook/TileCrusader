@@ -20,6 +20,8 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.iterators.OptionsIterator;
     import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.states.CustomTemplateState;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
@@ -56,19 +58,21 @@ package com.gamecook.tilecrusader.activities
         public var layout:VBox;
         private var defaultName:String;
         private var classOptionIterator:OptionsBehavior;
-        private var stateSO:SharedObject;
-        private var stateSOData:Object;
         public var classLabel:Label;
+        private var activeGameState:ActiveGameState;
+        private var customTemplateState:CustomTemplateState;
 
         public function ConfigureCharacterActivity(activityManager:ActivityManager, data:* = null)
         {
-            if(!data) data = {};
             super(activityManager, data);
         }
 
 
         override protected function onCreate():void
         {
+            activeGameState = new ActiveGameState();
+            customTemplateState = new CustomTemplateState();
+
             loadState(null);
             mapViewPortX = 20;
             mapViewPortWidth = fullSizeWidth - 480;
@@ -180,14 +184,14 @@ package com.gamecook.tilecrusader.activities
             classOptionIterator = new OptionsBehavior(classButton, RacesOptions.getValues());
             layout.x = fullSizeWidth - 450;
 
-            if(stateSOData.customTemplate)
+            if(customTemplateState.customTemplate)
             {
-                applyTemplate(stateSOData.customTemplate);
-                classButton.label = stateSOData.customTemplate.className;
-                nameInput.text = stateSOData.customTemplate.name;
+                applyTemplate(customTemplateState.customTemplate);
+                classButton.label = customTemplateState.className;
+                nameInput.text = customTemplateState.name;
                 classLabel.text = "Class(Custom):";
 
-                var index:int = RacesOptions.getValues().indexOf(stateSOData.customTemplate.className);
+                var index:int = RacesOptions.getValues().indexOf(customTemplateState.className);
                 classOptionIterator.setIndex(index);
 
             }
@@ -213,7 +217,6 @@ package com.gamecook.tilecrusader.activities
 
         public function onNameFocus(event:FocusEvent):void
         {
-            trace("Has Focus");
             var input:TextField = event.target as TextField;
             input.addEventListener(FocusEvent.FOCUS_OUT, onNameFocusOut);
             if(input.text == defaultName)
@@ -289,44 +292,51 @@ package com.gamecook.tilecrusader.activities
         public function  onDone(event:MouseEvent):void
         {
 
-            var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            var activeGameSO:Object = activeStateSO.data;
-            activeGameSO.activeGame = true;
-            activeGameSO.player = {name:nameInput.text,
+            //Mark active game flag, save player info and go to next screen
+            activeGameState.activeGame = true;
+            activeGameState.player = {name:nameInput.text,
                             maxLife: lifeNumStepper.value,
                             attackRoll: hitNumStepper.value,
                             defenseRoll: defNumStepper.value,
                             maxPotions: potionsNumStepper.value,
                             points:characterPoints,
                             characterPoints:DEFAULT_POINTS};
-            activeGameSO.lastActivity = getQualifiedClassName(RandomMapGeneratorActivity).replace("::", ".");
-            activeStateSO.flush();
-            trace("Active Game SO Size:", (activeStateSO.size/1,024), "k");
-            nextActivity(RandomMapGeneratorActivity);
+            activeGameState.lastActivity = getQualifiedClassName(RandomMapGeneratorActivity).replace("::", ".");
+
+            saveState(null);
+
             nextActivity(RandomMapGeneratorActivity);
         }
 
         public function onSave(event:MouseEvent):void
         {
-            stateSOData.customTemplate = {name: nameInput.text == "" ? "Not Sure" : nameInput.text, className: classButton.label, life:lifeNumStepper.value, attackRoll:hitNumStepper.value, defense:defNumStepper.value, potions:potionsNumStepper.value}
-            stateSO.flush();
+            customTemplateState.name = nameInput.text == "" ? "Not Sure" : nameInput.text
+            customTemplateState.className = classButton.label;
+            customTemplateState.life = lifeNumStepper.value;
+            customTemplateState.attackRoll = hitNumStepper.value;
+            customTemplateState.defense = defNumStepper.value;
+            customTemplateState.potions = potionsNumStepper.value;
+
+            customTemplateState.save();
+
             classLabel.text = "Class(Custom):";
-            trace("Custom Template SO Size:", (stateSO.size/1,024), "k");
-        }
-
-
-        override public function loadState(obj:Object):void
-        {
-            //super.loadState(obj);
-
-            //Get Map Option Settings
-            stateSO = SharedObject.getLocal("ConfigureCharacterActivity");
-            stateSOData = stateSO.data;
         }
 
         public function onCustomLook(event:MouseEvent):void
         {
             nextActivity(GenerateCharacterActivity, null);
+        }
+
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+            customTemplateState.load();
+        }
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            activeGameState.save();
+
         }
 
     }

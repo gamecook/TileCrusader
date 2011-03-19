@@ -120,6 +120,7 @@ package com.gamecook.tilecrusader.activities
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
         private var exploredTiles:Number;
+        private var activeGameState:ActiveGameState;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -129,18 +130,21 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            activeGameState = new ActiveGameState();
+            loadState(null);
+
             super.onCreate();
 
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
             map = data.mapInstance;
-            gameMode = data.gameType;
-            monsters = data.monsters;
-            treasurePool = data.treasurePool;
-            cashPool = data.cashPool;
-            cashRange = data.cashRange;
-            monstersDropTreasure = data.monstersDropTreasure;
+            gameMode = activeGameState.gameType;
+            monsters = activeGameState.monsters;
+            treasurePool = activeGameState.treasurePool;
+            cashPool = activeGameState.cashPool;
+            cashRange = activeGameState.cashRange;
+            monstersDropTreasure = activeGameState.monstersDropTreasure;
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -157,13 +161,13 @@ package com.gamecook.tilecrusader.activities
 
             mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3);
 
-            if(data.mapSelection)
+            if(activeGameState.mapSelection)
             {
-                mapSelection.parseObject(data.mapSelection);
+                mapSelection.parseObject(activeGameState.mapSelection);
             }
 
             // Apply darkness setting
-            switch (data.darkness)
+            switch (activeGameState.darkness)
             {
                 case DarknessOptions.LONG_RANGE:
                     mapSelection.fullLineOfSight(true);
@@ -181,7 +185,7 @@ package com.gamecook.tilecrusader.activities
 
             tileTypes = new TileTypes();
             //tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
-            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, data.player.characterPoints, 0));
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
@@ -194,10 +198,10 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            if(data.tileInstanceManager)
-                tileInstanceManager.parseObject(data.tileInstanceManager);
+            if(activeGameState.tileInstanceManager)
+                tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
-            player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", activeGameState.player) as PlayerTile;
 
             var characterSheetData:Object = {player:player};
 
@@ -218,7 +222,7 @@ package com.gamecook.tilecrusader.activities
             statusLabel.scaleX = statusLabel.scaleY = 1.5;
             overlayLayer.addChild(statusLabel);
 
-            addStatusMessage(data.startMessage);
+            addStatusMessage(activeGameState.startMessage);
 
             configureGame();
 
@@ -262,12 +266,12 @@ package com.gamecook.tilecrusader.activities
         private function cycleThroughLighting():void
         {
             var types:Array = [DarknessOptions.LONG_RANGE, DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
-            var id:int = types.indexOf(data.darkness);
+            var id:int = types.indexOf(activeGameState.darkness);
             id ++;
             if(id >= types.length)
                 id = 0;
             var lightingFlags:Array;
-            data.darkness = types[id];
+            activeGameState.darkness = types[id];
             if(id == 0)
             {
                 lightingFlags = [false, false, false];
@@ -288,7 +292,7 @@ package com.gamecook.tilecrusader.activities
             mapSelection.fullLineOfSight(lightingFlags[1]);
             mapSelection.revealAll(lightingFlags[2]);
 
-            statusLabel.text = "Changing lighting mode "+data.darkness;
+            statusLabel.text = "Changing lighting mode "+activeGameState.darkness;
         }
         private function configureMonsterTemplates():void
         {
@@ -322,7 +326,7 @@ package com.gamecook.tilecrusader.activities
 
             treasureIterator = new TreasureIterator(treasurePool);
 
-            movementHelper.startPosition(data.startPosition is Point ? data.startPosition : new Point(data.startPosition.x,data.startPosition.y));
+            movementHelper.startPosition(activeGameState.startPositionPoint);
 
             characterSheet.setPlayer(player);
 
@@ -407,6 +411,7 @@ package com.gamecook.tilecrusader.activities
                         }
                         else
                         {
+                            //TODO let player leave the level, use a pop up to ask
                             addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
@@ -651,7 +656,6 @@ package com.gamecook.tilecrusader.activities
                 if (player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
-                    soundManager.play(TCSoundClasses.DeathTheme);
                     //stateManager(GameOverActivity);
                     isPlayerDead = true;
                     //TODO build stat Data Object
@@ -678,13 +682,15 @@ package com.gamecook.tilecrusader.activities
             soundManager.play(TCSoundClasses.WalkStairsSound);
         }
 
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
             if(!isPlayerDead)
             {
-                var activeGameState:ActiveGameState = new ActiveGameState();
-                activeGameState.load();
                 activeGameState.player = player.toObject();
                 activeGameState.tileInstanceManager = tileInstanceManager.toObject();
                 activeGameState.mapSelection = mapSelection.toObject();
@@ -700,5 +706,7 @@ package com.gamecook.tilecrusader.activities
             saveState(null);
             super.onStop();
         }
+
+
     }
 }

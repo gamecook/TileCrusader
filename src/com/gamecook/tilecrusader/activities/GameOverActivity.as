@@ -9,13 +9,17 @@ package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.net.SharedObject;
-    public class GameOverActivity extends BaseActivity
+    public class GameOverActivity extends AdvancedActivity
     {
+        private var activeGameState:ActiveGameState;
+
         public function GameOverActivity(activityManager:ActivityManager, data:* = null)
         {
             super(activityManager, data);
@@ -23,7 +27,12 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            activeGameState = new ActiveGameState();
+            loadState(null);
+
             super.onCreate();
+
+            soundManager.play(TCSoundClasses.DeathTheme);
 
             var tf:Label = new Label(this, 0,0, "You were killed!");
             tf.x = (fullSizeWidth - tf.width) * .5;
@@ -32,8 +41,11 @@ package com.gamecook.tilecrusader.activities
 
             startNextActivityTimer(StartActivity, 3);
 
-            var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            so.clear();
+            //TODO show stats before clearing this out.
+
+            //TODO save player name and score
+
+            activeGameState.clear();
         }
     }
 }

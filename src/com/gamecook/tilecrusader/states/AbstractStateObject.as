@@ -12,7 +12,7 @@ package com.gamecook.tilecrusader.states
     public class AbstractStateObject implements IStateObject
     {
         protected var sharedObject:SharedObject;
-        protected var dataObject:Object;
+        protected var _dataObject:Object;
         protected var id:String;
 
         public function AbstractStateObject(self:AbstractStateObject, id:String)
@@ -27,7 +27,7 @@ package com.gamecook.tilecrusader.states
             try
             {
                 sharedObject = SharedObject.getLocal(id);
-                dataObject = sharedObject.data;
+                _dataObject = sharedObject.data;
             }
             catch(error:Error)
             {
@@ -37,12 +37,18 @@ package com.gamecook.tilecrusader.states
 
         public function save():void
         {
-            sharedObject.flush()
+            sharedObject.flush();
+            trace("StateObject",id,"Size:", (sharedObject.size/1,024), "k");
         }
 
         public function clear():void
         {
             sharedObject.clear();
+        }
+
+        public function get dataObject():Object
+        {
+            return _dataObject;
         }
     }
 }

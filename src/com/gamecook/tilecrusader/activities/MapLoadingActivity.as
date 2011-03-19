@@ -40,6 +40,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.BaseActivity;
 
@@ -60,10 +61,10 @@ package com.gamecook.tilecrusader.activities
         protected var textDelay:Number = 300;
         private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
-        private var activeStateSO:SharedObject;
         private var map:RandomMap;
         private var label:Label;
         private const LOADING_TEXT:String = "Loading ";
+        private var activeGameState:ActiveGameState;
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -82,49 +83,56 @@ package com.gamecook.tilecrusader.activities
             addChild(label);
 
 
-            activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            data = activeStateSO.data;
+            activeGameState = new ActiveGameState();
+
+            loadState(null);
 
             parseSpriteSheet();
 
 
             createMap();
 
-            data.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
-            activeStateSO.flush();
+            saveState(null);
 
-            data.mapInstance = map;
+            // Create data object for next activity
+            var activityObject:Object = {};
+            activityObject.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            activityObject.mapInstance = map;
 
-            startNextActivityTimer(GameActivity, 2, data);
+            startNextActivityTimer(GameActivity, 2, activityObject);
         }
 
         private function createMap():void
         {
+            //Create new Random Map
             map = new RandomMap();
 
-            if (data.map)
+            // Test to see if the current active state already has map
+            if (activeGameState.map)
             {
-                map.tiles = data.map.tiles;
+                // Get tiles from game state's map object
+                map.tiles = activeGameState.map.tiles;
             }
             else
             {
-                TimeMethodExecutionUtil.execute("generateMap", map.generateMap, data.size);
+                // If there were no tiles, generate a new map
+                TimeMethodExecutionUtil.execute("generateMap", map.generateMap, activeGameState.size);
 
-                data.startMessage = "You enter the dark dungeon.";
+                activeGameState.startMessage = "You enter the dark dungeon.";
 
                 generateMonsters();
                 generateTreasure();
 
                 var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
-                populateMapHelper.populateMap.apply(this, data.monsters);
-                populateMapHelper.populateMap.apply(this, data.chests);
+                populateMapHelper.populateMap.apply(this, activeGameState.monsters);
+                populateMapHelper.populateMap.apply(this, activeGameState.chests);
 
-                data.startPosition = populateMapHelper.getRandomEmptyPoint();
+                activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
 
-                data.cashPool = 100;
-                data.cashRange = 10;
+                activeGameState.cashPool = 100;
+                activeGameState.cashRange = 10;
 
-                data.map = map.toObject();
+                activeGameState.map = map.toObject();
             }
 
             trace("Map Size", map.width, map.height, "was generated");
@@ -138,7 +146,7 @@ package com.gamecook.tilecrusader.activities
             var emptyTreasureChests:Boolean = true;
             var trapTreasureChests:Boolean = false;
 
-            var totalChests:int = Math.floor((Math.random() * data.monsters.length) + .1);
+            var totalChests:int = Math.floor((Math.random() * activeGameState.monsters.length) + .1);
             var chests:Array = [];
             var treasurePool:Array = [];
 
@@ -154,7 +162,7 @@ package com.gamecook.tilecrusader.activities
             var treasureTypesTotal:int = treasureTypes.length;
 
             // Calculate the amount of treasure based on the total monsters in the game
-            var treasurePoolTotal:int = Math.floor((Math.random() * data.monsters.length) + .1);
+            var treasurePoolTotal:int = Math.floor((Math.random() * activeGameState.monsters.length) + .1);
 
             var i:int;
             //var treasureChestTotal:int = treasurePoolTotal *
@@ -169,8 +177,8 @@ package com.gamecook.tilecrusader.activities
             }
 
 
-            data.chests = chests;
-            data.treasurePool = treasurePool;
+            activeGameState.chests = chests;
+            activeGameState.treasurePool = treasurePool;
             trace("Treasure Pool", treasurePool.length, "in", chests.length, "values", treasurePool.toString());
 
         }
@@ -200,15 +208,15 @@ package com.gamecook.tilecrusader.activities
                 }
             }
 
-            if(data.gameType == GameModeOptions.KILL_BOSS)
+            if(activeGameState.gameType == GameModeOptions.KILL_BOSS)
             {
                 monsters.push("9");
                 trace("Boss was added to level");
             }
 
-            data.monsters = monsters;
+            activeGameState.monsters = monsters;
 
-            trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
+            //trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
         }
 
         private function parseSpriteSheet():void
@@ -261,6 +269,16 @@ package com.gamecook.tilecrusader.activities
 
 
             super.update(elapsed);
+        }
+
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            activeGameState.save();
         }
     }
 }
