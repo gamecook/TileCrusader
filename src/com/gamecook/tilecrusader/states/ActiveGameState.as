@@ -113,16 +113,18 @@ package com.gamecook.tilecrusader.states
             return _dataObject.cashRange;
         }
 
-        public function get monsters():Array
+        /*public function get monsters():Array
         {
+            trace("_dataObject.monsters", _dataObject.monsters);
             return _dataObject.monsters;
         }
 
         public function set monsters(value:Array):void
         {
             _dataObject.monsters = value;
-        }
 
+        }*/
+/*
         public function get chests():Array
         {
             return _dataObject.chests;
@@ -131,7 +133,7 @@ package com.gamecook.tilecrusader.states
         public function set chests(value:Array):void
         {
             _dataObject.chests = value;
-        }
+        }*/
 
         public function set treasurePool(treasurePool:Array):void
         {
@@ -152,6 +154,7 @@ package com.gamecook.tilecrusader.states
         {
             _dataObject.gameType = value;
         }
+/*
 
         public function set lastActivity(lastActivity:String):void
         {
@@ -162,6 +165,7 @@ package com.gamecook.tilecrusader.states
         {
             return _dataObject.lastActivity;
         }
+*/
 
         public function set activeGame(activeGame:Boolean):void
         {
@@ -191,6 +195,7 @@ package com.gamecook.tilecrusader.states
         public function set showMonsters(value:Boolean):void
         {
             _dataObject.showMonsters = value;
+
         }
 
         public function get monstersDropTreasure():Boolean

@@ -110,7 +110,7 @@ package com.gamecook.tilecrusader.activities
 
         public function onSubmit(event:MouseEvent):void
         {
-            activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            //activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
             saveState(null);
 
             nextActivity(MapLoadingActivity);

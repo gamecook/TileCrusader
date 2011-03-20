@@ -30,7 +30,7 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
-    import com.gamecook.frogue.helpers.PopulateMapHelper;
+    import com.gamecook.frogue.maps.MapPopulater;
     import com.gamecook.frogue.maps.Map;
     import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
@@ -65,6 +65,8 @@ package com.gamecook.tilecrusader.activities
         private var label:Label;
         private const LOADING_TEXT:String = "Loading ";
         private var activeGameState:ActiveGameState;
+        private var monsters:Array = [];
+        private var chests:Array = [];
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -123,9 +125,9 @@ package com.gamecook.tilecrusader.activities
                 generateMonsters();
                 generateTreasure();
 
-                var populateMapHelper:PopulateMapHelper = new PopulateMapHelper(map);
-                populateMapHelper.populateMap.apply(this, activeGameState.monsters);
-                populateMapHelper.populateMap.apply(this, activeGameState.chests);
+                var populateMapHelper:MapPopulater = new MapPopulater(map);
+                populateMapHelper.populateMap.apply(this, monsters);
+                populateMapHelper.populateMap.apply(this, chests);
 
                 activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
 
@@ -146,8 +148,7 @@ package com.gamecook.tilecrusader.activities
             var emptyTreasureChests:Boolean = true;
             var trapTreasureChests:Boolean = false;
 
-            var totalChests:int = Math.floor((Math.random() * activeGameState.monsters.length) + .1);
-            var chests:Array = [];
+            var totalChests:int = Math.floor((Math.random() * monsters.length) + .1);
             var treasurePool:Array = [];
 
             // These are the types of treasure in the game
@@ -162,7 +163,7 @@ package com.gamecook.tilecrusader.activities
             var treasureTypesTotal:int = treasureTypes.length;
 
             // Calculate the amount of treasure based on the total monsters in the game
-            var treasurePoolTotal:int = Math.floor((Math.random() * activeGameState.monsters.length) + .1);
+            var treasurePoolTotal:int = Math.floor((Math.random() * monsters.length) + .1);
 
             var i:int;
             //var treasureChestTotal:int = treasurePoolTotal *
@@ -176,8 +177,6 @@ package com.gamecook.tilecrusader.activities
                 }
             }
 
-
-            activeGameState.chests = chests;
             activeGameState.treasurePool = treasurePool;
             trace("Treasure Pool", treasurePool.length, "in", chests.length, "values", treasurePool.toString());
 
@@ -187,20 +186,20 @@ package com.gamecook.tilecrusader.activities
         {
             var monsterTypes:Array = ["1","2","3","4","5","6","7","8"];
             var monsterPercentage:Array = [.3,.2,.1, .1, .05, .02, .02, .01];
-            var monsters:Array = [];
             var totalMonsterPercent:Number = .05;
             var i:int = 0;
             var j:int = 0;
             var total:int = monsterTypes.length;
             var monsterValues:Number;
             var monsterType:int;
-            var totalTiles:int = Math.floor(RandomMap(map).getOpenTiles().length * totalMonsterPercent);
+            var totalTiles:int = Math.ceil(RandomMap(map).getOpenTiles().length * totalMonsterPercent);
 
             for(i = 0; i < total; i++)
             {
-                monsterValues = Math.ceil(monsterPercentage[i] * totalTiles);
+                //TODO need to look into why the values are sometimes larger then what they really are.
+                monsterValues = Math.floor(monsterPercentage[i] * totalTiles);
                 monsterType = monsterTypes[i] ;
-
+                //trace("MonsterType", monsterType, "monsterValues", monsterValues);
                 for(j = 0; j < monsterValues; j++)
                 {
 
@@ -214,8 +213,6 @@ package com.gamecook.tilecrusader.activities
                 trace("Boss was added to level");
             }
 
-            activeGameState.monsters = monsters;
-
             //trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
         }
 
@@ -227,7 +224,7 @@ package com.gamecook.tilecrusader.activities
             // create sprite sheet
             var bitmap:Bitmap = new SpriteSheetImage();
             spriteSheet.bitmapData = bitmap.bitmapData;
-            spriteSheet.registerSprite("splashScreen", new Rectangle(0, 0, 800, 480));
+            //spriteSheet.registerSprite("splashScreen", new Rectangle(0, 0, 800, 480));
 
             var i:int;
             var rows:int = Math.floor(bitmap.height / 20);

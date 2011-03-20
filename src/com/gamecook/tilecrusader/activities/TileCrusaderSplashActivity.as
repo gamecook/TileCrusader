@@ -39,10 +39,13 @@ package com.gamecook.tilecrusader.activities
 
     import com.jessefreeman.factivity.managers.ActivityManager;
 
+    import flash.display.Bitmap;
     import flash.text.TextField;
 
     public class TileCrusaderSplashActivity extends AdvancedActivity
     {
+        [Embed(source="../../../../../build/assets/tc_logo.png")]
+        public static var Logo:Class;
 
         public function TileCrusaderSplashActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -54,10 +57,16 @@ package com.gamecook.tilecrusader.activities
 
             super.onCreate();
 
+            var logo:Bitmap = new Logo();
+            logo.x = (fullSizeWidth - logo.width) * .5;
+            logo.y  = ((fullSizeHeight - logo.height) * .5) - 100;
+            addChild(logo);
+
             var tf:Label = new Label(this,0, 0, "Tile Crusader");
-            tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y  = (fullSizeHeight - tf.height) * .5;
-            tf.scaleX = tf.scaleY = 2;
+            tf.x = logo.x + 60;
+            tf.y  = logo.y + logo.height;
+
+            tf.scaleX = tf.scaleY = 6;
 
             startNextActivityTimer(WarningActivity, 3);
         }

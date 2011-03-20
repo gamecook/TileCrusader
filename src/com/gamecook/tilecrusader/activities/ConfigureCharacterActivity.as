@@ -301,7 +301,6 @@ package com.gamecook.tilecrusader.activities
                             maxPotions: potionsNumStepper.value,
                             points:characterPoints,
                             characterPoints:DEFAULT_POINTS};
-            activeGameState.lastActivity = getQualifiedClassName(RandomMapGeneratorActivity).replace("::", ".");
 
             saveState(null);
 
