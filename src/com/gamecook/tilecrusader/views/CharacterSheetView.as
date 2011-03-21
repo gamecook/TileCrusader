@@ -99,7 +99,7 @@ package com.gamecook.tilecrusader.views
         private function onQuitClick():void
         {
             // TODO Need a way to quit here.
-            com.gamecook.tilecrusader.managers.PopUpManager.showOverlay(new QuitPopUpWindow(onQuit));
+            PopUpManager.showOverlay(new QuitPopUpWindow(onQuit));
         }
 
         private function onQuit():void

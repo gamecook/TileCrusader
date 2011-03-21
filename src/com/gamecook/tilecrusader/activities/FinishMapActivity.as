@@ -30,11 +30,13 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
     public class FinishMapActivity extends BaseActivity
     {
+        private var activeGameState:ActiveGameState;
 
         public function FinishMapActivity(stateManager:IActivityManager, data:*)
         {
@@ -44,11 +46,29 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            activeGameState = new ActiveGameState();
+
+            trace("Finish Map Success", data.success);
+            loadState(null);
+
             super.onCreate();
 
             var message:Label = new Label(this, 0,0,"You have escaped the map.");
 
+            //activeGameState.clearMapData();
             startNextActivityTimer(RandomMapGeneratorActivity, 1, data);
+        }
+
+
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            activeGameState.save();
+
         }
     }
 }

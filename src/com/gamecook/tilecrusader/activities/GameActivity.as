@@ -14,6 +14,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
@@ -41,6 +42,8 @@ package com.gamecook.tilecrusader.activities
 
     import com.gamecook.tilecrusader.views.VirtualKeysView;
 
+    import com.gamecook.tilecrusader.views.popups.AlertPopUpWindow;
+    import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.Bitmap;
@@ -235,6 +238,10 @@ package com.gamecook.tilecrusader.activities
                 textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
             }
 
+            //TODO this isn't working look into it.
+            /*if(activeGameState.startMessage)
+                PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
+
         }
 
         private function onQuit():void
@@ -393,22 +400,15 @@ package com.gamecook.tilecrusader.activities
                             //TODO gameover
                             //TODO play heroic theme here?
                             trace("Level Done");
-                            isPlayerDead = true;
-                            var newData:Object = {player:{name:player.getName(),
-                            maxLife: player.getMaxLife(),
-                            attackRoll: player.getAttackRolls(),
-                            defenseRoll: player.getDefenceRolls(),
-                            maxPotions: player.getMaxPotion(),
-                            potions: player.getPotions(),
-                            characterPoints:player.getCharacterPoints()}};
 
-                            //TODO save out activeState but remove
-                            startNextActivityTimer(FinishMapActivity, 1, newData);
+                            onCompleteLevel(true);
                         }
                         else
                         {
                             //TODO let player leave the level, use a pop up to ask
-                            addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
+
+                            PopUpManager.showOverlay(new LeaveLevelPopUpWindow(onLeaveMap));
+                            //addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
                     default:
@@ -434,6 +434,22 @@ package com.gamecook.tilecrusader.activities
            {
                statusLabel.text = status;
            }
+        }
+
+        private function onCompleteLevel(success:Boolean):void
+        {
+            // Level has been finished, remove map sepcific info from state
+            activeGameState.clearMapData();
+            activeGameState.player = player.toObject();
+            // for state to save to update the player.
+            activeGameState.save();
+
+            startNextActivityTimer(FinishMapActivity, 1, {success:success});
+        }
+
+        private function onLeaveMap():void
+        {
+            onCompleteLevel(false);
         }
 
         public function addStatusMessage(value:String, clear:Boolean = true):void
@@ -607,13 +623,12 @@ package com.gamecook.tilecrusader.activities
 
         override public function update(elapsed:Number = 0):void
         {
-            var t:int = getTimer();
-
 
             if(virtualKeys)
                 virtualKeys.update(elapsed);
 
             pollKeyPressCounter += elapsed;
+
             if(pollKeyPressCounter >= keyPressDelay)
             {
                 pollKeyPressCounter = 0;
@@ -640,11 +655,6 @@ package com.gamecook.tilecrusader.activities
             super.update(elapsed);
 
             exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
-
-            t = (getTimer()-t);
-
-            if(status == "")
-                statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
 
             characterSheet.refresh();
         }

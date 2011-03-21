@@ -113,28 +113,6 @@ package com.gamecook.tilecrusader.states
             return _dataObject.cashRange;
         }
 
-        /*public function get monsters():Array
-        {
-            trace("_dataObject.monsters", _dataObject.monsters);
-            return _dataObject.monsters;
-        }
-
-        public function set monsters(value:Array):void
-        {
-            _dataObject.monsters = value;
-
-        }*/
-/*
-        public function get chests():Array
-        {
-            return _dataObject.chests;
-        }
-
-        public function set chests(value:Array):void
-        {
-            _dataObject.chests = value;
-        }*/
-
         public function set treasurePool(treasurePool:Array):void
         {
             _dataObject.treasurePool = treasurePool;
@@ -154,18 +132,6 @@ package com.gamecook.tilecrusader.states
         {
             _dataObject.gameType = value;
         }
-/*
-
-        public function set lastActivity(lastActivity:String):void
-        {
-            _dataObject.lastActivity = lastActivity;
-        }
-
-        public function get lastActivity():String
-        {
-            return _dataObject.lastActivity;
-        }
-*/
 
         public function set activeGame(activeGame:Boolean):void
         {
@@ -206,6 +172,23 @@ package com.gamecook.tilecrusader.states
         public function set monstersDropTreasure(value:Boolean):void
         {
             _dataObject.monstersDropTreasure = value;
+        }
+
+        public function clearMapData():void
+        {
+            delete _dataObject.tileInstanceManager;
+            delete _dataObject.mapSelection;
+            delete _dataObject.startPosition;
+            delete _dataObject.map;
+            delete _dataObject.size;
+            delete _dataObject.startMessage;
+            delete _dataObject.cashPool;
+            delete _dataObject.cashRange;
+            delete _dataObject.treasurePool;
+            delete _dataObject.gameType;
+            delete _dataObject.darkness;
+            delete _dataObject.showMonsters;
+            delete _dataObject.monstersDropTreasure;
         }
     }
 }
