@@ -47,7 +47,7 @@ package com.gamecook.tilecrusader.maps
         protected var visiblePoints:Array = [];
         protected var viewDistance:int;
         protected var _tourchMode:Boolean;
-        protected var _fullLineOfSight:Boolean;
+        //protected var _fullLineOfSight:Boolean;
         protected var exploredTiles:Array = [];
         protected var lightMap:Array = [];
         private var tileMap:TileTypes;
@@ -102,8 +102,37 @@ package com.gamecook.tilecrusader.maps
                             spriteID = spriteID.concat(","+tileMap.getTileSprite(tiles[rows][columns]));
                     }
 
-                    tiles[rows][columns] = spriteID;
 
+
+                    var uID:int = getTileID(columns, rows);
+
+                    if(lightMap[uID])
+                    {
+                        var id:int = Math.round((viewDistance - lightMap[uID]) / viewDistance * 10) - 3;
+                        if(id < 1)
+                            id = 0;
+
+                        //trace("LightMap", uID, tileValue, lightMap[uID], id);
+
+                        //spriteID = spriteID.concat(",light"+id);
+                        //trace("spriteID", spriteID);
+
+                        spriteID = spriteID.concat(",light"+id);
+                    }
+                    else if(exploredTilesHashMap[uID])
+                    {
+                        //trace("Out Of Sight", uID, tileValue, viewDistance+1);
+                        spriteID = spriteID = spriteID.concat(",light9");
+                    }
+                    else if(tileMap.isMonster(tileValue))
+                    {
+                        //trace("Monster in Dark", uID);
+                        spriteID = "sprite0";
+                    }
+                    else
+                    {
+                        spriteID = "light10";
+                    }
                     /*if(tiles[rows][columns] != "#")
                     {
                         tiles[rows][columns] = " ";
@@ -119,10 +148,12 @@ package com.gamecook.tilecrusader.maps
                         else
                             tiles[rows][columns] = "*";
                     }*/
+
+                    tiles[rows][columns] = spriteID;
                 }
 
             }
-
+            lightMap.length = 0;
             visiblePoints.length = 0;
         }
 
@@ -155,7 +186,7 @@ package com.gamecook.tilecrusader.maps
             var dy:int = Math.abs(y1 - y0);
             var x:int = x0;
             var y:int = y0;
-            var n:int = (!_fullLineOfSight) ? viewDistance : 1 + dx + dy;
+            var n:int = viewDistance;//(!_fullLineOfSight) ? viewDistance : 1 + dx + dy;
             var x_inc:int = (x1 > x0) ? 1 : -1;
             var y_inc:int = (y1 > y0) ? 1 : -1;
             var error:int = dx - dy;
@@ -164,7 +195,7 @@ package com.gamecook.tilecrusader.maps
 
             for (; n > 0; --n)
             {
-                var isWall:Boolean = visit(x, y, tiles);
+                var isWall:Boolean = visit(x, y, tiles, n);
                 if (isWall)
                     n = 0;
 
@@ -182,7 +213,7 @@ package com.gamecook.tilecrusader.maps
 
         }
 
-        private function visit(x:int, y:int, tiles:Array):Boolean
+        private function visit(x:int, y:int, tiles:Array, distance:int):Boolean
         {
             //TODO not sure why I would ever get a value less then 0 but I do
             if(x < 0) x = 0;
@@ -194,10 +225,12 @@ package com.gamecook.tilecrusader.maps
 
             var uID:int = getTileID(y,x);
 
+            lightMap[uID] = distance;
+
             if(visiblePoints.indexOf(uID) == -1)
                 visiblePoints.push(uID);
 
-            if(!_tourchMode || !_fullLineOfSight)
+            if(!_tourchMode);// || !_fullLineOfSight)
             {
                 if(!exploredTilesHashMap[uID] && tile != "#")
                 {
@@ -226,10 +259,10 @@ package com.gamecook.tilecrusader.maps
             _tourchMode = value;
         }
 
-        public function fullLineOfSight(value:Boolean):void
+        /*public function fullLineOfSight(value:Boolean):void
         {
             _fullLineOfSight = value;
-        }
+        }*/
 
         public function getVisitedTiles():int
         {

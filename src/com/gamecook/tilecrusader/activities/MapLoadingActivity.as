@@ -47,11 +47,15 @@ package com.gamecook.tilecrusader.activities
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.Bitmap;
+    import flash.display.BitmapData;
     import flash.display.Shape;
     import flash.geom.Point;
     import flash.geom.Rectangle;
+    import flash.geom.Rectangle;
     import flash.net.SharedObject;
     import flash.utils.getQualifiedClassName;
+
+    import mx.graphics.shaderClasses.ColorBurnShader;
 
     public class MapLoadingActivity extends AdvancedActivity
     {
@@ -66,6 +70,7 @@ package com.gamecook.tilecrusader.activities
         private var activeGameState:ActiveGameState;
         private var monsters:Array = [];
         private var chests:Array = [];
+        private const TILE_SIZE:int = 32;
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -245,6 +250,35 @@ package com.gamecook.tilecrusader.activities
                 spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
             }
 
+            createDarknessTiles();
+
+        }
+
+        private function createDarknessTiles():void
+        {
+            var i:int = 0;
+            var total:int = 10;
+            var bitmapData:BitmapData = new BitmapData(TILE_SIZE, TILE_SIZE, true, 0xFF000000);
+            var rect:Rectangle = new Rectangle(0, 0, TILE_SIZE, TILE_SIZE);
+
+            for (i = 0; i < total; i ++)
+            {
+                bitmapData.fillRect(rect, returnARGB(0x000000, i * 20));
+                spriteSheet.cacheSprite("light"+i, bitmapData.clone());
+            }
+
+            // Black Tile
+            bitmapData.fillRect(rect, 0x00000000);
+            spriteSheet.cacheSprite("light10", bitmapData.clone());
+
+        }
+
+        private function returnARGB(rgb:uint, newAlpha:uint):uint{
+          //newAlpha has to be in the 0 to 255 range
+          var argb:uint = 0;
+          argb += (newAlpha<<24);
+          argb += (rgb);
+          return argb;
         }
 
         override public function onStart():void

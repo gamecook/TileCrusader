@@ -11,12 +11,12 @@ package com.gamecook.tilecrusader.enum
     {
         private static const CLASS_TEMPLATES:Object = new Object();
         {
-            CLASS_TEMPLATES[ClassOptions.KNIGHT] = {life:10, attackRoll:3, defense:2, potions:5};
-            CLASS_TEMPLATES[ClassOptions.MAGE] = {life:5, attackRoll:2, defense:1, potions:12};
-            CLASS_TEMPLATES[ClassOptions.THIEF] = {life:7, attackRoll:2, defense:1, potions:10};
-            CLASS_TEMPLATES[ClassOptions.NECROMANCER] = {life:13, attackRoll:3, defense:2, potions:2};
-            CLASS_TEMPLATES[ClassOptions.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2};
-            CLASS_TEMPLATES[ClassOptions.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10};
+            CLASS_TEMPLATES[ClassOptions.KNIGHT] = {life:10, attackRoll:3, defense:2, potions:5, visibility:5};
+            CLASS_TEMPLATES[ClassOptions.MAGE] = {life:5, attackRoll:2, defense:1, potions:12, visibility:5};
+            CLASS_TEMPLATES[ClassOptions.THIEF] = {life:7, attackRoll:2, defense:1, potions:10, visibility:5};
+            CLASS_TEMPLATES[ClassOptions.NECROMANCER] = {life:13, attackRoll:3, defense:2, potions:2, visibility:5};
+            CLASS_TEMPLATES[ClassOptions.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2, visibility:5};
+            CLASS_TEMPLATES[ClassOptions.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10, visibility:5};
         }
 
         public static function getTemplate(value:String):Object

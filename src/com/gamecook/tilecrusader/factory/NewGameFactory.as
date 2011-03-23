@@ -37,6 +37,7 @@ package com.gamecook.tilecrusader.factory
                             attackRoll: playerObj.attackRoll,
                             defenseRoll: playerObj.defense,
                             maxPotions: playerObj.potions,
+                            visibility: playerObj.visibility,
                             points: DEFAULT_POINTS,
                             characterPoints: DEFAULT_POINTS};
 

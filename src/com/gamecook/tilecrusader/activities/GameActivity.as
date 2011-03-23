@@ -113,6 +113,7 @@ package com.gamecook.tilecrusader.activities
         private var analytics:MapAnalytics;
         private var invalidMapAnalytics:Boolean;
         private var monstersLeft:int;
+        private var visibility:int;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -155,10 +156,7 @@ package com.gamecook.tilecrusader.activities
 
             darknessWidth = 5;
             darknessHeight = 4;
-
-
-
-
+            visibility = activeGameState.player.visibility;
 
             movementHelper = new MovementHelper(map);
 
@@ -168,7 +166,7 @@ package com.gamecook.tilecrusader.activities
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileTypes);
 
             if(activeGameState.mapSelection)
             {
@@ -178,9 +176,6 @@ package com.gamecook.tilecrusader.activities
             // Apply darkness setting
             switch (activeGameState.darkness)
             {
-                case DarknessOptions.LONG_RANGE:
-                    mapSelection.fullLineOfSight(true);
-                break;
                 case DarknessOptions.TORCH:
                     mapSelection.tourchMode(true);
                 break;
@@ -268,21 +263,18 @@ package com.gamecook.tilecrusader.activities
 
         private function cycleThroughLighting():void
         {
-            var types:Array = [DarknessOptions.LONG_RANGE, DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
+            var types:Array = [DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
             var id:int = types.indexOf(activeGameState.darkness);
             id ++;
             if(id >= types.length)
                 id = 0;
             var lightingFlags:Array;
             activeGameState.darkness = types[id];
-            if(id == 0)
-            {
-                lightingFlags = [false, false, false];
-            }else if (id == 1)
+            if (id == 0)
             {
                 lightingFlags = [false, true, false];
             }
-            else if (id == 2)
+            else if (id == 1)
             {
                lightingFlags = [true, false, false];
             }
@@ -292,7 +284,7 @@ package com.gamecook.tilecrusader.activities
             }
 
             mapSelection.tourchMode(lightingFlags[0]);
-            mapSelection.fullLineOfSight(lightingFlags[1]);
+            //mapSelection.fullLineOfSight(lightingFlags[1]);
             mapSelection.revealAll(lightingFlags[2]);
 
             statusLabel.text = "Changing lighting mode "+activeGameState.darkness;

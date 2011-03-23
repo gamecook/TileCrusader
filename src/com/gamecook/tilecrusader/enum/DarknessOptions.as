@@ -38,7 +38,7 @@ package com.gamecook.tilecrusader.enum
 
         public static function getValues():Array
         {
-            return [NONE, REVEAL, LONG_RANGE, TORCH];
+            return [REVEAL, TORCH];
         }
     }
 }
