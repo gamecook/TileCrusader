@@ -35,16 +35,19 @@ package com.gamecook.tilecrusader.states
             }
         }
 
-        public function save():void
+        public function save():String
         {
             //TODO need to add some logic to make sure this actually saves
-            sharedObject.flush();
+            var success:String = sharedObject.flush();
             trace("StateObject",id,"Size:", (sharedObject.size/1,024), "k");
+
+            return success;
         }
 
         public function clear():void
         {
             sharedObject.clear();
+            _dataObject = sharedObject.data;
         }
 
         public function get dataObject():Object

@@ -13,6 +13,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.factory.NewGameFactory;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
     public class DebugStartActivity extends AdvancedActivity
@@ -35,7 +36,8 @@ package com.gamecook.tilecrusader.activities
                                                  GameModeOptions.getValues(),
                                                  MapSizeOptions.getValues(),
                                                  BooleanOptions.getTFOptions(),
-                                                 BooleanOptions.getTFOptions())
+                                                 BooleanOptions.getTFOptions());
+
             nextActivity(MapLoadingActivity);
         }
     }

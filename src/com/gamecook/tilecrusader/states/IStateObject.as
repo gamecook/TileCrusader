@@ -11,7 +11,7 @@ package com.gamecook.tilecrusader.states
     {
         function load():void;
 
-        function save():void;
+        function save():String;
 
         function clear():void;
     }

@@ -375,6 +375,7 @@ package com.gamecook.tilecrusader.activities
                 switch (tileTypes.getTileType(tile))
                 {
                     case TileTypes.IMPASSABLE:
+                            //TODO need to make sure we don't call render here
                             soundManager.play(TCSoundClasses.WallHit);
                         return;
                     case TileTypes.MONSTER: case TileTypes.BOSS:

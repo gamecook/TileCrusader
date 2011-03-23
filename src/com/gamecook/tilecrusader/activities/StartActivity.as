@@ -22,6 +22,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.managers.SoundManager;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.events.MouseEvent;
@@ -80,7 +81,8 @@ package com.gamecook.tilecrusader.activities
             //stateSOData.activeGame = true;
             //nextActivity(ConfigureCharacterActivity);
             //nextActivity(ConfigureCharacterActivity);
-            NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions())
+            NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions());
+
             nextActivity(MapLoadingActivity);
         }
 

@@ -21,6 +21,8 @@ package com.gamecook.tilecrusader.factory
             var activeGameState:ActiveGameState = new ActiveGameState();
             activeGameState.load();
 
+            activeGameState.clear();
+
             var success:Boolean = false;
 
             var playerClass:String = ArrayUtil.pickRandomArrayElement(classOptions);
@@ -46,7 +48,7 @@ package com.gamecook.tilecrusader.factory
 
             //TODO this needs to be correctly connected
             success = true;
-            activeGameState.save();
+            var error:String = activeGameState.save();
 
             return success;
         }
