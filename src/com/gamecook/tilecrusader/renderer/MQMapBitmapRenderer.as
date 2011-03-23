@@ -27,16 +27,16 @@ package com.gamecook.tilecrusader.renderer
 
     public class MQMapBitmapRenderer extends MapBitmapRenderer
     {
-        private var tileMap:TileTypes;
+        //private var tileMap:TileTypes;
         private var instances:TileInstanceManager;
         private var currentTileID:int;
         private var statsTF:TextField;
         private var statsMatrix:Matrix;
 
-        public function MQMapBitmapRenderer(target:BitmapData, spriteSheet:SpriteSheet, tileMap:TileTypes, instances:TileInstanceManager)
+        public function MQMapBitmapRenderer(target:BitmapData, spriteSheet:SpriteSheet, instances:TileInstanceManager)
         {
             this.instances = instances;
-            this.tileMap = tileMap;
+            //this.tileMap = tileMap;
             super(target, spriteSheet);
 
             statsTF = new TextField();
@@ -74,12 +74,27 @@ package com.gamecook.tilecrusader.renderer
 
         override protected function tileBitmap(value:String):BitmapData
         {
-            var sprites:Array = [tileMap.getTileSprite(" "), tileMap.getTileSprite(value)];
-            if(value == "@")
-                sprites.shift();
-            var bitmapData:BitmapData = spriteSheet.getSprite.apply(this, sprites);
 
-            if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
+            if(spriteSheet.hasSpriteCached(value))
+            {
+                //trace("SpriteSheet has sprite", value);
+                return spriteSheet.getSpriteFromCache(value);
+            }
+            else
+            {
+                var sprites:Array = value.split(",");
+
+                return spriteSheet.getSprite.apply(this, sprites);
+                //trace("SpriteSheet does not have sprite", value);
+            }
+
+            //var sprites:Array = [value];
+            /*if(value == "@")
+                sprites.shift();*/
+
+            //var bitmapData:BitmapData = ;
+
+            /*if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
             {
                 var tile:IFight = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as IFight;
                 bitmapData = bitmapData.clone();
@@ -111,9 +126,9 @@ package com.gamecook.tilecrusader.renderer
                     bitmapData.draw(bar, matrix);
 
                 }
-            }
+            }*/
 
-            return bitmapData;
+            //return bitmapData;
         }
 
 

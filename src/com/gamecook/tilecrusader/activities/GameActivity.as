@@ -139,7 +139,6 @@ package com.gamecook.tilecrusader.activities
 
 
             gameMode = activeGameState.gameType;
-            //monsters = activeGameState.monsters;
             treasurePool = activeGameState.treasurePool;
             cashPool = activeGameState.cashPool;
             cashRange = activeGameState.cashRange;
@@ -158,7 +157,18 @@ package com.gamecook.tilecrusader.activities
             darknessHeight = 4;
 
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3);
+
+
+
+            movementHelper = new MovementHelper(map);
+
+            configureMonsterTemplates();
+
+
+            tileTypes = new TileTypes();
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
+
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes);
 
             if(activeGameState.mapSelection)
             {
@@ -176,15 +186,6 @@ package com.gamecook.tilecrusader.activities
                 break;
             }
 
-
-            movementHelper = new MovementHelper(map);
-
-            configureMonsterTemplates();
-
-
-            tileTypes = new TileTypes();
-            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
-
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = MESSAGE_HEIGHT;
@@ -192,7 +193,7 @@ package com.gamecook.tilecrusader.activities
 
 
 
-            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
+            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
             combatHelper = new CombatHelper();
 
@@ -473,6 +474,10 @@ package com.gamecook.tilecrusader.activities
                     success = hasArtifact;
                 break;
                 case GameModeOptions.KILL_ALL_MONSTERS:
+                    TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
+                    // This is super expensive
+                    monstersLeft = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, false, "1","2","3","4","5","6","7","8","9");
+
                     success = (monstersLeft == 0);
                 break;
                 case GameModeOptions.KILL_BOSS:
@@ -561,7 +566,6 @@ package com.gamecook.tilecrusader.activities
         protected function swapTileOnMap(point:Point, tile:String):void
         {
             map.swapTile(point, tile);
-            invalidateMapAnalytics();
         }
 
 
@@ -614,13 +618,6 @@ package com.gamecook.tilecrusader.activities
         private function movePlayer(value:Point):void
         {
             movementHelper.move(value.x, value.y);
-
-            var pos:Point = movementHelper.playerPosition;
-
-            var x:int = pos.x - mapSelection.getOffsetX();
-            var y:int = pos.y - mapSelection.getOffsetY();
-
-            trace("Player Point", pos.x, "x", pos.y, "|", mapSelection.getOffsetX(), y-mapSelection.getOffsetY(), "|", x, y);
             player.addStep();
         }
 
@@ -647,19 +644,6 @@ package com.gamecook.tilecrusader.activities
                 }
             }
 
-            if(invalidMapAnalytics)
-            {
-                TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
-
-                monstersLeft = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, false, "1","2","3","4","5","6","7","8","9");
-
-
-                trace("Monsters in MapAnalytics", monstersLeft);
-
-
-                invalidMapAnalytics = false;
-
-            }
             super.update(elapsed);
 
             exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
@@ -684,7 +668,7 @@ package com.gamecook.tilecrusader.activities
                 var x:int = pos.x - mapSelection.getOffsetX();
                 var y:int = pos.y - mapSelection.getOffsetY();
 
-                renderer.renderPlayer(x,y);
+                renderer.renderPlayer(x,y, tileTypes.getTileSprite("@"));
 
                 invalid = false;
             }
@@ -748,12 +732,6 @@ package com.gamecook.tilecrusader.activities
             saveState(null);
             super.onStop();
         }
-
-        public function invalidateMapAnalytics():void
-        {
-            invalidMapAnalytics = true;
-        }
-
 
     }
 }

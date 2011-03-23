@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.managers {
-
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.google.analytics.GATracker;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.managers.ActivityManager;
@@ -18,6 +18,7 @@ package com.gamecook.tilecrusader.managers {
 
         private var tracker:GATracker;
         private var os:String;
+        private var activeClassName:String;
 
 
         public function TCActivityManager(tracker:GATracker)
@@ -34,8 +35,8 @@ package com.gamecook.tilecrusader.managers {
 
         override public function setCurrentActivity(activity:Class, data:* = null):void
         {
-            var className:String = String(activity).split(" ")[1].substr(0,-1);
-            tracker.trackPageview("/TileCrusader/"+os+"/"+className);
+            activeClassName = String(activity).split(" ")[1].substr(0,-1);
+            tracker.trackPageview("/TileCrusader/"+os+"/"+activeClassName);
             super.setCurrentActivity(activity, data);
         }
 
@@ -46,6 +47,12 @@ package com.gamecook.tilecrusader.managers {
                 newActivity["tracker"] = tracker;
 
             super.addActivity(newActivity);
+        }
+
+        override public function updateCurrentActivity(elapsed:Number = 0):void
+        {
+            if (currentActivity)
+                TimeMethodExecutionUtil.execute(activeClassName+" Update", currentActivity.update, elapsed);
         }
     }
 }

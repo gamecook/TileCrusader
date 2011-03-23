@@ -29,13 +29,15 @@ package com.gamecook.tilecrusader.utils
     public class TimeMethodExecutionUtil
     {
         public static var t:int;
+        public static var threshold:int = 10;
 
         public static function execute(name:String, target:Function, ...arguments):*
         {
             t = getTimer();
             var value:* = target.apply(target, arguments);
             t = (getTimer()-t);
-            trace("Method '"+name+"' executed in " + t + " ms\n");
+            if(t > threshold)
+                trace("Method '"+name+"' executed in " + t + " ms\n");
             return value;
         }
     }

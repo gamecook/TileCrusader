@@ -59,7 +59,6 @@ package com.gamecook.tilecrusader.activities
         public static var SpriteSheetImage:Class;
         protected var textCounter:Number = 0;
         protected var textDelay:Number = 300;
-        private var splashScreen:Bitmap;
         private var spriteSheet:SpriteSheet;
         private var map:RandomMap;
         private var label:Label;

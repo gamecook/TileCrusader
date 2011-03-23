@@ -94,7 +94,9 @@ package com.gamecook.tilecrusader.views
 
         private function init():void
         {
-            parseSpriteSheet();
+            //TODO this entire thing is broken, good luck...
+
+            /*parseSpriteSheet();
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -121,7 +123,7 @@ package com.gamecook.tilecrusader.views
             mapBitmap.y = 0;
             addChild(mapBitmap);
 
-            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
+            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
 
             // Configure
@@ -130,7 +132,7 @@ package com.gamecook.tilecrusader.views
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
             player = tileInstanceManager.getInstance("@", "@", {life:0, maxLife:"", attackRoll: ""}) as PlayerTile;
 
-            render();
+            render();*/
         }
 
         private function parseSpriteSheet():void
@@ -175,7 +177,7 @@ package com.gamecook.tilecrusader.views
         public function move(value:Point):void
         {
 
-            var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
+            /*var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
 
             if (tmpPoint != null)
             {
@@ -193,7 +195,7 @@ package com.gamecook.tilecrusader.views
                         break;
                 }
                 invalidate();
-            }
+            }*/
         }
 
         private function movePlayer(value:Point):void
@@ -209,12 +211,12 @@ package com.gamecook.tilecrusader.views
         public function render():void
         {
 
-            if (invalid)
+            /*if (invalid)
             {
                 mapDarkness.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapDarkness);
                 invalid = false;
-            }
+            }*/
 
         }
 
