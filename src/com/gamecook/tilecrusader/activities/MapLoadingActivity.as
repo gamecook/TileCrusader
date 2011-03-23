@@ -125,12 +125,24 @@ package com.gamecook.tilecrusader.activities
                 generateMonsters();
                 generateTreasure();
 
+                //TODO Create start position and exit based on game mode.
+
                 var populateMapHelper:MapPopulater = new MapPopulater(map);
                 populateMapHelper.populateMap.apply(this, monsters);
                 populateMapHelper.populateMap.apply(this, chests);
 
-                activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
+                var exitPosition:Point = populateMapHelper.getRandomEmptyPoint();
+                map.swapTile(exitPosition, "E");
 
+                if(activeGameState.gameType != GameModeOptions.ESCAPE)
+                {
+                    activeGameState.startPositionPoint = exitPosition;
+                }
+                else
+                {
+                    //TODO need to loop through all random points and find the longest one from the exit
+                    activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
+                }
                 activeGameState.cashPool = 100;
                 activeGameState.cashRange = 10;
 

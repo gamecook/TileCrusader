@@ -614,6 +614,13 @@ package com.gamecook.tilecrusader.activities
         private function movePlayer(value:Point):void
         {
             movementHelper.move(value.x, value.y);
+
+            var pos:Point = movementHelper.playerPosition;
+
+            var x:int = pos.x - mapSelection.getOffsetX();
+            var y:int = pos.y - mapSelection.getOffsetY();
+
+            trace("Player Point", pos.x, "x", pos.y, "|", mapSelection.getOffsetX(), y-mapSelection.getOffsetY(), "|", x, y);
             player.addStep();
         }
 
@@ -671,6 +678,13 @@ package com.gamecook.tilecrusader.activities
 
                 mapSelection.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapSelection);
+
+                var pos:Point = movementHelper.playerPosition;
+
+                var x:int = pos.x - mapSelection.getOffsetX();
+                var y:int = pos.y - mapSelection.getOffsetY();
+
+                renderer.renderPlayer(x,y);
 
                 invalid = false;
             }

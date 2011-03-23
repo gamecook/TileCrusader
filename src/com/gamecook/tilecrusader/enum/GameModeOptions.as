@@ -15,6 +15,7 @@ package com.gamecook.tilecrusader.enum
         public static const KILL_BOSS:String = "Kill Boss";
         public static const POISONED:String = "Find A Cure";
         public static var EXPLORE:String = "Explore Map";
+        public static const ESCAPE:String = "Escape";
 
         public static function getGameModeDescription(gameMode:String):String
         {
@@ -42,7 +43,7 @@ package com.gamecook.tilecrusader.enum
 
         public static function getValues():Array
         {
-            return [EXPLORE, /*FIND_ALL_TREASURE, FIND_ARTIFACT, POISONED,*/ KILL_ALL_MONSTERS, KILL_BOSS];
+            return [EXPLORE, /*ESCAPE, FIND_ALL_TREASURE, FIND_ARTIFACT, POISONED,*/ KILL_ALL_MONSTERS, KILL_BOSS];
         }
     }
 }

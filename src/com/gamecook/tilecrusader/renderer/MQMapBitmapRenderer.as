@@ -74,7 +74,10 @@ package com.gamecook.tilecrusader.renderer
 
         override protected function tileBitmap(value:String):BitmapData
         {
-            var bitmapData:BitmapData = spriteSheet.getSprite(tileMap.getTileSprite(" "), tileMap.getTileSprite(value));
+            var sprites:Array = [tileMap.getTileSprite(" "), tileMap.getTileSprite(value)];
+            if(value == "@")
+                sprites.shift();
+            var bitmapData:BitmapData = spriteSheet.getSprite.apply(this, sprites);
 
             if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
             {

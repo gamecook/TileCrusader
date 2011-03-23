@@ -58,7 +58,7 @@ package com.gamecook.tilecrusader.activities
                 <VBox id="buttonLayout" x="50" y="150" scaleX="2" scaleY="2">
                             <PushButton id="continueButton" label="Continue Crusade" event="click:onContinue"/>
                             <PushButton id="newGameButton" label="Micro Crusade" event="click:onStartGame"/>
-                            <PushButton id="helpButton" label="Help" event="click:onHelp"/>
+                            <!--<PushButton id="helpButton" label="Help" event="click:onHelp"/>-->
                             <PushButton id="optionsButton" label="Options" event="click:onOptions"/>
                     </VBox>
 
