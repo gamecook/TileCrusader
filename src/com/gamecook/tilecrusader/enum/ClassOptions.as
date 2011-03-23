@@ -29,7 +29,7 @@
  */
 package com.gamecook.tilecrusader.enum
 {
-    public class RacesOptions
+    public class ClassOptions
     {
         public static const KNIGHT:String = "Knight";
         public static const MAGE:String = "Mage";

@@ -13,6 +13,12 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
 
+    import com.gamecook.tilecrusader.enum.BooleanOptions;
+    import com.gamecook.tilecrusader.enum.ClassOptions;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.MapSizeOptions;
+    import com.gamecook.tilecrusader.factory.NewGameFactory;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.managers.SoundManager;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
@@ -50,7 +56,7 @@ package com.gamecook.tilecrusader.activities
 
                 <VBox id="buttonLayout" x="50" y="150" scaleX="2" scaleY="2">
                             <PushButton id="continueButton" label="Continue Crusade" event="click:onContinue"/>
-                            <PushButton id="newGameButton" label="New Crusade" event="click:onStartGame"/>
+                            <PushButton id="newGameButton" label="Micro Crusade" event="click:onStartGame"/>
                             <PushButton id="helpButton" label="Help" event="click:onHelp"/>
                             <PushButton id="optionsButton" label="Options" event="click:onOptions"/>
                     </VBox>
@@ -67,11 +73,15 @@ package com.gamecook.tilecrusader.activities
 
         public function onStartGame(event:MouseEvent):void
         {
-            var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            so.clear();
+
+            //var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
+            //so.clear();
             //TODO show a warning that this will overwrite the current game
-            stateSOData.activeGame = true;
-            nextActivity(ConfigureCharacterActivity);
+            //stateSOData.activeGame = true;
+            //nextActivity(ConfigureCharacterActivity);
+            //nextActivity(ConfigureCharacterActivity);
+            NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions())
+            nextActivity(MapLoadingActivity);
         }
 
         public function onContinue(event:MouseEvent):void

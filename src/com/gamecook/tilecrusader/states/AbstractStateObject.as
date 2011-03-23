@@ -37,6 +37,7 @@ package com.gamecook.tilecrusader.states
 
         public function save():void
         {
+            //TODO need to add some logic to make sure this actually saves
             sharedObject.flush();
             trace("StateObject",id,"Size:", (sharedObject.size/1,024), "k");
         }

@@ -16,7 +16,8 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.enum.RacesOptions;
+    import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
+    import com.gamecook.tilecrusader.enum.ClassOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.iterators.OptionsIterator;
     import com.gamecook.tilecrusader.managers.SingletonManager;
@@ -54,7 +55,7 @@ package com.gamecook.tilecrusader.activities
         private var defaultTotalTextColor:uint;
         private var spriteSheet:SpriteSheet;
         public var classButton:PushButton;
-        private var classTemplates:Array;
+        //private var classTemplates:Array;
         public var layout:VBox;
         private var defaultName:String;
         private var classOptionIterator:OptionsBehavior;
@@ -173,15 +174,7 @@ package com.gamecook.tilecrusader.activities
 
             //classIterator = new OptionsIterator();
 
-            classTemplates = [];
-            classTemplates[RacesOptions.KNIGHT] = {life:10, attackRoll:3, defense:2, potions:5};
-            classTemplates[RacesOptions.MAGE] = {life:5, attackRoll:2, defense:1, potions:12};
-            classTemplates[RacesOptions.THIEF] = {life:7, attackRoll:2, defense:1, potions:10};
-            classTemplates[RacesOptions.NECROMANCER] = {life:13, attackRoll:3, defense:2, potions:2};
-            classTemplates[RacesOptions.BARBARIAN] = {life:10, attackRoll:5, defense:3, potions:2};
-            classTemplates[RacesOptions.DARK_MAGE] = {life:5, attackRoll:4, defense:1, potions:10};
-
-            classOptionIterator = new OptionsBehavior(classButton, RacesOptions.getValues());
+            classOptionIterator = new OptionsBehavior(classButton, ClassOptions.getValues());
             layout.x = fullSizeWidth - 450;
 
             if(customTemplateState.customTemplate)
@@ -191,7 +184,7 @@ package com.gamecook.tilecrusader.activities
                 nameInput.text = customTemplateState.name;
                 classLabel.text = "Class(Custom):";
 
-                var index:int = RacesOptions.getValues().indexOf(customTemplateState.className);
+                var index:int = ClassOptions.getValues().indexOf(customTemplateState.className);
                 classOptionIterator.setIndex(index);
 
             }
@@ -245,7 +238,7 @@ package com.gamecook.tilecrusader.activities
             classLabel.text = "Class:";
             var race:String = classOptionIterator.nextOption();
 
-            var template:Object = classTemplates[race];
+            var template:Object = PlayerClassTemplates.getTemplate(race);
 
             applyTemplate(template);
         }

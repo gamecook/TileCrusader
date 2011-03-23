@@ -55,7 +55,7 @@ package com.gamecook.tilecrusader.activities
 
     public class MapLoadingActivity extends AdvancedActivity
     {
-        [Embed(source="../../../../../build/assets/spritesheet_template.png")]
+        [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;
         protected var textCounter:Number = 0;
         protected var textDelay:Number = 300;
@@ -224,22 +224,16 @@ package com.gamecook.tilecrusader.activities
             // create sprite sheet
             var bitmap:Bitmap = new SpriteSheetImage();
             spriteSheet.bitmapData = bitmap.bitmapData;
-            //spriteSheet.registerSprite("splashScreen", new Rectangle(0, 0, 800, 480));
-
+            var tileSize:int = 32;
             var i:int;
-            var rows:int = Math.floor(bitmap.height / 20);
-            var total:int = Math.floor((bitmap.width - 800) / 20) * (bitmap.height / 20);
-            var spriteRect:Rectangle = new Rectangle(800, 0, 20, 20);
+            var total:int = Math.floor(bitmap.width / tileSize);
+            var spriteRect:Rectangle = new Rectangle(0, 0, tileSize, tileSize);
             for (i = 0; i < total; ++i)
             {
+                spriteRect.x = i * tileSize;
                 spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
-                spriteRect.y += 20;
-                if (i % rows == (rows - 1))
-                {
-                    spriteRect.x += 20;
-                    spriteRect.y = 0;
-                }
             }
+
         }
 
         override public function onStart():void

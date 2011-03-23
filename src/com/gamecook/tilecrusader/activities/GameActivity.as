@@ -86,7 +86,7 @@ package com.gamecook.tilecrusader.activities
         private var overlayLayer:Sprite;
         private var statusLabel:Label;
         private var status:String = "";
-        private static const TILE_SIZE:int = 20;
+        private static const TILE_SIZE:int = 32;
         private var scale:int = 2;
         private var tileWidth:int;
         private var tileHeight:int;
