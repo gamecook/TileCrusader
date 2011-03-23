@@ -14,6 +14,7 @@ package com.gamecook.tilecrusader.tiles
         private var potions:int = 0;
         private var maxPotions:int = 0;
         private var kills:int = 0;
+        private var steps:int = 0;
 
         public function PlayerTile()
         {
@@ -66,6 +67,9 @@ package com.gamecook.tilecrusader.tiles
             if(obj.hasOwnProperty("kills"))
                 kills = obj.kills;
 
+            if(obj.hasOwnProperty("steps"))
+                steps = obj.steps;
+
         }
 
         public function addPotion(value:int):void
@@ -101,8 +105,19 @@ package com.gamecook.tilecrusader.tiles
             obj.maxPotions = maxPotions;
             obj.potions = potions;
             obj.kills = kills;
+            obj.steps = steps;
 
             return obj;
+        }
+
+        public function addStep():void
+        {
+            steps ++;
+        }
+
+        public function getSteps():int
+        {
+            return steps;
         }
     }
 }

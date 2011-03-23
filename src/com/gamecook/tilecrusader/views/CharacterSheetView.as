@@ -69,40 +69,24 @@ package com.gamecook.tilecrusader.views
             quitLabel = UIFactory.createTextFieldButton(onQuitClick, 110,5,"Quit");
             addChild(quitLabel);
 
-            nameLabel = UIFactory.createTextField(13, 64, "BitchAss");
+            nameLabel = UIFactory.createTextField(13, 64, player.getName());
             addChild(nameLabel);
 
+            //TODO need to connect this up
             classLabel = UIFactory.createTextField(13, 86, "The Knight");
             classLabel.textColor = 0x999999;
             addChild(classLabel);
 
-            lifeLabel = UIFactory.createTextField(13, 200, "L");
-            addChild(lifeLabel);
-
-            lifeBarBG = new Shape();
-            lifeBarBG.graphics.beginFill(0xff0000);
-            lifeBarBG.graphics.drawRect(0,0, 155, 18);
-            lifeBarBG.graphics.endFill();
-            lifeBarBG.x = 33;
-            lifeBarBG.y = 202;
-            addChild(lifeBarBG);
-
-            lifeBar = new Shape();
-            lifeBar.graphics.beginFill(0x00ff00);
-            lifeBar.graphics.drawRect(0,0, lifeBarBG.width, lifeBarBG.height);
-            lifeBar.graphics.endFill();
-            lifeBar.x = lifeBarBG.x;
-            lifeBar.y = lifeBarBG.y;
-            addChild(lifeBar);
-
             goldLabel = UIFactory.createTextField(13, 225, "G: $0");
             addChild(goldLabel);
 
+/*
             hitLabel = UIFactory.createTextField(102, 110, "H: 0");
             addChild(hitLabel);
 
             defenseLabel = UIFactory.createTextField(102, 130, "D: 0");
             addChild(defenseLabel);
+*/
 
             potionLabel = UIFactory.createTextField(102, 150, "P: 0");
             addChild(potionLabel);
@@ -115,7 +99,7 @@ package com.gamecook.tilecrusader.views
         private function onQuitClick():void
         {
             // TODO Need a way to quit here.
-            com.gamecook.tilecrusader.managers.PopUpManager.showOverlay(new QuitPopUpWindow(onQuit));
+            PopUpManager.showOverlay(new QuitPopUpWindow(onQuit));
         }
 
         private function onQuit():void
@@ -137,9 +121,9 @@ package com.gamecook.tilecrusader.views
                 goldLabel.text = "G: $"+player.getGold();
                 potionLabel.text = "P: "+player.getPotions();
                 killLabel.text = "K: "+player.getKills();
-                lifeBar.scaleX = player.getLife()/player.getMaxLife();
-                hitLabel.text = "H: "+player.getAttackRolls().toString();
-                defenseLabel.text = "D: "+player.getDefenceRolls().toString();
+                //lifeBar.scaleX = player.getLife()/player.getMaxLife();
+                //hitLabel.text = "H: "+player.getAttackRolls().toString();
+                //defenseLabel.text = "D: "+player.getDefenceRolls().toString();
                 potionLabel.text = "P: "+player.getPotions().toString();
             }
         }

@@ -24,6 +24,7 @@ package com.gamecook.tilecrusader.activities {
         override public function onStop():void
         {
             soundManager.destroySounds();
+            soundManager.volume = 0;
             super.onStop();
         }
 

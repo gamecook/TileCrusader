@@ -30,7 +30,7 @@
 package com.gamecook.tilecrusader.views
 {
     import com.gamecook.frogue.helpers.MovementHelper;
-    import com.gamecook.frogue.helpers.PopulateMapHelper;
+    import com.gamecook.frogue.maps.MapPopulater;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.maps.FogOfWarMapSelection;
     import com.gamecook.frogue.maps.MapSelection;
@@ -65,7 +65,7 @@ package com.gamecook.tilecrusader.views
         private var darknessWidth:int;
         private var darknessHeight:int;
 
-        private var populateMapHelper:PopulateMapHelper;
+        private var populateMapHelper:MapPopulater;
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         public var player:PlayerTile;
@@ -109,7 +109,7 @@ package com.gamecook.tilecrusader.views
             mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 3);
             mapDarkness.revealAll(true);
 
-            populateMapHelper = new PopulateMapHelper(map);
+            populateMapHelper = new MapPopulater(map);
 
             movementHelper = new MovementHelper(map);
 

@@ -8,26 +8,23 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
+    import com.gamecook.frogue.maps.MapAnalytics;
     import com.gamecook.tilecrusader.effects.Quake;
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.gamecook.tilecrusader.templates.ITemplate;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.templates.Template;
     import com.gamecook.tilecrusader.templates.TemplateCollection;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.gamecook.frogue.helpers.MovementHelper;
-    import com.gamecook.frogue.helpers.PopulateMapHelper;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.io.IControl;
-    import com.gamecook.frogue.maps.FogOfWarMapSelection;
-    import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
@@ -37,31 +34,25 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.status.DoubleAttackStatus;
     import com.gamecook.tilecrusader.combat.IFight;
-    import com.gamecook.tilecrusader.factory.TileFactory;
     import com.gamecook.tilecrusader.iterators.TreasureIterator;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.gamecook.tilecrusader.views.CharacterSheetView;
 
     import com.gamecook.tilecrusader.views.VirtualKeysView;
 
+    import com.gamecook.tilecrusader.views.popups.AlertPopUpWindow;
+    import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Sprite;
-    import flash.display.StageAlign;
-    import flash.display.StageScaleMode;
-    import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.geom.Point;
-    import flash.net.SharedObject;
-    import flash.text.TextField;
-    import flash.text.TextFormat;
+    import flash.system.Capabilities;
     import flash.ui.Keyboard;
-    import flash.ui.KeyboardType;
     import flash.utils.getTimer;
 
     public class GameActivity extends AdvancedActivity implements IControl
@@ -83,7 +74,7 @@ package com.gamecook.tilecrusader.activities
         private var characterSheet:CharacterSheetView;
         private var tileTypes:TileTypes;
         private var treasureIterator:TreasureIterator;
-        private var monsters:Array;
+        //private var monsters:Array;
         private var chests:Array;
         private var gameMode:String;
         private var hasArtifact:Boolean;
@@ -118,27 +109,41 @@ package com.gamecook.tilecrusader.activities
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
         private var exploredTiles:Number;
+        private var activeGameState:ActiveGameState;
+        private var analytics:MapAnalytics;
+        private var invalidMapAnalytics:Boolean;
+        private var monstersLeft:int;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
             super(activityManager, data);
         }
 
-
         override protected function onCreate():void
         {
+
+            activeGameState = new ActiveGameState();
+            loadState(null);
+
             super.onCreate();
 
             display = addChild(new Sprite()) as Sprite;
             overlayLayer = addChild(new Sprite()) as Sprite;
 
             map = data.mapInstance;
-            gameMode = data.gameType;
-            monsters = data.monsters;
-            treasurePool = data.treasurePool;
-            cashPool = data.cashPool;
-            cashRange = data.cashRange;
-            monstersDropTreasure = data.monstersDropTreasure;
+            analytics = new MapAnalytics(map);
+
+            TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
+            var remainingMonsters:int = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, "1","2","3","4","5","6","7","8","9");
+            trace("Monsters in MapAnalytics", remainingMonsters);
+
+
+            gameMode = activeGameState.gameType;
+            //monsters = activeGameState.monsters;
+            treasurePool = activeGameState.treasurePool;
+            cashPool = activeGameState.cashPool;
+            cashRange = activeGameState.cashRange;
+            monstersDropTreasure = activeGameState.monstersDropTreasure;
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -155,13 +160,13 @@ package com.gamecook.tilecrusader.activities
 
             mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3);
 
-            if(data.mapSelection)
+            if(activeGameState.mapSelection)
             {
-                mapSelection.parseObject(data.mapSelection);
+                mapSelection.parseObject(activeGameState.mapSelection);
             }
 
             // Apply darkness setting
-            switch (data.darkness)
+            switch (activeGameState.darkness)
             {
                 case DarknessOptions.LONG_RANGE:
                     mapSelection.fullLineOfSight(true);
@@ -178,8 +183,7 @@ package com.gamecook.tilecrusader.activities
 
 
             tileTypes = new TileTypes();
-            //tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
-            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, data.player.characterPoints, 0));
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
@@ -192,10 +196,10 @@ package com.gamecook.tilecrusader.activities
 
             combatHelper = new CombatHelper();
 
-            if(data.tileInstanceManager)
-                tileInstanceManager.parseObject(data.tileInstanceManager);
+            if(activeGameState.tileInstanceManager)
+                tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
-            player = tileInstanceManager.getInstance("@", "@", data.player) as PlayerTile;
+            player = tileInstanceManager.getInstance("@", "@", activeGameState.player) as PlayerTile;
 
             var characterSheetData:Object = {player:player};
 
@@ -216,7 +220,7 @@ package com.gamecook.tilecrusader.activities
             statusLabel.scaleX = statusLabel.scaleY = 1.5;
             overlayLayer.addChild(statusLabel);
 
-            addStatusMessage(data.startMessage);
+            addStatusMessage(activeGameState.startMessage);
 
             configureGame();
 
@@ -228,8 +232,15 @@ package com.gamecook.tilecrusader.activities
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
 
-            quakeEffect = new Quake(display);
-            textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
+            if(Capabilities.version.substr(0,3) != "IOS")
+            {
+                quakeEffect = new Quake(display);
+                textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
+            }
+
+            //TODO this isn't working look into it.
+            /*if(activeGameState.startMessage)
+                PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
 
         }
 
@@ -257,12 +268,12 @@ package com.gamecook.tilecrusader.activities
         private function cycleThroughLighting():void
         {
             var types:Array = [DarknessOptions.LONG_RANGE, DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
-            var id:int = types.indexOf(data.darkness);
+            var id:int = types.indexOf(activeGameState.darkness);
             id ++;
             if(id >= types.length)
                 id = 0;
             var lightingFlags:Array;
-            data.darkness = types[id];
+            activeGameState.darkness = types[id];
             if(id == 0)
             {
                 lightingFlags = [false, false, false];
@@ -283,7 +294,7 @@ package com.gamecook.tilecrusader.activities
             mapSelection.fullLineOfSight(lightingFlags[1]);
             mapSelection.revealAll(lightingFlags[2]);
 
-            statusLabel.text = "Changing lighting mode "+data.darkness;
+            statusLabel.text = "Changing lighting mode "+activeGameState.darkness;
         }
         private function configureMonsterTemplates():void
         {
@@ -317,7 +328,7 @@ package com.gamecook.tilecrusader.activities
 
             treasureIterator = new TreasureIterator(treasurePool);
 
-            movementHelper.startPosition(data.startPosition is Point ? data.startPosition : new Point(data.startPosition.x,data.startPosition.y));
+            movementHelper.startPosition(activeGameState.startPositionPoint);
 
             characterSheet.setPlayer(player);
 
@@ -389,20 +400,15 @@ package com.gamecook.tilecrusader.activities
                             //TODO gameover
                             //TODO play heroic theme here?
                             trace("Level Done");
-                            isPlayerDead = true;
-                            var newData:Object = {player:{name:player.getName(),
-                            maxLife: player.getMaxLife(),
-                            attackRoll: player.getAttackRolls(),
-                            defenseRoll: player.getDefenceRolls(),
-                            maxPotions: player.getMaxPotion(),
-                            potions: player.getPotions(),
-                            characterPoints:player.getCharacterPoints()}};
 
-                            startNextActivityTimer(FinishMapActivity, 1, newData);
+                            onCompleteLevel(true);
                         }
                         else
                         {
-                            addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
+                            //TODO let player leave the level, use a pop up to ask
+
+                            PopUpManager.showOverlay(new LeaveLevelPopUpWindow(onLeaveMap));
+                            //addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
                     default:
@@ -413,14 +419,37 @@ package com.gamecook.tilecrusader.activities
             }
            if(status.length > 0)
            {
-                textEffect.newMessage(status, 2);
-                addThread(textEffect);
-                status = "";
+                if(textEffect)
+                {
+                    textEffect.newMessage(status, 2);
+                    addThread(textEffect);
+                    status = "";
+                }
+                else
+                {
+                    statusLabel.text = status;
+                }
            }
             else
            {
                statusLabel.text = status;
            }
+        }
+
+        private function onCompleteLevel(success:Boolean):void
+        {
+            // Level has been finished, remove map sepcific info from state
+            activeGameState.clearMapData();
+            activeGameState.player = player.toObject();
+            // for state to save to update the player.
+            activeGameState.save();
+
+            startNextActivityTimer(FinishMapActivity, 1, {success:success});
+        }
+
+        private function onLeaveMap():void
+        {
+            onCompleteLevel(false);
         }
 
         public function addStatusMessage(value:String, clear:Boolean = true):void
@@ -443,10 +472,11 @@ package com.gamecook.tilecrusader.activities
                     success = hasArtifact;
                 break;
                 case GameModeOptions.KILL_ALL_MONSTERS:
-                    success = (monsters.length == 0);
+                    success = (monstersLeft == 0);
                 break;
                 case GameModeOptions.KILL_BOSS:
-                    success = (monsters.indexOf("9") == -1);
+                    var value:int = analytics.getTotal(false, "9");
+                    success = (value == 0);
                 break;
                 case GameModeOptions.EXPLORE:
                     success = (exploredTiles == 1);
@@ -460,7 +490,8 @@ package com.gamecook.tilecrusader.activities
         {
             var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
 
-            addThread(quakeEffect);
+            if(quakeEffect)
+                addThread(quakeEffect);
 
             // Run the check to see if the player is dead
             checkIfPlayerIsDead();
@@ -480,24 +511,25 @@ package com.gamecook.tilecrusader.activities
             if (tmpTile.getLife() <= 0)
             {
 
-                var tile:String = map.getTileType(tmpPoint);
+                /*var tile:String = map.getTileType(tmpPoint);
                 var index:int = monsters.indexOf(Number(tile));
                 monsters.splice(index,1);
 
                 trace("Monster", tile, "was killed", monsters.length, "left index",index,  monsters);
+*/
 
                 player.addKill();
 
                 soundManager.play(TCSoundClasses.WinBattle);
 
-                map.swapTile(tmpPoint, "X");
+                swapTileOnMap(tmpPoint, "X");
 
                 if(monstersDropTreasure){
                     var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
                     if(treasure == "K")
                         treasurePool.push(treasure);
                     else
-                        map.swapTile(tmpPoint, treasure);
+                        swapTileOnMap(tmpPoint, treasure);
                 }
 
                 tileInstanceManager.removeInstance(uID);
@@ -517,12 +549,20 @@ package com.gamecook.tilecrusader.activities
             {
                 addStatusMessage("\nA trap was sprung dealing 1 point of damage.", false);
                 player.subtractLife(1);
-                addThread(quakeEffect);
+                if(quakeEffect)
+                    addThread(quakeEffect);
                 treasure = " ";
             }
 
-            map.swapTile(tmpPoint, treasure);
+            swapTileOnMap(tmpPoint, treasure);
         }
+
+        protected function swapTileOnMap(point:Point, tile:String):void
+        {
+            map.swapTile(point, tile);
+            invalidateMapAnalytics();
+        }
+
 
         private function pickup(tile:String, tmpPoint:Point, value:Point):void
         {
@@ -566,13 +606,14 @@ package com.gamecook.tilecrusader.activities
                 addStatusMessage(player.getName() +" has found an Artifact.");
             }
 
-            map.swapTile(tmpPoint, " ");
+            swapTileOnMap(tmpPoint, " ");
             movePlayer(value);
         }
 
         private function movePlayer(value:Point):void
         {
             movementHelper.move(value.x, value.y);
+            player.addStep();
         }
 
         protected function invalidate():void
@@ -582,10 +623,12 @@ package com.gamecook.tilecrusader.activities
 
         override public function update(elapsed:Number = 0):void
         {
+
             if(virtualKeys)
                 virtualKeys.update(elapsed);
 
             pollKeyPressCounter += elapsed;
+
             if(pollKeyPressCounter >= keyPressDelay)
             {
                 pollKeyPressCounter = 0;
@@ -596,10 +639,24 @@ package com.gamecook.tilecrusader.activities
                 }
             }
 
+            if(invalidMapAnalytics)
+            {
+                TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
+
+                monstersLeft = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, false, "1","2","3","4","5","6","7","8","9");
+
+
+                trace("Monsters in MapAnalytics", monstersLeft);
+
+
+                invalidMapAnalytics = false;
+
+            }
             super.update(elapsed);
 
+            exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
 
-
+            characterSheet.refresh();
         }
 
         override protected function render():void
@@ -610,22 +667,11 @@ package com.gamecook.tilecrusader.activities
 
             if (invalid)
             {
-                var t:int = getTimer();
 
-                //TODO there is a bug in renderer that doesn't let you see the last row
                 mapSelection.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapSelection);
-                characterSheet.refresh();
 
                 invalid = false;
-
-                t = (getTimer()-t);
-
-                exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
-                if(status == "")
-                    statusLabel.text = "Render executed in " + t + " ms.\n"+Math.round(exploredTiles*100) + "% of the map was explored.", true;
-
-                trace("Explored Tiles", mapSelection.getVisitedTiles(), "/", map.getOpenTiles().length);
             }
         }
 
@@ -637,7 +683,6 @@ package com.gamecook.tilecrusader.activities
                 if (player.getPotions() == 0)
                 {
                     addStatusMessage("Player was killed!", true);
-                    soundManager.play(TCSoundClasses.DeathTheme);
                     //stateManager(GameOverActivity);
                     isPlayerDead = true;
                     //TODO build stat Data Object
@@ -664,21 +709,21 @@ package com.gamecook.tilecrusader.activities
             soundManager.play(TCSoundClasses.WalkStairsSound);
         }
 
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
             if(!isPlayerDead)
             {
-                //super.saveState(obj, activeState);
-                var activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-                var activeGameSO:Object = activeStateSO.data;
-                activeGameSO.player = player.toObject();
-                activeGameSO.tileInstanceManager = tileInstanceManager.toObject();
-                activeGameSO.mapSelection = mapSelection.toObject();
-                activeGameSO.startPosition = movementHelper.playerPosition;
-                activeGameSO.map = map.toObject();
-
-                activeStateSO.flush();
+                activeGameState.player = player.toObject();
+                activeGameState.tileInstanceManager = tileInstanceManager.toObject();
+                activeGameState.mapSelection = mapSelection.toObject();
+                activeGameState.startPosition = movementHelper.playerPosition;
+                activeGameState.map = map.toObject();
+                activeGameState.save();
             }
 
         }
@@ -688,5 +733,12 @@ package com.gamecook.tilecrusader.activities
             saveState(null);
             super.onStop();
         }
+
+        public function invalidateMapAnalytics():void
+        {
+            invalidMapAnalytics = true;
+        }
+
+
     }
 }

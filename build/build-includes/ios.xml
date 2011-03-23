@@ -39,7 +39,7 @@
         <java jar="${FLEX_HOME}/lib/adt.jar" fork="true" failonerror="true">
             <arg value="-package"/>
             <arg value="-target"/>
-            <arg value="ipa-test"/>
+            <arg value="ipa-ad-hoc"/>
             <arg value="-provisioning-profile"/>
             <arg value="${basedir}/build/ios-resources/${ios.provision}"/>
             <arg value="-storetype"/>
@@ -48,7 +48,7 @@
             <arg value="${basedir}/build/ios-resources/${certificate.filename}"/>
             <arg value="-storepass"/>
             <arg value="${certificate.password}"/>
-            <arg value="${ipas.loc}/${project.name.versioned}.ipa"/>
+            <arg value="${ipas.loc}/${project.name}.ipa"/>
             <arg value="${tmp.loc}/${project.name}-air-app.xml"/>
             <arg value="-C"/>
             <arg value="${tmp.loc}"/>

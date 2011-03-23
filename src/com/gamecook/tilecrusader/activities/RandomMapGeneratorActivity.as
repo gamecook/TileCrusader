@@ -11,6 +11,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
     import com.gamecook.tilecrusader.enum.BooleanOptions;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.utils.ArrayUtil;
     import com.gamecook.tilecrusader.views.Button;
     import com.gamecook.tilecrusader.views.StackLayout;
@@ -40,6 +41,7 @@ package com.gamecook.tilecrusader.activities
         private var dropTreasureOptions:Array;
         private var mapOptionsSO:SharedObject;
         private var activeStateSO:SharedObject;
+        private var activeGameState:ActiveGameState;
 
         public function RandomMapGeneratorActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -49,14 +51,16 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            activeGameState = new ActiveGameState();
+            loadState(null);
+
             super.onCreate();
 
             //Get Map Option Settings
             mapOptionsSO = SharedObject.getLocal(ApplicationShareObjects.MAP_OPTIONS);
             var mapOptionsSOData:Object = mapOptionsSO.data;
 
-            activeStateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
-            data = activeStateSO.data;
+
 
             trace("Has Shared Object", mapOptionsSOData);
 
@@ -91,23 +95,24 @@ package com.gamecook.tilecrusader.activities
 
         public function generateData(event:MouseEvent = null):void
         {
-            data.size = generateRandomMapSize();
-            data.gameType = generateRandomGameType();
-            data.darkness = generateRandomDarkness();
-            data.monstersDropTreasure = generateDropTreasure();
-            data.showMonsters = generateRandomShowMonsters();
+            activeGameState.size = generateRandomMapSize();
+            activeGameState.gameType = generateRandomGameType();
+            activeGameState.darkness = generateRandomDarkness();
+            activeGameState.monstersDropTreasure = generateDropTreasure();
+            activeGameState.showMonsters = generateRandomShowMonsters();
 
-            mapSizeLabel.text = "Map Size: "+data.size;
-            darknessLabel.text = "Darkness: "+data.darkness;
-            showMonsters.text = "Show Monsters: "+data.showMonsters;
-            dropTreasure.text = "Drop Treasure: "+data.monstersDropTreasure;
-            gameMode.text = "Game Mode: "+data.gameType;
+            mapSizeLabel.text = "Map Size: "+activeGameState.size;
+            darknessLabel.text = "Darkness: "+activeGameState.darkness;
+            showMonsters.text = "Show Monsters: "+activeGameState.showMonsters;
+            dropTreasure.text = "Drop Treasure: "+activeGameState.monstersDropTreasure;
+            gameMode.text = "Game Mode: "+activeGameState.gameType;
         }
 
         public function onSubmit(event:MouseEvent):void
         {
-            data.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
-            activeStateSO.flush();
+            //activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            saveState(null);
+
             nextActivity(MapLoadingActivity);
         }
 
@@ -145,7 +150,17 @@ package com.gamecook.tilecrusader.activities
 
         public function onFilter(event:MouseEvent):void
         {
-            nextActivity(RandomMapGeneratorFilterActivity, data);
+            nextActivity(RandomMapGeneratorFilterActivity);
+        }
+
+        override public function loadState(obj:Object):void
+        {
+            activeGameState.load();
+        }
+
+        override public function saveState(obj:Object, activeState:Boolean = true):void
+        {
+            activeGameState.save();
         }
 
     }
