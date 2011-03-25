@@ -53,7 +53,7 @@ package com.gamecook.tilecrusader.views
     import flash.geom.Rectangle;
     import flash.text.TextField;
 
-    public class AutoPlayMap extends Sprite
+    public class ArtisticMapView extends Sprite
     {
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;
@@ -84,7 +84,7 @@ package com.gamecook.tilecrusader.views
         private var blocked:Boolean = true;
         private var dir:int = 0;
 
-        public function AutoPlayMap(viewPortWidth:int, viewPortHeight:int)
+        public function ArtisticMapView(viewPortWidth:int, viewPortHeight:int)
         {
             this.viewPortHeight = viewPortHeight;
             this.viewPortWidth = viewPortWidth;
@@ -96,7 +96,6 @@ package com.gamecook.tilecrusader.views
         {
             //TODO this entire thing is broken, good luck...
 
-            /*parseSpriteSheet();
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
@@ -130,82 +129,9 @@ package com.gamecook.tilecrusader.views
             map.generateMap(30);
 
             movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
-            player = tileInstanceManager.getInstance("@", "@", {life:0, maxLife:"", attackRoll: ""}) as PlayerTile;
+            //player = tileInstanceManager.getInstance("@", "@", {life:0, maxLife:"", attackRoll: ""}) as PlayerTile;
 
-            render();*/
-        }
-
-        private function parseSpriteSheet():void
-        {
-            spriteSheet = SingletonManager.getClassReference(SpriteSheet);
-            spriteSheet.clear();
-
-            // create sprite sheet
-            var bitmap:Bitmap = new SpriteSheetImage();
-            spriteSheet.bitmapData = bitmap.bitmapData;
-            var tileSize:int = 32;
-            var i:int;
-            var total:int = Math.floor(bitmap.width / tileSize);
-            var spriteRect:Rectangle = new Rectangle(0, 0, tileSize, tileSize);
-            for (i = 0; i < total; ++i)
-            {
-                spriteRect.x = i * tileSize;
-                spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
-            }
-        }
-
-        public function up():void
-        {
-            move(MovementHelper.UP);
-        }
-
-        public function down():void
-        {
-            move(MovementHelper.DOWN);
-        }
-
-        public function right():void
-        {
-            move(MovementHelper.RIGHT);
-        }
-
-        public function left():void
-        {
-            move(MovementHelper.LEFT);
-        }
-
-        public function move(value:Point):void
-        {
-
-            /*var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
-
-            if (tmpPoint != null)
-            {
-                var tile:String = map.getTileType(tmpPoint);
-
-                switch (tileTypes.getTileType(tile))
-                {
-                    case TileTypes.IMPASSABLE:
-                        blocked = true;
-                        return;
-
-                    default:
-                        movePlayer(value);
-                        blocked = false;
-                        break;
-                }
-                invalidate();
-            }*/
-        }
-
-        private function movePlayer(value:Point):void
-        {
-            movementHelper.move(value.x, value.y);
-        }
-
-        protected function invalidate():void
-        {
-            invalid = true;
+            render();
         }
 
         public function render():void
@@ -220,28 +146,5 @@ package com.gamecook.tilecrusader.views
 
         }
 
-        public function nextMove():void
-        {
-            if(blocked || Math.random() > .8)
-            {
-                dir = Math.random() * 4;
-            }
-
-            switch(dir)
-                {
-                    case 0:
-                        up();
-                        break;
-                    case 1:
-                        right();
-                        break;
-                    case 2:
-                        down();
-                        break;
-                    case 3:
-                        left();
-                        break;
-                }
-        }
     }
 }
