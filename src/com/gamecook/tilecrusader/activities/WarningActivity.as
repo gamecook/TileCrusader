@@ -59,12 +59,10 @@ package com.gamecook.tilecrusader.activities
             tf.autoSize = TextFieldAutoSize
             tf.textField.wordWrap = true;
             tf.textField.multiline = true;
-            tf.textField.width = 300;
-            tf.scaleX = tf.scaleY = 2;
-            tf.x = (fullSizeWidth - tf.width) * .5;
+            tf.textField.width = 280;
+            tf.x = (fullSizeWidth - tf.textField.width) * .5;
 
-            var btn:PushButton = new PushButton(this, 0, 300, "Ok, I get it!", onAccept);
-            btn.scaleX = btn.scaleY = 2;
+            var btn:PushButton = new PushButton(this, 0, tf.textField.y + tf.textField.height + 100, "Ok, I get it!", onAccept);
             btn.x = (fullSizeWidth - btn.width) * .5;
 
 

@@ -57,7 +57,7 @@ package com.gamecook.tilecrusader.activities
 
              var xml:XML = <comps>
 
-                      <VBox x="20" y="20" scaleX="2" scaleY="2">
+                      <VBox x="20" y="20">
 
                       <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
                       <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>

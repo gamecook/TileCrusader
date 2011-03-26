@@ -30,15 +30,13 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.gamecook.tilecrusader.views.AutoPlayMap;
+    import com.gamecook.tilecrusader.views.ArtisticMapView;
     import com.jessefreeman.factivity.managers.ActivityManager;
     import com.jessefreeman.factivity.managers.IActivityManager;
 
     public class RandomMapBGActivity extends AdvancedActivity
     {
-        protected var randMap:AutoPlayMap;
-        protected var movementCounter:int = 0;
-        protected var nextMovement:int = 500;
+        protected var randMap:ArtisticMapView;
         protected var mapViewPortWidth:int = 500;
         protected var mapViewPortHeight:int = 200;
         protected var mapViewPortX:int = 260;
@@ -53,30 +51,12 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
-            randMap = new AutoPlayMap(mapViewPortWidth, mapViewPortHeight);
+            randMap = new ArtisticMapView(mapViewPortWidth, mapViewPortHeight);
             randMap.x = mapViewPortX;
             randMap.y = mapViewPortY;
             addChild(randMap);
 
         }
 
-        override public function update(elapsed:Number = 0):void
-        {
-            super.update(elapsed);
-
-            movementCounter += elapsed;
-            if (movementCounter >= nextMovement)
-            {
-                randMap.nextMove();
-                movementCounter = 0;
-            }
-
-        }
-
-        override protected function render():void
-        {
-            super.render();
-            randMap.render();
-        }
     }
 }

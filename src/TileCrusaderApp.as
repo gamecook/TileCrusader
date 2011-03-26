@@ -77,7 +77,7 @@ package
 
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
-            var scale:Number = 1;
+            var scale:Number = 2;
             if(stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
             {
                 if(os == "IOS")
@@ -92,27 +92,22 @@ package
                 }
             }
 
-            BaseActivity.fullSizeWidth = screenWidth;
-            BaseActivity.fullSizeHeight = screenHeight;
+            BaseActivity.fullSizeWidth = screenWidth * .5;
+            BaseActivity.fullSizeHeight = screenHeight * .5;
 
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             //Debug Game
-            game = new TileCrusaderGame(tracker, 0,0, DebugStartActivity, scale);
+            //game = new TileCrusaderGame(tracker, 0,0, DebugStartActivity, scale);
 
             // Real Game
-            //game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
+            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
 
             addChild(game);
 
             var stats:DisplayObject = addChild( new Stats() );
 
-            /*CONFIG::mobile
-            {
-                stats.scaleX = stats.scaleY = 2;
-            }*/
-
-            stats.y =  BaseActivity.fullSizeHeight - stats.height;
+            stats.y =  (BaseActivity.fullSizeHeight * 2) - stats.height;
 
             var label:Label = new Label(this, 0,0);
             label.autoSize = TextFieldAutoSize.LEFT;
@@ -134,6 +129,7 @@ package
         {
             // Configure Minimal Comps
             Style.setStyle(Style.DARK);
+
             Style.fontName = "system";
             Component.initStage(stage);
         }

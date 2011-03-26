@@ -53,7 +53,6 @@ package com.gamecook.tilecrusader.activities
             var tf:Label = new Label(this,0, 0, "Game Cook Presents:");
             tf.x = (fullSizeWidth - tf.width) * .5;
             tf.y  = (fullSizeHeight - tf.height) * .5;
-            tf.scaleX = tf.scaleY = 2;
 
             startNextActivityTimer(TileCrusaderSplashActivity, 3);
         }

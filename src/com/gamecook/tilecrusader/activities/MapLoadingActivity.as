@@ -53,24 +53,20 @@ package com.gamecook.tilecrusader.activities
     import flash.geom.Rectangle;
     import flash.geom.Rectangle;
     import flash.net.SharedObject;
+    import flash.text.StyleSheet;
     import flash.utils.getQualifiedClassName;
-
-    import mx.graphics.shaderClasses.ColorBurnShader;
 
     public class MapLoadingActivity extends AdvancedActivity
     {
-        [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
-        public static var SpriteSheetImage:Class;
         protected var textCounter:Number = 0;
         protected var textDelay:Number = 300;
-        private var spriteSheet:SpriteSheet;
         private var map:RandomMap;
         private var label:Label;
         private const LOADING_TEXT:String = "Loading ";
         private var activeGameState:ActiveGameState;
         private var monsters:Array = [];
         private var chests:Array = [];
-        private const TILE_SIZE:int = 32;
+
 
         public function MapLoadingActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -83,9 +79,8 @@ package com.gamecook.tilecrusader.activities
             super.onCreate();
 
             label = new Label(this, 0,0, LOADING_TEXT);
-            label.scaleX = label.scaleY = 2;
             label.x = (fullSizeWidth - label.width) * .5
-            label.y = (fullSizeHeight - label.height) * .5
+            label.y = (fullSizeHeight - label.height) +10;
             addChild(label);
 
 
@@ -93,8 +88,7 @@ package com.gamecook.tilecrusader.activities
 
             loadState(null);
 
-            parseSpriteSheet();
-
+            activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
 
             createMap();
 
@@ -102,7 +96,7 @@ package com.gamecook.tilecrusader.activities
 
             // Create data object for next activity
             var activityObject:Object = {};
-            activityObject.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
+            //activityObject.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
             activityObject.mapInstance = map;
 
             startNextActivityTimer(GameActivity, 2, activityObject);
@@ -230,55 +224,6 @@ package com.gamecook.tilecrusader.activities
             }
 
             //trace("Created ", monsters.length, "monsters from ", totalTiles, "/", Math.floor(RandomMap(map).getOpenTiles().length), "possible tiles.\n Total treasure chests", data.chests);
-        }
-
-        private function parseSpriteSheet():void
-        {
-            spriteSheet = SingletonManager.getClassReference(SpriteSheet);
-            spriteSheet.clear();
-
-            // create sprite sheet
-            var bitmap:Bitmap = new SpriteSheetImage();
-            spriteSheet.bitmapData = bitmap.bitmapData;
-            var tileSize:int = 32;
-            var i:int;
-            var total:int = Math.floor(bitmap.width / tileSize);
-            var spriteRect:Rectangle = new Rectangle(0, 0, tileSize, tileSize);
-            for (i = 0; i < total; ++i)
-            {
-                spriteRect.x = i * tileSize;
-                spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
-            }
-
-            createDarknessTiles();
-
-        }
-
-        private function createDarknessTiles():void
-        {
-            var i:int = 0;
-            var total:int = 10;
-            var bitmapData:BitmapData = new BitmapData(TILE_SIZE, TILE_SIZE, true, 0xFF000000);
-            var rect:Rectangle = new Rectangle(0, 0, TILE_SIZE, TILE_SIZE);
-
-            for (i = 0; i < total; i ++)
-            {
-                bitmapData.fillRect(rect, returnARGB(0x000000, i * 20));
-                spriteSheet.cacheSprite("light"+i, bitmapData.clone());
-            }
-
-            // Black Tile
-            bitmapData.fillRect(rect, 0x00000000);
-            spriteSheet.cacheSprite("light10", bitmapData.clone());
-
-        }
-
-        private function returnARGB(rgb:uint, newAlpha:uint):uint{
-          //newAlpha has to be in the 0 to 255 range
-          var argb:uint = 0;
-          argb += (newAlpha<<24);
-          argb += (rgb);
-          return argb;
         }
 
         override public function onStart():void

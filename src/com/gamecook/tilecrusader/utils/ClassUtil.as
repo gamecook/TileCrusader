@@ -6,9 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.utils {
+    import flash.utils.getQualifiedClassName;
+
     public class ClassUtil {
-        public function ClassUtil()
+        public static function classToString(value:Class):String
         {
+            return getQualifiedClassName(value).replace("::", ".");
         }
     }
 }

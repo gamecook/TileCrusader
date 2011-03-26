@@ -87,7 +87,7 @@ package com.gamecook.tilecrusader.activities
         private var statusLabel:Label;
         private var status:String = "";
         private static const TILE_SIZE:int = 32;
-        private var scale:int = 2;
+        private var scale:int = 1;
         private var tileWidth:int;
         private var tileHeight:int;
         private const SIDEBAR_WIDTH:int = 200;
@@ -111,7 +111,6 @@ package com.gamecook.tilecrusader.activities
         private var exploredTiles:Number;
         private var activeGameState:ActiveGameState;
         private var analytics:MapAnalytics;
-        private var invalidMapAnalytics:Boolean;
         private var monstersLeft:int;
         private var visibility:int;
 
@@ -202,7 +201,7 @@ package com.gamecook.tilecrusader.activities
             characterSheet = new CharacterSheetView(activityManager, characterSheetData, onQuit);
             characterSheet.x = viewPortWidth;
 
-            overlayLayer.addChild(characterSheet);
+            //overlayLayer.addChild(characterSheet);
 
             //TODO need to make this it's own class
             statusLabel = new Label(this, 5, 2, "");
@@ -213,7 +212,6 @@ package com.gamecook.tilecrusader.activities
             statusLabel.textField.wordWrap = true;
             statusLabel.x = 5;
             statusLabel.y = 2;
-            statusLabel.scaleX = statusLabel.scaleY = 1.5;
             overlayLayer.addChild(statusLabel);
 
             addStatusMessage(activeGameState.startMessage);
@@ -227,6 +225,7 @@ package com.gamecook.tilecrusader.activities
             addChild(virtualKeys);
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
+            virtualKeys.scaleX = virtualKeys.scaleY = .5;
 
             if(Capabilities.version.substr(0,3) != "IOS")
             {
@@ -508,13 +507,6 @@ package com.gamecook.tilecrusader.activities
             // Test to see if the monster is dead
             if (tmpTile.getLife() <= 0)
             {
-
-                /*var tile:String = map.getTileType(tmpPoint);
-                var index:int = monsters.indexOf(Number(tile));
-                monsters.splice(index,1);
-
-                trace("Monster", tile, "was killed", monsters.length, "left index",index,  monsters);
-*/
 
                 player.addKill();
 

@@ -27,21 +27,15 @@
  * Time: 10:53 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.views
-{
-    import com.gamecook.frogue.helpers.MovementHelper;
+package com.gamecook.tilecrusader.views {
     import com.gamecook.frogue.maps.MapPopulater;
-    import com.gamecook.frogue.io.Controls;
-    import com.gamecook.frogue.maps.FogOfWarMapSelection;
-    import com.gamecook.frogue.maps.MapSelection;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.combat.CombatHelper;
     import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.iterators.TreasureIterator;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
@@ -49,12 +43,11 @@ package com.gamecook.tilecrusader.views
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Sprite;
+    import flash.filters.ColorMatrixFilter;
     import flash.geom.Point;
     import flash.geom.Rectangle;
-    import flash.text.TextField;
 
-    public class ArtisticMapView extends Sprite
-    {
+    public class ArtisticMapView extends Sprite {
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;
 
@@ -66,23 +59,19 @@ package com.gamecook.tilecrusader.views
         private var darknessHeight:int;
 
         private var populateMapHelper:MapPopulater;
-        private var movementHelper:MovementHelper;
-        private var invalid:Boolean = true;
         public var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
         private var tileTypes:TileTypes;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
-        private var mapDarkness:FogOfWarMapSelection;
 
         private static const TILE_SIZE:int = 32;
-        private var scale:int = 2;
+        private var scale:int = 1;
         private var tileWidth:int;
         private var tileHeight:int;
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
-        private var blocked:Boolean = true;
-        private var dir:int = 0;
+        private var mapSelection:TCMapSelection;
 
         public function ArtisticMapView(viewPortWidth:int, viewPortHeight:int)
         {
@@ -107,43 +96,55 @@ package com.gamecook.tilecrusader.views
             darknessHeight = 4;
 
             map = new RandomMap();
-            mapDarkness = new FogOfWarMapSelection(map, renderWidth, renderHeight, 3);
-            mapDarkness.revealAll(true);
+            // Configure
+            map.generateMap(10);
 
             populateMapHelper = new MapPopulater(map);
-
-            movementHelper = new MovementHelper(map);
 
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
 
-            mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0xff0000));
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes);
+
+            mapBitmap = new Bitmap(new BitmapData(viewPortWidth / scale, viewPortHeight / scale, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = 0;
             addChild(mapBitmap);
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
+            var startPoint:Point = populateMapHelper.getRandomEmptyPoint();
 
-            // Configure
-            map.generateMap(30);
+            mapSelection.setCenter(populateMapHelper.getRandomEmptyPoint());
+            var point:Point = populateMapHelper.getRandomEmptyPoint();
+            mapSelection.setCenter(point);
 
-            movementHelper.startPosition(populateMapHelper.getRandomEmptyPoint());
-            //player = tileInstanceManager.getInstance("@", "@", {life:0, maxLife:"", attackRoll: ""}) as PlayerTile;
 
-            render();
-        }
+            renderer.renderMap(mapSelection);
 
-        public function render():void
-        {
+            // Apply effect
 
-            /*if (invalid)
-            {
-                mapDarkness.setCenter(movementHelper.playerPosition);
-                renderer.renderMap(mapDarkness);
-                invalid = false;
-            }*/
+            // Create a new rectangle from 0,0
+            var rect:Rectangle = new Rectangle(0, 0, mapBitmap.width, mapBitmap.height);
+            // Set sepia properties
+            var greyColorMatrix = new ColorMatrixFilter();
+            greyColorMatrix.matrix = [.3086    ,    .6094    ,    .0820    ,    0    ,    0,
+                .3086    ,    .6094    ,    .0820    ,    0    ,    0,
+                .3086    ,    .6094    ,    .0820    ,    0    ,    0,
+                0    ,    0    ,    0    ,    1    ,    0
+            ];
 
+
+            var tmpBitmapData:BitmapData = mapBitmap.bitmapData.clone();
+            tmpBitmapData.applyFilter(tmpBitmapData, rect, new Point(0, 0), greyColorMatrix);
+
+
+            mapBitmap.bitmapData.draw(tmpBitmapData);
+
+            var x:int = point.x - mapSelection.getOffsetX();
+            var y:int = point.y - mapSelection.getOffsetY();
+
+            renderer.renderPlayer(x, y, tileTypes.getTileSprite("@"));
         }
 
     }

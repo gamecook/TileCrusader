@@ -47,7 +47,6 @@ package com.gamecook.tilecrusader.maps
         protected var visiblePoints:Array = [];
         protected var viewDistance:int;
         protected var _tourchMode:Boolean;
-        //protected var _fullLineOfSight:Boolean;
         protected var exploredTiles:Array = [];
         protected var lightMap:Array = [];
         private var tileMap:TileTypes;
@@ -196,6 +195,7 @@ package com.gamecook.tilecrusader.maps
             for (; n > 0; --n)
             {
                 var isWall:Boolean = visit(x, y, tiles, n);
+
                 if (isWall)
                     n = 0;
 

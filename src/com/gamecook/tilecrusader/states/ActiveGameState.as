@@ -190,5 +190,10 @@ package com.gamecook.tilecrusader.states
             delete _dataObject.showMonsters;
             delete _dataObject.monstersDropTreasure;
         }
+
+        public function set lastActivity(lastActivity:String):void
+        {
+            _dataObject.lastActivity = lastActivity;
+        }
     }
 }
