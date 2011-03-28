@@ -10,7 +10,7 @@ package com.gamecook.tilecrusader.renderer
     import com.gamecook.frogue.renderer.MapBitmapRenderer;
 
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.combat.IFight;
+    import com.gamecook.tilecrusader.combat.ICombatant;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.tiles.BaseTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
@@ -78,7 +78,7 @@ package com.gamecook.tilecrusader.renderer
 
             if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
             {
-                var tile:IFight = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as IFight;
+                var tile:ICombatant = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as ICombatant;
                 bitmapData = bitmapData.clone();
 
                 statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font> <font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";

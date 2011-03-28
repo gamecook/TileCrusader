@@ -7,7 +7,7 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.combat.IFight;
+    import com.gamecook.tilecrusader.combat.ICombatant;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.ITemplateCollection;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
@@ -42,7 +42,7 @@ package com.gamecook.tilecrusader.factory
                 var template:ITemplate = templates.getRandomTemplate();
 
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
-                templateApplicator.apply(tile as IFight, template, points);
+                templateApplicator.apply(tile as ICombatant, template, points);
                 tile.setName(template.getName()+" "+tile.getName());
             }
 

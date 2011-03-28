@@ -7,12 +7,19 @@
  */
 package com.gamecook.tilecrusader.combat
 {
+	import com.gamecook.tilecrusader.tiles.ITile;
 
-    import com.gamecook.tilecrusader.tiles.ITile;
-
-    public interface IFight extends ITile
+	public interface ICombatant extends ITile
     {
+		function set onDie(value:Function):void;
+	    function get onDie():Function;
 
+	    function get onAttack():Function;
+	    function set onAttack(value:Function):void;
+		
+	    function get onDefend():Function;
+	    function set onDefend(value:Function):void;
+	    
         function getLife():int;
 
         function subtractLife(value:int):void;
@@ -38,5 +45,8 @@ package com.gamecook.tilecrusader.combat
         function getDefenseRolls():int;
 
         function addMaxLife(value:int):void;
+
+	    function attack(monster:ICombatant, useChance:Boolean):void;
+	    function defend(monster:ICombatant):void;
     }
 }

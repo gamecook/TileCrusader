@@ -16,11 +16,33 @@ package com.gamecook.tilecrusader.tiles
         private var kills:int = 0;
         private var steps:int = 0;
 
+	    public var onUsePotion:Function;
+	    
         public function PlayerTile()
         {
         }
 
-        public function setGold(value:int):void
+	    override protected function set life(value:int):void
+	    {
+		    trace("life: ", value);
+		    if (value == 0 && getPotions() > 0)
+		    {
+			    usePotion();
+			    return;
+		    }
+
+		    super.life = value;
+	    }
+
+	    private function usePotion():void
+	    {
+		    setLife(getMaxLife());
+		    subtractPotion();
+
+		    onUsePotion();
+	    }
+
+	    public function setGold(value:int):void
         {
             gold = value;
         }

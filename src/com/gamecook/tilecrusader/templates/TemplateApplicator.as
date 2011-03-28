@@ -29,7 +29,7 @@
  */
 package com.gamecook.tilecrusader.templates
 {
-    import com.gamecook.tilecrusader.combat.IFight;
+    import com.gamecook.tilecrusader.combat.ICombatant;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
 
     public class TemplateApplicator
@@ -38,7 +38,7 @@ package com.gamecook.tilecrusader.templates
         {
         }
 
-        public function apply(target:IFight, template:ITemplate, points:int):void
+        public function apply(target:ICombatant, template:ITemplate, points:int):void
         {
             var property:String;
             while(points > 0)
@@ -51,7 +51,7 @@ package com.gamecook.tilecrusader.templates
             }
         }
 
-        private function addPoint(property:String, target:IFight):void
+        private function addPoint(property:String, target:ICombatant):void
         {
             //TODO need to add a check to see if you can actually add point, if not it needs to go to life.
             switch (property)

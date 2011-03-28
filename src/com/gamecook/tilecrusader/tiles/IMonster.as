@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    import com.gamecook.tilecrusader.combat.IFight;
+    import com.gamecook.tilecrusader.combat.ICombatant;
 
-    public interface IMonster extends IFight
+    public interface IMonster extends ICombatant
     {
         function getCharacterPointPercent():Number;
     }

@@ -7,8 +7,8 @@
  */
 package com.gamecook.tilecrusader.combat
 {
-    import com.gamecook.tilecrusader.combat.IFight;
-    import com.gamecook.tilecrusader.status.AttackStatus;
+    import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.status.CombatResult;
     import com.gamecook.tilecrusader.status.DoubleAttackStatus;
 
     public class CombatHelper
@@ -17,18 +17,18 @@ package com.gamecook.tilecrusader.combat
         {
         }
 
-        public function doubleAttack(attackerA:IFight, attackerB:IFight):DoubleAttackStatus
+        public function doubleAttack(attackerA:ICombatant, attackerB:ICombatant):DoubleAttackStatus
         {
             //TODO find out who has attack first
             if(Math.random() >= 0.5)
             {
-                var tmpInstance:IFight = attackerA;
+                var tmpInstance:ICombatant = attackerA;
                 attackerA = attackerB;
                 attackerB = tmpInstance;
             }
 
-            var statusA:AttackStatus = attack(attackerA, attackerB);
-            var statusB:AttackStatus;
+            var statusA:CombatResult = attack(attackerA, attackerB);
+            var statusB:CombatResult;
 
             if(!statusA.kill)
             {
@@ -43,7 +43,8 @@ package com.gamecook.tilecrusader.combat
 
         }
 
-        public function attack(attacker:IFight, defender:IFight):AttackStatus
+	    //TODO: clean up by refactoring to visitor
+        public function attack(attacker:ICombatant, defender:ICombatant):CombatResult
         {
             var hit:int = attacker.getHitValue();
             var defense:int = defender.getDefenseValue();
@@ -57,16 +58,17 @@ package com.gamecook.tilecrusader.combat
             {
                 success = true;
                 difference = hit - defense;
-                defender.subtractLife(difference);
-                if(defender.getLife() == 0)
+	            defender.subtractLife(difference);
+	            if(defender.getLife() == 0)
                 {
-                    kill = true;
+	                kill = true;
                 }
             }
+	        
 
             //TODO check for special attributes
 
-            return new AttackStatus(attacker, defender, success, hit, defense, difference, kill);
+            return new CombatResult(success, hit, difference);
         }
     }
 }
