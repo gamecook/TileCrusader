@@ -264,7 +264,6 @@ package com.gamecook.tilecrusader.activities
 
 	    private function onPlayerDie(player:ICombatant):void
 	    {
-		    addStatusMessage("Player was killed!", true);
 		    //stateManager(GameOverActivity);
 		    //TODO build stat Data Object
 		    startNextActivityTimer(GameOverActivity, 1);
@@ -548,9 +547,18 @@ package com.gamecook.tilecrusader.activities
 		{
 			var monster:ICombatant = attackResult.attacker;
 			var monsterName:String = monster.getName();
-			var message:String;
-			message = monsterName + " did " + attackResult.hitValue + " damage";
-			message += " with " + IEquipment(monster.equipmentSlots[0]).description + "\n";
+			var message:String = monsterName;
+			
+			if(player.isDead)
+			{
+				message += " killed " + player.getName();
+			}
+			else
+			{
+				message += " did " + attackResult.hitValue + " damage";
+			}
+			
+			message += " with " + monster.equipmentSlot0.description + "\n";
 			addStatusMessage(message, false);
 
 			//TODO keep track of this sound, may need a player hit as well.
@@ -573,8 +581,17 @@ package com.gamecook.tilecrusader.activities
 
 		    tileInstanceManager.removeInstance(currentuID);
 
-		    var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();;
-		    addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
+		    var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
+		    var dropChance:Number = .25;
+		    if(Math.random() < dropChance)
+		    {
+			    addStatusMessage(monster.getName() + " died and dropped " + monster.equipmentSlot0.description, false);
+			    //TODO: some swap tile logic. Weapons need a map character.
+		    }
+		    else
+		    {
+			    addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
+		    }
 	    }
 
         private function openTreasure(tmpPoint:Point):void

@@ -22,7 +22,8 @@ package com.gamecook.tilecrusader.tiles
         protected var defenseRoll:int = 1;
         protected var characterPoints:int = 0;
         private var pointPercent:Number = 0;
-
+		private var equipmentSlots:Array = [];
+		
         public function MonsterTile()
         {
         }
@@ -216,7 +217,6 @@ package com.gamecook.tilecrusader.tiles
 
 
 	    private var _onDefend:Function;
-		private var _equipmentSlots:Array = [];
 	    public function get onDefend():Function
 	    {
 		    return _onDefend;
@@ -290,12 +290,17 @@ package com.gamecook.tilecrusader.tiles
 			addAttackRoll(equipment.attack);
 			addDefenseRoll(equipment.defense);
 			//TODO: limit to two slots?
-			_equipmentSlots.push(equipment);
+			equipmentSlots.push(equipment);
 		}
 
-		public function get equipmentSlots():Array
+		public function get equipmentSlot0():IEquipment
 		{
-			return _equipmentSlots;
+			return equipmentSlots[0] as IEquipment;
+		}
+
+		public function get equipmentSlot1():IEquipment
+		{
+			return equipmentSlots[1] as IEquipment;
 		}
 	}
 }

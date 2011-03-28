@@ -52,8 +52,9 @@ package com.gamecook.tilecrusader.combat
 
 		function addEquipment(modifier:IEquipment):void;
 
-		function get equipmentSlots():Array;
-		
 		function get isDead():Boolean;
+
+		function get equipmentSlot0():IEquipment;
+		function get equipmentSlot1():IEquipment;
 	}
 }
