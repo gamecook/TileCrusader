@@ -16,7 +16,6 @@ package com.gamecook.tilecrusader.activities
 	import com.gamecook.frogue.renderer.AbstractMapRenderer;
 	import com.gamecook.frogue.sprites.SpriteSheet;
 	import com.gamecook.tilecrusader.combat.AttackResult;
-	import com.gamecook.tilecrusader.combat.CombatHelper;
 	import com.gamecook.tilecrusader.combat.DeathMessageFactory;
 	import com.gamecook.tilecrusader.combat.ICombatant;
 	import com.gamecook.tilecrusader.effects.Quake;
@@ -24,6 +23,7 @@ package com.gamecook.tilecrusader.activities
 	import com.gamecook.tilecrusader.enum.DarknessOptions;
 	import com.gamecook.tilecrusader.enum.GameModeOptions;
 	import com.gamecook.tilecrusader.enum.TemplateProperties;
+	import com.gamecook.tilecrusader.equipment.IEquipment;
 	import com.gamecook.tilecrusader.factory.TCTileFactory;
 	import com.gamecook.tilecrusader.iterators.TreasureIterator;
 	import com.gamecook.tilecrusader.managers.PopUpManager;
@@ -67,7 +67,6 @@ package com.gamecook.tilecrusader.activities
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         private var player:PlayerTile;
-        private var combatHelper:CombatHelper;
         private var tileInstanceManager:TileInstanceManager;
         private var characterSheet:CharacterSheetView;
         private var tileTypes:TileTypes;
@@ -103,7 +102,6 @@ package com.gamecook.tilecrusader.activities
         private var keyPressDelay:int = 0;
         private var _nextMove:Point;
         private var monstersDropTreasure:Boolean;
-        private var isPlayerDead:Boolean;
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
         private var exploredTiles:Number;
@@ -194,8 +192,6 @@ package com.gamecook.tilecrusader.activities
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
 
-            combatHelper = new CombatHelper();
-
             if(activeGameState.tileInstanceManager)
                 tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
@@ -266,14 +262,12 @@ package com.gamecook.tilecrusader.activities
 		    addStatusMessage("You have taken a potion and restored your health.", true);
 	    }
 
-	    private function onPlayerDie():void
+	    private function onPlayerDie(player:ICombatant):void
 	    {
 		    addStatusMessage("Player was killed!", true);
 		    //stateManager(GameOverActivity);
-		    isPlayerDead = true;
 		    //TODO build stat Data Object
 		    startNextActivityTimer(GameOverActivity, 1);
-
 	    }
 
         private function onQuit():void
@@ -395,7 +389,7 @@ package com.gamecook.tilecrusader.activities
         public function move(value:Point):void
         {
 
-            if(isPlayerDead)
+            if(player.isDead)
                 return;
 
             var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
@@ -552,7 +546,11 @@ package com.gamecook.tilecrusader.activities
 
 		private function onMonsterAttack(attackResult:AttackResult):void
 		{
-			var message:String = formatAttackResultMessage(attackResult);
+			var monster:ICombatant = attackResult.attacker;
+			var monsterName:String = monster.getName();
+			var message:String;
+			message = monsterName + " did " + attackResult.hitValue + " damage";
+			message += " with " + IEquipment(monster.equipmentSlots[0]).description + "\n";
 			addStatusMessage(message, false);
 
 			//TODO keep track of this sound, may need a player hit as well.
@@ -561,8 +559,6 @@ package com.gamecook.tilecrusader.activities
 
 	    private function onMonsterDie(monster:ICombatant):void
 	    {
-		    player.addKill();
-
 		    soundManager.play(TCSoundClasses.WinBattle);
 
 		    swapTileOnMap(currentPoint, "X");
@@ -734,7 +730,7 @@ package com.gamecook.tilecrusader.activities
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
-            if(!isPlayerDead)
+            if(!player.isDead)
             {
                 activeGameState.player = player.toObject();
                 activeGameState.tileInstanceManager = tileInstanceManager.toObject();

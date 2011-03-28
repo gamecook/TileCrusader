@@ -7,6 +7,7 @@
  */
 package com.gamecook.tilecrusader.combat
 {
+	import com.gamecook.tilecrusader.equipment.IEquipment;
 	import com.gamecook.tilecrusader.tiles.ITile;
 
 	public interface ICombatant extends ITile
@@ -48,5 +49,11 @@ package com.gamecook.tilecrusader.combat
 
 	    function attack(monster:ICombatant, useChance:Boolean):void;
 	    function defend(monster:ICombatant):void;
-    }
+
+		function addEquipment(modifier:IEquipment):void;
+
+		function get equipmentSlots():Array;
+		
+		function get isDead():Boolean;
+	}
 }

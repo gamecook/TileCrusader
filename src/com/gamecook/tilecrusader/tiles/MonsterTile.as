@@ -11,13 +11,14 @@ package com.gamecook.tilecrusader.tiles
 	import com.gamecook.tilecrusader.combat.ICombatant;
 	import com.gamecook.tilecrusader.dice.CombatDice;
 	import com.gamecook.tilecrusader.dice.ICombatDice;
+	import com.gamecook.tilecrusader.equipment.IEquipment;
 
 	public class MonsterTile extends BaseTile implements ICombatant, IMonster
     {
         private var _life:int = 1;
-        protected var maxLife:int = 1;
-        protected var dice:ICombatDice;
-        protected var attackRoll:int = 1;
+		protected var maxLife:int = 1;
+		protected var dice:ICombatDice;
+		protected var attackRoll:int = 1;
         protected var defenseRoll:int = 1;
         protected var characterPoints:int = 0;
         private var pointPercent:Number = 0;
@@ -157,13 +158,13 @@ package com.gamecook.tilecrusader.tiles
         }
 
         override public function toObject():Object{
-            var tmpObject = super.toObject();
+            var tmpObject:Object = super.toObject();
             tmpObject.maxLife = maxLife;
             tmpObject.life = life;
             tmpObject.attackRoll = attackRoll;
             tmpObject.defenseRoll = defenseRoll;
-            tmpObject.characterPoints = characterPoints
-            tmpObject.pointPercent = pointPercent
+            tmpObject.characterPoints = characterPoints;
+            tmpObject.pointPercent = pointPercent;
 
             return tmpObject;
         }
@@ -185,6 +186,12 @@ package com.gamecook.tilecrusader.tiles
 		    }
 		    _life = value;
 	    }
+
+		public function get isDead():Boolean
+		{
+			return life == 0;
+		}
+
 
 	    protected var _onDie:Function;
 	    public function set onDie(value:Function):void
@@ -209,6 +216,7 @@ package com.gamecook.tilecrusader.tiles
 
 
 	    private var _onDefend:Function;
+		private var _equipmentSlots:Array = [];
 	    public function get onDefend():Function
 	    {
 		    return _onDefend;
@@ -248,7 +256,7 @@ package com.gamecook.tilecrusader.tiles
 		    }
 	    }
 
-		private function attackThenDefend(defender:ICombatant):void
+		protected function attackThenDefend(defender:ICombatant):void
 		{
 			attemptDamageDefender(defender);
 			var defendResult:AttackResult;
@@ -276,5 +284,18 @@ package com.gamecook.tilecrusader.tiles
 
 		    defender.subtractLife(difference); //the defender should die after the attack
 	    }
-    }
+
+		public function addEquipment(equipment:IEquipment):void
+		{
+			addAttackRoll(equipment.attack);
+			addDefenseRoll(equipment.defense);
+			//TODO: limit to two slots?
+			_equipmentSlots.push(equipment);
+		}
+
+		public function get equipmentSlots():Array
+		{
+			return _equipmentSlots;
+		}
+	}
 }

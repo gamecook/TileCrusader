@@ -3,10 +3,10 @@
  * Date: 3/19/11
  * Time: 4:36 PM
  */
-package com.gamecook.tilecrusader.tools.generator
+package com.gamecook.tilecrusader.equipment
 {
-	import com.gamecook.tilecrusader.tools.generator.weapons.IWeapon;
-	import com.gamecook.tilecrusader.tools.generator.weapons.Weapon;
+	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+	import com.gamecook.tilecrusader.equipment.weapons.Weapon;
 
 	public class WeaponGenerator
 	{
@@ -15,15 +15,23 @@ package com.gamecook.tilecrusader.tools.generator
 		
 		public function getWeapon(level:uint):IWeapon
 		{
+			//TODO: figure out how level matches length of arrays
+			level = Math.min(level, includedPrefixes.length - 1);
+			
 			//TODO: match character level range to weapon range
 			var type:String = createType();
 			var description:String = createDescription(level, type);
 			var damage:int = createDamage(level);
+			var defense:int = createDefense(level);
 			
-			var weapon:Weapon = new Weapon(type, description, damage);
-			
+			var weapon:Weapon = new Weapon(type, description, damage, defense);
 			
 			return weapon;
+		}
+
+		private function createDefense(level:int):int
+		{
+			return level;
 		}
 
 		private function createType():String
