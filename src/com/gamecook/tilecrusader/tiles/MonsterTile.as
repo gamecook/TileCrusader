@@ -35,22 +35,22 @@ package com.gamecook.tilecrusader.tiles
             return dice;
         }
 
-        public function setAttackRolls(value:int):void
-        {
-            attackRoll = value;
-        }
+		public function setAttackRolls(value:int):void
+		{
+			attackRoll = value;
+		}
 
-        public function getAttackRolls():int
+		public function getAttackRolls():int
         {
             return attackRoll;
         }
 
-        public function setDefenseRolls(value:int):void
-        {
-            defenseRoll = value;
-        }
+		public function setDefenseRolls(value:int):void
+		{
+			defenseRoll = value;
+		}
 
-        public function getDefenceRolls():int
+		public function getDefenceRolls():int
        {
            return defenseRoll;
        }
@@ -287,8 +287,6 @@ package com.gamecook.tilecrusader.tiles
 
 		public function addEquipment(equipment:IEquipment):void
 		{
-			addAttackRoll(equipment.attack);
-			addDefenseRoll(equipment.defense);
 			//TODO: limit to two slots?
 			equipmentSlots.push(equipment);
 		}

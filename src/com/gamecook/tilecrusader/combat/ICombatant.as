@@ -56,5 +56,9 @@ package com.gamecook.tilecrusader.combat
 
 		function get equipmentSlot0():IEquipment;
 		function get equipmentSlot1():IEquipment;
+
+		function setAttackRolls(value:int):void;
+
+		function setDefenseRolls(value:int):void;
 	}
 }

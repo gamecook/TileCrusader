@@ -11,6 +11,9 @@ package com.gamecook.tilecrusader.equipment
 	{
 		public function apply(combatant:ICombatant, equipment:IEquipment):void
 		{
+			combatant.setAttackRolls(combatant.getAttackRolls() + equipment.attack);
+			combatant.setDefenseRolls(combatant.getDefenseRolls() + equipment.defense);
+			
 			combatant.addEquipment(equipment);
 		}
 	}

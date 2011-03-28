@@ -35,14 +35,14 @@ package com.gamecook.tilecrusader.equipment.weapons
 			_defense = defense;
 		}
 
-		public function toString():String
-		{
-			return "Weapon{_type=" + String(_type) + ",_description=" + String(_description) + ",_damage=" + String(_damage) + "}";
-		}
-
 		public function get defense():int
 		{
 			return _defense;
+		}
+
+		public function toString():String
+		{
+			return "Weapon{_type=" + String(_type) + ",_description=" + String(_description) + ",_damage=" + String(_damage) + ",_defense=" + String(_defense) + "}";
 		}
 	}
 }
