@@ -50,6 +50,7 @@ package com.gamecook.tilecrusader.activities
     import flash.display.BitmapData;
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
+    import flash.events.MouseEvent;
     import flash.geom.Point;
     import flash.system.Capabilities;
     import flash.ui.Keyboard;
@@ -165,7 +166,7 @@ package com.gamecook.tilecrusader.activities
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileTypes);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileTypes, tileInstanceManager);
 
             if(activeGameState.mapSelection)
             {
@@ -236,7 +237,7 @@ package com.gamecook.tilecrusader.activities
             //TODO this isn't working look into it.
             /*if(activeGameState.startMessage)
                 PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
-
+            addChild(new Bitmap(spriteSheet.getSprite("life100")));
         }
 
         private function onQuit():void
@@ -652,7 +653,10 @@ package com.gamecook.tilecrusader.activities
                 var x:int = pos.x - mapSelection.getOffsetX();
                 var y:int = pos.y - mapSelection.getOffsetY();
 
-                renderer.renderPlayer(x,y, tileTypes.getTileSprite("@"));
+                var playerSprite:String = tileTypes.getTileSprite("@");
+                if(player.getLife() < player.getMaxLife())
+                    playerSprite = playerSprite.concat(",life"+(Math.round(player.getLife()/ player.getMaxLife()  * 100).toString())) ;
+                renderer.renderPlayer(x,y, playerSprite);
 
                 invalid = false;
             }
@@ -690,6 +694,15 @@ package com.gamecook.tilecrusader.activities
             controls = new Controls(this);
 
             soundManager.play(TCSoundClasses.WalkStairsSound);
+
+            addEventListener(MouseEvent.CLICK, onClick);
+        }
+
+        private function onClick(event:MouseEvent):void
+        {
+            var localTile:Point = new Point(Math.floor(event.localX/TILE_SIZE), Math.floor(event.localY/TILE_SIZE));
+            var tileID:int = mapSelection.getTileID(localTile.x, localTile.y);
+            trace(localTile, tileID, tileID%map.width, tileID%map.height, mapSelection.getOffsetX(), mapSelection.getOffsetY());
         }
 
         override public function loadState(obj:Object):void

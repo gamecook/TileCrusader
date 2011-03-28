@@ -35,6 +35,9 @@ package com.gamecook.tilecrusader.maps
 
     import com.gamecook.frogue.maps.MapSelection;
 
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.tiles.BaseTile;
+    import com.gamecook.tilecrusader.tiles.IMonster;
     import com.gamecook.tilecrusader.tiles.TileTypes;
 
     import flash.geom.Point;
@@ -50,9 +53,11 @@ package com.gamecook.tilecrusader.maps
         protected var exploredTiles:Array = [];
         protected var lightMap:Array = [];
         private var tileMap:TileTypes;
+        private var instanceManager:TileInstanceManager;
 
-        public function AdvancedFogOfWarMapSelection(map:IMap, width:int, height:int, viewDistance:int, tileMap:TileTypes)
+        public function AdvancedFogOfWarMapSelection(map:IMap, width:int, height:int, viewDistance:int, tileMap:TileTypes, instanceManager:TileInstanceManager)
         {
+            this.instanceManager = instanceManager;
             this.tileMap = tileMap;
             this.viewDistance = viewDistance;
             super(map, width, height);
@@ -104,6 +109,21 @@ package com.gamecook.tilecrusader.maps
 
 
                     var uID:int = getTileID(columns, rows);
+
+                    if(instanceManager)
+                    {
+                        if(instanceManager.hasInstance(uID.toString()))
+                        {
+                            var instance:BaseTile = instanceManager.getInstance(uID.toString());
+                            if(instance is IMonster)
+                            {
+                                //TODO test to see if life is cached, if not create it
+                                //TODO This should also be moved into some kind of util for the player as well.
+                                if(instance["getLife"]() < instance["getMaxLife"]())
+                                    spriteID = spriteID.concat(",life"+(Math.round(instance["getLife"]()/ instance["getMaxLife"]()  * 100).toString())) ;
+                            }
+                        }
+                    }
 
                     if(lightMap[uID])
                     {

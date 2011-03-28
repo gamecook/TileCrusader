@@ -116,7 +116,7 @@ package com.gamecook.tilecrusader.activities
             else
             {
                 // If there were no tiles, generate a new map
-                TimeMethodExecutionUtil.execute("generateMap", map.generateMap, activeGameState.size);
+                TimeMethodExecutionUtil.execute("generateMap", map.generateMap, activeGameState.size, 2);
 
                 activeGameState.startMessage = "You enter the dark dungeon.";
 

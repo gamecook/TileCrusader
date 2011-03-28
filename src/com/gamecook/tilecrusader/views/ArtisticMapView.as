@@ -104,7 +104,7 @@ package com.gamecook.tilecrusader.views {
             tileTypes = new TileTypes();
             tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes, null);
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth / scale, viewPortHeight / scale, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
