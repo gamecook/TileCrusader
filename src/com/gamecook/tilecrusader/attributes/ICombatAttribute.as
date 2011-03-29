@@ -7,10 +7,10 @@
  */
 package com.gamecook.tilecrusader.attributes
 {
-    import com.gamecook.tilecrusader.combat.IFight;
+    import com.gamecook.tilecrusader.combat.ICombatant;
 
     public interface ICombatAttribute extends IAttribute
     {
-        function combatTargets(targetA:IFight, targetB:IFight):void;
+        function combatTargets(targetA:ICombatant, targetB:ICombatant):void;
     }
 }

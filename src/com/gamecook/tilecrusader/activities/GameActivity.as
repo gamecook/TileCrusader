@@ -7,56 +7,55 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.gamecook.frogue.maps.MapAnalytics;
-    import com.gamecook.tilecrusader.effects.Quake;
-    import com.gamecook.tilecrusader.effects.TypeTextEffect;
-    import com.gamecook.tilecrusader.enum.DarknessOptions;
-    import com.gamecook.tilecrusader.enum.TemplateProperties;
-    import com.gamecook.tilecrusader.factory.TCTileFactory;
-    import com.gamecook.tilecrusader.managers.PopUpManager;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.maps.TCMapSelection;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.templates.Template;
-    import com.gamecook.tilecrusader.templates.TemplateCollection;
-    import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.gamecook.frogue.helpers.MovementHelper;
-    import com.gamecook.frogue.io.Controls;
-    import com.gamecook.frogue.io.IControl;
-    import com.gamecook.frogue.maps.RandomMap;
-    import com.gamecook.frogue.renderer.AbstractMapRenderer;
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-    import com.gamecook.tilecrusader.combat.CombatHelper;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-    import com.gamecook.tilecrusader.status.DoubleAttackStatus;
-    import com.gamecook.tilecrusader.combat.IFight;
-    import com.gamecook.tilecrusader.iterators.TreasureIterator;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.views.CharacterSheetView;
 
-    import com.gamecook.tilecrusader.views.VirtualKeysView;
+	import com.bit101.components.Label;
+	import com.gamecook.frogue.helpers.MovementHelper;
+	import com.gamecook.frogue.io.Controls;
+	import com.gamecook.frogue.io.IControl;
+	import com.gamecook.frogue.maps.MapAnalytics;
+	import com.gamecook.frogue.maps.RandomMap;
+	import com.gamecook.frogue.renderer.AbstractMapRenderer;
+	import com.gamecook.frogue.sprites.SpriteSheet;
+	import com.gamecook.tilecrusader.combat.AttackResult;
+	import com.gamecook.tilecrusader.combat.DeathMessageFactory;
+	import com.gamecook.tilecrusader.combat.ICombatant;
+	import com.gamecook.tilecrusader.effects.Quake;
+	import com.gamecook.tilecrusader.effects.TypeTextEffect;
+	import com.gamecook.tilecrusader.enum.DarknessOptions;
+	import com.gamecook.tilecrusader.enum.GameModeOptions;
+	import com.gamecook.tilecrusader.enum.TemplateProperties;
+	import com.gamecook.tilecrusader.equipment.IEquipment;
+	import com.gamecook.tilecrusader.factory.TCTileFactory;
+	import com.gamecook.tilecrusader.iterators.TreasureIterator;
+	import com.gamecook.tilecrusader.managers.PopUpManager;
+	import com.gamecook.tilecrusader.managers.SingletonManager;
+	import com.gamecook.tilecrusader.managers.TileInstanceManager;
+	import com.gamecook.tilecrusader.maps.TCMapSelection;
+	import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+	import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+	import com.gamecook.tilecrusader.states.ActiveGameState;
+	import com.gamecook.tilecrusader.status.DoubleAttackStatus;
+	import com.gamecook.tilecrusader.templates.Template;
+	import com.gamecook.tilecrusader.templates.TemplateApplicator;
+	import com.gamecook.tilecrusader.templates.TemplateCollection;
+	import com.gamecook.tilecrusader.tiles.PlayerTile;
+	import com.gamecook.tilecrusader.tiles.TileTypes;
+	import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+	import com.gamecook.tilecrusader.views.CharacterSheetView;
+	import com.gamecook.tilecrusader.views.VirtualKeysView;
+	import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
+	import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.gamecook.tilecrusader.views.popups.AlertPopUpWindow;
-    import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.display.Sprite;
-    import flash.events.KeyboardEvent;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
     import flash.events.MouseEvent;
     import flash.geom.Point;
-    import flash.system.Capabilities;
-    import flash.ui.Keyboard;
-    import flash.utils.getTimer;
+	import flash.system.Capabilities;
+	import flash.ui.Keyboard;
 
-    public class GameActivity extends AdvancedActivity implements IControl
+	public class GameActivity extends AdvancedActivity implements IControl
     {
 
 
@@ -70,7 +69,6 @@ package com.gamecook.tilecrusader.activities
         private var movementHelper:MovementHelper;
         private var invalid:Boolean = true;
         private var player:PlayerTile;
-        private var combatHelper:CombatHelper;
         private var tileInstanceManager:TileInstanceManager;
         private var characterSheet:CharacterSheetView;
         private var tileTypes:TileTypes;
@@ -106,14 +104,16 @@ package com.gamecook.tilecrusader.activities
         private var keyPressDelay:int = 0;
         private var _nextMove:Point;
         private var monstersDropTreasure:Boolean;
-        private var isPlayerDead:Boolean;
         private var templateApplicator:TemplateApplicator;
         private var monsterTemplates:TemplateCollection;
         private var exploredTiles:Number;
         private var activeGameState:ActiveGameState;
         private var analytics:MapAnalytics;
         private var monstersLeft:int;
+
         private var visibility:int;
+	    private var currentPoint:Point;
+	    private var currentuID:String;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -190,13 +190,16 @@ package com.gamecook.tilecrusader.activities
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
-            combatHelper = new CombatHelper();
-
             if(activeGameState.tileInstanceManager)
                 tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
             player = tileInstanceManager.getInstance("@", "@", activeGameState.player) as PlayerTile;
-
+			player.onDie = onPlayerDie;
+			player.onAttack = onPlayerAttack;
+	        player.onDefend = onPlayerDefend;
+	        player.onUsePotion = onPlayerUsePotion;
+			
+			
             var characterSheetData:Object = {player:player};
 
             characterSheet = new CharacterSheetView(activityManager, characterSheetData, onQuit);
@@ -237,8 +240,31 @@ package com.gamecook.tilecrusader.activities
             //TODO this isn't working look into it.
             /*if(activeGameState.startMessage)
                 PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
-            addChild(new Bitmap(spriteSheet.getSprite("life100")));
         }
+
+		private function onPlayerDefend():void
+		{
+			
+		}
+
+		private function onPlayerAttack(attackResult:AttackResult):void
+		{
+			var message:String = formatAttackResultMessage(attackResult);
+			addStatusMessage(message, false);
+		}
+
+	    private function onPlayerUsePotion():void
+	    {
+		    soundManager.play(TCSoundClasses.PotionSound);
+		    addStatusMessage("You have taken a potion and restored your health.", true);
+	    }
+
+	    private function onPlayerDie(player:ICombatant):void
+	    {
+		    //stateManager(GameOverActivity);
+		    //TODO build stat Data Object
+		    startNextActivityTimer(GameOverActivity, 1);
+	    }
 
         private function onQuit():void
         {
@@ -356,7 +382,7 @@ package com.gamecook.tilecrusader.activities
         public function move(value:Point):void
         {
 
-            if(isPlayerDead)
+            if(player.isDead)
                 return;
 
             var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
@@ -374,11 +400,13 @@ package com.gamecook.tilecrusader.activities
                     case TileTypes.MONSTER: case TileTypes.BOSS:
                         var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
 
-                        var tmpTile:IFight = tileInstanceManager.getInstance(uID, tile) as IFight;
+                        var tmpTile:ICombatant = tileInstanceManager.getInstance(uID, tile) as ICombatant;
 
-                        if (tmpTile is IFight)
+                        if (tmpTile is ICombatant)
                         {
-                            fight(tmpTile, tmpPoint, uID);
+	                        currentPoint = tmpPoint;
+	                        currentuID = uID;
+                            fight(tmpTile);
                         }
                         break;
                     case TileTypes.TREASURE:
@@ -484,50 +512,87 @@ package com.gamecook.tilecrusader.activities
             return success;
         }
 
-        private function fight(tmpTile:IFight, tmpPoint:Point, uID:String):void
+        private function fight(monster:ICombatant):void
         {
-            var status:DoubleAttackStatus = combatHelper.doubleAttack(player, IFight(tmpTile));
+	        setCurrentMonster(monster);
+	        player.attack(monster, true);
 
             if(quakeEffect)
-                addThread(quakeEffect);
-
-            // Run the check to see if the player is dead
-            checkIfPlayerIsDead();
-
-            //Check the isPlayerDead flag, if dead exit out of the fight update
-            if(isPlayerDead)
-                return;
-
-            //TODO keep track of this sound, may need a player hit as well.
-            soundManager.play(TCSoundClasses.EnemyAttack);
-
-            // Player is still alive so display combat message
-            //TODO this may need to cleaned up and only show combat message when monster is not dead and do different message once killed
-            addStatusMessage(status.toString());
-
-            // Test to see if the monster is dead
-            if (tmpTile.getLife() <= 0)
             {
 
-                player.addKill();
-
-                soundManager.play(TCSoundClasses.WinBattle);
-
-                swapTileOnMap(tmpPoint, "X");
-
-                if(monstersDropTreasure){
-                    var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
-                    if(treasure == "K")
-                        treasurePool.push(treasure);
-                    else
-                        swapTileOnMap(tmpPoint, treasure);
-                }
-
-                tileInstanceManager.removeInstance(uID);
+	            addThread(quakeEffect);
 
             }
-
         }
+
+		protected function setCurrentMonster(monster:ICombatant):void
+		{
+			monster.onDie = onMonsterDie;
+			monster.onAttack = onMonsterAttack;
+			monster.onDefend = onMonsterDefend;
+		}
+
+		protected function formatAttackResultMessage(attackResult:AttackResult):String
+		{
+			var message:String = "Attack was " + attackResult.success ? "successful" : "not successful" + "!\n";
+			message = attackResult.attacker.getName() + " rolled " + attackResult.hitValue + " point" + (( attackResult.hitValue != 1) ? "s" : "") + " of damage against " + attackResult.defender.getName() + "\n";
+			return message;
+		}
+
+		private function onMonsterDefend():void
+		{
+		}
+
+		private function onMonsterAttack(attackResult:AttackResult):void
+		{
+			var monster:ICombatant = attackResult.attacker;
+			var monsterName:String = monster.getName();
+			var message:String = monsterName;
+			
+			if(player.isDead)
+			{
+				message += " killed " + player.getName();
+			}
+			else
+			{
+				message += " did " + attackResult.hitValue + " damage";
+			}
+			
+			message += " with " + monster.equipmentSlot0.description + "\n";
+			addStatusMessage(message, false);
+
+			//TODO keep track of this sound, may need a player hit as well.
+			soundManager.play(TCSoundClasses.EnemyAttack);
+		}
+
+	    private function onMonsterDie(monster:ICombatant):void
+	    {
+		    soundManager.play(TCSoundClasses.WinBattle);
+
+		    swapTileOnMap(currentPoint, "X");
+
+		    if(monstersDropTreasure){
+			    var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
+			    if(treasure == "K")
+				    treasurePool.push(treasure);
+			    else
+				    swapTileOnMap(currentPoint, treasure);
+		    }
+
+		    tileInstanceManager.removeInstance(currentuID);
+
+		    var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
+		    var dropChance:Number = .25;
+		    if(Math.random() < dropChance)
+		    {
+			    addStatusMessage(monster.getName() + " died and dropped " + monster.equipmentSlot0.description, false);
+			    //TODO: some swap tile logic. Weapons need a map character.
+		    }
+		    else
+		    {
+			    addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
+		    }
+	    }
 
         private function openTreasure(tmpPoint:Point):void
         {
@@ -640,8 +705,6 @@ package com.gamecook.tilecrusader.activities
         {
             super.render();
 
-            checkIfPlayerIsDead();
-
             if (invalid)
             {
 
@@ -659,29 +722,6 @@ package com.gamecook.tilecrusader.activities
                 renderer.renderPlayer(x,y, playerSprite);
 
                 invalid = false;
-            }
-        }
-
-        private function checkIfPlayerIsDead():void
-        {
-            if (player.getLife() == 0)
-            {
-
-                if (player.getPotions() == 0)
-                {
-                    addStatusMessage("Player was killed!", true);
-                    //stateManager(GameOverActivity);
-                    isPlayerDead = true;
-                    //TODO build stat Data Object
-                    startNextActivityTimer(GameOverActivity, 1);
-                }
-                else
-                {
-                    player.setLife(player.getMaxLife());
-                    player.subtractPotion();
-                    soundManager.play(TCSoundClasses.PotionSound);
-                    addStatusMessage("You have taken a potion and restored your health.", true);
-                }
             }
         }
 
@@ -712,7 +752,7 @@ package com.gamecook.tilecrusader.activities
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
-            if(!isPlayerDead)
+            if(!player.isDead)
             {
                 activeGameState.player = player.toObject();
                 activeGameState.tileInstanceManager = tileInstanceManager.toObject();

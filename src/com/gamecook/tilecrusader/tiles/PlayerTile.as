@@ -7,7 +7,9 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    public class PlayerTile extends MonsterTile
+	import com.gamecook.tilecrusader.combat.ICombatant;
+
+	public class PlayerTile extends MonsterTile
     {
 
         private var gold:int = 0;
@@ -17,11 +19,32 @@ package com.gamecook.tilecrusader.tiles
         private var steps:int = 0;
         private var visibility:int = 3;
 
-        public function PlayerTile()
+	    public var onUsePotion:Function;
+
+		public function PlayerTile()
         {
         }
 
-        public function setGold(value:int):void
+	    override protected function set life(value:int):void
+	    {
+		    if (value == 0 && getPotions() > 0)
+		    {
+			    usePotion();
+			    return;
+		    }
+
+		    super.life = value;
+	    }
+
+	    private function usePotion():void
+	    {
+		    setLife(getMaxLife());
+		    subtractPotion();
+
+		    onUsePotion();
+	    }
+
+	    public function setGold(value:int):void
         {
             gold = value;
         }
@@ -134,5 +157,16 @@ package com.gamecook.tilecrusader.tiles
         {
             visibility = value;
         }
-    }
+
+		override public function attack(monster:ICombatant, useChance:Boolean):void
+		{
+			super.attack(monster, useChance);
+			
+			if(monster.isDead)
+			{
+				addKill();
+			}
+		}
+	}
+
 }

@@ -73,7 +73,7 @@ package com.gamecook.tilecrusader.dice
                 value += rollValue == BLACK_SHIELD ? 1 : 0;
             }
 
-            return value;
+	        return value;
         }
     }
 }

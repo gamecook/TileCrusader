@@ -3,33 +3,44 @@
  * Date: 3/19/11
  * Time: 4:36 PM
  */
-package com.gamecook.tilecrusader.tools.generator
+package com.gamecook.tilecrusader.equipment
 {
-	import com.gamecook.tilecrusader.tools.generator.weapons.IWeapon;
-	import com.gamecook.tilecrusader.tools.generator.weapons.Weapon;
+	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+	import com.gamecook.tilecrusader.equipment.weapons.Weapon;
 
 	public class WeaponGenerator
 	{
 		include "weapons/prefixes.as"
 		include "weapons/suffixes.as"
+		include "weapons/types.as"
 		
 		public function getWeapon(level:uint):IWeapon
 		{
+			//TODO: figure out how level matches length of arrays
+			level = Math.min(level, includedPrefixes.length - 1);
+			level = int(Math.random() * level);
+			
 			//TODO: match character level range to weapon range
 			var type:String = createType();
 			var description:String = createDescription(level, type);
 			var damage:int = createDamage(level);
+			var defense:int = createDefense(level);
 			
-			var weapon:Weapon = new Weapon(type, description, damage);
-			
+			var weapon:Weapon = new Weapon(type, description, damage, defense);
 			
 			return weapon;
 		}
 
+		private function createDefense(level:int):int
+		{
+			
+			return int(Math.random() * level);
+		}
+
 		private function createType():String
 		{
-			//TODO: Anything other than Swords?
-			return "Sword";
+			var randomType:int = int(Math.random() * types.length);
+			return types[randomType];
 		}
 
 		private function createDescription(level:uint, type:String):String
@@ -51,7 +62,7 @@ package com.gamecook.tilecrusader.tools.generator
 		private function createDamage(level:uint):uint
 		{
 			//TODO: determine damage based on level
-			return level;
+			return int(Math.random() * level);
 		}
 
 		private function createSuffix(level:uint):String

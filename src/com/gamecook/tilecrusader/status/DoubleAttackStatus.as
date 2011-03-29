@@ -10,20 +10,20 @@ package com.gamecook.tilecrusader.status
     import com.gamecook.tilecrusader.combat.*;
     public class DoubleAttackStatus implements IStatus
     {
-        protected var _attackStatus:AttackStatus;
-        protected var _attackStatus2:AttackStatus;
+        protected var _attackStatus:CombatResult;
+        protected var _attackStatus2:CombatResult;
 
-        public function get attackStatus():AttackStatus
+        public function get attackStatus():CombatResult
         {
             return _attackStatus;
         }
 
-        public function get attackStatus2():AttackStatus
+        public function get attackStatus2():CombatResult
         {
             return _attackStatus2;
         }
 
-        public function DoubleAttackStatus(attackStatus:AttackStatus, attackStatus2:AttackStatus)
+        public function DoubleAttackStatus(attackStatus:CombatResult, attackStatus2:CombatResult)
         {
             _attackStatus2 = attackStatus2;
             _attackStatus = attackStatus;

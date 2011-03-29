@@ -7,18 +7,19 @@
  */
 package com.gamecook.tilecrusader.status
 {
-    import com.gamecook.tilecrusader.combat.*;
-    public class AttackStatus
+	import com.gamecook.tilecrusader.combat.ICombatant;
+
+	public class CombatResult
     {
-        protected var _attacker:IFight;
-        protected var _defender:IFight;
+        protected var _attacker:ICombatant;
+        protected var _defender:ICombatant;
         protected var _success:Boolean;
         protected var _hit:int;
         protected var _defense:int;
         protected var _difference:int;
         protected var _kill:Boolean;
 
-        public function AttackStatus(attacker:IFight, defender:IFight, success:Boolean, hit:int, defense:int, difference:int, kill:Boolean)
+        public function CombatResult(success:Boolean, hit:int, difference:int)
         {
             _kill = kill;
             _difference = difference;
@@ -30,12 +31,12 @@ package com.gamecook.tilecrusader.status
         }
 
 
-        public function get attacker():IFight
+        public function get attacker():ICombatant
         {
             return _attacker;
         }
 
-        public function get defender():IFight
+        public function get defender():ICombatant
         {
             return _defender;
         }

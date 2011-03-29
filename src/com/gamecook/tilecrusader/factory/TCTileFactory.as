@@ -7,21 +7,26 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.combat.IFight;
-    import com.gamecook.tilecrusader.templates.ITemplate;
-    import com.gamecook.tilecrusader.templates.ITemplateCollection;
-    import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
-    import com.gamecook.tilecrusader.tiles.IMonster;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+	import com.gamecook.tilecrusader.combat.ICombatant;
+	import com.gamecook.tilecrusader.equipment.CombatantEquipmentApplicator;
+	import com.gamecook.tilecrusader.equipment.WeaponGenerator;
+	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+	import com.gamecook.tilecrusader.templates.ITemplate;
+	import com.gamecook.tilecrusader.templates.ITemplateCollection;
+	import com.gamecook.tilecrusader.templates.TemplateApplicator;
+	import com.gamecook.tilecrusader.tiles.BaseTile;
+	import com.gamecook.tilecrusader.tiles.IMonster;
+	import com.gamecook.tilecrusader.tiles.PlayerTile;
+	import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    public class TCTileFactory extends TileFactory
+	public class TCTileFactory extends TileFactory
     {
         private var templates:ITemplateCollection;
         private var templateApplicator:TemplateApplicator;
         private var characterPoints:int;
         private var modifier:Number;
+	    private var weaponGenerator:WeaponGenerator = new WeaponGenerator();
+		private var combatantEquipmentApplicator:CombatantEquipmentApplicator = new CombatantEquipmentApplicator();
 
         public function TCTileFactory(tileTypes:TileTypes, templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {
@@ -37,12 +42,16 @@ package com.gamecook.tilecrusader.factory
         {
             var tile:BaseTile = super.createTile(value);
 
+	        //TODO: move to a combatantFactory subclass? TCTileFactory shouldn't have to worry about checking ICombatant/IMonsters/etc
             if(tile is IMonster && !(tile is PlayerTile))
             {
                 var template:ITemplate = templates.getRandomTemplate();
-
+	            var weapon:IWeapon = weaponGenerator.getWeapon(characterPoints);
+	            
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
-                templateApplicator.apply(tile as IFight, template, points);
+                templateApplicator.apply(tile as ICombatant, template, points);
+	            combatantEquipmentApplicator.apply(tile as ICombatant, weapon);
+	            //TODO: generate armor and apply
                 tile.setName(template.getName()+" "+tile.getName());
             }
 
