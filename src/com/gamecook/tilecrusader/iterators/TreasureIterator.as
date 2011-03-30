@@ -7,9 +7,6 @@
  */
 package com.gamecook.tilecrusader.iterators
 {
-    import com.gamecook.tilecrusader.tiles.BaseTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-
     public class TreasureIterator implements IIterator
     {
         private var pool:Array = [];

@@ -10,12 +10,8 @@ package com.gamecook.tilecrusader.renderer
     import com.gamecook.frogue.renderer.MapBitmapRenderer;
 
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.combat.ICombatant;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.filters.BitmapFilterQuality;
     import flash.filters.GlowFilter;

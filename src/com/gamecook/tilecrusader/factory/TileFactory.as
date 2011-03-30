@@ -7,25 +7,25 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.gamecook.tilecrusader.tiles.BaseTile;
+
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
     import flash.utils.getDefinitionByName;
 
     public class TileFactory implements ITileFactory
     {
 
-        private var tileTypes:TileTypes;
         private const TILE_PACKAGE:String = "com.gamecook.tilecrusader.tiles.";
 
-        public function TileFactory(tileTypes:TileTypes)
+        public function TileFactory()
         {
-            this.tileTypes = tileTypes;
+            //TODO I removed the reference of TileTypes when it wasn't static. So remember that in case you need to go back.
         }
 
         public function createTile(value:String):BaseTile
         {
-            var template:Object = tileTypes.getTileTemplate(value);
+            var template:Object = TileTypes.getTileTemplate(value);
             if(!template)
                 return null;
 

@@ -69,7 +69,6 @@ package com.gamecook.tilecrusader.views
         private var invalid:Boolean = true;
         public var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
-        private var tileTypes:TileTypes;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
         private var mapDarkness:FogOfWarMapSelection;
@@ -112,15 +111,14 @@ package com.gamecook.tilecrusader.views
 
             movementHelper = new MovementHelper(map);
 
-            tileTypes = new TileTypes();
-            tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
+            tileInstanceManager = new TileInstanceManager(new TileFactory());
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = 0;
             addChild(mapBitmap);
 
-            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileTypes, tileInstanceManager);
+            renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
 
             // Configure
@@ -180,7 +178,7 @@ package com.gamecook.tilecrusader.views
             {
                 var tile:String = map.getTileType(tmpPoint);
 
-                switch (tileTypes.getTileType(tile))
+                switch (TileTypes.getTileType(tile))
                 {
                     case TileTypes.IMPASSABLE:
                         blocked = true;

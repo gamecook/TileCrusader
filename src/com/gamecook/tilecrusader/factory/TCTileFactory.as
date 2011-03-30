@@ -28,13 +28,13 @@ package com.gamecook.tilecrusader.factory
 	    private var weaponGenerator:WeaponGenerator = new WeaponGenerator();
 		private var combatantEquipmentApplicator:CombatantEquipmentApplicator = new CombatantEquipmentApplicator();
 
-        public function TCTileFactory(tileTypes:TileTypes, templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
+        public function TCTileFactory(templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {
             this.modifier = modifier;
             this.characterPoints = characterPoints;
             this.templateApplicator = templateApplicator;
             this.templates = templates;
-            super(tileTypes);
+            super();
         }
 
 
@@ -47,7 +47,13 @@ package com.gamecook.tilecrusader.factory
             {
                 var template:ITemplate = templates.getRandomTemplate();
 	            var weapon:IWeapon = weaponGenerator.getWeapon(characterPoints);
-	            
+
+                var spriteID:String = TileTypes.getTileSprite(value)+","+TileTypes.getTileSprite(weapon.tileID);
+
+                // Create weapon and armor sprites
+
+
+                trace("New Monster", spriteID);
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
                 templateApplicator.apply(tile as ICombatant, template, points);
 	            combatantEquipmentApplicator.apply(tile as ICombatant, weapon);

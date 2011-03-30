@@ -21,11 +21,22 @@ package com.gamecook.tilecrusader.tiles
 		protected var attackRoll:int = 1;
         protected var defenseRoll:int = 1;
         protected var characterPoints:int = 0;
-        private var pointPercent:Number = 0;
-		private var equipmentSlots:Array = [];
-		
+        protected var pointPercent:Number = 0;
+		protected var equipmentSlots:Array = [];
+        protected var spriteID:String;
+
         public function MonsterTile()
         {
+        }
+
+        public function setSpriteID(value:String):void
+        {
+            spriteID = value;
+        }
+
+        public function getSpriteID():String
+        {
+            return spriteID;
         }
 
         public function getDice():ICombatDice
@@ -110,6 +121,18 @@ package com.gamecook.tilecrusader.tiles
 
         }
 
+        override public function toObject():Object{
+            var tmpObject:Object = super.toObject();
+            tmpObject.maxLife = maxLife;
+            tmpObject.life = life;
+            tmpObject.attackRoll = attackRoll;
+            tmpObject.defenseRoll = defenseRoll;
+            tmpObject.characterPoints = characterPoints;
+            tmpObject.pointPercent = pointPercent;
+
+            return tmpObject;
+        }
+
         public function subtractLife(value:int):void
         {
             life -= value;
@@ -158,17 +181,7 @@ package com.gamecook.tilecrusader.tiles
             life = maxLife;
         }
 
-        override public function toObject():Object{
-            var tmpObject:Object = super.toObject();
-            tmpObject.maxLife = maxLife;
-            tmpObject.life = life;
-            tmpObject.attackRoll = attackRoll;
-            tmpObject.defenseRoll = defenseRoll;
-            tmpObject.characterPoints = characterPoints;
-            tmpObject.pointPercent = pointPercent;
 
-            return tmpObject;
-        }
 
 	    protected function get life():int
 	    {

@@ -38,6 +38,7 @@ package com.gamecook.tilecrusader.maps
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.tiles.BaseTile;
     import com.gamecook.tilecrusader.tiles.IMonster;
+    import com.gamecook.tilecrusader.tiles.MonsterTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
 
     import flash.geom.Point;
@@ -52,13 +53,11 @@ package com.gamecook.tilecrusader.maps
         protected var _tourchMode:Boolean;
         protected var exploredTiles:Array = [];
         protected var lightMap:Array = [];
-        private var tileMap:TileTypes;
         private var instanceManager:TileInstanceManager;
 
-        public function AdvancedFogOfWarMapSelection(map:IMap, width:int, height:int, viewDistance:int, tileMap:TileTypes, instanceManager:TileInstanceManager)
+        public function AdvancedFogOfWarMapSelection(map:IMap, width:int, height:int, viewDistance:int, instanceManager:TileInstanceManager)
         {
             this.instanceManager = instanceManager;
-            this.tileMap = tileMap;
             this.viewDistance = viewDistance;
             super(map, width, height);
         }
@@ -95,23 +94,26 @@ package com.gamecook.tilecrusader.maps
             {
                 for(columns = 0; columns < width; columns ++)
                 {
-                    var spriteID:String = tileMap.getTileSprite("#");
+                    var spriteID:String = TileTypes.getTileSprite("#");
                     var tileValue = tiles[rows][columns];
+                    var uID:int = getTileID(columns, rows);
 
                     if(tileValue != "#")
                     {
-                        spriteID = tileMap.getTileSprite(" ");
+                        spriteID = TileTypes.getTileSprite(" ");
 
                         if(tileValue != " ")
-                            spriteID = spriteID.concat(","+tileMap.getTileSprite(tiles[rows][columns]));
+                            spriteID = spriteID.concat(","+TileTypes.getTileSprite(tiles[rows][columns]));
+
+
                     }
 
 
 
-                    var uID:int = getTileID(columns, rows);
 
                     if(instanceManager)
                     {
+
                         if(instanceManager.hasInstance(uID.toString()))
                         {
                             var instance:BaseTile = instanceManager.getInstance(uID.toString());
@@ -127,6 +129,13 @@ package com.gamecook.tilecrusader.maps
 
                     if(lightMap[uID])
                     {
+                        // Check to see if tile is a monster, if so get weapon graphic ready
+                        if(TileTypes.isMonster(tileValue))
+                        {
+                            var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
+                            spriteID = spriteID.concat(","+TileTypes.getTileSprite(newMonsterTile.equipmentSlot0.tileID));
+                        }
+
                         var id:int = Math.round((viewDistance - lightMap[uID]) / viewDistance * 10) - 3;
                         if(id < 1)
                             id = 0;
@@ -137,16 +146,18 @@ package com.gamecook.tilecrusader.maps
                         //trace("spriteID", spriteID);
 
                         spriteID = spriteID.concat(",light"+id);
+
+
                     }
                     else if(exploredTilesHashMap[uID])
                     {
                         //trace("Out Of Sight", uID, tileValue, viewDistance+1);
                         spriteID = spriteID = spriteID.concat(",light9");
                     }
-                    else if(tileMap.isMonster(tileValue))
+                    else if(TileTypes.isMonster(tileValue))
                     {
                         //trace("Monster in Dark", uID);
-                        spriteID = "sprite0";
+                        spriteID = "sprite3";
                     }
                     else
                     {

@@ -61,7 +61,6 @@ package com.gamecook.tilecrusader.views {
         private var populateMapHelper:MapPopulater;
         public var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
-        private var tileTypes:TileTypes;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
         private var mapBitmap:Bitmap;
 
@@ -101,10 +100,9 @@ package com.gamecook.tilecrusader.views {
 
             populateMapHelper = new MapPopulater(map);
 
-            tileTypes = new TileTypes();
-            tileInstanceManager = new TileInstanceManager(new TileFactory(tileTypes));
+            tileInstanceManager = new TileInstanceManager(new TileFactory());
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, tileTypes, null);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, 3, null);
 
             mapBitmap = new Bitmap(new BitmapData(viewPortWidth / scale, viewPortHeight / scale, false, 0xff0000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
@@ -144,7 +142,7 @@ package com.gamecook.tilecrusader.views {
             var x:int = point.x - mapSelection.getOffsetX();
             var y:int = point.y - mapSelection.getOffsetY();
 
-            renderer.renderPlayer(x, y, tileTypes.getTileSprite("@"));
+            renderer.renderPlayer(x, y, TileTypes.getTileSprite("@"));
         }
 
     }

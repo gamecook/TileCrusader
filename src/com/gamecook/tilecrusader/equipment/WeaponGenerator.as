@@ -7,8 +7,9 @@ package com.gamecook.tilecrusader.equipment
 {
 	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
 	import com.gamecook.tilecrusader.equipment.weapons.Weapon;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-	public class WeaponGenerator
+    public class WeaponGenerator
 	{
 		include "weapons/prefixes.as"
 		include "weapons/suffixes.as"
@@ -21,12 +22,13 @@ package com.gamecook.tilecrusader.equipment
 			level = int(Math.random() * level);
 			
 			//TODO: match character level range to weapon range
-			var type:String = createType();
+            var tileID:String = createTileID();
+			var type:String = TileTypes.getTileName(tileID);
 			var description:String = createDescription(level, type);
 			var damage:int = createDamage(level);
 			var defense:int = createDefense(level);
 			
-			var weapon:Weapon = new Weapon(type, description, damage, defense);
+			var weapon:Weapon = new Weapon(tileID, type, description, damage, defense);
 			
 			return weapon;
 		}
@@ -37,7 +39,7 @@ package com.gamecook.tilecrusader.equipment
 			return int(Math.random() * level);
 		}
 
-		private function createType():String
+		private function createTileID():String
 		{
 			var randomType:int = int(Math.random() * types.length);
 			return types[randomType];

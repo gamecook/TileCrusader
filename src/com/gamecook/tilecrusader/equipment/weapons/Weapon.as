@@ -11,8 +11,14 @@ package com.gamecook.tilecrusader.equipment.weapons
 		private var _description:String;
 		private var _damage:int;
 		private var _defense:int;
+        private var _tileID:String;
 
-		public function get type():String
+        public function get tileID():String
+        {
+            return _tileID;
+        }
+
+        public function get type():String
 		{
 			return _type;
 		}
@@ -27,9 +33,11 @@ package com.gamecook.tilecrusader.equipment.weapons
 			return _damage;
 		}
 
-		public function Weapon(type:String, description:String, damage:int, defense:int)
+		public function Weapon(tileID:String, type:String, description:String, damage:int, defense:int)
 		{
-			_type = type;
+            this._tileID = tileID;
+
+            _type = type;
 			_description = description;
 			_damage = damage;
 			_defense = defense;

@@ -71,7 +71,6 @@ package com.gamecook.tilecrusader.activities
         private var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
         private var characterSheet:CharacterSheetView;
-        private var tileTypes:TileTypes;
         private var treasureIterator:TreasureIterator;
         //private var monsters:Array;
         private var chests:Array;
@@ -163,10 +162,9 @@ package com.gamecook.tilecrusader.activities
             configureMonsterTemplates();
 
 
-            tileTypes = new TileTypes();
-            tileInstanceManager = new TileInstanceManager(new TCTileFactory(tileTypes, monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
+            tileInstanceManager = new TileInstanceManager(new TCTileFactory(monsterTemplates, templateApplicator, activeGameState.player.characterPoints, 0));
 
-            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileTypes, tileInstanceManager);
+            mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileInstanceManager);
 
             if(activeGameState.mapSelection)
             {
@@ -391,7 +389,7 @@ package com.gamecook.tilecrusader.activities
             {
                 var tile:String = map.getTileType(tmpPoint);
 
-                switch (tileTypes.getTileType(tile))
+                switch (TileTypes.getTileType(tile))
                 {
                     case TileTypes.IMPASSABLE:
                             //TODO need to make sure we don't call render here
@@ -716,7 +714,7 @@ package com.gamecook.tilecrusader.activities
                 var x:int = pos.x - mapSelection.getOffsetX();
                 var y:int = pos.y - mapSelection.getOffsetY();
 
-                var playerSprite:String = tileTypes.getTileSprite("@");
+                var playerSprite:String = TileTypes.getTileSprite("@");
                 if(player.getLife() < player.getMaxLife())
                     playerSprite = playerSprite.concat(",life"+(Math.round(player.getLife()/ player.getMaxLife()  * 100).toString())) ;
                 renderer.renderPlayer(x,y, playerSprite);

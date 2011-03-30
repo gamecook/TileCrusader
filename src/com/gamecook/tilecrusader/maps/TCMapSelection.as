@@ -29,18 +29,16 @@
  */
 package com.gamecook.tilecrusader.maps
 {
-    import com.gamecook.frogue.maps.FogOfWarMapSelection;
     import com.gamecook.frogue.maps.IMap;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.serialize.ISerializeToObject;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
 
     public class TCMapSelection extends AdvancedFogOfWarMapSelection implements ISerializeToObject
     {
 
-        public function TCMapSelection(map:IMap, width:int, height:int, viewDistance:int, tileMap:TileTypes, instanceManager:TileInstanceManager)
+        public function TCMapSelection(map:IMap, width:int, height:int, viewDistance:int, instanceManager:TileInstanceManager)
         {
-            super(map, width, height, viewDistance, tileMap, instanceManager);
+            super(map, width, height, viewDistance, instanceManager);
         }
 
         public function parseObject(value:Object):void

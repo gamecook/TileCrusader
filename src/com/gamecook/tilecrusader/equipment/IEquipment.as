@@ -7,7 +7,8 @@ package com.gamecook.tilecrusader.equipment
 {
 	public interface IEquipment
 	{
-		function get attack():int;
+		function get tileID():String;
+        function get attack():int;
 		function get defense():int;
 
 		function get type():String;
