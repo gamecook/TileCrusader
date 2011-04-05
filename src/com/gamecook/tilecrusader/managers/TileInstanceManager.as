@@ -92,5 +92,10 @@ package com.gamecook.tilecrusader.managers
             }
             return obj;
         }
+
+        public function replaceInstance(uID:String, value:BaseTile):void
+        {
+            singletons[uID] = value;
+        }
     }
 }
