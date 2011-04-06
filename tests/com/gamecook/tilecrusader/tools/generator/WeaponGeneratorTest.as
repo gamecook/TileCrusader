@@ -6,7 +6,7 @@
 package com.gamecook.tilecrusader.tools.generator
 {
 	import com.gamecook.tilecrusader.equipment.WeaponGenerator;
-	import com.gamecook.tilecrusader.tools.generator.weapons.IWeapon;
+    import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
 
 	import org.hamcrest.assertThat;
 

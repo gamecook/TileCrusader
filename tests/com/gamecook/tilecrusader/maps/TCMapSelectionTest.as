@@ -8,6 +8,9 @@
 package com.gamecook.tilecrusader.maps {
     import com.gamecook.frogue.maps.Map;
 
+    import com.gamecook.tilecrusader.factory.TileFactory;
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+
     import flash.net.SharedObject;
 
     import org.flexunit.Assert;
@@ -17,7 +20,7 @@ package com.gamecook.tilecrusader.maps {
     public function TCMapSelectionTest() {
 
         var map:Map = new Map();
-        super(map, 10, 10, 5);
+        super(map, 10, 10, 5, new TileInstanceManager(new TileFactory()));
     }
 
     [Test]

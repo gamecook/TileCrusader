@@ -24,8 +24,10 @@ package com.gamecook.tilecrusader.activities
 	import com.gamecook.tilecrusader.enum.DarknessOptions;
 	import com.gamecook.tilecrusader.enum.GameModeOptions;
 	import com.gamecook.tilecrusader.enum.TemplateProperties;
-	import com.gamecook.tilecrusader.equipment.IEquipment;
-	import com.gamecook.tilecrusader.factory.TCTileFactory;
+    import com.gamecook.tilecrusader.equipment.IEquipable;
+    import com.gamecook.tilecrusader.equipment.IEquipment;
+    import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+    import com.gamecook.tilecrusader.factory.TCTileFactory;
 	import com.gamecook.tilecrusader.iterators.TreasureIterator;
 	import com.gamecook.tilecrusader.managers.PopUpManager;
 	import com.gamecook.tilecrusader.managers.SingletonManager;
@@ -40,7 +42,8 @@ package com.gamecook.tilecrusader.activities
 	import com.gamecook.tilecrusader.templates.TemplateCollection;
 	import com.gamecook.tilecrusader.tiles.PlayerTile;
 	import com.gamecook.tilecrusader.tiles.TileTypes;
-	import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+    import com.gamecook.tilecrusader.tiles.WeaponTile;
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
 	import com.gamecook.tilecrusader.views.CharacterSheetView;
 	import com.gamecook.tilecrusader.views.VirtualKeysView;
 	import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
@@ -188,6 +191,7 @@ package com.gamecook.tilecrusader.activities
 
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
+            //TODO this should be moved into the MapLoadingActivity
             if(activeGameState.tileInstanceManager)
                 tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
@@ -413,6 +417,13 @@ package com.gamecook.tilecrusader.activities
                     case TileTypes.PICKUP: case TileTypes.ARTIFACT:
                         pickup(tile, tmpPoint, value);
                         break;
+                    case TileTypes.EQUIPMENT:
+
+                        var wUID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
+                        var tmpWeapon:WeaponTile = tileInstanceManager.getInstance(wUID, tile) as WeaponTile;
+
+                        equip(player, tmpWeapon, wUID,  tmpPoint, value);
+                        break;
                     case TileTypes.EXIT:
                         movePlayer(value);
                         if(canFinishLevel())
@@ -454,6 +465,19 @@ package com.gamecook.tilecrusader.activities
            {
                statusLabel.text = status;
            }
+        }
+
+        private function equip(player:PlayerTile, tmpTile:WeaponTile, uID:String, tilePoint:Point, nextMovePoint:Point):void
+        {
+            //TODO need to test if you can equip
+            //TODO prompt user to equip
+
+            player.equip(tmpTile.getWeapon());
+
+            //TODO make sure the player is actually picking up the item.
+            tileInstanceManager.removeInstance(uID);
+            swapTileOnMap(tilePoint, " ");
+            movePlayer(nextMovePoint);
         }
 
         private function onCompleteLevel(success:Boolean):void
@@ -569,6 +593,9 @@ package com.gamecook.tilecrusader.activities
 
 		    swapTileOnMap(currentPoint, "X");
 
+
+		    /*
+		    //Old drop treasure code
 		    if(monstersDropTreasure){
 			    var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
 			    if(treasure == "K")
@@ -576,8 +603,18 @@ package com.gamecook.tilecrusader.activities
 			    else
 				    swapTileOnMap(currentPoint, treasure);
 		    }
+            */
 
-		    tileInstanceManager.removeInstance(currentuID);
+            // TODO This is a hardcoded test for dropping the weapon.
+            var droppedEquipment:IEquipment = monster.equipmentSlot0;
+
+            swapTileOnMap(currentPoint, droppedEquipment.tileID);
+
+            var weaponTile:WeaponTile = new WeaponTile();
+            weaponTile.parseObject({weapon:droppedEquipment.toObject()});
+            //weaponTile.getSpriteID();
+
+            tileInstanceManager.replaceInstance(currentuID, weaponTile);
 
 		    var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
 		    var dropChance:Number = .25;
@@ -634,7 +671,7 @@ package com.gamecook.tilecrusader.activities
             }
             else if (tile == "P")
             {
-                if(player.getPotions() < player.getMaxPotion())
+                if(player.getPotions() < player.getMaxPotions())
                 {
                     player.addPotion(1);
                     addStatusMessage(player.getName() +" has picked up a health potion.");
@@ -715,8 +752,16 @@ package com.gamecook.tilecrusader.activities
                 var y:int = pos.y - mapSelection.getOffsetY();
 
                 var playerSprite:String = TileTypes.getTileSprite("@");
+
+                //Add custom sprite overlay (equipment)
+                if(player.getSpriteID() != "")
+                    playerSprite = playerSprite.concat(","+player.getSpriteID());
+
+                //Add life sprite
                 if(player.getLife() < player.getMaxLife())
                     playerSprite = playerSprite.concat(",life"+(Math.round(player.getLife()/ player.getMaxLife()  * 100).toString())) ;
+
+                //Draw player
                 renderer.renderPlayer(x,y, playerSprite);
 
                 invalid = false;

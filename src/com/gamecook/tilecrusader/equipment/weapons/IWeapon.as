@@ -9,5 +9,6 @@ package com.gamecook.tilecrusader.equipment.weapons
 
 	public interface IWeapon extends IEquipment
 	{
+
 	}
 }

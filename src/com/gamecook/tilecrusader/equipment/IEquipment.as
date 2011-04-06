@@ -5,7 +5,9 @@
  */
 package com.gamecook.tilecrusader.equipment
 {
-	public interface IEquipment
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+
+    public interface IEquipment extends ISerializeToObject
 	{
 		function get tileID():String;
         function get attack():int;

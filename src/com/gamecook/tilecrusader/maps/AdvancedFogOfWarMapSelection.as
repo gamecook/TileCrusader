@@ -98,6 +98,7 @@ package com.gamecook.tilecrusader.maps
                     var tileValue = tiles[rows][columns];
                     var uID:int = getTileID(columns, rows);
 
+                    // Get base tile if it's not a wall
                     if(tileValue != "#")
                     {
                         spriteID = TileTypes.getTileSprite(" ");
@@ -105,49 +106,26 @@ package com.gamecook.tilecrusader.maps
                         if(tileValue != " ")
                             spriteID = spriteID.concat(","+TileTypes.getTileSprite(tiles[rows][columns]));
 
-
                     }
 
-
-
-
-                    if(instanceManager)
+                    //Pre-Process tile based on type.
+                    if(TileTypes.isMonster(tileValue))
                     {
-
-                        if(instanceManager.hasInstance(uID.toString()))
-                        {
-                            var instance:BaseTile = instanceManager.getInstance(uID.toString());
-                            if(instance is IMonster)
-                            {
-                                //TODO test to see if life is cached, if not create it
-                                //TODO This should also be moved into some kind of util for the player as well.
-                                if(instance["getLife"]() < instance["getMaxLife"]())
-                                    spriteID = spriteID.concat(",life"+(Math.round(instance["getLife"]()/ instance["getMaxLife"]()  * 100).toString())) ;
-                            }
-                        }
+                        var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
+                        spriteID = spriteID.concat(","+newMonsterTile.getSpriteID());
+                        if(newMonsterTile.getLife() < newMonsterTile.getMaxLife())
+                            spriteID = spriteID.concat(",life"+(Math.round(newMonsterTile.getLife()/ newMonsterTile.getMaxLife()  * 100).toString())) ;
                     }
 
+                    //Apply lighting effects
                     if(lightMap[uID])
                     {
-                        // Check to see if tile is a monster, if so get weapon graphic ready
-                        if(TileTypes.isMonster(tileValue))
-                        {
-                            var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
-                            spriteID = spriteID.concat(","+TileTypes.getTileSprite(newMonsterTile.equipmentSlot0.tileID));
-                        }
 
                         var id:int = Math.round((viewDistance - lightMap[uID]) / viewDistance * 10) - 3;
                         if(id < 1)
                             id = 0;
 
-                        //trace("LightMap", uID, tileValue, lightMap[uID], id);
-
-                        //spriteID = spriteID.concat(",light"+id);
-                        //trace("spriteID", spriteID);
-
                         spriteID = spriteID.concat(",light"+id);
-
-
                     }
                     else if(exploredTilesHashMap[uID])
                     {

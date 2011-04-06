@@ -5,13 +5,17 @@
  */
 package com.gamecook.tilecrusader.equipment.weapons
 {
-	public class Weapon implements IWeapon
+    import com.gamecook.tilecrusader.enum.EquipmentValues;
+    import com.gamecook.tilecrusader.equipment.IEquipable;
+
+    public class Weapon implements IWeapon, IEquipable
 	{
 		private var _type:String;
 		private var _description:String;
 		private var _damage:int;
 		private var _defense:int;
         private var _tileID:String;
+        private const DEFAULT_SLOT:String = "weapon";
 
         public function get tileID():String
         {
@@ -33,14 +37,9 @@ package com.gamecook.tilecrusader.equipment.weapons
 			return _damage;
 		}
 
-		public function Weapon(tileID:String, type:String, description:String, damage:int, defense:int)
+		public function Weapon()
 		{
-            this._tileID = tileID;
 
-            _type = type;
-			_description = description;
-			_damage = damage;
-			_defense = defense;
 		}
 
 		public function get defense():int
@@ -52,5 +51,43 @@ package com.gamecook.tilecrusader.equipment.weapons
 		{
 			return "Weapon{_type=" + String(_type) + ",_description=" + String(_description) + ",_damage=" + String(_damage) + ",_defense=" + String(_defense) + "}";
 		}
-	}
+
+        public function parseObject(value:Object):void
+        {
+            if(value.hasOwnProperty("tileID"))
+                _tileID = value.tileID;
+
+            if(value.hasOwnProperty("type"))
+                _type = value.type;
+
+            if(value.hasOwnProperty("description"))
+                _description = value.description;
+
+            if(value.hasOwnProperty("damage"))
+                _damage = value.damage;
+
+            if(value.hasOwnProperty("defense"))
+                _defense = value.defense;
+        }
+
+        public function toObject():Object
+        {
+            return {tileID:tileID, type:type, description:description, damage:_damage, defense:defense}
+        }
+
+        public function slotID():String
+        {
+            return EquipmentValues.WEAPON_SLOT;
+        }
+
+        public function getModifyAttribute():String
+        {
+            return EquipmentValues.ATTACK;
+        }
+
+        public function getValue():Number
+        {
+            return _damage;
+        }
+    }
 }

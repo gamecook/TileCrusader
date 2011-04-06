@@ -11,9 +11,12 @@ package com.gamecook.tilecrusader.tiles
 	import com.gamecook.tilecrusader.combat.ICombatant;
 	import com.gamecook.tilecrusader.dice.CombatDice;
 	import com.gamecook.tilecrusader.dice.ICombatDice;
-	import com.gamecook.tilecrusader.equipment.IEquipment;
+    import com.gamecook.tilecrusader.enum.EquipmentValues;
+    import com.gamecook.tilecrusader.equipment.IEquip;
+    import com.gamecook.tilecrusader.equipment.IEquipable;
+    import com.gamecook.tilecrusader.equipment.IEquipment;
 
-	public class MonsterTile extends BaseTile implements ICombatant, IMonster
+	public class MonsterTile extends BaseTile implements ICombatant, IMonster, IEquip
     {
         private var _life:int = 1;
 		protected var maxLife:int = 1;
@@ -23,7 +26,7 @@ package com.gamecook.tilecrusader.tiles
         protected var characterPoints:int = 0;
         protected var pointPercent:Number = 0;
 		protected var equipmentSlots:Array = [];
-        protected var spriteID:String;
+        protected var spriteID:String = "";
 
         public function MonsterTile()
         {
@@ -31,7 +34,8 @@ package com.gamecook.tilecrusader.tiles
 
         public function setSpriteID(value:String):void
         {
-            spriteID = value;
+
+            spriteID = TileTypes.getTileSprite(equipmentSlot0.tileID);
         }
 
         public function getSpriteID():String
@@ -302,7 +306,15 @@ package com.gamecook.tilecrusader.tiles
 		{
 			//TODO: limit to two slots?
 			equipmentSlots.push(equipment);
+            updateCustomSpriteID();
 		}
+
+        private function updateCustomSpriteID():void
+        {
+            //TODO need to add graphics for each slot
+            if(equipmentSlot0)
+                spriteID = TileTypes.getTileSprite(equipmentSlot0.tileID);
+        }
 
 		public function get equipmentSlot0():IEquipment
 		{
@@ -313,5 +325,19 @@ package com.gamecook.tilecrusader.tiles
 		{
 			return equipmentSlots[1] as IEquipment;
 		}
-	}
+
+        public function equip(item:IEquipable):void
+        {
+            //TODO need to clean all this mess up
+            if(item.slotID() == EquipmentValues.WEAPON_SLOT)
+                equipmentSlots[0] = item;
+
+            updateCustomSpriteID();
+        }
+
+        public function canEquip(item:IEquipable):Boolean
+        {
+            return false;
+        }
+    }
 }

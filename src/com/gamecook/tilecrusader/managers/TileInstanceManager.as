@@ -55,7 +55,7 @@ package com.gamecook.tilecrusader.managers
 
         public function removeInstance(uID:String):void
         {
-            singletons[uID] = null;
+            delete singletons[uID];
         }
 
         public function clear():void

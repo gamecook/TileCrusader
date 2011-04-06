@@ -18,7 +18,7 @@ package com.gamecook.tilecrusader.managers {
 
         public function TileInstanceManagerTest()
         {
-            super(new TileFactory(new TileTypes()));
+            super(new TileFactory());
 
         }
 
@@ -68,7 +68,7 @@ package com.gamecook.tilecrusader.managers {
         {
             clear();
 
-            var instanceManager = new TileInstanceManager(new TileFactory(new TileTypes()));
+            var instanceManager = new TileInstanceManager(new TileFactory());
             instanceManager.getInstance("34", "9", {maxLife:100});
 
             parseObject(instanceManager.toObject());

@@ -28,8 +28,8 @@ package com.gamecook.tilecrusader.equipment
 			var damage:int = createDamage(level);
 			var defense:int = createDefense(level);
 			
-			var weapon:Weapon = new Weapon(tileID, type, description, damage, defense);
-			
+			var weapon:Weapon = new Weapon();
+			weapon.parseObject({tileID:tileID, type:type, description:description, damage:damage, defense:defense});
 			return weapon;
 		}
 

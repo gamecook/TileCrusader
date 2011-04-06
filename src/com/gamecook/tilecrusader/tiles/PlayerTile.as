@@ -8,8 +8,10 @@
 package com.gamecook.tilecrusader.tiles
 {
 	import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.equipment.ILoot;
+    import com.gamecook.tilecrusader.equipment.IStoreLoot;
 
-	public class PlayerTile extends MonsterTile
+    public class PlayerTile extends MonsterTile implements IStoreLoot
     {
 
         private var gold:int = 0;
@@ -119,7 +121,7 @@ package com.gamecook.tilecrusader.tiles
             potions --;
         }
 
-        public function getMaxPotion():int
+        public function getMaxPotions():int
         {
             return maxPotions;
         }
@@ -167,6 +169,14 @@ package com.gamecook.tilecrusader.tiles
 				addKill();
 			}
 		}
-	}
+
+        public function addLoot(item:ILoot):void
+        {
+            var functionName:String = "add"+item.getModifyAttribute();
+
+            if(this.hasOwnProperty(functionName))
+                this[functionName](item.getValue());
+        }
+    }
 
 }

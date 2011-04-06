@@ -8,7 +8,7 @@
 package com.gamecook.tilecrusader.factory
 {
 	import com.gamecook.tilecrusader.combat.ICombatant;
-	import com.gamecook.tilecrusader.equipment.CombatantEquipmentApplicator;
+	import com.gamecook.tilecrusader.applicators.CombatantEquipmentApplicator;
 	import com.gamecook.tilecrusader.equipment.WeaponGenerator;
 	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
 	import com.gamecook.tilecrusader.templates.ITemplate;
