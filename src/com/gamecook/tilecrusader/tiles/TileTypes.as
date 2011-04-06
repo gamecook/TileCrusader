@@ -21,7 +21,8 @@ package com.gamecook.tilecrusader.tiles
         public static const BOSS:String = "boss";
         public static const EQUIPMENT:String = "equipment";
 
-        private static const TYPES : Object = new Object();
+        public static const TYPES : Object = new Object();
+        public static const DARKNESS:String = "darkness";
 		{
 		TYPES[' '] = { name: 'Floor', sprite: "sprite0", type: PASSABLE},
         TYPES['#'] = { name: 'Wall', sprite: "sprite1", type: IMPASSABLE},
@@ -113,6 +114,11 @@ package com.gamecook.tilecrusader.tiles
         public static function getTileName(value:String):String
         {
             return TYPES[value].name;
+        }
+
+        public static function isDarkness(value:String):Boolean
+        {
+            return TYPES[value] == null ? false : (TYPES[value].type == DARKNESS);
         }
     }
 }

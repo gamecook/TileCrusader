@@ -783,9 +783,30 @@ package com.gamecook.tilecrusader.activities
 
         private function onClick(event:MouseEvent):void
         {
-            var localTile:Point = new Point(Math.floor(event.localX/TILE_SIZE), Math.floor(event.localY/TILE_SIZE));
-            var tileID:int = mapSelection.getTileID(localTile.x, localTile.y);
-            trace(localTile, tileID, tileID%map.width, tileID%map.height, mapSelection.getOffsetX(), mapSelection.getOffsetY());
+            var localPoint:Point = new Point(Math.floor((event.localX - mapBitmap.x)/TILE_SIZE), Math.floor((event.localY - mapBitmap.y)/TILE_SIZE));
+            var tileID:int = mapSelection.getTileID(localPoint.x, localPoint.y);
+
+            var playerPoint:Point = mapSelection.getCenter().clone();
+            playerPoint.x -= mapSelection.getOffsetX();
+            playerPoint.y -= mapSelection.getOffsetY();
+
+            var directionX:int = 0;
+            if(localPoint.x > playerPoint.x)
+                directionX = 1;
+            else if (localPoint.x < playerPoint.x)
+                directionX = -1;
+
+            var directionY:int = 0;
+            if(localPoint.y > playerPoint.y)
+                directionY = 1;
+            else if (localPoint.y < playerPoint.y)
+                directionY = -1;
+
+            trace("Move To", directionX, directionY, "playerPoint", playerPoint, "localPoint", localPoint, mapSelection.getOffsetX(), mapSelection.getOffsetY());
+
+            nextMove(new Point(directionX, directionY));
+
+            //trace(localTile, tileID, tileID%map.width, tileID%map.height, mapSelection.getOffsetX(), mapSelection.getOffsetY());
         }
 
         override public function loadState(obj:Object):void

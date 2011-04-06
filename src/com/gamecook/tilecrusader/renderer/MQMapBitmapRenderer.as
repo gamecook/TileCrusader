@@ -12,6 +12,11 @@ package com.gamecook.tilecrusader.renderer
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
 
+    import com.gamecook.tilecrusader.tiles.MonsterTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
+
+    import com.gamecook.tilecrusader.tiles.WeaponTile;
+
     import flash.display.BitmapData;
     import flash.filters.BitmapFilterQuality;
     import flash.filters.GlowFilter;
@@ -42,7 +47,7 @@ package com.gamecook.tilecrusader.renderer
             statsTF.thickness = 0;
             statsTF.sharpness = 100;
             var tfx:TextFormat = new TextFormat("system2", 8, 0xffffff);
-            tfx.letterSpacing = -1.2;
+            tfx.letterSpacing = -1.1;
             statsTF.defaultTextFormat = tfx;
 
             var outline:GlowFilter = new GlowFilter();
@@ -56,7 +61,7 @@ package com.gamecook.tilecrusader.renderer
             statsTF.filters = filterArray;
 
             statsMatrix = new Matrix();
-            statsMatrix.translate(-3, 12);
+            statsMatrix.translate(-1, 23);
             //statsMatrix.scale(.8,.8);
         }
 
@@ -70,61 +75,56 @@ package com.gamecook.tilecrusader.renderer
 
         override protected function tileBitmap(value:String):BitmapData
         {
+            var bitmapData:BitmapData;
+            var sprites:Array = value.split(",");
 
             if(spriteSheet.hasSpriteCached(value))
             {
-                //trace("SpriteSheet has sprite", value);
-                return spriteSheet.getSpriteFromCache(value);
+                bitmapData = spriteSheet.getSpriteFromCache(value);
             }
             else
             {
-                var sprites:Array = value.split(",");
-
-                return spriteSheet.getSprite.apply(this, sprites);
-                //trace("SpriteSheet does not have sprite", value);
+                bitmapData = spriteSheet.getSprite.apply(this, sprites);
             }
 
-            //var sprites:Array = [value];
-            /*if(value == "@")
-                sprites.shift();*/
-
-            //var bitmapData:BitmapData = ;
-
-            /*if(tileMap.isMonster(value) || tileMap.isPlayer(value) || tileMap.isBoss(value))
+            if(instances.hasInstance(currentTileID.toString()))
             {
-                var tile:ICombatant = instances.getInstance(tileMap.isPlayer(value) ? "@" : currentTileID.toString(), value) as ICombatant;
-                bitmapData = bitmapData.clone();
+                var tile:MonsterTile = instances.getInstance(currentTileID.toString(), value) as MonsterTile;
 
-                statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font> <font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
-
-                bitmapData.draw(statsTF, statsMatrix);
-
-                var life:Number = tile.getLife() / tile.getMaxLife();
-
-                if(life < 1)
+                if(tile is MonsterTile && !TileTypes.isDarkness(sprites[sprites.length-1]))
                 {
-                    var matrix:Matrix = new Matrix();
 
-                    bitmapData = bitmapData.clone();
-                    var xOffset:int = bitmapData.width-2;
+                    statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font>|<font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
 
-                    var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
+                    bitmapData.draw(statsTF, statsMatrix);
 
-                    var lifeBarHeight:Number = Math.floor(bitmapData.height * life -1);
-                    if(lifeBarHeight <=0) lifeBarHeight = 1;
-                    var lifeBarY:Number = bitmapData.height - lifeBarHeight;
-                    var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
+                    var life:Number = tile.getLife() / tile.getMaxLife();
 
-                    matrix.translate(xOffset, 0);
-                    bitmapData.draw(bg, matrix);
+                    if(life < 1)
+                    {
+                        var matrix:Matrix = new Matrix();
 
-                    matrix.translate(0, lifeBarY);
-                    bitmapData.draw(bar, matrix);
+                        bitmapData = bitmapData.clone();
+                        var xOffset:int = bitmapData.width-2;
 
+                        var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
+
+                        var lifeBarHeight:Number = Math.floor(bitmapData.height * life -1);
+                        if(lifeBarHeight <=0) lifeBarHeight = 1;
+                        var lifeBarY:Number = bitmapData.height - lifeBarHeight;
+                        var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
+
+                        matrix.translate(xOffset, 0);
+                        bitmapData.draw(bg, matrix);
+
+                        matrix.translate(0, lifeBarY);
+                        bitmapData.draw(bar, matrix);
+
+                    }
                 }
-            }*/
+            }
 
-            //return bitmapData;
+            return bitmapData;
         }
 
 

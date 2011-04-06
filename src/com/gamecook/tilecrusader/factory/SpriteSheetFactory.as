@@ -8,6 +8,7 @@
 package com.gamecook.tilecrusader.factory {
     import com.gamecook.frogue.sprites.SpriteSheet;
 
+    import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.gamecook.tilecrusader.utils.ColorUtil;
 
     import flash.display.Bitmap;
@@ -87,16 +88,29 @@ package com.gamecook.tilecrusader.factory {
             var total:int = 10;
             var bitmapData:BitmapData = new BitmapData(TILE_SIZE, TILE_SIZE, true, 0xFF000000);
             var rect:Rectangle = new Rectangle(0, 0, TILE_SIZE, TILE_SIZE);
+            var id:String;
 
             for (i = 0; i < total; i ++)
             {
+                id = "light"+i;
                 bitmapData.fillRect(rect, ColorUtil.returnARGB(0x000000, i * 20));
-                spriteSheet.cacheSprite("light"+i, bitmapData.clone());
+                spriteSheet.cacheSprite(id, bitmapData.clone());
             }
+
+            //TODO this may not be accurate
+            // Register last light tile as darkness since it's out of range
+            TileTypes.registerTile(id, {type:TileTypes.DARKNESS});
 
             // Black Tile
             bitmapData.fillRect(rect, 0x00000000);
-            spriteSheet.cacheSprite("light10", bitmapData.clone());
+            id = "light"+i;
+            spriteSheet.cacheSprite(id, bitmapData.clone());
+
+            //Register last light tile as darkness
+            TileTypes.registerTile(id, {type:TileTypes.DARKNESS});
+
+            //This is the tile for the monster's eyes
+            TileTypes.registerTile("sprite3", {type:TileTypes.DARKNESS});
 
             return spriteSheet;
 

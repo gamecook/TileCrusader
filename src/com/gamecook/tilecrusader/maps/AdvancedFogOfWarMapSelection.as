@@ -113,8 +113,8 @@ package com.gamecook.tilecrusader.maps
                     {
                         var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
                         spriteID = spriteID.concat(","+newMonsterTile.getSpriteID());
-                        if(newMonsterTile.getLife() < newMonsterTile.getMaxLife())
-                            spriteID = spriteID.concat(",life"+(Math.round(newMonsterTile.getLife()/ newMonsterTile.getMaxLife()  * 100).toString())) ;
+                        /*if(newMonsterTile.getLife() < newMonsterTile.getMaxLife())
+                            spriteID = spriteID.concat(",life"+(Math.round(newMonsterTile.getLife()/ newMonsterTile.getMaxLife()  * 100).toString())) ;*/
                     }
 
                     //Apply lighting effects
@@ -141,21 +141,6 @@ package com.gamecook.tilecrusader.maps
                     {
                         spriteID = "light10";
                     }
-                    /*if(tiles[rows][columns] != "#")
-                    {
-                        tiles[rows][columns] = " ";
-
-
-
-                    }*/
-                    /*var uID:int = getTileID(columns,rows);
-                    if(visiblePoints.indexOf(uID) == -1)
-                    {
-                        if(exploredTilesHashMap[uID] || _revealAll)
-                            tiles[rows][columns] =  tiles[rows][columns]== "?" ? "#" : "?";
-                        else
-                            tiles[rows][columns] = "*";
-                    }*/
 
                     tiles[rows][columns] = spriteID;
                 }
