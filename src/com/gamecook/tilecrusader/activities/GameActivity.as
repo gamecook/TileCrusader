@@ -91,7 +91,7 @@ package com.gamecook.tilecrusader.activities
         private var scale:int = 1;
         private var tileWidth:int;
         private var tileHeight:int;
-        private const SIDEBAR_WIDTH:int = 200;
+        //private const SIDEBAR_WIDTH:int = 200;
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
         private const MESSAGE_HEIGHT:int = 40;
@@ -116,6 +116,7 @@ package com.gamecook.tilecrusader.activities
         private var visibility:int;
 	    private var currentPoint:Point;
 	    private var currentuID:String;
+        private var mouseDown:Boolean;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -149,7 +150,7 @@ package com.gamecook.tilecrusader.activities
 
             // Configure Tile, Render and Darkness size
             tileWidth = tileHeight = TILE_SIZE * scale;
-            viewPortWidth = (fullSizeWidth - SIDEBAR_WIDTH);
+            viewPortWidth = (fullSizeWidth);// - SIDEBAR_WIDTH);
             viewPortHeight = fullSizeHeight - tileHeight;
 
 
@@ -227,11 +228,11 @@ package com.gamecook.tilecrusader.activities
             //TODO May need to slow this down for mobile
             keyPressDelay = .25 * MILLISECONDS;
 
-            virtualKeys = new VirtualKeysView(this);
+            /*virtualKeys = new VirtualKeysView(this);
             addChild(virtualKeys);
             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
-            virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);
-            virtualKeys.scaleX = virtualKeys.scaleY = .5;
+            virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);*/
+            //virtualKeys.scaleX = virtualKeys.scaleY = .5;
 
             if(Capabilities.version.substr(0,3) != "IOS")
             {
@@ -713,15 +714,17 @@ package com.gamecook.tilecrusader.activities
 
         override public function update(elapsed:Number = 0):void
         {
-
-            if(virtualKeys)
-                virtualKeys.update(elapsed);
-
             pollKeyPressCounter += elapsed;
 
             if(pollKeyPressCounter >= keyPressDelay)
             {
                 pollKeyPressCounter = 0;
+
+                if(mouseDown)
+                {
+                    onUpdateMousePosition();
+                }
+
                 if(_nextMove)
                 {
                     move(_nextMove);
@@ -778,13 +781,34 @@ package com.gamecook.tilecrusader.activities
 
             soundManager.play(TCSoundClasses.WalkStairsSound);
 
-            addEventListener(MouseEvent.CLICK, onClick);
+            addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+            addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+            addEventListener(MouseEvent.CLICK, onMouseClick);
         }
 
-        private function onClick(event:MouseEvent):void
+        private function onMouseClick(event:MouseEvent):void
         {
-            var localPoint:Point = new Point(Math.floor((event.localX - mapBitmap.x)/TILE_SIZE), Math.floor((event.localY - mapBitmap.y)/TILE_SIZE));
+            onUpdateMousePosition();
+        }
+
+        private function onMouseDown(event:MouseEvent):void
+        {
+            mouseDown = true;
+        }
+
+        private function onMouseUp(event:MouseEvent):void
+        {
+            mouseDown = false;
+        }
+
+        private function onUpdateMousePosition():void
+        {
+
+            var localPoint:Point = new Point(Math.floor((mouseX - mapBitmap.x)/TILE_SIZE), Math.floor((mouseY - mapBitmap.y)/TILE_SIZE));
             var tileID:int = mapSelection.getTileID(localPoint.x, localPoint.y);
+
+            trace("Update Mouse Position", mouseX, mouseY, localPoint);
+
 
             var playerPoint:Point = mapSelection.getCenter().clone();
             playerPoint.x -= mapSelection.getOffsetX();
@@ -802,7 +826,7 @@ package com.gamecook.tilecrusader.activities
             else if (localPoint.y < playerPoint.y)
                 directionY = -1;
 
-            trace("Move To", directionX, directionY, "playerPoint", playerPoint, "localPoint", localPoint, mapSelection.getOffsetX(), mapSelection.getOffsetY());
+            //trace("Move To", directionX, directionY, "playerPoint", playerPoint, "localPoint", localPoint, mapSelection.getOffsetX(), mapSelection.getOffsetY());
 
             nextMove(new Point(directionX, directionY));
 
