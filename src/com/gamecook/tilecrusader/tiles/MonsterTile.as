@@ -326,13 +326,17 @@ package com.gamecook.tilecrusader.tiles
 			return equipmentSlots[1] as IEquipment;
 		}
 
-        public function equip(item:IEquipable):void
+        public function equip(item:IEquipable):IEquipment
         {
+            var droppedItem:IEquipment = equipmentSlots[0] != null? equipmentSlots[0] : null;
+
             //TODO need to clean all this mess up
             if(item.slotID() == EquipmentValues.WEAPON_SLOT)
                 equipmentSlots[0] = item;
 
             updateCustomSpriteID();
+
+            return droppedItem;
         }
 
         public function canEquip(item:IEquipable):Boolean

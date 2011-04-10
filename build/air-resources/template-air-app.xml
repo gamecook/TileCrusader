@@ -11,6 +11,7 @@
         <resizable>true</resizable>
         <minimizable>true</minimizable> 
         <maximizable>true</maximizable>
+        <renderMode>gpu</renderMode>
         <!--<width>@width@</width>-->
         <!--<height>@height@</height>-->
     </initialWindow>

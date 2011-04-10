@@ -120,5 +120,10 @@ package com.gamecook.tilecrusader.tiles
         {
             return TYPES[value] == null ? false : (TYPES[value].type == DARKNESS);
         }
+
+        public static function getEmptyTile():String
+        {
+            return " ";
+        }
     }
 }

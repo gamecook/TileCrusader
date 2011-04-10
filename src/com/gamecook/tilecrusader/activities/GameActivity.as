@@ -27,6 +27,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.equipment.IEquipable;
     import com.gamecook.tilecrusader.equipment.IEquipment;
     import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+    import com.gamecook.tilecrusader.equipment.weapons.Weapon;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
 	import com.gamecook.tilecrusader.iterators.TreasureIterator;
 	import com.gamecook.tilecrusader.managers.PopUpManager;
@@ -473,12 +474,33 @@ package com.gamecook.tilecrusader.activities
             //TODO need to test if you can equip
             //TODO prompt user to equip
 
-            player.equip(tmpTile.getWeapon());
+            var droppedEquipment:IEquipment = player.equip(tmpTile.getWeapon());
 
             //TODO make sure the player is actually picking up the item.
-            tileInstanceManager.removeInstance(uID);
-            swapTileOnMap(tilePoint, " ");
+
+
+            var newTile:String = TileTypes.getEmptyTile();
+
+            // Drop weapon
+            if(droppedEquipment)
+            {
+                newTile = droppedEquipment.tileID;
+
+                var weaponTile:WeaponTile = new WeaponTile();
+                weaponTile.parseObject({weapon:droppedEquipment.toObject()});
+
+                tileInstanceManager.replaceInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
+            }
+            else
+            {
+                tileInstanceManager.removeInstance(uID);
+            }
+
+            swapTileOnMap(tilePoint, newTile);
+
             movePlayer(nextMovePoint);
+
+
         }
 
         private function onCompleteLevel(success:Boolean):void

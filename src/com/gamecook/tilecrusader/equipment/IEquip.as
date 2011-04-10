@@ -9,7 +9,7 @@ package com.gamecook.tilecrusader.equipment {
 
     public interface IEquip {
 
-        function equip(item:IEquipable):void;
+        function equip(item:IEquipable):IEquipment;
         function canEquip(item:IEquipable):Boolean;
 
     }
