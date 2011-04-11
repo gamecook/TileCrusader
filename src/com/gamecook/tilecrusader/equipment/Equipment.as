@@ -15,6 +15,7 @@ package com.gamecook.tilecrusader.equipment
         private var _damage:int;
         private var _defense:int;
         private var _tileID:String;
+        private var slotID:int;
 
         public function get tileID():String
         {
@@ -67,16 +68,19 @@ package com.gamecook.tilecrusader.equipment
 
             if (value.hasOwnProperty("defense"))
                 _defense = value.defense;
+
+            if(value.hasOwnProperty("slotID"))
+                slotID = value.slotID;
         }
 
         public function toObject():Object
         {
-            return {tileID:tileID, type:type, description:description, damage:_damage, defense:defense}
+            return {tileID:tileID, type:type, description:description, damage:_damage, defense:defense, slotID:slotID}
         }
 
-        public function slotID():String
+        public function getSlotID():int
         {
-            return SlotsEnum.WEAPON;
+            return slotID;
         }
 
         public function getModifyAttribute():String

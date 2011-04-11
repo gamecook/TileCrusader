@@ -8,6 +8,7 @@
 package com.gamecook.tilecrusader.factory
 {
     import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.enum.SlotsEnum;
     import com.gamecook.tilecrusader.equipment.Equipment;
     import com.gamecook.tilecrusader.equipment.IEquipable;
     import com.gamecook.tilecrusader.factory.EquipmentFactory;
@@ -46,18 +47,15 @@ package com.gamecook.tilecrusader.factory
                 var template:ITemplate = templates.getRandomTemplate();
 
                 //TODO this is hardcoded right now, should be moved into an enum
-                var weapon:IEquipable = weaponGenerator.createEquipment(characterPoints, EquipmentFactory.WEAPON);
+                var weapon:IEquipable = weaponGenerator.createEquipment(characterPoints, SlotsEnum.WEAPON);
+                var shield:IEquipable = weaponGenerator.createEquipment(characterPoints, SlotsEnum.SHIELD);
 
-                var spriteID:String = TileTypes.getTileSprite(value) + "," + TileTypes.getTileSprite(weapon.tileID);
-
-                // Create weapon and armor sprites
-
-
-                trace("New Monster", spriteID);
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
                 templateApplicator.apply(tile as ICombatant, template, points);
-                IMonster(tile).equip(weapon)
-                //combatantEquipmentApplicator.apply(tile as ICombatant, weapon);
+
+                IMonster(tile).equip(weapon);
+                IMonster(tile).equip(shield);
+
                 //TODO: generate armor and apply
                 tile.setName(template.getName() + " " + tile.getName());
             }

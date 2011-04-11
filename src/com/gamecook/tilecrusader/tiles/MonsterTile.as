@@ -306,23 +306,25 @@ package com.gamecook.tilecrusader.tiles
         private function updateCustomSpriteID():void
         {
             //TODO this should default to the tile's graphic vs having it in the map
-            spriteID = "";
+            var sprites:Array = [];
 
             if (getWeaponSlot())
-                spriteID = spriteID.concat(TileTypes.getTileSprite(getWeaponSlot().tileID));
+                sprites.push(TileTypes.getTileSprite(getWeaponSlot().tileID));
 
             if (getArmorSlot())
-                spriteID = spriteID.concat(TileTypes.getTileSprite(getArmorSlot().tileID));
+                sprites.push(TileTypes.getTileSprite(getArmorSlot().tileID));
 
             if (getShieldSlot())
-                spriteID = spriteID.concat(TileTypes.getTileSprite(getShieldSlot().tileID));
+                sprites.push(TileTypes.getTileSprite(getShieldSlot().tileID));
 
             if (getHelmetSlot())
-                spriteID = spriteID.concat(TileTypes.getTileSprite(getHelmetSlot().tileID));
+                sprites.push(TileTypes.getTileSprite(getHelmetSlot().tileID));
 
             if (getShoeSlot())
-                spriteID = spriteID.concat(TileTypes.getTileSprite(getShoeSlot().tileID));
+                sprites.push(TileTypes.getTileSprite(getShoeSlot().tileID));
 
+            var arrayAsString = sprites.toString();
+            spriteID = arrayAsString;//.subStr(1,arrayAsString.length -1);
             trace("Sprite ID", spriteID);
         }
 
@@ -331,10 +333,15 @@ package com.gamecook.tilecrusader.tiles
             var droppedItem:IEquipable = null;//equipmentSlots[0] != null? equipmentSlots[0] : null;
 
             //TODO need to clean all this mess up
-            if (item.slotID() == SlotsEnum.WEAPON)
+            if (item.getSlotID() == SlotsEnum.WEAPON)
             {
                 droppedItem = getWeaponSlot();
-                setWeaponSlot(item as IEquipable);
+                setWeaponSlot(item);
+            }
+            else if(item.getSlotID() == SlotsEnum.SHIELD)
+            {
+                droppedItem = getShieldSlot();
+                setShieldSlot(item)
             }
 
             updateCustomSpriteID();

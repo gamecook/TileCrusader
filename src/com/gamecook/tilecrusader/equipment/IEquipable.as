@@ -13,7 +13,7 @@ package com.gamecook.tilecrusader.equipment
     {
         function get tileID():String;
 
-        function slotID():String;
+        function getSlotID():int;
 
         function getModifyAttribute():String;
 

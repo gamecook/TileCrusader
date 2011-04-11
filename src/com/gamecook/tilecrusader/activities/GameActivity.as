@@ -719,7 +719,7 @@ package com.gamecook.tilecrusader.activities
 
                 //Add custom sprite overlay (equipment)
                 if (player.getSpriteID() != "")
-                    playerSprite = playerSprite.concat("," + player.getSpriteID());
+                    playerSprite = playerSprite.concat(","+player.getSpriteID()); // Removed "," from here since now it's done in the tile instance
 
                 //Add life sprite
                 if (player.getLife() < player.getMaxLife())

@@ -33,8 +33,6 @@ package com.gamecook.tilecrusader.activities
     {
         private const DEFAULT_POINTS:int = 20;
 
-        [Embed(source="../../../../../build/assets/spritesheet_template.png")]
-        public static var SpriteSheetImage:Class;
 
         protected var characterPoints:int = DEFAULT_POINTS;
         public var pointTotal:Label;
@@ -71,32 +69,11 @@ package com.gamecook.tilecrusader.activities
             mapViewPortY = 100;
             super.onCreate();
 
-            parseSpriteSheet();
+            //TODO this needs to run off the global style sheet.
+            //parseSpriteSheet();
         }
 
-        private function parseSpriteSheet():void
-        {
-            spriteSheet = SingletonManager.getClassReference(SpriteSheet);
-            spriteSheet.clear();
 
-            // create sprite sheet
-            var bitmap:Bitmap = new SpriteSheetImage();
-            spriteSheet.bitmapData = bitmap.bitmapData;
-            spriteSheet.registerSprite("splashScreen", new Rectangle(0, 0, 800, 480));
-
-            var i:int;
-            var rows:int = Math.floor(bitmap.height / 20);
-            var total:int = Math.floor((bitmap.width - 800) / 20) * (bitmap.height / 20);
-            var spriteRect:Rectangle = new Rectangle(800, 0, 20, 20);
-            for (i = 0; i < total; ++i) {
-                spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
-                spriteRect.y += 20;
-                if (i % rows == (rows - 1)) {
-                    spriteRect.x += 20;
-                    spriteRect.y = 0;
-                }
-            }
-        }
 
         override public function onStart():void
         {

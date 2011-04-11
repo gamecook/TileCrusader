@@ -9,8 +9,8 @@ package com.gamecook.tilecrusader.enum
 {
     public class SlotsEnum
     {
-        public static const WEAPON:String = "weapon";
-        public static const SHIELD:String = "shield";
+        public static const WEAPON:int = 0;
+        public static const SHIELD:int = 1;
         public static const ARMOR:String = "armor";
         public static const HELMET:String = "helmet";
         public static const SHOE:String = "shoe";

@@ -8,14 +8,11 @@ package com.gamecook.tilecrusader.factory
     import com.gamecook.tilecrusader.equipment.*;
     import com.gamecook.tilecrusader.tiles.TileTypes;
 
-
-    public class EquipmentFactory
+public class EquipmentFactory
     {
         include "prefixes.as"
         include "suffixes.as"
         include "types.as"
-
-        public static const WEAPON:int = 0;
 
         public function createEquipment(level:uint, equipmentType:int):IEquipable
         {
@@ -31,7 +28,7 @@ package com.gamecook.tilecrusader.factory
             var modify:String = type;
 
             var weapon:Equipment = new Equipment();
-            weapon.parseObject({tileID:tileID, type:equipmentType, description:description, modifierValue:modifierValue, modify:modify});
+            weapon.parseObject({tileID:tileID, type:equipmentType, description:description, modifierValue:modifierValue, modify:modify, slotID:equipmentType});
             return weapon;
         }
 

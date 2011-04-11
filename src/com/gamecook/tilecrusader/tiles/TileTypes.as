@@ -56,6 +56,12 @@ package com.gamecook.tilecrusader.tiles
                     TYPES['w12'] = { name: 'Whip', sprite: "sprite29", classPath:"EquipmentTile", type: EQUIPMENT},
                     TYPES['w13'] = { name: 'Club', sprite: "sprite30", classPath:"EquipmentTile", type: EQUIPMENT},
                     TYPES['w14'] = { name: 'Stick', sprite: "sprite31", classPath:"EquipmentTile", type: EQUIPMENT}
+
+                    TYPES['sl1'] = { name: 'Shield A', sprite: "sprite32", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl2'] = { name: 'Shield B', sprite: "sprite33", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl3'] = { name: 'Shield C', sprite: "sprite34", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl4'] = { name: 'Shield D', sprite: "sprite35", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl5'] = { name: 'Shield E', sprite: "sprite36", classPath:"EquipmentTile", type: EQUIPMENT}
         }
 
         public static function registerTile(id:String, template:Object):void
