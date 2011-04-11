@@ -11,7 +11,7 @@ package com.gamecook.tilecrusader.equipment
 
     public interface IEquipable extends ISerializeToObject
     {
-
+        function get tileID():String;
         function slotID():String;
         function getModifyAttribute():String;
         function getValue():Number;

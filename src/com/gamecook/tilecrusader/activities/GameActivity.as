@@ -603,7 +603,7 @@ package com.gamecook.tilecrusader.activities
 				message += " did " + attackResult.hitValue + " damage";
 			}
 			
-			message += " with " + monster.equipmentSlot0.description + "\n";
+			message += " with " + monster.getWeaponSlot().description + "\n";
 			addStatusMessage(message, false);
 
 			//TODO keep track of this sound, may need a player hit as well.
@@ -629,7 +629,7 @@ package com.gamecook.tilecrusader.activities
             */
 
             // TODO This is a hardcoded test for dropping the weapon.
-            var droppedEquipment:IEquipment = monster.equipmentSlot0;
+            var droppedEquipment:IEquipment = monster.getWeaponSlot();
 
             swapTileOnMap(currentPoint, droppedEquipment.tileID);
 
@@ -643,7 +643,7 @@ package com.gamecook.tilecrusader.activities
 		    var dropChance:Number = .25;
 		    if(Math.random() < dropChance)
 		    {
-			    addStatusMessage(monster.getName() + " died and dropped " + monster.equipmentSlot0.description, false);
+			    addStatusMessage(monster.getName() + " died and dropped " + monster.getWeaponSlot().description, false);
 			    //TODO: some swap tile logic. Weapons need a map character.
 		    }
 		    else

@@ -6,7 +6,8 @@
 package com.gamecook.tilecrusader.equipment.weapons
 {
     import com.gamecook.tilecrusader.enum.EquipmentValues;
-    import com.gamecook.tilecrusader.equipment.IEquipable;
+import com.gamecook.tilecrusader.enum.SlotsEnum;
+import com.gamecook.tilecrusader.equipment.IEquipable;
 
     public class Weapon implements IWeapon, IEquipable
 	{
@@ -15,7 +16,6 @@ package com.gamecook.tilecrusader.equipment.weapons
 		private var _damage:int;
 		private var _defense:int;
         private var _tileID:String;
-        private const DEFAULT_SLOT:String = "weapon";
 
         public function get tileID():String
         {
@@ -77,7 +77,7 @@ package com.gamecook.tilecrusader.equipment.weapons
 
         public function slotID():String
         {
-            return EquipmentValues.WEAPON_SLOT;
+            return SlotsEnum.WEAPON;
         }
 
         public function getModifyAttribute():String

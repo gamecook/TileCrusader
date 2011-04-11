@@ -12,11 +12,12 @@ package com.gamecook.tilecrusader.tiles
 	import com.gamecook.tilecrusader.dice.CombatDice;
 	import com.gamecook.tilecrusader.dice.ICombatDice;
     import com.gamecook.tilecrusader.enum.EquipmentValues;
-    import com.gamecook.tilecrusader.equipment.IEquip;
+import com.gamecook.tilecrusader.enum.SlotsEnum;
+import com.gamecook.tilecrusader.equipment.IEquip;
     import com.gamecook.tilecrusader.equipment.IEquipable;
     import com.gamecook.tilecrusader.equipment.IEquipment;
 
-	public class MonsterTile extends BaseTile implements ICombatant, IMonster, IEquip
+	public class MonsterTile extends BaseTile implements IMonster
     {
         private var _life:int = 1;
 		protected var maxLife:int = 1;
@@ -30,13 +31,22 @@ package com.gamecook.tilecrusader.tiles
 
         public function MonsterTile()
         {
+            configureSlots()
         }
 
-        public function setSpriteID(value:String):void
+        private function configureSlots():void {
+            equipmentSlots[SlotsEnum.WEAPON] = null;
+            equipmentSlots[SlotsEnum.SHIELD] = null;
+            equipmentSlots[SlotsEnum.ARMOR] = null;
+            equipmentSlots[SlotsEnum.HELMET] = null;
+            equipmentSlots[SlotsEnum.SHOE] = null;
+        }
+
+       /* public function setSpriteID(value:String):void
         {
 
             spriteID = TileTypes.getTileSprite(equipmentSlot0.tileID);
-        }
+        }*/
 
         public function getSpriteID():String
         {
@@ -302,46 +312,92 @@ package com.gamecook.tilecrusader.tiles
 		    defender.subtractLife(difference); //the defender should die after the attack
 	    }
 
-		public function addEquipment(equipment:IEquipment):void
+		/*public function addEquipment(equipment:IEquipment):void
 		{
 			//TODO: limit to two slots?
 			equipmentSlots.push(equipment);
             updateCustomSpriteID();
-		}
+		}*/
 
         private function updateCustomSpriteID():void
         {
-            //TODO need to add graphics for each slot
-            if(equipmentSlot0)
-                spriteID = TileTypes.getTileSprite(equipmentSlot0.tileID);
+            //TODO this should default to the tile's graphic vs having it in the map
+            spriteID = "";
+
+            if(getWeaponSlot())
+                spriteID = spriteID.concat(TileTypes.getTileSprite(getWeaponSlot().tileID));
+
+            if(getArmorSlot())
+                spriteID = spriteID.concat(TileTypes.getTileSprite(getArmorSlot().tileID));
+
+            if(getShieldSlot())
+                spriteID = spriteID.concat(TileTypes.getTileSprite(getShieldSlot().tileID));
+
+            if(getHelmetSlot())
+                spriteID = spriteID.concat(TileTypes.getTileSprite(getHelmetSlot().tileID));
+
+            if(getShoeSlot())
+                spriteID = spriteID.concat(TileTypes.getTileSprite(getShoeSlot().tileID));
+
+            trace("Sprite ID", spriteID);
         }
-
-		public function get equipmentSlot0():IEquipment
-		{
-			return equipmentSlots[0] as IEquipment;
-		}
-
-		public function get equipmentSlot1():IEquipment
-		{
-			return equipmentSlots[1] as IEquipment;
-		}
 
         public function equip(item:IEquipable):IEquipment
         {
-            var droppedItem:IEquipment = equipmentSlots[0] != null? equipmentSlots[0] : null;
+            var droppedItem:IEquipment = null;//equipmentSlots[0] != null? equipmentSlots[0] : null;
 
             //TODO need to clean all this mess up
-            if(item.slotID() == EquipmentValues.WEAPON_SLOT)
-                equipmentSlots[0] = item;
+            if(item.slotID() == SlotsEnum.WEAPON)
+               setWeaponSlot(item as IEquipment);
 
             updateCustomSpriteID();
 
             return droppedItem;
         }
 
-        public function canEquip(item:IEquipable):Boolean
+        public function canEquip(item:IEquipable, slot:String):Boolean
         {
-            return false;
+            return (equipmentSlots[slot]);
+        }
+
+        public function setWeaponSlot(value:IEquipment):void {
+            equipmentSlots[SlotsEnum.WEAPON] = value;
+        }
+
+        public function getWeaponSlot():IEquipment {
+            return equipmentSlots[SlotsEnum.WEAPON];
+        }
+
+        public function setHelmetSlot(value:IEquipment):void {
+            equipmentSlots[SlotsEnum.HELMET] = value;
+        }
+
+        public function getHelmetSlot():IEquipment {
+            return equipmentSlots[SlotsEnum.HELMET];
+        }
+
+        public function setArmorSlot(value:IEquipment):void {
+            equipmentSlots[SlotsEnum.ARMOR] = value;
+        }
+
+        public function getArmorSlot():IEquipment {
+            return equipmentSlots[SlotsEnum.ARMOR];
+        }
+
+        public function setShieldSlot(value:IEquipment):void {
+            equipmentSlots[SlotsEnum.SHIELD] = value;
+        }
+
+        public function getShieldSlot():IEquipment {
+            return equipmentSlots[SlotsEnum.SHIELD];
+        }
+
+        public function setShoeSlot(value:IEquipment):void {
+            equipmentSlots[SlotsEnum.SHOE] = value;
+        }
+
+        public function getShoeSlot():IEquipment {
+            return equipmentSlots[SlotsEnum.SHOE];
         }
     }
 }

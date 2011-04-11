@@ -10,12 +10,12 @@ package com.gamecook.tilecrusader.applicators
 
 	public class CombatantEquipmentApplicator
 	{
-		public function apply(combatant:ICombatant, equipment:IEquipment):void
+		public function apply(combatant:IEquip, equipment:IEquipable):void
 		{
-			combatant.setAttackRolls(combatant.getAttackRolls() + equipment.attack);
+			/*combatant.setAttackRolls(combatant.getAttackRolls() + equipment.attack);
 			combatant.setDefenseRolls(combatant.getDefenseRolls() + equipment.defense);
-			
-			combatant.addEquipment(equipment);
+			*/
+			combatant.equip(equipment);
 		}
 	}
 }

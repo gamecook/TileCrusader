@@ -112,9 +112,9 @@ package com.gamecook.tilecrusader.maps
                     if(TileTypes.isMonster(tileValue))
                     {
                         var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
-                        spriteID = spriteID.concat(","+newMonsterTile.getSpriteID());
-                        /*if(newMonsterTile.getLife() < newMonsterTile.getMaxLife())
-                            spriteID = spriteID.concat(",life"+(Math.round(newMonsterTile.getLife()/ newMonsterTile.getMaxLife()  * 100).toString())) ;*/
+                        var newTileID:String = newMonsterTile.getSpriteID();
+                        if(newTileID != "" || newTileID)
+                            spriteID = spriteID.concat(","+newMonsterTile.getSpriteID());
                     }
 
                     //Apply lighting effects

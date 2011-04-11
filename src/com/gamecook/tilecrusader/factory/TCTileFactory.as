@@ -9,7 +9,8 @@ package com.gamecook.tilecrusader.factory
 {
 	import com.gamecook.tilecrusader.combat.ICombatant;
 	import com.gamecook.tilecrusader.applicators.CombatantEquipmentApplicator;
-	import com.gamecook.tilecrusader.equipment.WeaponGenerator;
+import com.gamecook.tilecrusader.equipment.IEquipable;
+import com.gamecook.tilecrusader.equipment.WeaponGenerator;
 	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
 	import com.gamecook.tilecrusader.templates.ITemplate;
 	import com.gamecook.tilecrusader.templates.ITemplateCollection;
@@ -46,7 +47,7 @@ package com.gamecook.tilecrusader.factory
             if(tile is IMonster && !(tile is PlayerTile))
             {
                 var template:ITemplate = templates.getRandomTemplate();
-	            var weapon:IWeapon = weaponGenerator.getWeapon(characterPoints);
+	            var weapon:IEquipable = weaponGenerator.getWeapon(characterPoints);
 
                 var spriteID:String = TileTypes.getTileSprite(value)+","+TileTypes.getTileSprite(weapon.tileID);
 
@@ -56,7 +57,8 @@ package com.gamecook.tilecrusader.factory
                 trace("New Monster", spriteID);
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
                 templateApplicator.apply(tile as ICombatant, template, points);
-	            combatantEquipmentApplicator.apply(tile as ICombatant, weapon);
+	            IMonster(tile).equip(weapon)
+                //combatantEquipmentApplicator.apply(tile as ICombatant, weapon);
 	            //TODO: generate armor and apply
                 tile.setName(template.getName()+" "+tile.getName());
             }

@@ -10,7 +10,7 @@ package com.gamecook.tilecrusader.equipment {
     public interface IEquip {
 
         function equip(item:IEquipable):IEquipment;
-        function canEquip(item:IEquipable):Boolean;
+        function canEquip(item:IEquipable, slot:String):Boolean;
 
     }
 }

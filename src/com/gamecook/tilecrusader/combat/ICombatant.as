@@ -8,9 +8,10 @@
 package com.gamecook.tilecrusader.combat
 {
 	import com.gamecook.tilecrusader.equipment.IEquipment;
-	import com.gamecook.tilecrusader.tiles.ITile;
+import com.gamecook.tilecrusader.tiles.ISlot;
+import com.gamecook.tilecrusader.tiles.ITile;
 
-	public interface ICombatant extends ITile
+	public interface ICombatant extends ITile, ISlot
     {
 		function set onDie(value:Function):void;
 	    function get onDie():Function;
@@ -50,12 +51,12 @@ package com.gamecook.tilecrusader.combat
 	    function attack(monster:ICombatant, useChance:Boolean):void;
 	    function defend(monster:ICombatant):void;
 
-		function addEquipment(modifier:IEquipment):void;
+		//function addEquipment(modifier:IEquipment):void;
 
 		function get isDead():Boolean;
 
-		function get equipmentSlot0():IEquipment;
-		function get equipmentSlot1():IEquipment;
+		/*function get equipmentSlot0():IEquipment;
+		function get equipmentSlot1():IEquipment;*/
 
 		function setAttackRolls(value:int):void;
 

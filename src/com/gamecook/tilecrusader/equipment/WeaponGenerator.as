@@ -15,7 +15,7 @@ package com.gamecook.tilecrusader.equipment
 		include "weapons/suffixes.as"
 		include "weapons/types.as"
 		
-		public function getWeapon(level:uint):IWeapon
+		public function getWeapon(level:uint):IEquipable
 		{
 			//TODO: figure out how level matches length of arrays
 			level = Math.min(level, includedPrefixes.length - 1);
