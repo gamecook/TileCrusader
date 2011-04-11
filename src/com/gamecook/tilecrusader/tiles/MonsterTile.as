@@ -332,7 +332,10 @@ package com.gamecook.tilecrusader.tiles
 
             //TODO need to clean all this mess up
             if (item.slotID() == SlotsEnum.WEAPON)
+            {
+                droppedItem = getWeaponSlot();
                 setWeaponSlot(item as IEquipable);
+            }
 
             updateCustomSpriteID();
 

@@ -6,18 +6,18 @@
 package com.gamecook.tilecrusader.tools.generator
 {
 
-import com.gamecook.tilecrusader.equipment.WeaponGenerator;
+import com.gamecook.tilecrusader.factory.EquipmentFactory;
 
 	import org.hamcrest.assertThat;
 
 	public class WeaponGeneratorTest
 	{
-		private var weaponGenerator:WeaponGenerator;
+		private var weaponGenerator:EquipmentFactory;
 		
 		[Before]
 		public function setup():void
 		{
-			weaponGenerator = new WeaponGenerator();
+			weaponGenerator = new EquipmentFactory();
 		}
 		
 		[Test]
@@ -28,7 +28,7 @@ import com.gamecook.tilecrusader.equipment.WeaponGenerator;
 			for (var i:int = 0; i < 100; i++)
 			{
 				level = int(Math.random() * 4);
-				weapon = weaponGenerator.getWeapon(level) as IEquipment;
+				weapon = weaponGenerator.createEquipment(level) as IEquipment;
 				assertThat(weapon);
 			}
 		}

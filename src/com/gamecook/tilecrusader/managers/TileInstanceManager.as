@@ -89,7 +89,13 @@ package com.gamecook.tilecrusader.managers
             return obj;
         }
 
-        public function replaceInstance(uID:String, value:BaseTile):void
+        /**
+         * Use this method to add a Tile to the manager. Note, this will overwrite
+         * any instance in it's place.
+         * @param uID
+         * @param value
+         */
+        public function registerInstance(uID:String, value:BaseTile):void
         {
             singletons[uID] = value;
         }

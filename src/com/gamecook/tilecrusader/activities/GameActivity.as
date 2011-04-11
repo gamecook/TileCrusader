@@ -448,7 +448,7 @@ package com.gamecook.tilecrusader.activities
                 var weaponTile:EquipmentTile = new EquipmentTile();
                 weaponTile.parseObject({weapon:droppedEquipment.toObject()});
 
-                tileInstanceManager.replaceInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
+                tileInstanceManager.registerInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
             }
             else {
                 tileInstanceManager.removeInstance(uID);
@@ -591,7 +591,7 @@ package com.gamecook.tilecrusader.activities
             weaponTile.parseObject({weapon:droppedEquipment.toObject()});
             //weaponTile.getSpriteID();
 
-            tileInstanceManager.replaceInstance(currentuID, weaponTile);
+            tileInstanceManager.registerInstance(currentuID, weaponTile);
 
             var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
             var dropChance:Number = .25;

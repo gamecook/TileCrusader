@@ -8,8 +8,9 @@
 package com.gamecook.tilecrusader.factory
 {
     import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.equipment.Equipment;
     import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.equipment.WeaponGenerator;
+    import com.gamecook.tilecrusader.factory.EquipmentFactory;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.ITemplateCollection;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
@@ -24,7 +25,7 @@ package com.gamecook.tilecrusader.factory
         private var templateApplicator:TemplateApplicator;
         private var characterPoints:int;
         private var modifier:Number;
-        private var weaponGenerator:WeaponGenerator = new WeaponGenerator();
+        private var weaponGenerator:EquipmentFactory = new EquipmentFactory();
 
         public function TCTileFactory(templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {
@@ -43,7 +44,9 @@ package com.gamecook.tilecrusader.factory
             //TODO: move to a combatantFactory subclass? TCTileFactory shouldn't have to worry about checking ICombatant/IMonsters/etc
             if (tile is IMonster && !(tile is PlayerTile)) {
                 var template:ITemplate = templates.getRandomTemplate();
-                var weapon:IEquipable = weaponGenerator.getWeapon(characterPoints);
+
+                //TODO this is hardcoded right now, should be moved into an enum
+                var weapon:IEquipable = weaponGenerator.createEquipment(characterPoints, EquipmentFactory.WEAPON);
 
                 var spriteID:String = TileTypes.getTileSprite(value) + "," + TileTypes.getTileSprite(weapon.tileID);
 

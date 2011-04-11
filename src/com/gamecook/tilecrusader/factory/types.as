@@ -1,5 +1,4 @@
-private var types:Array = [
-    "w1",
+private var types:Array = [["w1",
     "w2",
     "w3",
     "w4",
@@ -12,5 +11,5 @@ private var types:Array = [
     "w11",
     "w12",
     "w13",
-    "w14"
+    "w14"]
 ];
