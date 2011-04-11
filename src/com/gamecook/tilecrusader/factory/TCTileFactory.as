@@ -7,20 +7,19 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-	import com.gamecook.tilecrusader.combat.ICombatant;
-	import com.gamecook.tilecrusader.applicators.CombatantEquipmentApplicator;
+import com.gamecook.tilecrusader.applicators.CombatantEquipmentApplicator;
+import com.gamecook.tilecrusader.combat.ICombatant;
 import com.gamecook.tilecrusader.equipment.IEquipable;
 import com.gamecook.tilecrusader.equipment.WeaponGenerator;
-	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
-	import com.gamecook.tilecrusader.templates.ITemplate;
-	import com.gamecook.tilecrusader.templates.ITemplateCollection;
-	import com.gamecook.tilecrusader.templates.TemplateApplicator;
-	import com.gamecook.tilecrusader.tiles.BaseTile;
-	import com.gamecook.tilecrusader.tiles.IMonster;
-	import com.gamecook.tilecrusader.tiles.PlayerTile;
-	import com.gamecook.tilecrusader.tiles.TileTypes;
+import com.gamecook.tilecrusader.templates.ITemplate;
+import com.gamecook.tilecrusader.templates.ITemplateCollection;
+import com.gamecook.tilecrusader.templates.TemplateApplicator;
+import com.gamecook.tilecrusader.tiles.BaseTile;
+import com.gamecook.tilecrusader.tiles.IMonster;
+import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-	public class TCTileFactory extends TileFactory
+public class TCTileFactory extends TileFactory
     {
         private var templates:ITemplateCollection;
         private var templateApplicator:TemplateApplicator;

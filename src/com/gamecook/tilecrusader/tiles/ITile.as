@@ -7,9 +7,7 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    import flash.geom.Point;
-
-    public interface ITile
+public interface ITile
     {
         function getName():String;
         function get id():String;

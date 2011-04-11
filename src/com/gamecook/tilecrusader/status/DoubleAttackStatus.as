@@ -7,8 +7,7 @@
  */
 package com.gamecook.tilecrusader.status
 {
-    import com.gamecook.tilecrusader.combat.*;
-    public class DoubleAttackStatus implements IStatus
+public class DoubleAttackStatus implements IStatus
     {
         protected var _attackStatus:CombatResult;
         protected var _attackStatus2:CombatResult;

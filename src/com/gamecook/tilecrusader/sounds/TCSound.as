@@ -6,15 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.sounds {
-    import com.gamecook.tilecrusader.managers.SoundManager;
+import com.gamecook.tilecrusader.managers.SoundManager;
 
-    import flash.events.Event;
-    import flash.media.Sound;
-    import flash.media.SoundChannel;
-    import flash.media.SoundTransform;
-    import flash.net.URLRequest;
+import flash.events.Event;
+import flash.media.Sound;
+import flash.media.SoundChannel;
+import flash.media.SoundTransform;
+import flash.net.URLRequest;
 
-    public class TCSound {
+public class TCSound {
         /**
 		 * Whether or not this sound should be automatically destroyed when you switch states.
 		 */

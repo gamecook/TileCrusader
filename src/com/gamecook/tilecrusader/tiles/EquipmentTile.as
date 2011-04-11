@@ -6,15 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.tiles {
-    import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
-    import com.gamecook.tilecrusader.equipment.weapons.Weapon;
+import com.gamecook.tilecrusader.equipment.IEquipable;
+import com.gamecook.tilecrusader.equipment.Equipment;
 
-    public class WeaponTile extends BaseTile{
+public class EquipmentTile extends BaseTile{
 
         private var weapon:IEquipable;
 
-        public function WeaponTile()
+        public function EquipmentTile()
         {
         }
 
@@ -24,7 +23,7 @@ package com.gamecook.tilecrusader.tiles {
 
             if(obj.hasOwnProperty("weapon"))
             {
-                weapon = new Weapon();
+                weapon = new Equipment();
                 weapon.parseObject(obj.weapon);
             }
 

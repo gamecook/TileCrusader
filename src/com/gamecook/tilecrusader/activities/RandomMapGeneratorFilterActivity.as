@@ -29,20 +29,20 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.PushButton;
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.enum.BooleanOptions;
-    import com.gamecook.tilecrusader.enum.DarknessOptions;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.bit101.components.PushButton;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+import com.gamecook.tilecrusader.enum.BooleanOptions;
+import com.gamecook.tilecrusader.enum.DarknessOptions;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.enum.MapSizeOptions;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import flash.events.MouseEvent;
-    import flash.net.SharedObject;
+import flash.events.MouseEvent;
+import flash.net.SharedObject;
 
-    public class RandomMapGeneratorFilterActivity extends RandomMapBGActivity
+public class RandomMapGeneratorFilterActivity extends RandomMapBGActivity
     {
         public var mapSizeButton:PushButton;
         private var mapOptionIterator:OptionsBehavior;

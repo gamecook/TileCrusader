@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.behaviors
 {
-    import com.gamecook.tilecrusader.iterators.IIterator;
-    import com.gamecook.tilecrusader.iterators.OptionsIterator;
+import com.gamecook.tilecrusader.iterators.IIterator;
+import com.gamecook.tilecrusader.iterators.OptionsIterator;
 
-    public class OptionsBehavior
+public class OptionsBehavior
     {
         private var target:*;
         private var options:Array;

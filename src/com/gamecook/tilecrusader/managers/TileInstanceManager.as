@@ -7,11 +7,11 @@
  */
 package com.gamecook.tilecrusader.managers
 {
-    import com.gamecook.tilecrusader.factory.ITileFactory;
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
+import com.gamecook.tilecrusader.factory.ITileFactory;
+import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+import com.gamecook.tilecrusader.tiles.BaseTile;
 
-    public class TileInstanceManager implements ISerializeToObject
+public class TileInstanceManager implements ISerializeToObject
     {
         protected var singletons:Array = [];
         private var factory:ITileFactory;

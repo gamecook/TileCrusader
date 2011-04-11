@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.tiles.BaseTile;
+import com.gamecook.tilecrusader.tiles.BaseTile;
 
-    public interface ITileFactory
+public interface ITileFactory
     {
         function createTile(value:String):BaseTile;
     }

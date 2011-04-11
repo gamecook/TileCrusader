@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.behaviors
 {
-    import flash.events.IEventDispatcher;
-    import flash.events.MouseEvent;
+import flash.events.IEventDispatcher;
+import flash.events.MouseEvent;
 
-    public interface IButton extends IEventDispatcher
+public interface IButton extends IEventDispatcher
     {
         function onRollOver(event:MouseEvent):void;
 

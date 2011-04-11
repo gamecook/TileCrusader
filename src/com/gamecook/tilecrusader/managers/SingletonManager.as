@@ -31,9 +31,9 @@
 
 package com.gamecook.tilecrusader.managers
 {
-    import flash.utils.Dictionary;
+import flash.utils.Dictionary;
 
-    public class SingletonManager
+public class SingletonManager
     {
         private static var _instance:SingletonManager;
 

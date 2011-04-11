@@ -29,25 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.managers.SoundManager;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import flash.display.Bitmap;
 
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.geom.Rectangle;
-    import flash.text.StyleSheet;
-    import flash.text.TextField;
-
-    public class TileCrusaderSplashActivity extends AdvancedActivity
+public class TileCrusaderSplashActivity extends AdvancedActivity
     {
 
         [Embed(source="../../../../../build/assets/tc_logo.png")]

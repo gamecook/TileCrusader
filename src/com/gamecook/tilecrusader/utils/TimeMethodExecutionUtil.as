@@ -24,9 +24,9 @@
  */
 package com.gamecook.tilecrusader.utils
 {
-    import flash.utils.getTimer;
+import flash.utils.getTimer;
 
-    public class TimeMethodExecutionUtil
+public class TimeMethodExecutionUtil
     {
         public static var t:int;
         public static var threshold:int = 10;

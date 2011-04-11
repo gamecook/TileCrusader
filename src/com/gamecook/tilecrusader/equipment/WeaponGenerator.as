@@ -5,15 +5,14 @@
  */
 package com.gamecook.tilecrusader.equipment
 {
-	import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
-	import com.gamecook.tilecrusader.equipment.weapons.Weapon;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+import com.gamecook.tilecrusader.equipment.Equipment;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    public class WeaponGenerator
+public class WeaponGenerator
 	{
-		include "weapons/prefixes.as"
-		include "weapons/suffixes.as"
-		include "weapons/types.as"
+		include "prefixes.as"
+		include "suffixes.as"
+		include "types.as"
 		
 		public function getWeapon(level:uint):IEquipable
 		{
@@ -28,7 +27,7 @@ package com.gamecook.tilecrusader.equipment
 			var damage:int = createDamage(level);
 			var defense:int = createDefense(level);
 			
-			var weapon:Weapon = new Weapon();
+			var weapon:Equipment = new Equipment();
 			weapon.parseObject({tileID:tileID, type:type, description:description, damage:damage, defense:defense});
 			return weapon;
 		}

@@ -6,22 +6,22 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.tiles {
-import com.gamecook.tilecrusader.equipment.IEquipment;
+import com.gamecook.tilecrusader.equipment.IEquipable;
 
 public interface ISlot {
-    function setWeaponSlot(value:IEquipment):void;
-    function getWeaponSlot():IEquipment;
+    function setWeaponSlot(value:IEquipable):void;
+    function getWeaponSlot():IEquipable;
 
-    function setHelmetSlot(value:IEquipment):void;
-    function getHelmetSlot():IEquipment;
+    function setHelmetSlot(value:IEquipable):void;
+    function getHelmetSlot():IEquipable;
 
-    function setArmorSlot(value:IEquipment):void;
-    function getArmorSlot():IEquipment;
+    function setArmorSlot(value:IEquipable):void;
+    function getArmorSlot():IEquipable;
 
-    function setShieldSlot(value:IEquipment):void;
-    function getShieldSlot():IEquipment;
+    function setShieldSlot(value:IEquipable):void;
+    function getShieldSlot():IEquipable;
 
-    function setShoeSlot(value:IEquipment):void;
-    function getShoeSlot():IEquipment;
+    function setShoeSlot(value:IEquipable):void;
+    function getShoeSlot():IEquipable;
 }
 }

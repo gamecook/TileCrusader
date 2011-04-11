@@ -7,12 +7,11 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.states.CustomTemplateState;
-    import com.gamecook.tilecrusader.utils.ArrayUtil;
+import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.gamecook.tilecrusader.utils.ArrayUtil;
 
-    public class NewGameFactory
+public class NewGameFactory
     {
         private static var DEFAULT_POINTS:int = 20;
 

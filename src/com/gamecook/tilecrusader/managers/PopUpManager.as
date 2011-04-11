@@ -29,13 +29,13 @@
  */
 package com.gamecook.tilecrusader.managers
 {
-    import com.gamecook.tilecrusader.views.AbstractPopUp;
+import com.gamecook.tilecrusader.views.AbstractPopUp;
 
-    import flash.display.Sprite;
-    import flash.display.Stage;
-    import flash.events.MouseEvent;
+import flash.display.Sprite;
+import flash.display.Stage;
+import flash.events.MouseEvent;
 
-    public class PopUpManager
+public class PopUpManager
     {
         private static var stage:Stage;
         private static var currentPopUp:AbstractPopUp;

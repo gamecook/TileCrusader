@@ -29,19 +29,15 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.bit101.components.PushButton;
-    import com.bit101.components.TextArea;
+import com.bit101.components.Label;
+import com.bit101.components.PushButton;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import com.bit101.components.VBox;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import flash.events.MouseEvent;
+import flash.text.TextFieldAutoSize;
 
-    import flash.events.MouseEvent;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-
-    public class WarningActivity extends BaseActivity
+public class WarningActivity extends BaseActivity
     {
         public function WarningActivity(stateManager:IActivityManager, date:*)
         {

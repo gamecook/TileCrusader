@@ -29,16 +29,16 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.tilecrusader.behaviors.ButtonBehavior;
-    import com.gamecook.tilecrusader.behaviors.IButton;
+import com.gamecook.tilecrusader.behaviors.ButtonBehavior;
+import com.gamecook.tilecrusader.behaviors.IButton;
 
-    import flash.display.DisplayObject;
-    import flash.display.Sprite;
-    import flash.events.Event;
-    import flash.events.MouseEvent;
-    import flash.geom.Rectangle;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.geom.Rectangle;
 
-    public class Button extends Sprite implements IButton
+public class Button extends Sprite implements IButton
     {
         protected var activeDisplayObject:DisplayObject;
         private var _isDown:Boolean;

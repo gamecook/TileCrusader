@@ -29,9 +29,9 @@
  */
 package com.gamecook.tilecrusader.scores
 {
-    import com.gamecook.scores.FScoreboard;
+import com.gamecook.scores.FScoreboard;
 
-    public class TileCrusaderScoreboard extends FScoreboard
+public class TileCrusaderScoreboard extends FScoreboard
     {
         public static const ID:String = "TileCrusaderScoreboard"
         public static const MAX_SCORES:int = 5;

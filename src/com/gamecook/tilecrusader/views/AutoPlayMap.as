@@ -29,30 +29,26 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.frogue.helpers.MovementHelper;
-    import com.gamecook.frogue.maps.MapPopulater;
-    import com.gamecook.frogue.io.Controls;
-    import com.gamecook.frogue.maps.FogOfWarMapSelection;
-    import com.gamecook.frogue.maps.MapSelection;
-    import com.gamecook.frogue.maps.RandomMap;
-    import com.gamecook.frogue.renderer.AbstractMapRenderer;
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.iterators.TreasureIterator;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+import com.gamecook.frogue.helpers.MovementHelper;
+import com.gamecook.frogue.maps.FogOfWarMapSelection;
+import com.gamecook.frogue.maps.MapPopulater;
+import com.gamecook.frogue.maps.RandomMap;
+import com.gamecook.frogue.renderer.AbstractMapRenderer;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.factory.TileFactory;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.gamecook.tilecrusader.managers.TileInstanceManager;
+import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.display.Sprite;
-    import flash.geom.Point;
-    import flash.geom.Rectangle;
-    import flash.text.TextField;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Sprite;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 
-    public class AutoPlayMap extends Sprite
+public class AutoPlayMap extends Sprite
     {
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;

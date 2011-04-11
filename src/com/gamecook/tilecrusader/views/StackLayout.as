@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import flash.display.DisplayObject;
-    import flash.display.Sprite;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
 
-    public class StackLayout extends Sprite
+public class StackLayout extends Sprite
     {
         public static const VERTICAL:String = "y";
         public static const HORIZONTAL:String = "x";

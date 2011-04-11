@@ -7,17 +7,14 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-	import com.gamecook.tilecrusader.combat.AttackResult;
-	import com.gamecook.tilecrusader.combat.ICombatant;
-	import com.gamecook.tilecrusader.dice.CombatDice;
-	import com.gamecook.tilecrusader.dice.ICombatDice;
-    import com.gamecook.tilecrusader.enum.EquipmentValues;
+import com.gamecook.tilecrusader.combat.AttackResult;
+import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.dice.CombatDice;
+import com.gamecook.tilecrusader.dice.ICombatDice;
 import com.gamecook.tilecrusader.enum.SlotsEnum;
-import com.gamecook.tilecrusader.equipment.IEquip;
-    import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.equipment.IEquipment;
+import com.gamecook.tilecrusader.equipment.IEquipable;
 
-	public class MonsterTile extends BaseTile implements IMonster
+public class MonsterTile extends BaseTile implements IMonster
     {
         private var _life:int = 1;
 		protected var maxLife:int = 1;
@@ -312,13 +309,6 @@ import com.gamecook.tilecrusader.equipment.IEquip;
 		    defender.subtractLife(difference); //the defender should die after the attack
 	    }
 
-		/*public function addEquipment(equipment:IEquipment):void
-		{
-			//TODO: limit to two slots?
-			equipmentSlots.push(equipment);
-            updateCustomSpriteID();
-		}*/
-
         private function updateCustomSpriteID():void
         {
             //TODO this should default to the tile's graphic vs having it in the map
@@ -342,13 +332,13 @@ import com.gamecook.tilecrusader.equipment.IEquip;
             trace("Sprite ID", spriteID);
         }
 
-        public function equip(item:IEquipable):IEquipment
+        public function equip(item:IEquipable):IEquipable
         {
-            var droppedItem:IEquipment = null;//equipmentSlots[0] != null? equipmentSlots[0] : null;
+            var droppedItem:IEquipable = null;//equipmentSlots[0] != null? equipmentSlots[0] : null;
 
             //TODO need to clean all this mess up
             if(item.slotID() == SlotsEnum.WEAPON)
-               setWeaponSlot(item as IEquipment);
+               setWeaponSlot(item as IEquipable);
 
             updateCustomSpriteID();
 
@@ -360,43 +350,43 @@ import com.gamecook.tilecrusader.equipment.IEquip;
             return (equipmentSlots[slot]);
         }
 
-        public function setWeaponSlot(value:IEquipment):void {
+        public function setWeaponSlot(value:IEquipable):void {
             equipmentSlots[SlotsEnum.WEAPON] = value;
         }
 
-        public function getWeaponSlot():IEquipment {
+        public function getWeaponSlot():IEquipable {
             return equipmentSlots[SlotsEnum.WEAPON];
         }
 
-        public function setHelmetSlot(value:IEquipment):void {
+        public function setHelmetSlot(value:IEquipable):void {
             equipmentSlots[SlotsEnum.HELMET] = value;
         }
 
-        public function getHelmetSlot():IEquipment {
+        public function getHelmetSlot():IEquipable {
             return equipmentSlots[SlotsEnum.HELMET];
         }
 
-        public function setArmorSlot(value:IEquipment):void {
+        public function setArmorSlot(value:IEquipable):void {
             equipmentSlots[SlotsEnum.ARMOR] = value;
         }
 
-        public function getArmorSlot():IEquipment {
+        public function getArmorSlot():IEquipable {
             return equipmentSlots[SlotsEnum.ARMOR];
         }
 
-        public function setShieldSlot(value:IEquipment):void {
+        public function setShieldSlot(value:IEquipable):void {
             equipmentSlots[SlotsEnum.SHIELD] = value;
         }
 
-        public function getShieldSlot():IEquipment {
+        public function getShieldSlot():IEquipable {
             return equipmentSlots[SlotsEnum.SHIELD];
         }
 
-        public function setShoeSlot(value:IEquipment):void {
+        public function setShoeSlot(value:IEquipable):void {
             equipmentSlots[SlotsEnum.SHOE] = value;
         }
 
-        public function getShoeSlot():IEquipment {
+        public function getShoeSlot():IEquipable {
             return equipmentSlots[SlotsEnum.SHOE];
         }
     }

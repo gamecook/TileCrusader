@@ -7,12 +7,12 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import flash.display.Sprite;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-    import flash.text.TextFormat;
+import flash.display.Sprite;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
 
-    public class StatusDisplay extends Sprite
+public class StatusDisplay extends Sprite
     {
         private var statusLabel:TextField;
 

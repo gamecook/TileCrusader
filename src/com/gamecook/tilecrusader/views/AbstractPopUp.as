@@ -29,11 +29,11 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.tilecrusader.managers.PopUpManager;
+import com.gamecook.tilecrusader.managers.PopUpManager;
 
-    import flash.display.Sprite;
+import flash.display.Sprite;
 
-    public class AbstractPopUp extends Sprite
+public class AbstractPopUp extends Sprite
     {
         public function AbstractPopUp(self:AbstractPopUp)
         {

@@ -6,15 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.managers {
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-    import com.google.analytics.GATracker;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+import com.google.analytics.GATracker;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.display.DisplayObjectContainer;
-    import flash.system.Capabilities;
+import flash.display.DisplayObjectContainer;
+import flash.system.Capabilities;
 
-    public class TCActivityManager extends ActivityManager{
+public class TCActivityManager extends ActivityManager{
 
         private var tracker:GATracker;
         private var os:String;

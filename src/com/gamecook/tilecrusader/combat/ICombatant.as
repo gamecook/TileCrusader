@@ -7,11 +7,10 @@
  */
 package com.gamecook.tilecrusader.combat
 {
-	import com.gamecook.tilecrusader.equipment.IEquipment;
 import com.gamecook.tilecrusader.tiles.ISlot;
 import com.gamecook.tilecrusader.tiles.ITile;
 
-	public interface ICombatant extends ITile, ISlot
+public interface ICombatant extends ITile, ISlot
     {
 		function set onDie(value:Function):void;
 	    function get onDie():Function;

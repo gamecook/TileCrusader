@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class CreditsActivity extends BaseActivity
+public class CreditsActivity extends BaseActivity
     {
 
         public function CreditsActivity(activityManager:IActivityManager, data:*)

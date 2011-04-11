@@ -7,26 +7,22 @@
  */
 package com.gamecook.tilecrusader.renderer
 {
-    import com.gamecook.frogue.renderer.MapBitmapRenderer;
+import com.gamecook.frogue.renderer.MapBitmapRenderer;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.managers.TileInstanceManager;
+import com.gamecook.tilecrusader.tiles.MonsterTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+import flash.display.BitmapData;
+import flash.filters.BitmapFilterQuality;
+import flash.filters.GlowFilter;
+import flash.geom.Matrix;
+import flash.text.AntiAliasType;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
 
-    import com.gamecook.tilecrusader.tiles.MonsterTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-
-    import com.gamecook.tilecrusader.tiles.WeaponTile;
-
-    import flash.display.BitmapData;
-    import flash.filters.BitmapFilterQuality;
-    import flash.filters.GlowFilter;
-    import flash.geom.Matrix;
-    import flash.text.AntiAliasType;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-    import flash.text.TextFormat;
-
-    public class MQMapBitmapRenderer extends MapBitmapRenderer
+public class MQMapBitmapRenderer extends MapBitmapRenderer
     {
         //private var tileMap:TileTypes;
         private var instances:TileInstanceManager;

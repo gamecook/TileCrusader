@@ -29,32 +29,26 @@
  */
 package
 {
-    import com.bit101.components.Component;
-    import com.bit101.components.Label;
-    import com.bit101.components.Style;
-    import com.gamecook.tilecrusader.activities.DebugStartActivity;
-    import com.gamecook.tilecrusader.managers.PopUpManager;
-    import com.google.analytics.GATracker;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.gamecook.tilecrusader.TileCrusaderGame;
-    import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
+import com.bit101.components.Component;
+import com.bit101.components.Label;
+import com.bit101.components.Style;
+import com.gamecook.tilecrusader.TileCrusaderGame;
+import com.gamecook.tilecrusader.activities.DebugStartActivity;
+import com.gamecook.tilecrusader.managers.PopUpManager;
+import com.google.analytics.GATracker;
+import com.jessefreeman.factivity.activities.BaseActivity;
 
-    import flash.display.DisplayObject;
-    import flash.display.Sprite;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.display.StageAlign;
+import flash.display.StageDisplayState;
+import flash.display.StageScaleMode;
+import flash.system.Capabilities;
+import flash.text.TextFieldAutoSize;
 
-    import flash.display.StageAlign;
-    import flash.display.StageDisplayState;
-    import flash.display.StageScaleMode;
+import net.hires.debug.Stats;
 
-    import flash.system.Capabilities;
-
-    import flash.text.TextField;
-
-    import flash.text.TextFieldAutoSize;
-
-    import net.hires.debug.Stats;
-
-    [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
+[SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
     public class TileCrusaderApp extends Sprite
     {
         [Embed(source='../build/assets/nokiafc22.ttf', fontName="system", embedAsCFF=false, mimeType="application/x-font-truetype")]

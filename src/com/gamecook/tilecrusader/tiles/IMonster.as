@@ -7,8 +7,8 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    import com.gamecook.tilecrusader.combat.ICombatant;
-    import com.gamecook.tilecrusader.equipment.IEquip;
+import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.equipment.IEquip;
 
 public interface IMonster extends ICombatant, IEquip, ISlot
     {

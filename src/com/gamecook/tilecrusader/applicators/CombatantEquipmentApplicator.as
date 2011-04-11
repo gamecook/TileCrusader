@@ -5,10 +5,9 @@
  */
 package com.gamecook.tilecrusader.applicators
 {
-    import com.gamecook.tilecrusader.equipment.*;
-	import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.equipment.*;
 
-	public class CombatantEquipmentApplicator
+public class CombatantEquipmentApplicator
 	{
 		public function apply(combatant:IEquip, equipment:IEquipable):void
 		{

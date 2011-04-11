@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.templates
 {
-    import com.gamecook.tilecrusader.combat.ICombatant;
-    import com.gamecook.tilecrusader.enum.TemplateProperties;
+import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.enum.TemplateProperties;
 
-    public class TemplateApplicator
+public class TemplateApplicator
     {
         public function TemplateApplicator()
         {

@@ -29,16 +29,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import com.bit101.components.Label;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.gamecook.tilecrusader.factory.UIFactory;
-
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.text.TextField;
-
-    public class GameCookSplashActivity extends BaseActivity
+public class GameCookSplashActivity extends BaseActivity
     {
         public function GameCookSplashActivity(activityManager:ActivityManager, data:* = null)
         {

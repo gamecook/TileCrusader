@@ -7,26 +7,22 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.enum.BooleanOptions;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.utils.ArrayUtil;
-    import com.gamecook.tilecrusader.views.Button;
-    import com.gamecook.tilecrusader.views.StackLayout;
-    import com.gamecook.tilecrusader.enum.DarknessOptions;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.gamecook.tilecrusader.factory.UIFactory;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.bit101.components.Label;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+import com.gamecook.tilecrusader.enum.BooleanOptions;
+import com.gamecook.tilecrusader.enum.DarknessOptions;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.enum.MapSizeOptions;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.gamecook.tilecrusader.utils.ArrayUtil;
+import com.gamecook.tilecrusader.views.StackLayout;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.events.MouseEvent;
-    import flash.net.SharedObject;
-    import flash.text.TextField;
-    import flash.utils.getQualifiedClassName;
+import flash.events.MouseEvent;
+import flash.net.SharedObject;
 
-    public class RandomMapGeneratorActivity extends RandomMapBGActivity
+public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
         private var settingsLayout:StackLayout;
         private var darknessOptions:Array;

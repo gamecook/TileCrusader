@@ -29,18 +29,13 @@
  */
 package com.gamecook.tilecrusader
 {
-    import com.bit101.components.Component;
-    import com.bit101.components.Style;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.managers.SoundManager;
-    import com.gamecook.tilecrusader.managers.TCActivityManager;
-    import com.google.analytics.GATracker;
-    import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.gamecook.tilecrusader.managers.SoundManager;
+import com.gamecook.tilecrusader.managers.TCActivityManager;
+import com.google.analytics.GATracker;
+import com.jessefreeman.factivity.AbstractApplication;
 
-    import flash.events.Event;
-
-    public class TileCrusaderGame extends AbstractApplication
+public class TileCrusaderGame extends AbstractApplication
     {
         protected var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager) as SoundManager;
 

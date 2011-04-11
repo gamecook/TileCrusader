@@ -7,13 +7,12 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.tiles.BaseTile;
+import com.gamecook.tilecrusader.tiles.BaseTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+import flash.utils.getDefinitionByName;
 
-    import flash.utils.getDefinitionByName;
-
-    public class TileFactory implements ITileFactory
+public class TileFactory implements ITileFactory
     {
 
         private const TILE_PACKAGE:String = "com.gamecook.tilecrusader.tiles.";

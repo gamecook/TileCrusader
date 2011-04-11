@@ -29,19 +29,13 @@
  */
 package com.gamecook.tilecrusader.views.popups
 {
-    import com.gamecook.tilecrusader.views.*;
-    import com.gamecook.tilecrusader.activities.StartActivity;
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.views.*;
 
-    import com.gamecook.tilecrusader.views.popups.BasePopUp;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
 
-    import com.jessefreeman.factivity.managers.IActivityManager;
-
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-
-    public class QuitPopUpWindow extends BasePopUp
+public class QuitPopUpWindow extends BasePopUp
     {
         private var onAcceptCallback:Function;
         public function QuitPopUpWindow(onAcceptCallback:Function)

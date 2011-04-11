@@ -29,11 +29,11 @@
  */
 package com.gamecook.tilecrusader.views.popups
 {
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.factory.UIFactory;
 
-    import flash.text.TextField;
+import flash.text.TextField;
 
-    public class PopUpPickerWindow extends BasePopUp
+public class PopUpPickerWindow extends BasePopUp
     {
         private var data:Array;
 

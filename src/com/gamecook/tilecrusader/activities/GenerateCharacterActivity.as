@@ -6,19 +6,18 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.activities {
-    import com.bit101.components.Label;
-    import com.bit101.components.PushButton;
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
-    import com.gamecook.tilecrusader.tools.generator.CharacterGenerator;
-    import com.gamecook.tilecrusader.utils.ArrayUtil;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.bit101.components.Label;
+import com.bit101.components.PushButton;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+import com.gamecook.tilecrusader.tools.generator.CharacterGenerator;
+import com.gamecook.tilecrusader.utils.ArrayUtil;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import flash.display.Bitmap;
-    import flash.events.MouseEvent;
+import flash.display.Bitmap;
+import flash.events.MouseEvent;
 
-    public class GenerateCharacterActivity extends RandomMapBGActivity{
+public class GenerateCharacterActivity extends RandomMapBGActivity{
         private var character:Bitmap;
         private var generator:CharacterGenerator;
         private var bodyOptionBehavior:OptionsBehavior;

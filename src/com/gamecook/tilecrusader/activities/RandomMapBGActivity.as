@@ -29,12 +29,10 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.gamecook.tilecrusader.views.ArtisticMapView;
-    import com.jessefreeman.factivity.managers.ActivityManager;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.gamecook.tilecrusader.views.ArtisticMapView;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class RandomMapBGActivity extends AdvancedActivity
+public class RandomMapBGActivity extends AdvancedActivity
     {
         protected var randMap:ArtisticMapView;
         protected var mapViewPortWidth:int = 500;

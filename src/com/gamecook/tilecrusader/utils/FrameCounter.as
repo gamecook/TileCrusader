@@ -5,16 +5,16 @@
 */
 
 package  com.gamecook.tilecrusader.utils{
-	import flash.display.MovieClip;
-	import flash.events.*;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.utils.Timer;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.display.BitmapData;
+import flash.display.BitmapData;
+import flash.display.MovieClip;
+import flash.events.*;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.text.TextField;
+import flash.text.TextFormat;
+import flash.utils.Timer;
 
-	public class FrameCounter {
+public class FrameCounter {
 		private var format:TextFormat=new TextFormat();
 		private var messageText:String;
 		private var messageBitmapData:BitmapData;

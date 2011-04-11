@@ -29,16 +29,14 @@
  */
 package com.gamecook.tilecrusader.views.forms
 {
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.managers.PopUpManager;
+import com.gamecook.tilecrusader.views.Button;
+import com.gamecook.tilecrusader.views.popups.PopUpPickerWindow;
 
-    import com.gamecook.tilecrusader.managers.PopUpManager;
-    import com.gamecook.tilecrusader.views.Button;
+import flash.display.Sprite;
 
-    import com.gamecook.tilecrusader.views.popups.PopUpPickerWindow;
-
-    import flash.display.Sprite;
-
-    public class PopUpPicker extends Sprite
+public class PopUpPicker extends Sprite
     {
         private var data:Array;
         private var selectedID:int;
@@ -55,7 +53,7 @@ package com.gamecook.tilecrusader.views.forms
 
         private function onClick():void
         {
-            com.gamecook.tilecrusader.managers.PopUpManager.showOverlay(new PopUpPickerWindow(data, selectedID), onClose, true);
+            PopUpManager.showOverlay(new PopUpPickerWindow(data, selectedID), onClose, true);
         }
 
         private function onClose():void

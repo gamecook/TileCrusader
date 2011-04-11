@@ -7,19 +7,18 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.enum.BooleanOptions;
-    import com.gamecook.tilecrusader.enum.ClassOptions;
-    import com.gamecook.tilecrusader.enum.DarknessOptions;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.gamecook.tilecrusader.factory.NewGameFactory;
-    import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.enum.BooleanOptions;
+import com.gamecook.tilecrusader.enum.ClassOptions;
+import com.gamecook.tilecrusader.enum.DarknessOptions;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.enum.MapSizeOptions;
+import com.gamecook.tilecrusader.factory.NewGameFactory;
+import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class DebugStartActivity extends AdvancedActivity
+public class DebugStartActivity extends AdvancedActivity
     {
 
         public function DebugStartActivity(activityManager:IActivityManager, data:*)

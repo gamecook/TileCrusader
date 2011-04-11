@@ -7,59 +7,54 @@
  */
 package com.gamecook.tilecrusader.activities
 {
+import com.bit101.components.Label;
+import com.gamecook.frogue.helpers.MovementHelper;
+import com.gamecook.frogue.io.Controls;
+import com.gamecook.frogue.io.IControl;
+import com.gamecook.frogue.maps.MapAnalytics;
+import com.gamecook.frogue.maps.RandomMap;
+import com.gamecook.frogue.renderer.AbstractMapRenderer;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.combat.AttackResult;
+import com.gamecook.tilecrusader.combat.DeathMessageFactory;
+import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.effects.Quake;
+import com.gamecook.tilecrusader.effects.TypeTextEffect;
+import com.gamecook.tilecrusader.enum.DarknessOptions;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.enum.TemplateProperties;
+import com.gamecook.tilecrusader.equipment.IEquipable;
+import com.gamecook.tilecrusader.factory.TCTileFactory;
+import com.gamecook.tilecrusader.iterators.TreasureIterator;
+import com.gamecook.tilecrusader.managers.PopUpManager;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.gamecook.tilecrusader.managers.TileInstanceManager;
+import com.gamecook.tilecrusader.maps.TCMapSelection;
+import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.gamecook.tilecrusader.templates.Template;
+import com.gamecook.tilecrusader.templates.TemplateApplicator;
+import com.gamecook.tilecrusader.templates.TemplateCollection;
+import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
+import com.gamecook.tilecrusader.tiles.EquipmentTile;
+import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+import com.gamecook.tilecrusader.views.CharacterSheetView;
+import com.gamecook.tilecrusader.views.VirtualKeysView;
+import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-	import com.bit101.components.Label;
-	import com.gamecook.frogue.helpers.MovementHelper;
-	import com.gamecook.frogue.io.Controls;
-	import com.gamecook.frogue.io.IControl;
-	import com.gamecook.frogue.maps.MapAnalytics;
-	import com.gamecook.frogue.maps.RandomMap;
-	import com.gamecook.frogue.renderer.AbstractMapRenderer;
-	import com.gamecook.frogue.sprites.SpriteSheet;
-	import com.gamecook.tilecrusader.combat.AttackResult;
-	import com.gamecook.tilecrusader.combat.DeathMessageFactory;
-	import com.gamecook.tilecrusader.combat.ICombatant;
-	import com.gamecook.tilecrusader.effects.Quake;
-	import com.gamecook.tilecrusader.effects.TypeTextEffect;
-	import com.gamecook.tilecrusader.enum.DarknessOptions;
-	import com.gamecook.tilecrusader.enum.GameModeOptions;
-	import com.gamecook.tilecrusader.enum.TemplateProperties;
-    import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.equipment.IEquipment;
-    import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
-    import com.gamecook.tilecrusader.equipment.weapons.Weapon;
-    import com.gamecook.tilecrusader.factory.TCTileFactory;
-	import com.gamecook.tilecrusader.iterators.TreasureIterator;
-	import com.gamecook.tilecrusader.managers.PopUpManager;
-	import com.gamecook.tilecrusader.managers.SingletonManager;
-	import com.gamecook.tilecrusader.managers.TileInstanceManager;
-	import com.gamecook.tilecrusader.maps.TCMapSelection;
-	import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-	import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-	import com.gamecook.tilecrusader.states.ActiveGameState;
-	import com.gamecook.tilecrusader.status.DoubleAttackStatus;
-	import com.gamecook.tilecrusader.templates.Template;
-	import com.gamecook.tilecrusader.templates.TemplateApplicator;
-	import com.gamecook.tilecrusader.templates.TemplateCollection;
-	import com.gamecook.tilecrusader.tiles.PlayerTile;
-	import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.tiles.WeaponTile;
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-	import com.gamecook.tilecrusader.views.CharacterSheetView;
-	import com.gamecook.tilecrusader.views.VirtualKeysView;
-	import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
-	import com.jessefreeman.factivity.managers.ActivityManager;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Sprite;
+import flash.events.KeyboardEvent;
+import flash.events.MouseEvent;
+import flash.geom.Point;
+import flash.system.Capabilities;
+import flash.ui.Keyboard;
 
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Sprite;
-	import flash.events.KeyboardEvent;
-    import flash.events.MouseEvent;
-    import flash.geom.Point;
-	import flash.system.Capabilities;
-	import flash.ui.Keyboard;
-
-	public class GameActivity extends AdvancedActivity implements IControl
+public class GameActivity extends AdvancedActivity implements IControl
     {
 
 
@@ -422,7 +417,7 @@ package com.gamecook.tilecrusader.activities
                     case TileTypes.EQUIPMENT:
 
                         var wUID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
-                        var tmpWeapon:WeaponTile = tileInstanceManager.getInstance(wUID, tile) as WeaponTile;
+                        var tmpWeapon:EquipmentTile = tileInstanceManager.getInstance(wUID, tile) as EquipmentTile;
 
                         equip(player, tmpWeapon, wUID,  tmpPoint, value);
                         break;
@@ -469,12 +464,12 @@ package com.gamecook.tilecrusader.activities
            }
         }
 
-        private function equip(player:PlayerTile, tmpTile:WeaponTile, uID:String, tilePoint:Point, nextMovePoint:Point):void
+        private function equip(player:PlayerTile, tmpTile:EquipmentTile, uID:String, tilePoint:Point, nextMovePoint:Point):void
         {
             //TODO need to test if you can equip
             //TODO prompt user to equip
 
-            var droppedEquipment:IEquipment = player.equip(tmpTile.getWeapon());
+            var droppedEquipment:IEquipable = player.equip(tmpTile.getWeapon());
 
             //TODO make sure the player is actually picking up the item.
 
@@ -486,7 +481,7 @@ package com.gamecook.tilecrusader.activities
             {
                 newTile = droppedEquipment.tileID;
 
-                var weaponTile:WeaponTile = new WeaponTile();
+                var weaponTile:EquipmentTile = new EquipmentTile();
                 weaponTile.parseObject({weapon:droppedEquipment.toObject()});
 
                 tileInstanceManager.replaceInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
@@ -629,11 +624,11 @@ package com.gamecook.tilecrusader.activities
             */
 
             // TODO This is a hardcoded test for dropping the weapon.
-            var droppedEquipment:IEquipment = monster.getWeaponSlot();
+            var droppedEquipment:IEquipable = monster.getWeaponSlot();
 
             swapTileOnMap(currentPoint, droppedEquipment.tileID);
 
-            var weaponTile:WeaponTile = new WeaponTile();
+            var weaponTile:EquipmentTile = new EquipmentTile();
             weaponTile.parseObject({weapon:droppedEquipment.toObject()});
             //weaponTile.getSpriteID();
 

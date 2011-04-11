@@ -29,12 +29,12 @@
  */
 package com.gamecook.tilecrusader.views.forms
 {
-    import flash.display.Sprite;
-    import flash.events.Event;
-    import flash.events.FocusEvent;
-    import flash.text.TextField;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.FocusEvent;
+import flash.text.TextField;
 
-    public class InputField extends Sprite
+public class InputField extends Sprite
     {
         private var _textField:TextField;
         private var defaultText:String;

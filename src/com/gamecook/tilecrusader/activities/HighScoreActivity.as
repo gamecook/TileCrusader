@@ -29,12 +29,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.gamecook.tilecrusader.scores.TileCrusaderScoreboard;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+import com.bit101.components.Label;
+import com.gamecook.tilecrusader.scores.TileCrusaderScoreboard;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    public class HighScoreActivity extends BaseActivity
+public class HighScoreActivity extends BaseActivity
     {
         private var scores:Array;
         private var highScored:Boolean = false;

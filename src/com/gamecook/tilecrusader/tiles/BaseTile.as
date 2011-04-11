@@ -7,12 +7,11 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+import com.gamecook.tilecrusader.serialize.ISerializeToObject;
 
-    import flash.geom.Point;
-    import flash.utils.getQualifiedClassName;
+import flash.utils.getQualifiedClassName;
 
-    public class BaseTile implements ITile, ISerializeToObject
+public class BaseTile implements ITile, ISerializeToObject
     {
         private var name:String = "undefined";
         private var _type:String;

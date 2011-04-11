@@ -29,17 +29,13 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.frogue.io.IControl;
+import com.gamecook.frogue.io.IControl;
+import com.gamecook.tilecrusader.factory.UIFactory;
+import com.jessefreeman.factivity.activities.IUpdate;
 
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import flash.display.Sprite;
 
-    import com.jessefreeman.factivity.activities.IUpdate;
-
-    import flash.display.Bitmap;
-    import flash.display.Sprite;
-    import flash.events.MouseEvent;
-
-    public class VirtualKeysView extends Sprite implements IUpdate
+public class VirtualKeysView extends Sprite implements IUpdate
     {
         [Embed(source="../../../../../build/assets/arrow_up.gif")]
         public static var ArrowUp:Class;

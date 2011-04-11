@@ -29,9 +29,9 @@
  */
 package com.gamecook.tilecrusader.views.popups
 {
-    import com.gamecook.tilecrusader.views.AbstractPopUp;
+import com.gamecook.tilecrusader.views.AbstractPopUp;
 
-    public class BasePopUp extends AbstractPopUp
+public class BasePopUp extends AbstractPopUp
     {
         protected var paddingTop:int = 0;
         protected var paddingLeft:int = 0;

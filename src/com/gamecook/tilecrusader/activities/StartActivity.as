@@ -7,30 +7,25 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.bit101.components.PushButton;
-    import com.bit101.components.VBox;
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+import com.bit101.components.Label;
+import com.bit101.components.PushButton;
+import com.bit101.components.VBox;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+import com.gamecook.tilecrusader.enum.BooleanOptions;
+import com.gamecook.tilecrusader.enum.ClassOptions;
+import com.gamecook.tilecrusader.enum.DarknessOptions;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.enum.MapSizeOptions;
+import com.gamecook.tilecrusader.factory.NewGameFactory;
+import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.gamecook.tilecrusader.enum.BooleanOptions;
-    import com.gamecook.tilecrusader.enum.ClassOptions;
-    import com.gamecook.tilecrusader.enum.DarknessOptions;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.gamecook.tilecrusader.factory.NewGameFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.managers.SoundManager;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import flash.events.MouseEvent;
+import flash.net.SharedObject;
+import flash.utils.getDefinitionByName;
 
-    import flash.events.MouseEvent;
-    import flash.net.SharedObject;
-    import flash.utils.getDefinitionByName;
-
-
-    public class StartActivity extends RandomMapBGActivity
+public class StartActivity extends RandomMapBGActivity
     {
 
         public var title:Label;

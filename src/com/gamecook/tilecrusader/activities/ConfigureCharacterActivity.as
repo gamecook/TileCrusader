@@ -7,38 +7,29 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.InputText;
-    import com.bit101.components.Label;
-    import com.bit101.components.NumericStepper;
-    import com.bit101.components.PushButton;
-    import com.bit101.components.VBox;
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
-    import com.gamecook.tilecrusader.enum.ClassOptions;
-    import com.gamecook.tilecrusader.enum.TemplateProperties;
-    import com.gamecook.tilecrusader.iterators.OptionsIterator;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.states.CustomTemplateState;
-    import com.gamecook.tilecrusader.templates.Template;
-    import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.gamecook.tilecrusader.templates.TemplateCollection;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.bit101.components.InputText;
+import com.bit101.components.Label;
+import com.bit101.components.NumericStepper;
+import com.bit101.components.PushButton;
+import com.bit101.components.VBox;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+import com.gamecook.tilecrusader.enum.ClassOptions;
+import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.gamecook.tilecrusader.states.CustomTemplateState;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.display.Bitmap;
-    import flash.events.Event;
-    import flash.events.FocusEvent;
-    import flash.events.MouseEvent;
-    import flash.geom.Rectangle;
-    import flash.net.SharedObject;
-    import flash.text.TextField;
-    import flash.utils.getQualifiedClassName;
+import flash.display.Bitmap;
+import flash.events.Event;
+import flash.events.FocusEvent;
+import flash.events.MouseEvent;
+import flash.geom.Rectangle;
+import flash.text.TextField;
 
-
-    public class ConfigureCharacterActivity extends RandomMapBGActivity
+public class ConfigureCharacterActivity extends RandomMapBGActivity
     {
         private const DEFAULT_POINTS:int = 20;
 

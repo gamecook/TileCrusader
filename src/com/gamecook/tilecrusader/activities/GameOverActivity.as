@@ -7,16 +7,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import com.bit101.components.Label;
+import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.jessefreeman.factivity.managers.ActivityManager;
-
-    import flash.net.SharedObject;
-    public class GameOverActivity extends AdvancedActivity
+public class GameOverActivity extends AdvancedActivity
     {
         private var activeGameState:ActiveGameState;
 

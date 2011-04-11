@@ -29,18 +29,16 @@
  */
 package com.gamecook.tilecrusader.views.forms
 {
-    import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.views.Button;
+import com.gamecook.tilecrusader.views.StackLayout;
 
-    import com.gamecook.tilecrusader.views.Button;
-    import com.gamecook.tilecrusader.views.StackLayout;
+import flash.display.Sprite;
+import flash.text.TextField;
 
-    import flash.display.Sprite;
-    import flash.events.Event;
-    import flash.text.TextField;
+import flashx.textLayout.formats.TextAlign;
 
-    import flashx.textLayout.formats.TextAlign;
-
-    public class NumberStepper extends Sprite
+public class NumberStepper extends Sprite
     {
         private var maxValue:int;
         private var value:int;

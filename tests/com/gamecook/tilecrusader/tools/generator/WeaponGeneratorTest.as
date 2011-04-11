@@ -5,8 +5,8 @@
  */
 package com.gamecook.tilecrusader.tools.generator
 {
-	import com.gamecook.tilecrusader.equipment.WeaponGenerator;
-    import com.gamecook.tilecrusader.equipment.weapons.IWeapon;
+
+import com.gamecook.tilecrusader.equipment.WeaponGenerator;
 
 	import org.hamcrest.assertThat;
 
@@ -24,12 +24,12 @@ package com.gamecook.tilecrusader.tools.generator
 		public function getWeapon_should_generate_a_valid_weapon():void
 		{
 			var level:int;
-			var weapon:IWeapon;
+			var weapon:IEquipment;
 			for (var i:int = 0; i < 100; i++)
 			{
 				level = int(Math.random() * 4);
-				weapon = weaponGenerator.getWeapon(level);
-				assertThat(weapon is IWeapon);
+				weapon = weaponGenerator.getWeapon(level) as IEquipment;
+				assertThat(weapon);
 			}
 		}
 	}

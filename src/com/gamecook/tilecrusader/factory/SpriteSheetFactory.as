@@ -6,18 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.factory {
-    import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.tiles.TileTypes;
+import com.gamecook.tilecrusader.utils.ColorUtil;
 
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.utils.ColorUtil;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.geom.Rectangle;
 
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.geom.Matrix;
-    import flash.geom.Rectangle;
-
-
-    public class SpriteSheetFactory {
+public class SpriteSheetFactory {
 
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;

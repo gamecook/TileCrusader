@@ -29,34 +29,19 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.gamecook.frogue.maps.MapPopulater;
-    import com.gamecook.frogue.maps.Map;
-    import com.gamecook.frogue.maps.MapSelection;
-    import com.gamecook.frogue.maps.RandomMap;
-    import com.gamecook.frogue.renderer.MapDrawingRenderer;
-    import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import com.bit101.components.Label;
+import com.gamecook.frogue.maps.MapPopulater;
+import com.gamecook.frogue.maps.RandomMap;
+import com.gamecook.tilecrusader.enum.GameModeOptions;
+import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+import com.gamecook.tilecrusader.states.ActiveGameState;
+import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import flash.geom.Point;
+import flash.utils.getQualifiedClassName;
 
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.display.Shape;
-    import flash.geom.Point;
-    import flash.geom.Rectangle;
-    import flash.geom.Rectangle;
-    import flash.net.SharedObject;
-    import flash.text.StyleSheet;
-    import flash.utils.getQualifiedClassName;
-
-    public class MapLoadingActivity extends AdvancedActivity
+public class MapLoadingActivity extends AdvancedActivity
     {
         protected var textCounter:Number = 0;
         protected var textDelay:Number = 300;

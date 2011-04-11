@@ -7,11 +7,11 @@
  */
 package com.gamecook.tilecrusader.effects
 {
-    import com.jessefreeman.factivity.threads.GreenThread;
+import com.jessefreeman.factivity.threads.GreenThread;
 
-    import flash.display.DisplayObject;
+import flash.display.DisplayObject;
 
-    public class Quake extends GreenThread
+public class Quake extends GreenThread
     {
         private var target:DisplayObject;
         public function Quake(target:DisplayObject, intensity:Number=0.05,duration:Number=0.5, updateCallback:Function = null, finishCallback:Function = null)

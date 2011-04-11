@@ -7,11 +7,9 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-	import com.gamecook.tilecrusader.combat.ICombatant;
-    import com.gamecook.tilecrusader.equipment.ILoot;
-    import com.gamecook.tilecrusader.equipment.IStoreLoot;
+import com.gamecook.tilecrusader.combat.ICombatant;
 
-    public class PlayerTile extends MonsterTile implements IStoreLoot
+public class PlayerTile extends MonsterTile
     {
 
         private var gold:int = 0;
@@ -170,13 +168,6 @@ package com.gamecook.tilecrusader.tiles
 			}
 		}
 
-        public function addLoot(item:ILoot):void
-        {
-            var functionName:String = "add"+item.getModifyAttribute();
-
-            if(this.hasOwnProperty(functionName))
-                this[functionName](item.getValue());
-        }
     }
 
 }

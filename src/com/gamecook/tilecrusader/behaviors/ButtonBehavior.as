@@ -29,9 +29,9 @@
  */
 package com.gamecook.tilecrusader.behaviors
 {
-    import flash.events.MouseEvent;
+import flash.events.MouseEvent;
 
-    public class ButtonBehavior
+public class ButtonBehavior
     {
         protected var inside:Boolean = false;
 

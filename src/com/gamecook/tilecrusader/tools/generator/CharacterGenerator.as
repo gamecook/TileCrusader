@@ -6,16 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.tools.generator {
+import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.serialize.ISerializeToObject;
 
-    import com.gamecook.frogue.sprites.SpriteSheet;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.geom.Rectangle;
 
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
-
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.geom.Rectangle;
-
-    public class CharacterGenerator implements ISerializeToObject{
+public class CharacterGenerator implements ISerializeToObject{
 
         private static const SPRITE_SIZE:Rectangle = new Rectangle(0,0,32,32);
 

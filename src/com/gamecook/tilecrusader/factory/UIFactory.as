@@ -7,25 +7,23 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-    import com.gamecook.tilecrusader.views.Button;
+import com.gamecook.tilecrusader.views.Button;
+import com.gamecook.tilecrusader.views.forms.InputField;
+import com.gamecook.tilecrusader.views.forms.NumberStepper;
+import com.gamecook.tilecrusader.views.forms.PopUpPicker;
 
-    import com.gamecook.tilecrusader.views.forms.InputField;
+import flash.display.DisplayObject;
+import flash.events.MouseEvent;
+import flash.geom.Rectangle;
+import flash.text.AntiAliasType;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFieldType;
+import flash.text.TextFormat;
 
-    import com.gamecook.tilecrusader.views.forms.NumberStepper;
-    import com.gamecook.tilecrusader.views.forms.PopUpPicker;
+import flashx.textLayout.formats.TextAlign;
 
-    import flash.display.DisplayObject;
-    import flash.events.MouseEvent;
-    import flash.geom.Rectangle;
-    import flash.text.AntiAliasType;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
-    import flash.text.TextFieldType;
-    import flash.text.TextFormat;
-
-    import flashx.textLayout.formats.TextAlign;
-
-    public class UIFactory
+public class UIFactory
     {
         private static var tfx:TextFormat = new TextFormat("system", 18, 0xffffff);
 

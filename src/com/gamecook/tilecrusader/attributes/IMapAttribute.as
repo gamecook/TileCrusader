@@ -7,10 +7,10 @@
  */
 package com.gamecook.tilecrusader.attributes
 {
-    import com.gamecook.frogue.maps.IMap;
-    import com.gamecook.frogue.maps.IMapSelection;
+import com.gamecook.frogue.maps.IMap;
+import com.gamecook.frogue.maps.IMapSelection;
 
-    public interface IMapAttribute extends IAttribute
+public interface IMapAttribute extends IAttribute
     {
         function mapTarget(map:IMap, mapSelection:IMapSelection):void;
     }

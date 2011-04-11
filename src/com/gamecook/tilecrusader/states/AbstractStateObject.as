@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.states
 {
-    import flash.net.SharedObject;
+import flash.net.SharedObject;
 
-    public class AbstractStateObject implements IStateObject
+public class AbstractStateObject implements IStateObject
     {
         protected var sharedObject:SharedObject;
         protected var _dataObject:Object;

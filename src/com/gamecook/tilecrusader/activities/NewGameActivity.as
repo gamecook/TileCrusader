@@ -7,13 +7,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.managers.SoundManager;
-    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.gamecook.tilecrusader.managers.SingletonManager;
+import com.gamecook.tilecrusader.managers.SoundManager;
+import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    public class NewGameActivity extends RandomMapBGActivity
+public class NewGameActivity extends RandomMapBGActivity
     {
         var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager) as SoundManager;
 

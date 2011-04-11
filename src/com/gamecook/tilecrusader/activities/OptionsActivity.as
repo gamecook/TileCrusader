@@ -29,16 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.utils.MinimalConfigurator;
-    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+import com.bit101.utils.MinimalConfigurator;
+import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.events.MouseEvent;
-    import flash.net.SharedObject;
-    import flash.ui.Mouse;
+import flash.events.MouseEvent;
+import flash.net.SharedObject;
 
-    public class OptionsActivity extends RandomMapBGActivity
+public class OptionsActivity extends RandomMapBGActivity
     {
         public function OptionsActivity(activityManager:ActivityManager, data:* = null)
         {

@@ -29,11 +29,11 @@
  */
 package com.gamecook.tilecrusader.effects
 {
-    import com.jessefreeman.factivity.threads.GreenThread;
+import com.jessefreeman.factivity.threads.GreenThread;
 
-    import flash.text.TextField;
+import flash.text.TextField;
 
-    public class TypeTextEffect extends GreenThread
+public class TypeTextEffect extends GreenThread
     {
         private var target:TextField;
         private var message:String;

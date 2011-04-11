@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.status
 {
-	import com.gamecook.tilecrusader.combat.ICombatant;
+import com.gamecook.tilecrusader.combat.ICombatant;
 
-	public class CombatResult
+public class CombatResult
     {
         protected var _attacker:ICombatant;
         protected var _defender:ICombatant;

@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.managers {
-    import com.gamecook.tilecrusader.sounds.TCSound;
+import com.gamecook.tilecrusader.sounds.TCSound;
 
-    public class SoundManager {
+public class SoundManager {
 
         private var sounds:Array = [];
         private var music:TCSound;

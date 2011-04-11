@@ -29,15 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Label;
-    import com.bit101.utils.MinimalConfigurator;
+import com.bit101.components.Label;
+import com.bit101.utils.MinimalConfigurator;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import flash.events.MouseEvent;
 
-    import com.jessefreeman.factivity.managers.IActivityManager;
-    import flash.events.MouseEvent;
-
-    public class MinimalCompsTestActivity extends BaseActivity
+public class MinimalCompsTestActivity extends BaseActivity
     {
         public var myLabel:Label;
 

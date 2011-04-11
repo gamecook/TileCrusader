@@ -29,21 +29,15 @@
  */
 package com.gamecook.tilecrusader.maps
 {
-    import com.gamecook.frogue.maps.*;
-    import com.gamecook.frogue.maps.IMap;
-    import com.gamecook.frogue.maps.IMapSelection;
+import com.gamecook.frogue.maps.IMap;
+import com.gamecook.frogue.maps.MapSelection;
+import com.gamecook.tilecrusader.managers.TileInstanceManager;
+import com.gamecook.tilecrusader.tiles.MonsterTile;
+import com.gamecook.tilecrusader.tiles.TileTypes;
 
-    import com.gamecook.frogue.maps.MapSelection;
+import flash.geom.Point;
 
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
-    import com.gamecook.tilecrusader.tiles.IMonster;
-    import com.gamecook.tilecrusader.tiles.MonsterTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-
-    import flash.geom.Point;
-
-    public class AdvancedFogOfWarMapSelection extends MapSelection
+public class AdvancedFogOfWarMapSelection extends MapSelection
     {
         protected var exploredTilesHashMap:Array = [];
         protected var saveExploredTiles:Boolean = true;

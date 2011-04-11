@@ -7,24 +7,21 @@
  */
 package com.gamecook.tilecrusader.views
 {
-    import com.gamecook.tilecrusader.activities.StartActivity;
-    import com.gamecook.tilecrusader.factory.UIFactory;
-    import com.gamecook.tilecrusader.managers.PopUpManager;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.tilecrusader.activities.StartActivity;
+import com.gamecook.tilecrusader.factory.UIFactory;
+import com.gamecook.tilecrusader.managers.PopUpManager;
+import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.tilecrusader.views.popups.QuitPopUpWindow;
+import com.jessefreeman.factivity.activities.BaseActivity;
+import com.jessefreeman.factivity.managers.IActivityManager;
 
-    import com.gamecook.tilecrusader.views.popups.QuitPopUpWindow;
-    import com.jessefreeman.factivity.activities.BaseActivity;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Shape;
+import flash.events.MouseEvent;
+import flash.text.TextField;
 
-    import com.jessefreeman.factivity.managers.IActivityManager;
-
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.display.Shape;
-    import flash.display.Sprite;
-    import flash.events.MouseEvent;
-    import flash.text.TextField;
-
-    public class CharacterSheetView extends BaseActivity
+public class CharacterSheetView extends BaseActivity
     {
 
         private var player:PlayerTile;
