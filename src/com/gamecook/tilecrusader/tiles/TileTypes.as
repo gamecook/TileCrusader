@@ -57,11 +57,30 @@ package com.gamecook.tilecrusader.tiles
                     TYPES['w13'] = { name: 'Club', sprite: "sprite30", classPath:"EquipmentTile", type: EQUIPMENT},
                     TYPES['w14'] = { name: 'Stick', sprite: "sprite31", classPath:"EquipmentTile", type: EQUIPMENT}
 
-                    TYPES['sl1'] = { name: 'Shield A', sprite: "sprite32", classPath:"EquipmentTile", type: EQUIPMENT}
-                    TYPES['sl2'] = { name: 'Shield B', sprite: "sprite33", classPath:"EquipmentTile", type: EQUIPMENT}
-                    TYPES['sl3'] = { name: 'Shield C', sprite: "sprite34", classPath:"EquipmentTile", type: EQUIPMENT}
-                    TYPES['sl4'] = { name: 'Shield D', sprite: "sprite35", classPath:"EquipmentTile", type: EQUIPMENT}
-                    TYPES['sl5'] = { name: 'Shield E', sprite: "sprite36", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl1'] = { name: 'Shield 1', sprite: "sprite32", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl2'] = { name: 'Shield 2', sprite: "sprite33", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl3'] = { name: 'Shield 3', sprite: "sprite34", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl4'] = { name: 'Shield 4', sprite: "sprite35", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sl5'] = { name: 'Shield 5', sprite: "sprite36", classPath:"EquipmentTile", type: EQUIPMENT}
+
+                    TYPES['h1'] = { name: 'Helmet 1', sprite: "sprite37", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h2'] = { name: 'Helmet 2', sprite: "sprite38", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h3'] = { name: 'Helmet 3', sprite: "sprite39", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h4'] = { name: 'Helmet 4', sprite: "sprite40", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h5'] = { name: 'Helmet 5', sprite: "sprite41", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h6'] = { name: 'Helmet 6', sprite: "sprite42", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['h7'] = { name: 'Helmet 7', sprite: "sprite43", classPath:"EquipmentTile", type: EQUIPMENT}
+
+                    TYPES['a1'] = { name: 'Armor 1', sprite: "sprite44", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['a2'] = { name: 'Armor 2', sprite: "sprite45", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['a3'] = { name: 'Armor 3', sprite: "sprite46", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['a4'] = { name: 'Armor 4', sprite: "sprite47", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['a5'] = { name: 'Armor 5', sprite: "sprite48", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['a6'] = { name: 'Armor 6', sprite: "sprite49", classPath:"EquipmentTile", type: EQUIPMENT}
+
+                    TYPES['sh1'] = { name: 'Shoe 1', sprite: "sprite50", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sh2'] = { name: 'Shoe 2', sprite: "sprite51", classPath:"EquipmentTile", type: EQUIPMENT}
+                    TYPES['sh3'] = { name: 'Shoe 3', sprite: "sprite52", classPath:"EquipmentTile", type: EQUIPMENT}
         }
 
         public static function registerTile(id:String, template:Object):void

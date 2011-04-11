@@ -308,20 +308,21 @@ package com.gamecook.tilecrusader.tiles
             //TODO this should default to the tile's graphic vs having it in the map
             var sprites:Array = [];
 
-            if (getWeaponSlot())
-                sprites.push(TileTypes.getTileSprite(getWeaponSlot().tileID));
+            if (getShoeSlot())
+                sprites.push(TileTypes.getTileSprite(getShoeSlot().tileID));
 
             if (getArmorSlot())
                 sprites.push(TileTypes.getTileSprite(getArmorSlot().tileID));
 
-            if (getShieldSlot())
-                sprites.push(TileTypes.getTileSprite(getShieldSlot().tileID));
-
             if (getHelmetSlot())
                 sprites.push(TileTypes.getTileSprite(getHelmetSlot().tileID));
 
-            if (getShoeSlot())
-                sprites.push(TileTypes.getTileSprite(getShoeSlot().tileID));
+            if (getShieldSlot())
+                sprites.push(TileTypes.getTileSprite(getShieldSlot().tileID));
+
+            if (getWeaponSlot())
+                sprites.push(TileTypes.getTileSprite(getWeaponSlot().tileID));
+
 
             var arrayAsString = sprites.toString();
             spriteID = arrayAsString;//.subStr(1,arrayAsString.length -1);
@@ -342,6 +343,19 @@ package com.gamecook.tilecrusader.tiles
             {
                 droppedItem = getShieldSlot();
                 setShieldSlot(item)
+            }else if(item.getSlotID() == SlotsEnum.ARMOR)
+            {
+                droppedItem = getArmorSlot();
+                setArmorSlot(item)
+            }
+            else if(item.getSlotID() == SlotsEnum.HELMET)
+            {
+                droppedItem = getHelmetSlot();
+                setHelmetSlot(item)
+            }else if(item.getSlotID() == SlotsEnum.SHOE)
+            {
+                droppedItem = getShoeSlot();
+                setShoeSlot(item)
             }
 
             updateCustomSpriteID();

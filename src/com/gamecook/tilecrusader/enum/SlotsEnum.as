@@ -11,9 +11,9 @@ package com.gamecook.tilecrusader.enum
     {
         public static const WEAPON:int = 0;
         public static const SHIELD:int = 1;
-        public static const ARMOR:String = "armor";
-        public static const HELMET:String = "helmet";
-        public static const SHOE:String = "shoe";
+        public static const ARMOR:int = 2;
+        public static const HELMET:int = 3;
+        public static const SHOE:int = 4;
 
     }
 }

@@ -46,15 +46,22 @@ package com.gamecook.tilecrusader.factory
             if (tile is IMonster && !(tile is PlayerTile)) {
                 var template:ITemplate = templates.getRandomTemplate();
 
-                //TODO this is hardcoded right now, should be moved into an enum
-                var weapon:IEquipable = weaponGenerator.createEquipment(characterPoints, SlotsEnum.WEAPON);
-                var shield:IEquipable = weaponGenerator.createEquipment(characterPoints, SlotsEnum.SHIELD);
+                // Generate and Equip items
+                var equipmentTypes:Array = [SlotsEnum.WEAPON, SlotsEnum.SHIELD, SlotsEnum.HELMET, SlotsEnum.ARMOR, SlotsEnum.SHOE];
+
+                var total:int = equipmentTypes.length;
+                var i:int = 0;
+                var tmpEquipment:IEquipable;
+
+                for(i = 0; i < total; i++)
+                {
+                    tmpEquipment = weaponGenerator.createEquipment(characterPoints, equipmentTypes[i]);
+                    if(tmpEquipment)
+                        IMonster(tile).equip(tmpEquipment);
+                }
 
                 var points:int = (IMonster(tile).getCharacterPointPercent() + modifier) * characterPoints;
                 templateApplicator.apply(tile as ICombatant, template, points);
-
-                IMonster(tile).equip(weapon);
-                IMonster(tile).equip(shield);
 
                 //TODO: generate armor and apply
                 tile.setName(template.getName() + " " + tile.getName());
