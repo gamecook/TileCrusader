@@ -16,7 +16,6 @@ import com.gamecook.tilecrusader.enum.GameModeOptions;
 import com.gamecook.tilecrusader.enum.MapSizeOptions;
 import com.gamecook.tilecrusader.states.ActiveGameState;
 import com.gamecook.tilecrusader.utils.ArrayUtil;
-import com.gamecook.tilecrusader.views.StackLayout;
 import com.jessefreeman.factivity.managers.ActivityManager;
 
 import flash.events.MouseEvent;
@@ -24,7 +23,6 @@ import flash.net.SharedObject;
 
 public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
-        private var settingsLayout:StackLayout;
         private var darknessOptions:Array;
         private var gameModeOptions:Array;
         private var mapSizeOptions:Array;

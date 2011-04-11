@@ -5,7 +5,6 @@
  */
 package com.gamecook.tilecrusader.equipment
 {
-import com.gamecook.tilecrusader.equipment.Equipment;
 import com.gamecook.tilecrusader.tiles.TileTypes;
 
 public class WeaponGenerator

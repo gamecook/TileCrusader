@@ -7,7 +7,6 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-import com.gamecook.tilecrusader.applicators.CombatantEquipmentApplicator;
 import com.gamecook.tilecrusader.combat.ICombatant;
 import com.gamecook.tilecrusader.equipment.IEquipable;
 import com.gamecook.tilecrusader.equipment.WeaponGenerator;
@@ -26,7 +25,6 @@ public class TCTileFactory extends TileFactory
         private var characterPoints:int;
         private var modifier:Number;
 	    private var weaponGenerator:WeaponGenerator = new WeaponGenerator();
-		private var combatantEquipmentApplicator:CombatantEquipmentApplicator = new CombatantEquipmentApplicator();
 
         public function TCTileFactory(templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {

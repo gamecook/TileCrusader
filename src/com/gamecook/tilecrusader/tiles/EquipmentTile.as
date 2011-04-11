@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.tiles {
-import com.gamecook.tilecrusader.equipment.IEquipable;
 import com.gamecook.tilecrusader.equipment.Equipment;
+import com.gamecook.tilecrusader.equipment.IEquipable;
 
 public class EquipmentTile extends BaseTile{
 

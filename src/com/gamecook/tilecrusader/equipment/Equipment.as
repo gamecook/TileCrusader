@@ -7,7 +7,6 @@ package com.gamecook.tilecrusader.equipment
 {
 import com.gamecook.tilecrusader.enum.EquipmentValues;
 import com.gamecook.tilecrusader.enum.SlotsEnum;
-import com.gamecook.tilecrusader.equipment.IEquipable;
 
 public class Equipment implements IEquipable
 	{

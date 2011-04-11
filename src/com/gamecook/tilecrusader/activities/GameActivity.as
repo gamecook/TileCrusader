@@ -26,7 +26,6 @@ import com.gamecook.tilecrusader.enum.TemplateProperties;
 import com.gamecook.tilecrusader.equipment.IEquipable;
 import com.gamecook.tilecrusader.factory.TCTileFactory;
 import com.gamecook.tilecrusader.iterators.TreasureIterator;
-import com.gamecook.tilecrusader.managers.PopUpManager;
 import com.gamecook.tilecrusader.managers.SingletonManager;
 import com.gamecook.tilecrusader.managers.TileInstanceManager;
 import com.gamecook.tilecrusader.maps.TCMapSelection;
@@ -36,13 +35,10 @@ import com.gamecook.tilecrusader.states.ActiveGameState;
 import com.gamecook.tilecrusader.templates.Template;
 import com.gamecook.tilecrusader.templates.TemplateApplicator;
 import com.gamecook.tilecrusader.templates.TemplateCollection;
+import com.gamecook.tilecrusader.tiles.EquipmentTile;
 import com.gamecook.tilecrusader.tiles.PlayerTile;
 import com.gamecook.tilecrusader.tiles.TileTypes;
-import com.gamecook.tilecrusader.tiles.EquipmentTile;
 import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-import com.gamecook.tilecrusader.views.CharacterSheetView;
-import com.gamecook.tilecrusader.views.VirtualKeysView;
-import com.gamecook.tilecrusader.views.popups.LeaveLevelPopUpWindow;
 import com.jessefreeman.factivity.managers.ActivityManager;
 
 import flash.display.Bitmap;
@@ -69,7 +65,6 @@ public class GameActivity extends AdvancedActivity implements IControl
         private var invalid:Boolean = true;
         private var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
-        private var characterSheet:CharacterSheetView;
         private var treasureIterator:TreasureIterator;
         //private var monsters:Array;
         private var chests:Array;
@@ -93,7 +88,6 @@ public class GameActivity extends AdvancedActivity implements IControl
         private const MESSAGE_HEIGHT:int = 40;
         private var cashPool:int = 0;
         private var cashRange:int = 10;
-        private var virtualKeys:VirtualKeysView;
         private var treasurePool:Array;
         private var quakeEffect:Quake;
         private var textEffect:TypeTextEffect;
@@ -199,13 +193,6 @@ public class GameActivity extends AdvancedActivity implements IControl
 	        player.onUsePotion = onPlayerUsePotion;
 			
 			
-            var characterSheetData:Object = {player:player};
-
-            characterSheet = new CharacterSheetView(activityManager, characterSheetData, onQuit);
-            characterSheet.x = viewPortWidth;
-
-            //overlayLayer.addChild(characterSheet);
-
             //TODO need to make this it's own class
             statusLabel = new Label(this, 5, 2, "");
             statusLabel.textField.width = viewPortWidth - 5;
@@ -341,15 +328,9 @@ public class GameActivity extends AdvancedActivity implements IControl
 
             //tileInstanceManager.clear();
 
-            characterSheet.setPortrait(spriteSheet.getSprite("sprite6").clone());
-
-
             treasureIterator = new TreasureIterator(treasurePool);
 
             movementHelper.startPosition(activeGameState.startPositionPoint);
-
-            characterSheet.setPlayer(player);
-
         }
 
         //TODO need to clean up movement so it only happens once per second
@@ -435,7 +416,7 @@ public class GameActivity extends AdvancedActivity implements IControl
                         {
                             //TODO let player leave the level, use a pop up to ask
 
-                            PopUpManager.showOverlay(new LeaveLevelPopUpWindow(onLeaveMap));
+                            //PopUpManager.showOverlay(new LeaveLevelPopUpWindow(onLeaveMap));
                             //addStatusMessage("You can not leave until you "+GameModeOptions.getGameModeDescription(gameMode))+".";
                         }
                         break;
@@ -753,7 +734,6 @@ public class GameActivity extends AdvancedActivity implements IControl
 
             exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
 
-            characterSheet.refresh();
         }
 
         override protected function render():void
