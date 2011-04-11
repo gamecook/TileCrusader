@@ -9,6 +9,7 @@ package com.gamecook.tilecrusader.renderer
 {
 import com.gamecook.frogue.renderer.MapBitmapRenderer;
 import com.gamecook.frogue.sprites.SpriteSheet;
+import com.gamecook.tilecrusader.combat.ICombatant;
 import com.gamecook.tilecrusader.managers.TileInstanceManager;
 import com.gamecook.tilecrusader.tiles.MonsterTile;
 import com.gamecook.tilecrusader.tiles.TileTypes;
@@ -87,7 +88,7 @@ public class MQMapBitmapRenderer extends MapBitmapRenderer
             {
                 var tile:MonsterTile = instances.getInstance(currentTileID.toString(), value) as MonsterTile;
 
-                if(tile is MonsterTile && !TileTypes.isDarkness(sprites[sprites.length-1]))
+                if(tile is ICombatant && !TileTypes.isDarkness(sprites[sprites.length-1]))
                 {
 
                     statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font>|<font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";

@@ -34,6 +34,7 @@ import com.bit101.components.Label;
 import com.bit101.components.Style;
 import com.gamecook.tilecrusader.TileCrusaderGame;
 import com.gamecook.tilecrusader.activities.DebugStartActivity;
+import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
 import com.gamecook.tilecrusader.managers.PopUpManager;
 import com.google.analytics.GATracker;
 import com.jessefreeman.factivity.activities.BaseActivity;
