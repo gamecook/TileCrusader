@@ -37,7 +37,7 @@ package com.gamecook.tilecrusader.tiles
             equipmentSlots[SlotsEnum.SHIELD] = null;
             equipmentSlots[SlotsEnum.ARMOR] = null;
             equipmentSlots[SlotsEnum.HELMET] = null;
-            equipmentSlots[SlotsEnum.SHOE] = null;
+            equipmentSlots[SlotsEnum.SHOES] = null;
         }
 
         /* public function setSpriteID(value:String):void
@@ -352,7 +352,7 @@ package com.gamecook.tilecrusader.tiles
             {
                 droppedItem = getHelmetSlot();
                 setHelmetSlot(item)
-            }else if(item.getSlotID() == SlotsEnum.SHOE)
+            }else if(item.getSlotID() == SlotsEnum.SHOES)
             {
                 droppedItem = getShoeSlot();
                 setShoeSlot(item)
@@ -410,12 +410,12 @@ package com.gamecook.tilecrusader.tiles
 
         public function setShoeSlot(value:IEquipable):void
         {
-            equipmentSlots[SlotsEnum.SHOE] = value;
+            equipmentSlots[SlotsEnum.SHOES] = value;
         }
 
         public function getShoeSlot():IEquipable
         {
-            return equipmentSlots[SlotsEnum.SHOE];
+            return equipmentSlots[SlotsEnum.SHOES];
         }
     }
 }

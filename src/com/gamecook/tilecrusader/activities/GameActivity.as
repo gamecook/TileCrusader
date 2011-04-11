@@ -22,6 +22,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.effects.TypeTextEffect;
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.SlotsEnum;
     import com.gamecook.tilecrusader.enum.TemplateProperties;
     import com.gamecook.tilecrusader.equipment.IEquipable;
     import com.gamecook.tilecrusader.factory.TCTileFactory;
@@ -49,6 +50,8 @@ package com.gamecook.tilecrusader.activities
     import flash.geom.Point;
     import flash.system.Capabilities;
     import flash.ui.Keyboard;
+
+    import org.hamcrest.Matcher;
 
     public class GameActivity extends AdvancedActivity implements IControl
     {
@@ -571,27 +574,62 @@ package com.gamecook.tilecrusader.activities
             swapTileOnMap(currentPoint, "X");
 
 
-            /*
+
              //Old drop treasure code
              if(monstersDropTreasure){
-             var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
-             if(treasure == "K")
-             treasurePool.push(treasure);
-             else
-             swapTileOnMap(currentPoint, treasure);
-             }
-             */
 
-            // TODO This is a hardcoded test for dropping the weapon.
-            var droppedEquipment:IEquipable = monster.getWeaponSlot();
+                 // Pick a random number
+                 var rand:Number = Math.random();
 
-            swapTileOnMap(currentPoint, droppedEquipment.tileID);
+                 trace("Should Drop Value", rand);
+                 if(rand < .6)
+                 {
+                     // if value is less the 70%, select from treasure pool
+                     var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
+                     if(treasure == "K")
+                        treasurePool.push(treasure);
+                     else
+                     swapTileOnMap(currentPoint, treasure);
+                 }
+                 else
+                 {
+                    // Randomly pick a slot
+                     rand = Math.round(Math.random() * 7)// 5 slots + empty chances
+                    trace("Drop random equipment", rand);
+                    var droppedEquipment:IEquipable
 
-            var weaponTile:EquipmentTile = new EquipmentTile();
-            weaponTile.parseObject({weapon:droppedEquipment.toObject()});
-            //weaponTile.getSpriteID();
+                     switch(rand)
+                    {
+                        case SlotsEnum.ARMOR:
+                            droppedEquipment = monster.getArmorSlot();
+                            break;
+                         case SlotsEnum.WEAPON:
+                            droppedEquipment = monster.getWeaponSlot();
+                            break;
+                         case SlotsEnum.SHIELD:
+                            droppedEquipment = monster.getShieldSlot();
+                            break;
+                         case SlotsEnum.HELMET:
+                            droppedEquipment = monster.getHelmetSlot();
+                            break;
+                         case SlotsEnum.SHOES:
+                            droppedEquipment = monster.getHelmetSlot();
+                            break;
+                    }
 
-            tileInstanceManager.registerInstance(currentuID, weaponTile);
+                     if(droppedEquipment){
+                        swapTileOnMap(currentPoint, droppedEquipment.tileID);
+
+                        var weaponTile:EquipmentTile = new EquipmentTile();
+                        weaponTile.parseObject({weapon:droppedEquipment.toObject()});
+
+                        tileInstanceManager.registerInstance(currentuID, weaponTile);
+                     }
+                 }
+
+
+
+            }
 
             var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
             var dropChance:Number = .25;

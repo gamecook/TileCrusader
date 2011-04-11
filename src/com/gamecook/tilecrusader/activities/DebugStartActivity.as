@@ -36,9 +36,9 @@ package com.gamecook.tilecrusader.activities
             NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),
                     DarknessOptions.getValues(),
                     GameModeOptions.getValues(),
-                    MapSizeOptions.getValues(),
+                    /*MapSizeOptions.getValues(),*/[30],
                     BooleanOptions.getTFOptions(),
-                    BooleanOptions.getTFOptions());
+                    /*BooleanOptions.getTFOptions()*/[true]);
 
             SpriteSheetFactory.parseSpriteSheet(SingletonManager.getClassReference(SpriteSheet) as SpriteSheet);
 
