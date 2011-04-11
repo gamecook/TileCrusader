@@ -32,6 +32,7 @@ package com.gamecook.tilecrusader.templates
     public interface ITemplate
     {
         function getName():String;
+
         function nextProperty():String;
     }
 }

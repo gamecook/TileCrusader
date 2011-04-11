@@ -7,21 +7,21 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.bit101.utils.MinimalConfigurator;
-import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-import com.gamecook.tilecrusader.enum.BooleanOptions;
-import com.gamecook.tilecrusader.enum.DarknessOptions;
-import com.gamecook.tilecrusader.enum.GameModeOptions;
-import com.gamecook.tilecrusader.enum.MapSizeOptions;
-import com.gamecook.tilecrusader.states.ActiveGameState;
-import com.gamecook.tilecrusader.utils.ArrayUtil;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+    import com.gamecook.tilecrusader.enum.BooleanOptions;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.MapSizeOptions;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-import flash.events.MouseEvent;
-import flash.net.SharedObject;
+    import flash.events.MouseEvent;
+    import flash.net.SharedObject;
 
-public class RandomMapGeneratorActivity extends RandomMapBGActivity
+    public class RandomMapGeneratorActivity extends RandomMapBGActivity
     {
         private var darknessOptions:Array;
         private var gameModeOptions:Array;
@@ -55,7 +55,6 @@ public class RandomMapGeneratorActivity extends RandomMapBGActivity
             var mapOptionsSOData:Object = mapOptionsSO.data;
 
 
-
             trace("Has Shared Object", mapOptionsSOData);
 
             darknessOptions = (mapOptionsSOData.darknessOptions) ? mapOptionsSOData.darknessOptions : DarknessOptions.getValues();
@@ -66,19 +65,19 @@ public class RandomMapGeneratorActivity extends RandomMapBGActivity
 
             var xml:XML = <comps>
 
-                      <VBox x="20" y="20" scaleX="2" scaleY="2">
-                      <Label id="mapSizeLabel"/>
-                      <Label id="darknessLabel"/>
-                      <Label id="showMonsters"/>
-                      <Label id="dropTreasure"/>
-                      <Label id="gameMode"/>
+                <VBox x="20" y="20" scaleX="2" scaleY="2">
+                    <Label id="mapSizeLabel"/>
+                    <Label id="darknessLabel"/>
+                    <Label id="showMonsters"/>
+                    <Label id="dropTreasure"/>
+                    <Label id="gameMode"/>
 
-                      <PushButton id="generateDataButton" label="New Map" event="click:generateData"/>
-                      <PushButton id="submitButton" label="Play Map" event="click:onSubmit"/>
-                      <PushButton label="Filter" event="click:onFilter"/>
-                    </VBox>
+                    <PushButton id="generateDataButton" label="New Map" event="click:generateData"/>
+                    <PushButton id="submitButton" label="Play Map" event="click:onSubmit"/>
+                    <PushButton label="Filter" event="click:onFilter"/>
+                </VBox>
 
-                    </comps>
+            </comps>
 
             var config:MinimalConfigurator = new MinimalConfigurator(this);
             config.parseXML(xml);
@@ -95,11 +94,11 @@ public class RandomMapGeneratorActivity extends RandomMapBGActivity
             activeGameState.monstersDropTreasure = generateDropTreasure();
             activeGameState.showMonsters = generateRandomShowMonsters();
 
-            mapSizeLabel.text = "Map Size: "+activeGameState.size;
-            darknessLabel.text = "Darkness: "+activeGameState.darkness;
-            showMonsters.text = "Show Monsters: "+activeGameState.showMonsters;
-            dropTreasure.text = "Drop Treasure: "+activeGameState.monstersDropTreasure;
-            gameMode.text = "Game Mode: "+activeGameState.gameType;
+            mapSizeLabel.text = "Map Size: " + activeGameState.size;
+            darknessLabel.text = "Darkness: " + activeGameState.darkness;
+            showMonsters.text = "Show Monsters: " + activeGameState.showMonsters;
+            dropTreasure.text = "Drop Treasure: " + activeGameState.monstersDropTreasure;
+            gameMode.text = "Game Mode: " + activeGameState.gameType;
         }
 
         public function onSubmit(event:MouseEvent):void

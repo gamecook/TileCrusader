@@ -7,18 +7,18 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.enum.BooleanOptions;
-import com.gamecook.tilecrusader.enum.ClassOptions;
-import com.gamecook.tilecrusader.enum.DarknessOptions;
-import com.gamecook.tilecrusader.enum.GameModeOptions;
-import com.gamecook.tilecrusader.enum.MapSizeOptions;
-import com.gamecook.tilecrusader.factory.NewGameFactory;
-import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-import com.gamecook.tilecrusader.managers.SingletonManager;
-import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.enum.BooleanOptions;
+    import com.gamecook.tilecrusader.enum.ClassOptions;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.MapSizeOptions;
+    import com.gamecook.tilecrusader.factory.NewGameFactory;
+    import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-public class DebugStartActivity extends AdvancedActivity
+    public class DebugStartActivity extends AdvancedActivity
     {
 
         public function DebugStartActivity(activityManager:IActivityManager, data:*)
@@ -34,11 +34,11 @@ public class DebugStartActivity extends AdvancedActivity
             // this allows you to jump right into a newly generated game,
             // use this area to configure the ActiveGameState
             NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),
-                                                 DarknessOptions.getValues(),
-                                                 GameModeOptions.getValues(),
-                                                 MapSizeOptions.getValues(),
-                                                 BooleanOptions.getTFOptions(),
-                                                 BooleanOptions.getTFOptions());
+                    DarknessOptions.getValues(),
+                    GameModeOptions.getValues(),
+                    MapSizeOptions.getValues(),
+                    BooleanOptions.getTFOptions(),
+                    BooleanOptions.getTFOptions());
 
             SpriteSheetFactory.parseSpriteSheet(SingletonManager.getClassReference(SpriteSheet) as SpriteSheet);
 

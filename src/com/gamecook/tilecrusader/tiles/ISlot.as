@@ -5,23 +5,30 @@
  * Time: 8:01 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.tiles {
-import com.gamecook.tilecrusader.equipment.IEquipable;
+package com.gamecook.tilecrusader.tiles
+{
+    import com.gamecook.tilecrusader.equipment.IEquipable;
 
-public interface ISlot {
-    function setWeaponSlot(value:IEquipable):void;
-    function getWeaponSlot():IEquipable;
+    public interface ISlot
+    {
+        function setWeaponSlot(value:IEquipable):void;
 
-    function setHelmetSlot(value:IEquipable):void;
-    function getHelmetSlot():IEquipable;
+        function getWeaponSlot():IEquipable;
 
-    function setArmorSlot(value:IEquipable):void;
-    function getArmorSlot():IEquipable;
+        function setHelmetSlot(value:IEquipable):void;
 
-    function setShieldSlot(value:IEquipable):void;
-    function getShieldSlot():IEquipable;
+        function getHelmetSlot():IEquipable;
 
-    function setShoeSlot(value:IEquipable):void;
-    function getShoeSlot():IEquipable;
-}
+        function setArmorSlot(value:IEquipable):void;
+
+        function getArmorSlot():IEquipable;
+
+        function setShieldSlot(value:IEquipable):void;
+
+        function getShieldSlot():IEquipable;
+
+        function setShoeSlot(value:IEquipable):void;
+
+        function getShoeSlot():IEquipable;
+    }
 }

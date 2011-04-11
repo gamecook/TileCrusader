@@ -7,20 +7,23 @@
  */
 package com.gamecook.tilecrusader.combat
 {
-import com.gamecook.tilecrusader.tiles.ISlot;
-import com.gamecook.tilecrusader.tiles.ITile;
+    import com.gamecook.tilecrusader.tiles.ISlot;
+    import com.gamecook.tilecrusader.tiles.ITile;
 
-public interface ICombatant extends ITile, ISlot
+    public interface ICombatant extends ITile, ISlot
     {
-		function set onDie(value:Function):void;
-	    function get onDie():Function;
+        function set onDie(value:Function):void;
 
-	    function get onAttack():Function;
-	    function set onAttack(value:Function):void;
-		
-	    function get onDefend():Function;
-	    function set onDefend(value:Function):void;
-	    
+        function get onDie():Function;
+
+        function get onAttack():Function;
+
+        function set onAttack(value:Function):void;
+
+        function get onDefend():Function;
+
+        function set onDefend(value:Function):void;
+
         function getLife():int;
 
         function subtractLife(value:int):void;
@@ -47,18 +50,19 @@ public interface ICombatant extends ITile, ISlot
 
         function addMaxLife(value:int):void;
 
-	    function attack(monster:ICombatant, useChance:Boolean):void;
-	    function defend(monster:ICombatant):void;
+        function attack(monster:ICombatant, useChance:Boolean):void;
 
-		//function addEquipment(modifier:IEquipment):void;
+        function defend(monster:ICombatant):void;
 
-		function get isDead():Boolean;
+        //function addEquipment(modifier:IEquipment):void;
 
-		/*function get equipmentSlot0():IEquipment;
-		function get equipmentSlot1():IEquipment;*/
+        function get isDead():Boolean;
 
-		function setAttackRolls(value:int):void;
+        /*function get equipmentSlot0():IEquipment;
+         function get equipmentSlot1():IEquipment;*/
 
-		function setDefenseRolls(value:int):void;
-	}
+        function setAttackRolls(value:int):void;
+
+        function setDefenseRolls(value:int):void;
+    }
 }

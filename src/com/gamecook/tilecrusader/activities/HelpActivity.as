@@ -7,10 +7,10 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.jessefreeman.factivity.activities.BaseActivity;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-public class HelpActivity extends BaseActivity
+    public class HelpActivity extends BaseActivity
     {
         public function HelpActivity(activityManager:ActivityManager, data:* = null)
         {

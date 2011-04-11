@@ -29,11 +29,11 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.jessefreeman.factivity.activities.BaseActivity;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-public class GameCookSplashActivity extends BaseActivity
+    public class GameCookSplashActivity extends BaseActivity
     {
         public function GameCookSplashActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -45,9 +45,9 @@ public class GameCookSplashActivity extends BaseActivity
         {
             super.onCreate();
 
-            var tf:Label = new Label(this,0, 0, "Game Cook Presents:");
+            var tf:Label = new Label(this, 0, 0, "Game Cook Presents:");
             tf.x = (fullSizeWidth - tf.width) * .5;
-            tf.y  = (fullSizeHeight - tf.height) * .5;
+            tf.y = (fullSizeHeight - tf.height) * .5;
 
             startNextActivityTimer(TileCrusaderSplashActivity, 3);
         }

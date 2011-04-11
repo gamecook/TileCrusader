@@ -32,7 +32,9 @@ package com.gamecook.tilecrusader.templates
     public interface ITemplateCollection
     {
         function getTemplate(id:String):ITemplate;
+
         function getRandomTemplate():ITemplate;
+
         function addTemplate(id:String, template:ITemplate, weight:int = 1):void;
     }
 }

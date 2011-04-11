@@ -29,15 +29,15 @@
  */
 package com.gamecook.tilecrusader.maps
 {
-import com.gamecook.frogue.maps.IMap;
-import com.gamecook.frogue.maps.MapSelection;
-import com.gamecook.tilecrusader.managers.TileInstanceManager;
-import com.gamecook.tilecrusader.tiles.MonsterTile;
-import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.frogue.maps.IMap;
+    import com.gamecook.frogue.maps.MapSelection;
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.tiles.MonsterTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-import flash.geom.Point;
+    import flash.geom.Point;
 
-public class AdvancedFogOfWarMapSelection extends MapSelection
+    public class AdvancedFogOfWarMapSelection extends MapSelection
     {
         protected var exploredTilesHashMap:Array = [];
         protected var saveExploredTiles:Boolean = true;
@@ -66,11 +66,11 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
             newPoint.x -= getOffsetX();
             newPoint.y -= getOffsetY();
 
-            calculateLight(tiles,new Point(newPoint.y, newPoint.x));
+            calculateLight(tiles, new Point(newPoint.y, newPoint.x));
 
             applyLight(tiles, visiblePoints);
 
-            if(!saveExploredTiles)
+            if (!saveExploredTiles)
                 clear();
 
             return tiles;
@@ -84,55 +84,47 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
             var rows:int;
             var columns:int;
 
-            for(rows = 0; rows< height; rows++)
-            {
-                for(columns = 0; columns < width; columns ++)
-                {
+            for (rows = 0; rows < height; rows++) {
+                for (columns = 0; columns < width; columns ++) {
                     var spriteID:String = TileTypes.getTileSprite("#");
                     var tileValue = tiles[rows][columns];
                     var uID:int = getTileID(columns, rows);
 
                     // Get base tile if it's not a wall
-                    if(tileValue != "#")
-                    {
+                    if (tileValue != "#") {
                         spriteID = TileTypes.getTileSprite(" ");
 
-                        if(tileValue != " ")
-                            spriteID = spriteID.concat(","+TileTypes.getTileSprite(tiles[rows][columns]));
+                        if (tileValue != " ")
+                            spriteID = spriteID.concat("," + TileTypes.getTileSprite(tiles[rows][columns]));
 
                     }
 
                     //Pre-Process tile based on type.
-                    if(TileTypes.isMonster(tileValue))
-                    {
+                    if (TileTypes.isMonster(tileValue)) {
                         var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
                         var newTileID:String = newMonsterTile.getSpriteID();
-                        if(newTileID != "" || newTileID)
-                            spriteID = spriteID.concat(","+newMonsterTile.getSpriteID());
+                        if (newTileID != "" || newTileID)
+                            spriteID = spriteID.concat("," + newMonsterTile.getSpriteID());
                     }
 
                     //Apply lighting effects
-                    if(lightMap[uID])
-                    {
+                    if (lightMap[uID]) {
 
                         var id:int = Math.round((viewDistance - lightMap[uID]) / viewDistance * 10) - 3;
-                        if(id < 1)
+                        if (id < 1)
                             id = 0;
 
-                        spriteID = spriteID.concat(",light"+id);
+                        spriteID = spriteID.concat(",light" + id);
                     }
-                    else if(exploredTilesHashMap[uID])
-                    {
+                    else if (exploredTilesHashMap[uID]) {
                         //trace("Out Of Sight", uID, tileValue, viewDistance+1);
                         spriteID = spriteID = spriteID.concat(",light9");
                     }
-                    else if(TileTypes.isMonster(tileValue))
-                    {
+                    else if (TileTypes.isMonster(tileValue)) {
                         //trace("Monster in Dark", uID);
                         spriteID = "sprite3";
                     }
-                    else
-                    {
+                    else {
                         spriteID = "light10";
                     }
 
@@ -147,19 +139,17 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
         private function calculateLight(tiles:Array, center:Point):void
         {
 
-            var totalRows:int = tiles.length ;
+            var totalRows:int = tiles.length;
             var totalColumns:int = tiles[0].length;
             var i:int;
 
             // Get top
-            for (i = 0; i < totalColumns; i++)
-            {
-                rayTrace(center.x, center.y,0,i, tiles);
-                rayTrace(center.x, center.y,totalRows - 1,i, tiles);
+            for (i = 0; i < totalColumns; i++) {
+                rayTrace(center.x, center.y, 0, i, tiles);
+                rayTrace(center.x, center.y, totalRows - 1, i, tiles);
             }
 
-            for (i = 0; i < totalRows; i++)
-            {
+            for (i = 0; i < totalRows; i++) {
                 rayTrace(center.x, center.y, i, 0, tiles);
                 rayTrace(center.x, center.y, i, totalColumns - 1, tiles);
             }
@@ -180,20 +170,17 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
             dx *= 2;
             dy *= 2;
 
-            for (; n > 0; --n)
-            {
+            for (; n > 0; --n) {
                 var isWall:Boolean = visit(x, y, tiles, n);
 
                 if (isWall)
                     n = 0;
 
-                if (error > 0)
-                {
+                if (error > 0) {
                     x += x_inc;
                     error -= dy;
                 }
-                else
-                {
+                else {
                     y += y_inc;
                     error += dx;
                 }
@@ -204,24 +191,23 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
         private function visit(x:int, y:int, tiles:Array, distance:int):Boolean
         {
             //TODO not sure why I would ever get a value less then 0 but I do
-            if(x < 0) x = 0;
-            if(x > tiles.length -1) x = tiles.length -1;
-            if(y < 0) y = 0;
-            if(y > tiles[0].length -1) y = tiles[0].length -1;
+            if (x < 0) x = 0;
+            if (x > tiles.length - 1) x = tiles.length - 1;
+            if (y < 0) y = 0;
+            if (y > tiles[0].length - 1) y = tiles[0].length - 1;
 
             var tile:String = tiles[x][y];
 
-            var uID:int = getTileID(y,x);
+            var uID:int = getTileID(y, x);
 
             lightMap[uID] = distance;
 
-            if(visiblePoints.indexOf(uID) == -1)
+            if (visiblePoints.indexOf(uID) == -1)
                 visiblePoints.push(uID);
 
-            if(!_tourchMode);// || !_fullLineOfSight)
+            if (!_tourchMode);// || !_fullLineOfSight)
             {
-                if(!exploredTilesHashMap[uID] && tile != "#")
-                {
+                if (!exploredTilesHashMap[uID] && tile != "#") {
                     exploredTilesHashMap[uID] = " ";
                     exploredTiles.push(uID);
                 }
@@ -248,9 +234,9 @@ public class AdvancedFogOfWarMapSelection extends MapSelection
         }
 
         /*public function fullLineOfSight(value:Boolean):void
-        {
-            _fullLineOfSight = value;
-        }*/
+         {
+         _fullLineOfSight = value;
+         }*/
 
         public function getVisitedTiles():int
         {

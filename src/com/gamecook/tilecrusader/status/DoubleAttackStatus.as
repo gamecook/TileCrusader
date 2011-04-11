@@ -7,7 +7,7 @@
  */
 package com.gamecook.tilecrusader.status
 {
-public class DoubleAttackStatus implements IStatus
+    public class DoubleAttackStatus implements IStatus
     {
         protected var _attackStatus:CombatResult;
         protected var _attackStatus2:CombatResult;
@@ -31,12 +31,10 @@ public class DoubleAttackStatus implements IStatus
         public function toString():String
         {
             var message:String = _attackStatus.toString();
-            if(_attackStatus.kill)
-            {
-                message += attackStatus.defender.getName() +" was defeated.\n"
+            if (_attackStatus.kill) {
+                message += attackStatus.defender.getName() + " was defeated.\n"
             }
-            else
-            {
+            else {
                 //message += attackStatus.defender.getName() +" attacks back!\n";
                 message += attackStatus2.toString();
             }

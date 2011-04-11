@@ -21,41 +21,41 @@ package com.gamecook.tilecrusader.tiles
         public static const BOSS:String = "boss";
         public static const EQUIPMENT:String = "equipment";
 
-        public static const TYPES : Object = new Object();
+        public static const TYPES:Object = new Object();
         public static const DARKNESS:String = "darkness";
-		{
-		TYPES[' '] = { name: 'Floor', sprite: "sprite0", type: PASSABLE},
-        TYPES['#'] = { name: 'Wall', sprite: "sprite1", type: IMPASSABLE},
-        TYPES['E'] = { name: 'Exit', sprite: "sprite2", type: EXIT},
-        TYPES['T'] = { name: 'Treasure', sprite: "sprite4", type: TREASURE, classPath:"TreasureChestTile"},
-        TYPES['$'] = { name: 'Gold', sprite: "sprite5", type: PICKUP, classPath:"GoldTile"},
-        TYPES['P'] = { name: 'Potion', sprite: "sprite6", type: PICKUP},
-        TYPES['X'] = { name: 'Blood', sprite: "sprite7", type: PASSABLE},
-        TYPES['@'] = { name: 'Player', sprite: "sprite8", type: PLAYER, classPath:"PlayerTile"},
-		TYPES['1'] = { name: 'Ork', sprite: "sprite9", type: MONSTER, classPath:"MonsterTile", pointPercent:"0"},
-		TYPES['2'] = { name: 'Oger', sprite: "sprite10", type: MONSTER, classPath:"MonsterTile", pointPercent:".1"},
-		TYPES['3'] = { name: 'Goblin', sprite: "sprite11", type: MONSTER, classPath:"MonsterTile", pointPercent:".1"},
-		TYPES['4'] = { name: 'Wolfman', sprite: "sprite12", type: MONSTER, classPath:"MonsterTile", pointPercent:".3"},
-		TYPES['5'] = { name: 'Vampire', sprite: "sprite13", type: MONSTER, classPath:"MonsterTile", pointPercent:".3"},
-		TYPES['6'] = { name: 'Mummy', sprite: "sprite14", type: MONSTER, classPath:"MonsterTile", pointPercent:".4"},
-		TYPES['7'] = { name: 'Skeleton', sprite: "sprite15", type: MONSTER, classPath:"MonsterTile", pointPercent:".4"},
-		TYPES['8'] = { name: 'Imp', sprite: "sprite16", type: MONSTER, classPath:"MonsterTile", pointPercent:".6"},
-		TYPES['9'] = { name: 'Gargoyle', sprite: "sprite17", type: BOSS, classPath:"MonsterTile", pointPercent:"1"},
-        TYPES['A'] = { name: 'Artifact', sprite: "sprite100", type: ARTIFACT},
-        TYPES['w1'] = { name: 'Spear', sprite: "sprite18", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w2'] = { name: 'Cane', sprite: "sprite19", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w3'] = { name: 'Magic Wand', sprite: "sprite20", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w4'] = { name: 'Lead Pipe', sprite: "sprite21", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w5'] = { name: 'Knuckles', sprite: "sprite22", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w6'] = { name: 'Dagger', sprite: "sprite23", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w7'] = { name: 'Foil', sprite: "sprite24", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w8'] = { name: 'Sword', sprite: "sprite25", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w9'] = { name: 'Mace', sprite: "sprite26", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w10'] = { name: 'Axe', sprite: "sprite27", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w11'] = { name: 'Croquet Mallot', sprite: "sprite28", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w12'] = { name: 'Whip', sprite: "sprite29", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w13'] = { name: 'Club', sprite: "sprite30", classPath:"EquipmentTile", type: EQUIPMENT},
-        TYPES['w14'] = { name: 'Stick', sprite: "sprite31", classPath:"EquipmentTile", type: EQUIPMENT}
+        {
+            TYPES[' '] = { name: 'Floor', sprite: "sprite0", type: PASSABLE},
+                    TYPES['#'] = { name: 'Wall', sprite: "sprite1", type: IMPASSABLE},
+                    TYPES['E'] = { name: 'Exit', sprite: "sprite2", type: EXIT},
+                    TYPES['T'] = { name: 'Treasure', sprite: "sprite4", type: TREASURE, classPath:"TreasureChestTile"},
+                    TYPES['$'] = { name: 'Gold', sprite: "sprite5", type: PICKUP, classPath:"GoldTile"},
+                    TYPES['P'] = { name: 'Potion', sprite: "sprite6", type: PICKUP},
+                    TYPES['X'] = { name: 'Blood', sprite: "sprite7", type: PASSABLE},
+                    TYPES['@'] = { name: 'Player', sprite: "sprite8", type: PLAYER, classPath:"PlayerTile"},
+                    TYPES['1'] = { name: 'Ork', sprite: "sprite9", type: MONSTER, classPath:"MonsterTile", pointPercent:"0"},
+                    TYPES['2'] = { name: 'Oger', sprite: "sprite10", type: MONSTER, classPath:"MonsterTile", pointPercent:".1"},
+                    TYPES['3'] = { name: 'Goblin', sprite: "sprite11", type: MONSTER, classPath:"MonsterTile", pointPercent:".1"},
+                    TYPES['4'] = { name: 'Wolfman', sprite: "sprite12", type: MONSTER, classPath:"MonsterTile", pointPercent:".3"},
+                    TYPES['5'] = { name: 'Vampire', sprite: "sprite13", type: MONSTER, classPath:"MonsterTile", pointPercent:".3"},
+                    TYPES['6'] = { name: 'Mummy', sprite: "sprite14", type: MONSTER, classPath:"MonsterTile", pointPercent:".4"},
+                    TYPES['7'] = { name: 'Skeleton', sprite: "sprite15", type: MONSTER, classPath:"MonsterTile", pointPercent:".4"},
+                    TYPES['8'] = { name: 'Imp', sprite: "sprite16", type: MONSTER, classPath:"MonsterTile", pointPercent:".6"},
+                    TYPES['9'] = { name: 'Gargoyle', sprite: "sprite17", type: BOSS, classPath:"MonsterTile", pointPercent:"1"},
+                    TYPES['A'] = { name: 'Artifact', sprite: "sprite100", type: ARTIFACT},
+                    TYPES['w1'] = { name: 'Spear', sprite: "sprite18", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w2'] = { name: 'Cane', sprite: "sprite19", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w3'] = { name: 'Magic Wand', sprite: "sprite20", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w4'] = { name: 'Lead Pipe', sprite: "sprite21", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w5'] = { name: 'Knuckles', sprite: "sprite22", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w6'] = { name: 'Dagger', sprite: "sprite23", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w7'] = { name: 'Foil', sprite: "sprite24", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w8'] = { name: 'Sword', sprite: "sprite25", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w9'] = { name: 'Mace', sprite: "sprite26", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w10'] = { name: 'Axe', sprite: "sprite27", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w11'] = { name: 'Croquet Mallot', sprite: "sprite28", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w12'] = { name: 'Whip', sprite: "sprite29", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w13'] = { name: 'Club', sprite: "sprite30", classPath:"EquipmentTile", type: EQUIPMENT},
+                    TYPES['w14'] = { name: 'Stick', sprite: "sprite31", classPath:"EquipmentTile", type: EQUIPMENT}
         }
 
         public static function registerTile(id:String, template:Object):void
@@ -70,7 +70,7 @@ package com.gamecook.tilecrusader.tiles
 
         public static function getTileColor(tile:String):uint
         {
-            if(TYPES[tile] == null)
+            if (TYPES[tile] == null)
                 tile = TYPES["#"];
             return TYPES[tile].color;
         }

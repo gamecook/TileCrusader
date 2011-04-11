@@ -29,14 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.utils.MinimalConfigurator;
-import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-import flash.events.MouseEvent;
-import flash.net.SharedObject;
+    import flash.events.MouseEvent;
+    import flash.net.SharedObject;
 
-public class OptionsActivity extends RandomMapBGActivity
+    public class OptionsActivity extends RandomMapBGActivity
     {
         public function OptionsActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -53,16 +53,16 @@ public class OptionsActivity extends RandomMapBGActivity
             super.onCreate();
 
 
-             var xml:XML = <comps>
+            var xml:XML = <comps>
 
-                      <VBox x="20" y="20">
+                <VBox x="20" y="20">
 
-                      <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
-                      <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>
-                      <PushButton id="back" label="Back" event="click:onBack"/>
-                    </VBox>
+                    <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
+                    <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>
+                    <PushButton id="back" label="Back" event="click:onBack"/>
+                </VBox>
 
-                    </comps>
+            </comps>
 
             var config:MinimalConfigurator = new MinimalConfigurator(this);
             config.parseXML(xml);

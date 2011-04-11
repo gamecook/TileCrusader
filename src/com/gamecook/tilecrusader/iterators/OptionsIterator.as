@@ -33,6 +33,7 @@ package com.gamecook.tilecrusader.iterators
     {
         private var array:Array;
         private var index:int;
+
         public function OptionsIterator(array:Array, startIndex:int = -1)
         {
             this.array = array;
@@ -47,7 +48,7 @@ package com.gamecook.tilecrusader.iterators
         public function getNext():*
         {
             index ++;
-            if(index >= array.length)
+            if (index >= array.length)
                 index = 0;
             return array[index];
         }

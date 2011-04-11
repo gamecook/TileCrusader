@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.status
 {
-import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.combat.ICombatant;
 
-public class CombatResult
+    public class CombatResult
     {
         protected var _attacker:ICombatant;
         protected var _defender:ICombatant;
@@ -68,9 +68,9 @@ public class CombatResult
 
         public function toString():String
         {
-            var message:String = "Attack was "+success ? "successful" : "not successful"+"!\n";
+            var message:String = "Attack was " + success ? "successful" : "not successful" + "!\n";
 
-            message = attacker.getName()+" rolled "+hit+" point"+((hit != 1) ? "s" : "")+" of damage against "+defender.getName() +"\n";
+            message = attacker.getName() + " rolled " + hit + " point" + ((hit != 1) ? "s" : "") + " of damage against " + defender.getName() + "\n";
 
             return message;
         }

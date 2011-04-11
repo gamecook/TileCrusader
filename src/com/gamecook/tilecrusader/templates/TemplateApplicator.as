@@ -29,10 +29,10 @@
  */
 package com.gamecook.tilecrusader.templates
 {
-import com.gamecook.tilecrusader.combat.ICombatant;
-import com.gamecook.tilecrusader.enum.TemplateProperties;
+    import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.enum.TemplateProperties;
 
-public class TemplateApplicator
+    public class TemplateApplicator
     {
         public function TemplateApplicator()
         {
@@ -41,8 +41,7 @@ public class TemplateApplicator
         public function apply(target:ICombatant, template:ITemplate, points:int):void
         {
             var property:String;
-            while(points > 0)
-            {
+            while (points > 0) {
                 property = template.nextProperty();
                 addPoint(property, target);
 
@@ -54,8 +53,7 @@ public class TemplateApplicator
         private function addPoint(property:String, target:ICombatant):void
         {
             //TODO need to add a check to see if you can actually add point, if not it needs to go to life.
-            switch (property)
-            {
+            switch (property) {
                 case TemplateProperties.LIFE:
                     target.addMaxLife(1);
                     break;
@@ -66,10 +64,10 @@ public class TemplateApplicator
                     target.addDefenseRoll(1);
                     break;
                 case TemplateProperties.ATT_DEF:
-                    addPoint(getAttackOrDefenseProperty(Math.random()),target);
+                    addPoint(getAttackOrDefenseProperty(Math.random()), target);
                     break;
                 case TemplateProperties.RANDOM:
-                    addPoint(getAttackOrDefenseProperty(Math.random() * 3),target);
+                    addPoint(getAttackOrDefenseProperty(Math.random() * 3), target);
                     break;
             }
         }

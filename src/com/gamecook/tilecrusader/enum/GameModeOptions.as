@@ -21,8 +21,7 @@ package com.gamecook.tilecrusader.enum
         {
             var message:String;
 
-            switch(gameMode)
-            {
+            switch (gameMode) {
                 case KILL_ALL_MONSTERS:
                     message = "kill all monsters";
                     break;

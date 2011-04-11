@@ -7,50 +7,50 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.gamecook.frogue.helpers.MovementHelper;
-import com.gamecook.frogue.io.Controls;
-import com.gamecook.frogue.io.IControl;
-import com.gamecook.frogue.maps.MapAnalytics;
-import com.gamecook.frogue.maps.RandomMap;
-import com.gamecook.frogue.renderer.AbstractMapRenderer;
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.combat.AttackResult;
-import com.gamecook.tilecrusader.combat.DeathMessageFactory;
-import com.gamecook.tilecrusader.combat.ICombatant;
-import com.gamecook.tilecrusader.effects.Quake;
-import com.gamecook.tilecrusader.effects.TypeTextEffect;
-import com.gamecook.tilecrusader.enum.DarknessOptions;
-import com.gamecook.tilecrusader.enum.GameModeOptions;
-import com.gamecook.tilecrusader.enum.TemplateProperties;
-import com.gamecook.tilecrusader.equipment.IEquipable;
-import com.gamecook.tilecrusader.factory.TCTileFactory;
-import com.gamecook.tilecrusader.iterators.TreasureIterator;
-import com.gamecook.tilecrusader.managers.SingletonManager;
-import com.gamecook.tilecrusader.managers.TileInstanceManager;
-import com.gamecook.tilecrusader.maps.TCMapSelection;
-import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-import com.gamecook.tilecrusader.states.ActiveGameState;
-import com.gamecook.tilecrusader.templates.Template;
-import com.gamecook.tilecrusader.templates.TemplateApplicator;
-import com.gamecook.tilecrusader.templates.TemplateCollection;
-import com.gamecook.tilecrusader.tiles.EquipmentTile;
-import com.gamecook.tilecrusader.tiles.PlayerTile;
-import com.gamecook.tilecrusader.tiles.TileTypes;
-import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.gamecook.frogue.helpers.MovementHelper;
+    import com.gamecook.frogue.io.Controls;
+    import com.gamecook.frogue.io.IControl;
+    import com.gamecook.frogue.maps.MapAnalytics;
+    import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.frogue.renderer.AbstractMapRenderer;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.combat.AttackResult;
+    import com.gamecook.tilecrusader.combat.DeathMessageFactory;
+    import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.effects.Quake;
+    import com.gamecook.tilecrusader.effects.TypeTextEffect;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.TemplateProperties;
+    import com.gamecook.tilecrusader.equipment.IEquipable;
+    import com.gamecook.tilecrusader.factory.TCTileFactory;
+    import com.gamecook.tilecrusader.iterators.TreasureIterator;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.maps.TCMapSelection;
+    import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.templates.Template;
+    import com.gamecook.tilecrusader.templates.TemplateApplicator;
+    import com.gamecook.tilecrusader.templates.TemplateCollection;
+    import com.gamecook.tilecrusader.tiles.EquipmentTile;
+    import com.gamecook.tilecrusader.tiles.PlayerTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.events.KeyboardEvent;
-import flash.events.MouseEvent;
-import flash.geom.Point;
-import flash.system.Capabilities;
-import flash.ui.Keyboard;
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
+    import flash.display.Sprite;
+    import flash.events.KeyboardEvent;
+    import flash.events.MouseEvent;
+    import flash.geom.Point;
+    import flash.system.Capabilities;
+    import flash.ui.Keyboard;
 
-public class GameActivity extends AdvancedActivity implements IControl
+    public class GameActivity extends AdvancedActivity implements IControl
     {
 
 
@@ -104,8 +104,8 @@ public class GameActivity extends AdvancedActivity implements IControl
         private var monstersLeft:int;
 
         private var visibility:int;
-	    private var currentPoint:Point;
-	    private var currentuID:String;
+        private var currentPoint:Point;
+        private var currentuID:String;
         private var mouseDown:Boolean;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
@@ -128,7 +128,7 @@ public class GameActivity extends AdvancedActivity implements IControl
             analytics = new MapAnalytics(map);
 
             TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
-            var remainingMonsters:int = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, "1","2","3","4","5","6","7","8","9");
+            var remainingMonsters:int = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, "1", "2", "3", "4", "5", "6", "7", "8", "9");
             trace("Monsters in MapAnalytics", remainingMonsters);
 
 
@@ -145,7 +145,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
 
             renderWidth = Math.floor(viewPortWidth / tileWidth);
-            renderHeight = Math.floor((viewPortHeight- tileHeight) / tileHeight) ;
+            renderHeight = Math.floor((viewPortHeight - tileHeight) / tileHeight);
 
             darknessWidth = 5;
             darknessHeight = 4;
@@ -160,39 +160,36 @@ public class GameActivity extends AdvancedActivity implements IControl
 
             mapSelection = new TCMapSelection(map, renderWidth, renderHeight, visibility, tileInstanceManager);
 
-            if(activeGameState.mapSelection)
-            {
+            if (activeGameState.mapSelection) {
                 mapSelection.parseObject(activeGameState.mapSelection);
             }
 
             // Apply darkness setting
-            switch (activeGameState.darkness)
-            {
+            switch (activeGameState.darkness) {
                 case DarknessOptions.TORCH:
                     mapSelection.tourchMode(true);
-                break;
+                    break;
             }
 
-            mapBitmap = new Bitmap(new BitmapData(viewPortWidth/scale, viewPortHeight/scale, false, 0x000000));
+            mapBitmap = new Bitmap(new BitmapData(viewPortWidth / scale, viewPortHeight / scale, false, 0x000000));
             mapBitmap.scaleX = mapBitmap.scaleY = scale;
             mapBitmap.y = MESSAGE_HEIGHT;
             display.addChild(mapBitmap);
 
 
-
             renderer = new MQMapBitmapRenderer(mapBitmap.bitmapData, spriteSheet, tileInstanceManager);
 
             //TODO this should be moved into the MapLoadingActivity
-            if(activeGameState.tileInstanceManager)
+            if (activeGameState.tileInstanceManager)
                 tileInstanceManager.parseObject(activeGameState.tileInstanceManager);
 
             player = tileInstanceManager.getInstance("@", "@", activeGameState.player) as PlayerTile;
-			player.onDie = onPlayerDie;
-			player.onAttack = onPlayerAttack;
-	        player.onDefend = onPlayerDefend;
-	        player.onUsePotion = onPlayerUsePotion;
-			
-			
+            player.onDie = onPlayerDie;
+            player.onAttack = onPlayerAttack;
+            player.onDefend = onPlayerDefend;
+            player.onUsePotion = onPlayerUsePotion;
+
+
             //TODO need to make this it's own class
             statusLabel = new Label(this, 5, 2, "");
             statusLabel.textField.width = viewPortWidth - 5;
@@ -212,45 +209,44 @@ public class GameActivity extends AdvancedActivity implements IControl
             keyPressDelay = .25 * MILLISECONDS;
 
             /*virtualKeys = new VirtualKeysView(this);
-            addChild(virtualKeys);
-            virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
-            virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);*/
+             addChild(virtualKeys);
+             virtualKeys.x = fullSizeWidth - (virtualKeys.width + 10);
+             virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);*/
             //virtualKeys.scaleX = virtualKeys.scaleY = .5;
 
-            if(Capabilities.version.substr(0,3) != "IOS")
-            {
+            if (Capabilities.version.substr(0, 3) != "IOS") {
                 quakeEffect = new Quake(display);
                 textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
             }
 
             //TODO this isn't working look into it.
             /*if(activeGameState.startMessage)
-                PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
+             PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
         }
 
-		private function onPlayerDefend():void
-		{
-			
-		}
+        private function onPlayerDefend():void
+        {
 
-		private function onPlayerAttack(attackResult:AttackResult):void
-		{
-			var message:String = formatAttackResultMessage(attackResult);
-			addStatusMessage(message, false);
-		}
+        }
 
-	    private function onPlayerUsePotion():void
-	    {
-		    soundManager.play(TCSoundClasses.PotionSound);
-		    addStatusMessage("You have taken a potion and restored your health.", true);
-	    }
+        private function onPlayerAttack(attackResult:AttackResult):void
+        {
+            var message:String = formatAttackResultMessage(attackResult);
+            addStatusMessage(message, false);
+        }
 
-	    private function onPlayerDie(player:ICombatant):void
-	    {
-		    //stateManager(GameOverActivity);
-		    //TODO build stat Data Object
-		    startNextActivityTimer(GameOverActivity, 1);
-	    }
+        private function onPlayerUsePotion():void
+        {
+            soundManager.play(TCSoundClasses.PotionSound);
+            addStatusMessage("You have taken a potion and restored your health.", true);
+        }
+
+        private function onPlayerDie(player:ICombatant):void
+        {
+            //stateManager(GameOverActivity);
+            //TODO build stat Data Object
+            startNextActivityTimer(GameOverActivity, 1);
+        }
 
         private function onQuit():void
         {
@@ -260,8 +256,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
         private function onKeyDown(event:KeyboardEvent):void
         {
-            switch(event.keyCode)
-            {
+            switch (event.keyCode) {
                 case Keyboard.L:
                     cycleThroughLighting();
                     break;
@@ -278,20 +273,17 @@ public class GameActivity extends AdvancedActivity implements IControl
             var types:Array = [DarknessOptions.REVEAL, DarknessOptions.TORCH, DarknessOptions.NONE];
             var id:int = types.indexOf(activeGameState.darkness);
             id ++;
-            if(id >= types.length)
+            if (id >= types.length)
                 id = 0;
             var lightingFlags:Array;
             activeGameState.darkness = types[id];
-            if (id == 0)
-            {
+            if (id == 0) {
                 lightingFlags = [false, true, false];
             }
-            else if (id == 1)
-            {
-               lightingFlags = [true, false, false];
+            else if (id == 1) {
+                lightingFlags = [true, false, false];
             }
-            else
-            {
+            else {
                 lightingFlags = [false, false, true];
             }
 
@@ -299,21 +291,22 @@ public class GameActivity extends AdvancedActivity implements IControl
             //mapSelection.fullLineOfSight(lightingFlags[1]);
             mapSelection.revealAll(lightingFlags[2]);
 
-            statusLabel.text = "Changing lighting mode "+activeGameState.darkness;
+            statusLabel.text = "Changing lighting mode " + activeGameState.darkness;
         }
+
         private function configureMonsterTemplates():void
         {
             templateApplicator = new TemplateApplicator();
             monsterTemplates = new TemplateCollection();
 
             monsterTemplates.addTemplate("1", new Template("Regular", [TemplateProperties.LIFE, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 30);
-            monsterTemplates.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]),4);
-            monsterTemplates.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]),1);
-            monsterTemplates.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]),3);
-            monsterTemplates.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]),2);
-            monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]),2);
-            monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]),3);
-            monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]),1);
+            monsterTemplates.addTemplate("2", new Template("Tank", [TemplateProperties.LIFE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]), 4);
+            monsterTemplates.addTemplate("3", new Template("Chaos", [TemplateProperties.RANDOM]), 1);
+            monsterTemplates.addTemplate("4", new Template("Brute", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.DEFENSE, TemplateProperties.LIFE]), 3);
+            monsterTemplates.addTemplate("5", new Template("Attack Specialist", [TemplateProperties.ATTACK, TemplateProperties.ATTACK, TemplateProperties.LIFE, TemplateProperties.DEFENSE]), 2);
+            monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]), 2);
+            monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]), 3);
+            monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]), 1);
 
         }
 
@@ -362,58 +355,53 @@ public class GameActivity extends AdvancedActivity implements IControl
         public function move(value:Point):void
         {
 
-            if(player.isDead)
+            if (player.isDead)
                 return;
 
             var tmpPoint:Point = movementHelper.previewMove(value.x, value.y);
 
-            if (tmpPoint != null)
-            {
+            if (tmpPoint != null) {
                 var tile:String = map.getTileType(tmpPoint);
 
-                switch (TileTypes.getTileType(tile))
-                {
+                switch (TileTypes.getTileType(tile)) {
                     case TileTypes.IMPASSABLE:
-                            //TODO need to make sure we don't call render here
-                            soundManager.play(TCSoundClasses.WallHit);
+                        //TODO need to make sure we don't call render here
+                        soundManager.play(TCSoundClasses.WallHit);
                         return;
                     case TileTypes.MONSTER: case TileTypes.BOSS:
-                        var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
+                    var uID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
 
-                        var tmpTile:ICombatant = tileInstanceManager.getInstance(uID, tile) as ICombatant;
+                    var tmpTile:ICombatant = tileInstanceManager.getInstance(uID, tile) as ICombatant;
 
-                        if (tmpTile is ICombatant)
-                        {
-	                        currentPoint = tmpPoint;
-	                        currentuID = uID;
-                            fight(tmpTile);
-                        }
-                        break;
+                    if (tmpTile is ICombatant) {
+                        currentPoint = tmpPoint;
+                        currentuID = uID;
+                        fight(tmpTile);
+                    }
+                    break;
                     case TileTypes.TREASURE:
                         openTreasure(tmpPoint);
                         break;
                     case TileTypes.PICKUP: case TileTypes.ARTIFACT:
-                        pickup(tile, tmpPoint, value);
-                        break;
+                    pickup(tile, tmpPoint, value);
+                    break;
                     case TileTypes.EQUIPMENT:
 
                         var wUID:String = map.getTileID(tmpPoint.y, tmpPoint.x).toString();
                         var tmpWeapon:EquipmentTile = tileInstanceManager.getInstance(wUID, tile) as EquipmentTile;
 
-                        equip(player, tmpWeapon, wUID,  tmpPoint, value);
+                        equip(player, tmpWeapon, wUID, tmpPoint, value);
                         break;
                     case TileTypes.EXIT:
                         movePlayer(value);
-                        if(canFinishLevel())
-                        {
+                        if (canFinishLevel()) {
                             //TODO gameover
                             //TODO play heroic theme here?
                             trace("Level Done");
 
                             onCompleteLevel(true);
                         }
-                        else
-                        {
+                        else {
                             //TODO let player leave the level, use a pop up to ask
 
                             //PopUpManager.showOverlay(new LeaveLevelPopUpWindow(onLeaveMap));
@@ -426,23 +414,19 @@ public class GameActivity extends AdvancedActivity implements IControl
                 }
                 invalidate();
             }
-           if(status.length > 0)
-           {
-                if(textEffect)
-                {
+            if (status.length > 0) {
+                if (textEffect) {
                     textEffect.newMessage(status, 2);
                     addThread(textEffect);
                     status = "";
                 }
-                else
-                {
+                else {
                     statusLabel.text = status;
                 }
-           }
-            else
-           {
-               statusLabel.text = status;
-           }
+            }
+            else {
+                statusLabel.text = status;
+            }
         }
 
         private function equip(player:PlayerTile, tmpTile:EquipmentTile, uID:String, tilePoint:Point, nextMovePoint:Point):void
@@ -458,8 +442,7 @@ public class GameActivity extends AdvancedActivity implements IControl
             var newTile:String = TileTypes.getEmptyTile();
 
             // Drop weapon
-            if(droppedEquipment)
-            {
+            if (droppedEquipment) {
                 newTile = droppedEquipment.tileID;
 
                 var weaponTile:EquipmentTile = new EquipmentTile();
@@ -467,8 +450,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
                 tileInstanceManager.replaceInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
             }
-            else
-            {
+            else {
                 tileInstanceManager.removeInstance(uID);
             }
 
@@ -497,7 +479,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
         public function addStatusMessage(value:String, clear:Boolean = true):void
         {
-            if(clear)
+            if (clear)
                 status = "";
             status += value;
         }
@@ -506,28 +488,27 @@ public class GameActivity extends AdvancedActivity implements IControl
         {
             var success:Boolean;
 
-            switch(gameMode)
-            {
+            switch (gameMode) {
                 case GameModeOptions.FIND_ALL_TREASURE:
                     success = treasureIterator.hasNext();
-                break;
+                    break;
                 case GameModeOptions.FIND_ARTIFACT:
                     success = hasArtifact;
-                break;
+                    break;
                 case GameModeOptions.KILL_ALL_MONSTERS:
                     TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
                     // This is super expensive
-                    monstersLeft = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, false, "1","2","3","4","5","6","7","8","9");
+                    monstersLeft = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, false, "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
                     success = (monstersLeft == 0);
-                break;
+                    break;
                 case GameModeOptions.KILL_BOSS:
                     var value:int = analytics.getTotal(false, "9");
                     success = (value == 0);
-                break;
+                    break;
                 case GameModeOptions.EXPLORE:
                     success = (exploredTiles == 1);
-                 break;
+                    break;
             }
 
             return success;
@@ -535,74 +516,71 @@ public class GameActivity extends AdvancedActivity implements IControl
 
         private function fight(monster:ICombatant):void
         {
-	        setCurrentMonster(monster);
-	        player.attack(monster, true);
+            setCurrentMonster(monster);
+            player.attack(monster, true);
 
-            if(quakeEffect)
-            {
+            if (quakeEffect) {
 
-	            addThread(quakeEffect);
+                addThread(quakeEffect);
 
             }
         }
 
-		protected function setCurrentMonster(monster:ICombatant):void
-		{
-			monster.onDie = onMonsterDie;
-			monster.onAttack = onMonsterAttack;
-			monster.onDefend = onMonsterDefend;
-		}
+        protected function setCurrentMonster(monster:ICombatant):void
+        {
+            monster.onDie = onMonsterDie;
+            monster.onAttack = onMonsterAttack;
+            monster.onDefend = onMonsterDefend;
+        }
 
-		protected function formatAttackResultMessage(attackResult:AttackResult):String
-		{
-			var message:String = "Attack was " + attackResult.success ? "successful" : "not successful" + "!\n";
-			message = attackResult.attacker.getName() + " rolled " + attackResult.hitValue + " point" + (( attackResult.hitValue != 1) ? "s" : "") + " of damage against " + attackResult.defender.getName() + "\n";
-			return message;
-		}
+        protected function formatAttackResultMessage(attackResult:AttackResult):String
+        {
+            var message:String = "Attack was " + attackResult.success ? "successful" : "not successful" + "!\n";
+            message = attackResult.attacker.getName() + " rolled " + attackResult.hitValue + " point" + (( attackResult.hitValue != 1) ? "s" : "") + " of damage against " + attackResult.defender.getName() + "\n";
+            return message;
+        }
 
-		private function onMonsterDefend():void
-		{
-		}
+        private function onMonsterDefend():void
+        {
+        }
 
-		private function onMonsterAttack(attackResult:AttackResult):void
-		{
-			var monster:ICombatant = attackResult.attacker;
-			var monsterName:String = monster.getName();
-			var message:String = monsterName;
-			
-			if(player.isDead)
-			{
-				message += " killed " + player.getName();
-			}
-			else
-			{
-				message += " did " + attackResult.hitValue + " damage";
-			}
-			
-			message += " with " + monster.getWeaponSlot().description + "\n";
-			addStatusMessage(message, false);
+        private function onMonsterAttack(attackResult:AttackResult):void
+        {
+            var monster:ICombatant = attackResult.attacker;
+            var monsterName:String = monster.getName();
+            var message:String = monsterName;
 
-			//TODO keep track of this sound, may need a player hit as well.
-			soundManager.play(TCSoundClasses.EnemyAttack);
-		}
+            if (player.isDead) {
+                message += " killed " + player.getName();
+            }
+            else {
+                message += " did " + attackResult.hitValue + " damage";
+            }
 
-	    private function onMonsterDie(monster:ICombatant):void
-	    {
-		    soundManager.play(TCSoundClasses.WinBattle);
+            message += " with " + monster.getWeaponSlot().description + "\n";
+            addStatusMessage(message, false);
 
-		    swapTileOnMap(currentPoint, "X");
+            //TODO keep track of this sound, may need a player hit as well.
+            soundManager.play(TCSoundClasses.EnemyAttack);
+        }
+
+        private function onMonsterDie(monster:ICombatant):void
+        {
+            soundManager.play(TCSoundClasses.WinBattle);
+
+            swapTileOnMap(currentPoint, "X");
 
 
-		    /*
-		    //Old drop treasure code
-		    if(monstersDropTreasure){
-			    var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
-			    if(treasure == "K")
-				    treasurePool.push(treasure);
-			    else
-				    swapTileOnMap(currentPoint, treasure);
-		    }
-            */
+            /*
+             //Old drop treasure code
+             if(monstersDropTreasure){
+             var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : "X";
+             if(treasure == "K")
+             treasurePool.push(treasure);
+             else
+             swapTileOnMap(currentPoint, treasure);
+             }
+             */
 
             // TODO This is a hardcoded test for dropping the weapon.
             var droppedEquipment:IEquipable = monster.getWeaponSlot();
@@ -615,31 +593,28 @@ public class GameActivity extends AdvancedActivity implements IControl
 
             tileInstanceManager.replaceInstance(currentuID, weaponTile);
 
-		    var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
-		    var dropChance:Number = .25;
-		    if(Math.random() < dropChance)
-		    {
-			    addStatusMessage(monster.getName() + " died and dropped " + monster.getWeaponSlot().description, false);
-			    //TODO: some swap tile logic. Weapons need a map character.
-		    }
-		    else
-		    {
-			    addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
-		    }
-	    }
+            var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
+            var dropChance:Number = .25;
+            if (Math.random() < dropChance) {
+                addStatusMessage(monster.getName() + " died and dropped " + monster.getWeaponSlot().description, false);
+                //TODO: some swap tile logic. Weapons need a map character.
+            }
+            else {
+                addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
+            }
+        }
 
         private function openTreasure(tmpPoint:Point):void
         {
 
 
-            addStatusMessage(player.getName() +" has opened a treasure chest.");
+            addStatusMessage(player.getName() + " has opened a treasure chest.");
 
             var treasure:String = treasureIterator.hasNext() ? treasureIterator.getNext() : " ";
-            if(treasure == "K")
-            {
+            if (treasure == "K") {
                 addStatusMessage("\nA trap was sprung dealing 1 point of damage.", false);
                 player.subtractLife(1);
-                if(quakeEffect)
+                if (quakeEffect)
                     addThread(quakeEffect);
                 treasure = " ";
             }
@@ -655,44 +630,37 @@ public class GameActivity extends AdvancedActivity implements IControl
 
         private function pickup(tile:String, tmpPoint:Point, value:Point):void
         {
-            if (tile == "$")
-            {
+            if (tile == "$") {
                 var foundGold:int = Math.random() * cashRange;
 
-                if(foundGold > cashPool)
+                if (foundGold > cashPool)
                     foundGold = cashPool;
 
                 cashPool -= foundGold;
 
                 player.addGold(foundGold);
 
-                addStatusMessage(player.getName() +" has picked up $"+foundGold+" gold.");
+                addStatusMessage(player.getName() + " has picked up $" + foundGold + " gold.");
             }
-            else if (tile == "P")
-            {
-                if(player.getPotions() < player.getMaxPotions())
-                {
+            else if (tile == "P") {
+                if (player.getPotions() < player.getMaxPotions()) {
                     player.addPotion(1);
-                    addStatusMessage(player.getName() +" has picked up a health potion.");
+                    addStatusMessage(player.getName() + " has picked up a health potion.");
                 }
-                else
-                {
-                    if(player.getLife() < player.getMaxLife())
-                    {
+                else {
+                    if (player.getLife() < player.getMaxLife()) {
                         player.setLife(player.getMaxLife());
-                        addStatusMessage(player.getName() +" can not carry any more health potions.\nHe was able to drink it now and restore his health.");
+                        addStatusMessage(player.getName() + " can not carry any more health potions.\nHe was able to drink it now and restore his health.");
                         soundManager.play(TCSoundClasses.PotionSound);
                     }
-                    else
-                    {
-                    addStatusMessage(player.getName() +" can not carry any more health potions.\nThis one was thrown away.");
+                    else {
+                        addStatusMessage(player.getName() + " can not carry any more health potions.\nThis one was thrown away.");
                     }
                 }
             }
-            else if (tile == "A")
-            {
+            else if (tile == "A") {
                 hasArtifact = true;
-                addStatusMessage(player.getName() +" has found an Artifact.");
+                addStatusMessage(player.getName() + " has found an Artifact.");
             }
 
             swapTileOnMap(tmpPoint, " ");
@@ -714,17 +682,14 @@ public class GameActivity extends AdvancedActivity implements IControl
         {
             pollKeyPressCounter += elapsed;
 
-            if(pollKeyPressCounter >= keyPressDelay)
-            {
+            if (pollKeyPressCounter >= keyPressDelay) {
                 pollKeyPressCounter = 0;
 
-                if(mouseDown)
-                {
+                if (mouseDown) {
                     onUpdateMousePosition();
                 }
 
-                if(_nextMove)
-                {
+                if (_nextMove) {
                     move(_nextMove);
                     _nextMove = null
                 }
@@ -732,7 +697,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
             super.update(elapsed);
 
-            exploredTiles = mapSelection.getVisitedTiles()/map.getOpenTiles().length;
+            exploredTiles = mapSelection.getVisitedTiles() / map.getOpenTiles().length;
 
         }
 
@@ -740,8 +705,7 @@ public class GameActivity extends AdvancedActivity implements IControl
         {
             super.render();
 
-            if (invalid)
-            {
+            if (invalid) {
 
                 mapSelection.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapSelection);
@@ -754,15 +718,15 @@ public class GameActivity extends AdvancedActivity implements IControl
                 var playerSprite:String = TileTypes.getTileSprite("@");
 
                 //Add custom sprite overlay (equipment)
-                if(player.getSpriteID() != "")
-                    playerSprite = playerSprite.concat(","+player.getSpriteID());
+                if (player.getSpriteID() != "")
+                    playerSprite = playerSprite.concat("," + player.getSpriteID());
 
                 //Add life sprite
-                if(player.getLife() < player.getMaxLife())
-                    playerSprite = playerSprite.concat(",life"+(Math.round(player.getLife()/ player.getMaxLife()  * 100).toString())) ;
+                if (player.getLife() < player.getMaxLife())
+                    playerSprite = playerSprite.concat(",life" + (Math.round(player.getLife() / player.getMaxLife() * 100).toString()));
 
                 //Draw player
-                renderer.renderPlayer(x,y, playerSprite);
+                renderer.renderPlayer(x, y, playerSprite);
 
                 invalid = false;
             }
@@ -801,7 +765,7 @@ public class GameActivity extends AdvancedActivity implements IControl
         private function onUpdateMousePosition():void
         {
 
-            var localPoint:Point = new Point(Math.floor((mouseX - mapBitmap.x)/TILE_SIZE), Math.floor((mouseY - mapBitmap.y)/TILE_SIZE));
+            var localPoint:Point = new Point(Math.floor((mouseX - mapBitmap.x) / TILE_SIZE), Math.floor((mouseY - mapBitmap.y) / TILE_SIZE));
             var tileID:int = mapSelection.getTileID(localPoint.x, localPoint.y);
 
             trace("Update Mouse Position", mouseX, mouseY, localPoint);
@@ -812,13 +776,13 @@ public class GameActivity extends AdvancedActivity implements IControl
             playerPoint.y -= mapSelection.getOffsetY();
 
             var directionX:int = 0;
-            if(localPoint.x > playerPoint.x)
+            if (localPoint.x > playerPoint.x)
                 directionX = 1;
             else if (localPoint.x < playerPoint.x)
                 directionX = -1;
 
             var directionY:int = 0;
-            if(localPoint.y > playerPoint.y)
+            if (localPoint.y > playerPoint.y)
                 directionY = 1;
             else if (localPoint.y < playerPoint.y)
                 directionY = -1;
@@ -837,8 +801,7 @@ public class GameActivity extends AdvancedActivity implements IControl
 
         override public function saveState(obj:Object, activeState:Boolean = true):void
         {
-            if(!player.isDead)
-            {
+            if (!player.isDead) {
                 activeGameState.player = player.toObject();
                 activeGameState.tileInstanceManager = tileInstanceManager.toObject();
                 activeGameState.mapSelection = mapSelection.toObject();

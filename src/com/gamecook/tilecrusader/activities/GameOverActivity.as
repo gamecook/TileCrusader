@@ -7,12 +7,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-import com.gamecook.tilecrusader.states.ActiveGameState;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-public class GameOverActivity extends AdvancedActivity
+    public class GameOverActivity extends AdvancedActivity
     {
         private var activeGameState:ActiveGameState;
 
@@ -30,7 +30,7 @@ public class GameOverActivity extends AdvancedActivity
 
             soundManager.play(TCSoundClasses.DeathTheme);
 
-            var tf:Label = new Label(this, 0,0, "You were killed!");
+            var tf:Label = new Label(this, 0, 0, "You were killed!");
             tf.x = (fullSizeWidth - tf.width) * .5;
             tf.y = (fullSizeHeight - tf.height) * .5;
             addChild(tf);

@@ -29,14 +29,14 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-import com.gamecook.tilecrusader.managers.SingletonManager;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-import flash.display.Bitmap;
+    import flash.display.Bitmap;
 
-public class TileCrusaderSplashActivity extends AdvancedActivity
+    public class TileCrusaderSplashActivity extends AdvancedActivity
     {
 
         [Embed(source="../../../../../build/assets/tc_logo.png")]
@@ -56,7 +56,7 @@ public class TileCrusaderSplashActivity extends AdvancedActivity
 
             var logo:Bitmap = new Logo();
             logo.x = (fullSizeWidth - logo.width) * .5;
-            logo.y  = ((fullSizeHeight - logo.height) * .5);
+            logo.y = ((fullSizeHeight - logo.height) * .5);
             addChild(logo);
 
             startNextActivityTimer(WarningActivity, 3);

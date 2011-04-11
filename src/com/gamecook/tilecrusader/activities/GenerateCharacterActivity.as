@@ -5,19 +5,20 @@
  * Time: 10:20 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.activities {
-import com.bit101.components.Label;
-import com.bit101.components.PushButton;
-import com.bit101.utils.MinimalConfigurator;
-import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
-import com.gamecook.tilecrusader.tools.generator.CharacterGenerator;
-import com.gamecook.tilecrusader.utils.ArrayUtil;
-import com.jessefreeman.factivity.managers.IActivityManager;
+package com.gamecook.tilecrusader.activities
+{
+    import com.bit101.components.Label;
+    import com.bit101.components.PushButton;
+    import com.bit101.utils.MinimalConfigurator;
+    import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-import flash.display.Bitmap;
-import flash.events.MouseEvent;
+    import flash.display.Bitmap;
+    import flash.events.MouseEvent;
 
-public class GenerateCharacterActivity extends RandomMapBGActivity{
+    public class GenerateCharacterActivity extends RandomMapBGActivity
+    {
         private var character:Bitmap;
         private var generator:CharacterGenerator;
         private var bodyOptionBehavior:OptionsBehavior;
@@ -62,8 +63,8 @@ public class GenerateCharacterActivity extends RandomMapBGActivity{
 
                 <VBox id="layout" spacing="10" x="40" y="120" scaleX="2" scaleY="2">
 
-                        <VBox spacing="10">
-                              <VBox spacing="-5">
+                    <VBox spacing="10">
+                        <VBox spacing="-5">
                             <Label text="Body:"/>
                             <PushButton id="bodyButton" label="Body 1" event="click:onChangeBody"/>
                         </VBox>
@@ -77,12 +78,12 @@ public class GenerateCharacterActivity extends RandomMapBGActivity{
                         </VBox>
 
                     </VBox>
-                        <PushButton id="accept" label="I Like It" width="210" event="click:onDone"/>
-                        <HBox spacing="10">
-                            <PushButton id="cancel" label="Cancel" event="click:onBack"/>
-                            <PushButton id="randomize" label="Randomize" event="click:onRandomize"/>
-                        </HBox>
-                    </VBox>
+                    <PushButton id="accept" label="I Like It" width="210" event="click:onDone"/>
+                    <HBox spacing="10">
+                        <PushButton id="cancel" label="Cancel" event="click:onBack"/>
+                        <PushButton id="randomize" label="Randomize" event="click:onRandomize"/>
+                    </HBox>
+                </VBox>
 
             </comps>;
 
@@ -146,11 +147,11 @@ public class GenerateCharacterActivity extends RandomMapBGActivity{
 
         public function onRandomize(event:MouseEvent):void
         {
-           generator.changeBody(ArrayUtil.pickRandomArrayElement(generator.getBodySpriteNames()));
-           generator.changeFace(ArrayUtil.pickRandomArrayElement(generator.getFaceSpriteNames()));
-           generator.changeOutfit(ArrayUtil.pickRandomArrayElement(generator.getOutfitSpriteNames()));
+            generator.changeBody(ArrayUtil.pickRandomArrayElement(generator.getBodySpriteNames()));
+            generator.changeFace(ArrayUtil.pickRandomArrayElement(generator.getFaceSpriteNames()));
+            generator.changeOutfit(ArrayUtil.pickRandomArrayElement(generator.getOutfitSpriteNames()));
 
-           onUpdateCharacter();
+            onUpdateCharacter();
         }
     }
 }

@@ -29,27 +29,26 @@
  */
 package
 {
-import com.bit101.components.Component;
-import com.bit101.components.Label;
-import com.bit101.components.Style;
-import com.gamecook.tilecrusader.TileCrusaderGame;
-import com.gamecook.tilecrusader.activities.DebugStartActivity;
-import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
-import com.gamecook.tilecrusader.managers.PopUpManager;
-import com.google.analytics.GATracker;
-import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.bit101.components.Component;
+    import com.bit101.components.Label;
+    import com.bit101.components.Style;
+    import com.gamecook.tilecrusader.TileCrusaderGame;
+    import com.gamecook.tilecrusader.activities.DebugStartActivity;
+    import com.gamecook.tilecrusader.managers.PopUpManager;
+    import com.google.analytics.GATracker;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
-import flash.display.DisplayObject;
-import flash.display.Sprite;
-import flash.display.StageAlign;
-import flash.display.StageDisplayState;
-import flash.display.StageScaleMode;
-import flash.system.Capabilities;
-import flash.text.TextFieldAutoSize;
+    import flash.display.DisplayObject;
+    import flash.display.Sprite;
+    import flash.display.StageAlign;
+    import flash.display.StageDisplayState;
+    import flash.display.StageScaleMode;
+    import flash.system.Capabilities;
+    import flash.text.TextFieldAutoSize;
 
-import net.hires.debug.Stats;
+    import net.hires.debug.Stats;
 
-[SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
+    [SWF(width="800",height="480",backgroundColor="#000000",frameRate="60")]
     public class TileCrusaderApp extends Sprite
     {
         [Embed(source='../build/assets/nokiafc22.ttf', fontName="system", embedAsCFF=false, mimeType="application/x-font-truetype")]
@@ -66,22 +65,19 @@ import net.hires.debug.Stats;
         {
             configureStage();
             configureComponents();
-            os = Capabilities.version.substr(0,3);
+            os = Capabilities.version.substr(0, 3);
 
-            tracker = new GATracker( this, "UA-18884514-4", "AS3", false );
+            tracker = new GATracker(this, "UA-18884514-4", "AS3", false);
 
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
             var scale:Number = 2;
-            if(stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
-            {
-                if(os == "IOS")
-                {
+            if (stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE) {
+                if (os == "IOS") {
                     screenHeight = stage.fullScreenWidth;
                     screenWidth = stage.fullScreenHeight;
                 }
-                else
-                {
+                else {
                     screenWidth = stage.fullScreenWidth;
                     screenHeight = stage.fullScreenHeight;
                 }
@@ -93,28 +89,28 @@ import net.hires.debug.Stats;
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             //Debug Game
-            game = new TileCrusaderGame(tracker, 0,0, DebugStartActivity, scale);
+            game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
 
             // Real Game
             //game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
 
             addChild(game);
 
-            var stats:DisplayObject = addChild( new Stats() );
+            var stats:DisplayObject = addChild(new Stats());
 
-            stats.y =  (BaseActivity.fullSizeHeight * 2) - stats.height;
+            stats.y = (BaseActivity.fullSizeHeight * 2) - stats.height;
 
-            var label:Label = new Label(this, 0,0);
+            var label:Label = new Label(this, 0, 0);
             label.autoSize = TextFieldAutoSize.LEFT;
             label.textField.multiline = true;
             label.textField.wordWrap = true;
             label.textField.width = 300;
-            label.text += "Screen Resolution: "+stage.stageWidth+"x"+stage.stageHeight+"\n";
-            label.text += "Full Screen Resolution: "+stage.fullScreenWidth+"x"+stage.fullScreenHeight+"\n";
-            label.text += "Native Screen Resolution: "+Capabilities.screenResolutionX+"x"+Capabilities.screenResolutionY+"\n";
-            label.text += "Version: "+Capabilities.version+"\n";
-            label.text += "DPI: "+Capabilities.screenDPI+"\n";
-            label.text += "Display Mode: "+stage.displayState+"\n";
+            label.text += "Screen Resolution: " + stage.stageWidth + "x" + stage.stageHeight + "\n";
+            label.text += "Full Screen Resolution: " + stage.fullScreenWidth + "x" + stage.fullScreenHeight + "\n";
+            label.text += "Native Screen Resolution: " + Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY + "\n";
+            label.text += "Version: " + Capabilities.version + "\n";
+            label.text += "DPI: " + Capabilities.screenDPI + "\n";
+            label.text += "Display Mode: " + stage.displayState + "\n";
 
             label.x = stats.width + 10;
             label.y = stats.y;
@@ -129,7 +125,8 @@ import net.hires.debug.Stats;
             Component.initStage(stage);
         }
 
-        private function configureStage():void {
+        private function configureStage():void
+        {
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.TOP_LEFT;
         }

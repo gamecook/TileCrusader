@@ -27,27 +27,29 @@
  * Time: 10:53 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.views {
-import com.gamecook.frogue.maps.MapPopulater;
-import com.gamecook.frogue.maps.RandomMap;
-import com.gamecook.frogue.renderer.AbstractMapRenderer;
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.factory.TileFactory;
-import com.gamecook.tilecrusader.managers.SingletonManager;
-import com.gamecook.tilecrusader.managers.TileInstanceManager;
-import com.gamecook.tilecrusader.maps.TCMapSelection;
-import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-import com.gamecook.tilecrusader.tiles.PlayerTile;
-import com.gamecook.tilecrusader.tiles.TileTypes;
+package com.gamecook.tilecrusader.views
+{
+    import com.gamecook.frogue.maps.MapPopulater;
+    import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.frogue.renderer.AbstractMapRenderer;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.factory.TileFactory;
+    import com.gamecook.tilecrusader.managers.SingletonManager;
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.maps.TCMapSelection;
+    import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+    import com.gamecook.tilecrusader.tiles.PlayerTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.filters.ColorMatrixFilter;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
+    import flash.display.Sprite;
+    import flash.filters.ColorMatrixFilter;
+    import flash.geom.Point;
+    import flash.geom.Rectangle;
 
-public class ArtisticMapView extends Sprite {
+    public class ArtisticMapView extends Sprite
+    {
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;
 

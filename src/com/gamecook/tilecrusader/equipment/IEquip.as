@@ -5,11 +5,14 @@
  * Time: 8:29 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.equipment {
+package com.gamecook.tilecrusader.equipment
+{
 
-    public interface IEquip {
+    public interface IEquip
+    {
 
         function equip(item:IEquipable):IEquipable;
+
         function canEquip(item:IEquipable, slot:String):Boolean;
 
     }

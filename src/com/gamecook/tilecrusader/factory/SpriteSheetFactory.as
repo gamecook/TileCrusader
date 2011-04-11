@@ -5,17 +5,19 @@
  * Time: 11:55 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.factory {
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.tiles.TileTypes;
-import com.gamecook.tilecrusader.utils.ColorUtil;
+package com.gamecook.tilecrusader.factory
+{
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.tilecrusader.utils.ColorUtil;
 
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.geom.Matrix;
-import flash.geom.Rectangle;
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
+    import flash.geom.Matrix;
+    import flash.geom.Rectangle;
 
-public class SpriteSheetFactory {
+    public class SpriteSheetFactory
+    {
 
         [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
         public static var SpriteSheetImage:Class;
@@ -34,8 +36,7 @@ public class SpriteSheetFactory {
             var i:int;
             var total:int = Math.floor(bitmap.width / tileSize);
             var spriteRect:Rectangle = new Rectangle(0, 0, tileSize, tileSize);
-            for (i = 0; i < total; ++i)
-            {
+            for (i = 0; i < total; ++i) {
                 spriteRect.x = i * tileSize;
                 spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
             }
@@ -51,19 +52,18 @@ public class SpriteSheetFactory {
             var total:int = 100;
             var i:int;
 
-            for (i = 0; i <= total; i++)
-            {
+            for (i = 0; i <= total; i++) {
                 var matrix:Matrix = new Matrix();
 
                 var bitmapData:BitmapData = new BitmapData(TILE_SIZE, TILE_SIZE, true, 0x000000);
-                var xOffset:int = bitmapData.width-2;
+                var xOffset:int = bitmapData.width - 2;
 
-                var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
+                var bg:BitmapData = new BitmapData(2, bitmapData.height, false, 0xff0000);
 
-                var lifeBarHeight:Number = Math.floor(bitmapData.height * i/total);
-                if(lifeBarHeight <=0) lifeBarHeight = 1;
+                var lifeBarHeight:Number = Math.floor(bitmapData.height * i / total);
+                if (lifeBarHeight <= 0) lifeBarHeight = 1;
                 var lifeBarY:Number = bitmapData.height - lifeBarHeight;
-                var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
+                var bar:BitmapData = new BitmapData(2, lifeBarHeight, false, 0x00ff00);
 
                 matrix.translate(xOffset, 0);
                 bitmapData.draw(bg, matrix);
@@ -71,7 +71,7 @@ public class SpriteSheetFactory {
                 matrix.translate(0, lifeBarY);
                 bitmapData.draw(bar, matrix);
 
-                spriteSheet.cacheSprite("life"+Math.round(i/total * 100), bitmapData);
+                spriteSheet.cacheSprite("life" + Math.round(i / total * 100), bitmapData);
             }
         }
 
@@ -88,9 +88,8 @@ public class SpriteSheetFactory {
             var rect:Rectangle = new Rectangle(0, 0, TILE_SIZE, TILE_SIZE);
             var id:String;
 
-            for (i = 0; i < total; i ++)
-            {
-                id = "light"+i;
+            for (i = 0; i < total; i ++) {
+                id = "light" + i;
                 bitmapData.fillRect(rect, ColorUtil.returnARGB(0x000000, i * 20));
                 spriteSheet.cacheSprite(id, bitmapData.clone());
             }
@@ -101,7 +100,7 @@ public class SpriteSheetFactory {
 
             // Black Tile
             bitmapData.fillRect(rect, 0x00000000);
-            id = "light"+i;
+            id = "light" + i;
             spriteSheet.cacheSprite(id, bitmapData.clone());
 
             //Register last light tile as darkness

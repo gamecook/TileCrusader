@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.combat.ICombatant;
 
-public class PlayerTile extends MonsterTile
+    public class PlayerTile extends MonsterTile
     {
 
         private var gold:int = 0;
@@ -19,32 +19,31 @@ public class PlayerTile extends MonsterTile
         private var steps:int = 0;
         private var visibility:int = 3;
 
-	    public var onUsePotion:Function;
+        public var onUsePotion:Function;
 
-		public function PlayerTile()
+        public function PlayerTile()
         {
         }
 
-	    override protected function set life(value:int):void
-	    {
-		    if (value == 0 && getPotions() > 0)
-		    {
-			    usePotion();
-			    return;
-		    }
+        override protected function set life(value:int):void
+        {
+            if (value == 0 && getPotions() > 0) {
+                usePotion();
+                return;
+            }
 
-		    super.life = value;
-	    }
+            super.life = value;
+        }
 
-	    private function usePotion():void
-	    {
-		    setLife(getMaxLife());
-		    subtractPotion();
+        private function usePotion():void
+        {
+            setLife(getMaxLife());
+            subtractPotion();
 
-		    onUsePotion();
-	    }
+            onUsePotion();
+        }
 
-	    public function setGold(value:int):void
+        public function setGold(value:int):void
         {
             gold = value;
         }
@@ -62,7 +61,7 @@ public class PlayerTile extends MonsterTile
         public function subtractGold(value:int):void
         {
             gold -= value;
-            if(gold < 0) gold = 0;
+            if (gold < 0) gold = 0;
         }
 
         public function getPotions():int
@@ -79,22 +78,22 @@ public class PlayerTile extends MonsterTile
         {
             super.parseObject(obj);
 
-            if(obj.hasOwnProperty("gold"))
+            if (obj.hasOwnProperty("gold"))
                 gold = obj.gold;
 
-            if(obj.hasOwnProperty("maxPotions"))
+            if (obj.hasOwnProperty("maxPotions"))
                 maxPotions = obj.maxPotions;
 
-            if(obj.hasOwnProperty("potions"))
+            if (obj.hasOwnProperty("potions"))
                 potions = obj.potions;
 
-            if(obj.hasOwnProperty("kills"))
+            if (obj.hasOwnProperty("kills"))
                 kills = obj.kills;
 
-            if(obj.hasOwnProperty("steps"))
+            if (obj.hasOwnProperty("steps"))
                 steps = obj.steps;
 
-            if(obj.hasOwnProperty("visibility"))
+            if (obj.hasOwnProperty("visibility"))
                 visibility = obj.visibility;
 
         }
@@ -158,15 +157,14 @@ public class PlayerTile extends MonsterTile
             visibility = value;
         }
 
-		override public function attack(monster:ICombatant, useChance:Boolean):void
-		{
-			super.attack(monster, useChance);
-			
-			if(monster.isDead)
-			{
-				addKill();
-			}
-		}
+        override public function attack(monster:ICombatant, useChance:Boolean):void
+        {
+            super.attack(monster, useChance);
+
+            if (monster.isDead) {
+                addKill();
+            }
+        }
 
     }
 

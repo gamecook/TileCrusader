@@ -29,13 +29,13 @@
  */
 package com.gamecook.tilecrusader.managers
 {
-import com.gamecook.tilecrusader.views.AbstractPopUp;
+    import com.gamecook.tilecrusader.views.AbstractPopUp;
 
-import flash.display.Sprite;
-import flash.display.Stage;
-import flash.events.MouseEvent;
+    import flash.display.Sprite;
+    import flash.display.Stage;
+    import flash.events.MouseEvent;
 
-public class PopUpManager
+    public class PopUpManager
     {
         private static var stage:Stage;
         private static var currentPopUp:AbstractPopUp;
@@ -48,7 +48,7 @@ public class PopUpManager
             stage = target;
             overlay = new Sprite();
             overlay.graphics.beginFill(overlayColor, overlayAlpha);
-            overlay.graphics.drawRect(0,0,width, height);
+            overlay.graphics.drawRect(0, 0, width, height);
             overlay.graphics.endFill();
 
         }
@@ -56,7 +56,7 @@ public class PopUpManager
         public static function showOverlay(target:AbstractPopUp, onClose:Function = null, overlayClose:Boolean = false):void
         {
 
-            if(overlayClose)
+            if (overlayClose)
                 overlay.addEventListener(MouseEvent.CLICK, onOverlayClick);
 
             removePopUp(false);
@@ -75,14 +75,12 @@ public class PopUpManager
 
         private static function removePopUp(removeOverlay:Boolean):void
         {
-            if (currentPopUp)
-            {
+            if (currentPopUp) {
                 stage.removeChild(currentPopUp);
                 currentPopUp = null;
             }
 
-            if(overlay.stage && removeOverlay)
-            {
+            if (overlay.stage && removeOverlay) {
                 overlay.hasEventListener(MouseEvent.CLICK);
                 overlay.removeEventListener(MouseEvent.CLICK, onOverlayClick);
                 stage.removeChild(overlay);
@@ -92,8 +90,7 @@ public class PopUpManager
         public static function close():void
         {
             removePopUp(true);
-            if(onClose != null)
-            {
+            if (onClose != null) {
                 onClose();
                 onClose = null;
             }

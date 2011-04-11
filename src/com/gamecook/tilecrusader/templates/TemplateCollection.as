@@ -29,9 +29,9 @@
  */
 package com.gamecook.tilecrusader.templates
 {
-import com.gamecook.tilecrusader.utils.ArrayUtil;
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
 
-public class TemplateCollection implements ITemplateCollection
+    public class TemplateCollection implements ITemplateCollection
     {
         private var templates:Array = [];
         private var templateNames:Array = [];
@@ -57,8 +57,7 @@ public class TemplateCollection implements ITemplateCollection
         {
             templates[id] = template;
 
-            while(weight > 0)
-            {
+            while (weight > 0) {
                 templateNames.push(id);
                 weight --;
             }

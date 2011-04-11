@@ -5,17 +5,17 @@
  */
 package com.gamecook.tilecrusader.combat
 {
-	public class DeathMessageFactory
-	{
+    public class DeathMessageFactory
+    {
 
-		include "deathMessages.as"
-		
-		public static function getRandomDeathMessage():String
-		{
-			var length:uint = deathMessages.length;
-			var randomIndex:Number = Math.floor(Math.random() * length);
+        include "deathMessages.as"
 
-			return deathMessages[randomIndex];
-		}
-	}
+        public static function getRandomDeathMessage():String
+        {
+            var length:uint = deathMessages.length;
+            var randomIndex:Number = Math.floor(Math.random() * length);
+
+            return deathMessages[randomIndex];
+        }
+    }
 }

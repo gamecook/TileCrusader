@@ -32,6 +32,7 @@ package com.gamecook.tilecrusader.serialize
     public interface ISerializeToObject
     {
         function parseObject(value:Object):void;
+
         function toObject():Object;
     }
 }

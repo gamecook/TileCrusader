@@ -29,19 +29,19 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.gamecook.frogue.maps.MapPopulater;
-import com.gamecook.frogue.maps.RandomMap;
-import com.gamecook.tilecrusader.enum.GameModeOptions;
-import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-import com.gamecook.tilecrusader.states.ActiveGameState;
-import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
-import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.bit101.components.Label;
+    import com.gamecook.frogue.maps.MapPopulater;
+    import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.sounds.TCSoundClasses;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
-import flash.geom.Point;
-import flash.utils.getQualifiedClassName;
+    import flash.geom.Point;
+    import flash.utils.getQualifiedClassName;
 
-public class MapLoadingActivity extends AdvancedActivity
+    public class MapLoadingActivity extends AdvancedActivity
     {
         protected var textCounter:Number = 0;
         protected var textDelay:Number = 300;
@@ -63,9 +63,9 @@ public class MapLoadingActivity extends AdvancedActivity
         {
             super.onCreate();
 
-            label = new Label(this, 0,0, LOADING_TEXT);
+            label = new Label(this, 0, 0, LOADING_TEXT);
             label.x = (fullSizeWidth - label.width) * .5
-            label.y = (fullSizeHeight - label.height) +10;
+            label.y = (fullSizeHeight - label.height) + 10;
             addChild(label);
 
 
@@ -93,13 +93,11 @@ public class MapLoadingActivity extends AdvancedActivity
             map = new RandomMap();
 
             // Test to see if the current active state already has map
-            if (activeGameState.map)
-            {
+            if (activeGameState.map) {
                 // Get tiles from game state's map object
                 map.tiles = activeGameState.map.tiles;
             }
-            else
-            {
+            else {
                 // If there were no tiles, generate a new map
                 TimeMethodExecutionUtil.execute("generateMap", map.generateMap, activeGameState.size, 2);
 
@@ -117,12 +115,10 @@ public class MapLoadingActivity extends AdvancedActivity
                 var exitPosition:Point = populateMapHelper.getRandomEmptyPoint();
                 map.swapTile(exitPosition, "E");
 
-                if(activeGameState.gameType != GameModeOptions.ESCAPE)
-                {
+                if (activeGameState.gameType != GameModeOptions.ESCAPE) {
                     activeGameState.startPositionPoint = exitPosition;
                 }
-                else
-                {
+                else {
                     //TODO need to loop through all random points and find the longest one from the exit
                     activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
                 }
@@ -149,10 +145,10 @@ public class MapLoadingActivity extends AdvancedActivity
             // These are the types of treasure in the game
             var treasureTypes:Array = ["$","P"];
 
-            if(emptyTreasureChests)
+            if (emptyTreasureChests)
                 treasureTypes.push("K");
 
-            if(emptyTreasureChests)
+            if (emptyTreasureChests)
                 treasureTypes.push(" ");
 
             var treasureTypesTotal:int = treasureTypes.length;
@@ -162,12 +158,10 @@ public class MapLoadingActivity extends AdvancedActivity
 
             var i:int;
             //var treasureChestTotal:int = treasurePoolTotal *
-            for(i =0; i < treasurePoolTotal; i ++)
-            {
+            for (i = 0; i < treasurePoolTotal; i ++) {
 
                 treasurePool.push(treasureTypes[Math.floor((Math.random() * treasureTypesTotal))]);
-                if(i < totalChests)
-                {
+                if (i < totalChests) {
                     chests.push("T");
                 }
             }
@@ -189,21 +183,18 @@ public class MapLoadingActivity extends AdvancedActivity
             var monsterType:int;
             var totalTiles:int = Math.ceil(RandomMap(map).getOpenTiles().length * totalMonsterPercent);
 
-            for(i = 0; i < total; i++)
-            {
+            for (i = 0; i < total; i++) {
                 //TODO need to look into why the values are sometimes larger then what they really are.
                 monsterValues = Math.floor(monsterPercentage[i] * totalTiles);
-                monsterType = monsterTypes[i] ;
+                monsterType = monsterTypes[i];
                 //trace("MonsterType", monsterType, "monsterValues", monsterValues);
-                for(j = 0; j < monsterValues; j++)
-                {
+                for (j = 0; j < monsterValues; j++) {
 
                     monsters.push(monsterType);
                 }
             }
 
-            if(activeGameState.gameType == GameModeOptions.KILL_BOSS)
-            {
+            if (activeGameState.gameType == GameModeOptions.KILL_BOSS) {
                 monsters.push("9");
                 trace("Boss was added to level");
             }
@@ -221,14 +212,12 @@ public class MapLoadingActivity extends AdvancedActivity
         {
             textCounter += elapsed;
 
-            if(label.text.length > 11)
-            {
+            if (label.text.length > 11) {
                 label.text = LOADING_TEXT;
             }
 
 
-            if (textCounter >= textDelay)
-            {
+            if (textCounter >= textDelay) {
                 textCounter = 0;
                 label.text += ".";
             }

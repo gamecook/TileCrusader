@@ -7,11 +7,11 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
 
-import flash.utils.getQualifiedClassName;
+    import flash.utils.getQualifiedClassName;
 
-public class BaseTile implements ITile, ISerializeToObject
+    public class BaseTile implements ITile, ISerializeToObject
     {
         private var name:String = "undefined";
         private var _type:String;
@@ -55,13 +55,13 @@ public class BaseTile implements ITile, ISerializeToObject
 
         public function parseObject(obj:Object):void
         {
-            if(obj.hasOwnProperty("name"))
+            if (obj.hasOwnProperty("name"))
                 name = obj.name;
 
-            if(obj.hasOwnProperty("id"))
+            if (obj.hasOwnProperty("id"))
                 id = obj.id;
 
-            if(obj.hasOwnProperty("type"))
+            if (obj.hasOwnProperty("type"))
                 type = obj.type;
         }
 

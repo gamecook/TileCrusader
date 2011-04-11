@@ -21,9 +21,9 @@ package com.gamecook.tilecrusader.dice
             return randomNumber(0, sides);
         }
 
-        protected function randomNumber(low:Number=0, high:Number=1):int
+        protected function randomNumber(low:Number = 0, high:Number = 1):int
         {
-          return Math.floor(Math.random() * (1+high-low)) + low;
+            return Math.floor(Math.random() * (1 + high - low)) + low;
         }
     }
 }

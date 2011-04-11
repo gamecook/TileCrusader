@@ -7,18 +7,19 @@
  */
 package com.gamecook.tilecrusader.states
 {
-import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
+    import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
 
-import flash.geom.Point;
+    import flash.geom.Point;
 
-public class ActiveGameState extends AbstractStateObject
+    public class ActiveGameState extends AbstractStateObject
     {
         public function ActiveGameState()
         {
             super(this, ApplicationShareObjects.ACTIVE_GAME)
         }
 
-        public function get player():Object{
+        public function get player():Object
+        {
             return _dataObject.player;
         }
 

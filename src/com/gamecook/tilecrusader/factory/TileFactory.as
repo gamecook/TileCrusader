@@ -7,12 +7,12 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-import com.gamecook.tilecrusader.tiles.BaseTile;
-import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.tilecrusader.tiles.BaseTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-import flash.utils.getDefinitionByName;
+    import flash.utils.getDefinitionByName;
 
-public class TileFactory implements ITileFactory
+    public class TileFactory implements ITileFactory
     {
 
         private const TILE_PACKAGE:String = "com.gamecook.tilecrusader.tiles.";
@@ -25,22 +25,20 @@ public class TileFactory implements ITileFactory
         public function createTile(value:String):BaseTile
         {
             var template:Object = TileTypes.getTileTemplate(value);
-            if(!template)
+            if (!template)
                 return null;
 
             var classReference:Class;
-            try
-            {
+            try {
                 classReference = getDefinitionByName(TILE_PACKAGE + template.classPath) as Class;
             }
-            catch(error:Error)
-            {
+            catch(error:Error) {
                 classReference = BaseTile;
             }
 
             var instance:BaseTile = new classReference;
 
-            if(instance.hasOwnProperty("parseObject"))
+            if (instance.hasOwnProperty("parseObject"))
                 instance["parseObject"](template);
 
             return instance;

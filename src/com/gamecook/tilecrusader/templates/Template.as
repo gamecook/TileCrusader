@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.templates
         public function nextProperty():String
         {
             // If there is only one just return that.
-            if(attributes.length == 1)
+            if (attributes.length == 1)
                 return attributes[index];
 
             //
@@ -52,7 +52,7 @@ package com.gamecook.tilecrusader.templates
 
             // increment index and reset to 0 if out of bounds
             index ++;
-            if(index > attributes.length-1)
+            if (index > attributes.length - 1)
                 index = 0;
 
             return attribute;

@@ -29,12 +29,12 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.gamecook.tilecrusader.scores.TileCrusaderScoreboard;
-import com.jessefreeman.factivity.activities.BaseActivity;
-import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.bit101.components.Label;
+    import com.gamecook.tilecrusader.scores.TileCrusaderScoreboard;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-public class HighScoreActivity extends BaseActivity
+    public class HighScoreActivity extends BaseActivity
     {
         private var scores:Array;
         private var highScored:Boolean = false;
@@ -78,8 +78,7 @@ public class HighScoreActivity extends BaseActivity
             var totalScores:int = TileCrusaderScoreboard.MAX_SCORES;
 
             //find out if scores can be inserted at the beginning
-            if (!scores[0])
-            {
+            if (!scores[0]) {
                 score = {score:playerScore, initials:""};
                 scores.push(score);
                 newScore = score;
@@ -88,12 +87,10 @@ public class HighScoreActivity extends BaseActivity
             }
 
             //first loop: find out if scores can be inserted in middle
-            for (i = 0; i < totalScores; i++)
-            {
+            for (i = 0; i < totalScores; i++) {
                 score = scores[i];
                 if (highScored)
-                    break; else if (score.score <= playerScore)
-                {
+                    break; else if (score.score <= playerScore) {
                     score = {score:playerScore, initials:""};
                     newScorePosition = i;
                     scores.splice(i, 0, score);
@@ -106,8 +103,7 @@ public class HighScoreActivity extends BaseActivity
             }
 
             //find out if scores can be inserted at end
-            if (!highScored && totalScores < 5)
-            {
+            if (!highScored && totalScores < 5) {
                 score = {score:playerScore, initials:""};
                 scores.push(score);
                 newScorePosition = totalScores - 1;
@@ -118,8 +114,7 @@ public class HighScoreActivity extends BaseActivity
             var ypos:int = textItem.y + textItem.height + 20;
 
             //second loop lay out the current high scores.
-            for (i = 0; i < totalScores; i++)
-            {
+            for (i = 0; i < totalScores; i++) {
                 var scoreObj:Object = scores[i];
                 //display the current scores.
 
@@ -130,13 +125,11 @@ public class HighScoreActivity extends BaseActivity
                 xpos = (textItem.x - textItem.width) + 30;
 
                 //initials - loop to position each separately.
-                for (var j:Number = 0; j < 3; j++)
-                {
+                for (var j:Number = 0; j < 3; j++) {
 
                     textItem = new Label(this, xpos, ypos, scoreObj.initials.charAt(j));
                     //new high scores forms gets colored red.
-                    if (i == newScorePosition)
-                    {
+                    if (i == newScorePosition) {
                         textItem.textField.textColor = color;
                         newInitials.push(textItem);
                     } else
@@ -153,12 +146,11 @@ public class HighScoreActivity extends BaseActivity
             }
 
 
-            if (highScored)
-            {
+            if (highScored) {
                 var textItem:Label;
 
 
-                letterPreview = new Label(this, (fullSizeWidth - 100 ) * .5, 500,  "_");
+                letterPreview = new Label(this, (fullSizeWidth - 100 ) * .5, 500, "_");
                 letterPreview.textField.textColor = 0xc83fbb
 
                 //add in arrows for displaying position and possible motions
@@ -166,24 +158,23 @@ public class HighScoreActivity extends BaseActivity
                 leftArrow.textField.textColor = 0xc83fbb
 
                 /*rightArrow = new FlxText(letterPreview.right, letterPreview.y + 10, 200, " ");
-                rightArrow.textField.textColor = 0xc83fbb
+                 rightArrow.textField.textColor = 0xc83fbb
 
-                upArrow = new FlxText(letterPreview.left, letterPreview.top - 60, 100, "+");
-                upArrow.textField.textColor = 0xc83fbb
+                 upArrow = new FlxText(letterPreview.left, letterPreview.top - 60, 100, "+");
+                 upArrow.textField.textColor = 0xc83fbb
 
-                downArrow = new FlxText(letterPreview.left, letterPreview.bottom - 30, 100, "-")
-                downArrow.textField.textColor = 0xc83fbb
+                 downArrow = new FlxText(letterPreview.left, letterPreview.bottom - 30, 100, "-")
+                 downArrow.textField.textColor = 0xc83fbb
 
-                textItem = new FlxText(0, upArrow.top - 30, FlxG.width, "ENTER YOUR INITIALS");
-                textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
-                add(textItem);
+                 textItem = new FlxText(0, upArrow.top - 30, FlxG.width, "ENTER YOUR INITIALS");
+                 textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
+                 add(textItem);
 
-                textItem = new FlxText(0, downArrow.bottom, FlxG.width, "USE JOYSTICK TO SELECT LETTER");
-                textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
-                add(textItem);*/
+                 textItem = new FlxText(0, downArrow.bottom, FlxG.width, "USE JOYSTICK TO SELECT LETTER");
+                 textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
+                 add(textItem);*/
 
-            } else
-            {
+            } else {
                 //TODO Need to add something here so you don't accidentally click through the next screen.
                 nextActivity(StartActivity);
             }
@@ -192,76 +183,76 @@ public class HighScoreActivity extends BaseActivity
         override public function update(elapsed:Number = 0):void
         {
             /*if (highScored)
-            {
-                var str:String = newScore.initials;
+             {
+             var str:String = newScore.initials;
 
-                var clkX:Number = FlxG.mouse.x;
-                var clkY:Number = FlxG.mouse.y;
+             var clkX:Number = FlxG.mouse.x;
+             var clkY:Number = FlxG.mouse.y;
 
-                //figure out what motion needs to be done
-                var letterUp:Boolean = FlxG.keys.justPressed("UP") || (FlxG.mouse.justPressed() && clkY < letterPreview.top && clkX > letterPreview.left && clkX < letterPreview.right);
+             //figure out what motion needs to be done
+             var letterUp:Boolean = FlxG.keys.justPressed("UP") || (FlxG.mouse.justPressed() && clkY < letterPreview.top && clkX > letterPreview.left && clkX < letterPreview.right);
 
-                var letterDown:Boolean = FlxG.keys.justPressed("DOWN") || (FlxG.mouse.justPressed() && clkY > letterPreview.bottom && clkX > letterPreview.left && clkX < letterPreview.right);
+             var letterDown:Boolean = FlxG.keys.justPressed("DOWN") || (FlxG.mouse.justPressed() && clkY > letterPreview.bottom && clkX > letterPreview.left && clkX < letterPreview.right);
 
-                var letterLeft:Boolean = whichInitial > 0 && (FlxG.keys.justPressed("LEFT") || (FlxG.mouse.justPressed() && clkX < letterPreview.left));
+             var letterLeft:Boolean = whichInitial > 0 && (FlxG.keys.justPressed("LEFT") || (FlxG.mouse.justPressed() && clkX < letterPreview.left));
 
-                var letterRight:Boolean = whichInitial < 2 && (FlxG.keys.justPressed("RIGHT") || FlxG.keys.justPressed("ENTER") || (FlxG.mouse.justPressed() && clkX > letterPreview.right));
+             var letterRight:Boolean = whichInitial < 2 && (FlxG.keys.justPressed("RIGHT") || FlxG.keys.justPressed("ENTER") || (FlxG.mouse.justPressed() && clkX > letterPreview.right));
 
-                var doneEdit:Boolean = whichInitial == 2 && (FlxG.keys.justPressed("ENTER") || (FlxG.mouse.justPressed() && clkX > letterPreview.right));
+             var doneEdit:Boolean = whichInitial == 2 && (FlxG.keys.justPressed("ENTER") || (FlxG.mouse.justPressed() && clkX > letterPreview.right));
 
-                //perform said motions
-                if (letterUp)
-                    whichLetter = (whichLetter + 1) % 27; else if (letterDown)
-                    whichLetter = (whichLetter + 26) % 27; else if (letterLeft)
-                {
-                    whichInitial--;
-                    whichLetter = str.charCodeAt(whichInitial) - 64;
-                    if (whichLetter < 0)
-                        whichLetter = 1;
-                } else if (letterRight)
-                {
-                    whichInitial++;
-                    whichLetter = str.charCodeAt(whichInitial) - 64;
-                    if (whichLetter < 0)
-                        whichLetter = 1;
-                } else if (doneEdit)
-                {
-                    scoreboard.scores = scores;
-                    FlxG.state = new CreditsState();
-                }
+             //perform said motions
+             if (letterUp)
+             whichLetter = (whichLetter + 1) % 27; else if (letterDown)
+             whichLetter = (whichLetter + 26) % 27; else if (letterLeft)
+             {
+             whichInitial--;
+             whichLetter = str.charCodeAt(whichInitial) - 64;
+             if (whichLetter < 0)
+             whichLetter = 1;
+             } else if (letterRight)
+             {
+             whichInitial++;
+             whichLetter = str.charCodeAt(whichInitial) - 64;
+             if (whichLetter < 0)
+             whichLetter = 1;
+             } else if (doneEdit)
+             {
+             scoreboard.scores = scores;
+             FlxG.state = new CreditsState();
+             }
 
-                //update the arrows.
-                leftArrow.text = "<";
-                rightArrow.text = ">";
+             //update the arrows.
+             leftArrow.text = "<";
+             rightArrow.text = ">";
 
-                if (whichInitial == 0)
-                    leftArrow.text = " "; else if (whichInitial == 2)
-                    rightArrow.text = "OK";
+             if (whichInitial == 0)
+             leftArrow.text = " "; else if (whichInitial == 2)
+             rightArrow.text = "OK";
 
-                //update the string.
-                var arr:Array = new Array();
-                for (var i:Number = 0; i < 3; i++)
-                {
-                    if (i >= str.length)
-                        arr[i] = 32; else
-                        arr[i] = str.charCodeAt(i);
-                }
-                if (whichLetter == 0)
-                    arr[whichInitial] = 32; //space
-                else
-                    arr[whichInitial] = 64 + whichLetter; //some uppercase letter
+             //update the string.
+             var arr:Array = new Array();
+             for (var i:Number = 0; i < 3; i++)
+             {
+             if (i >= str.length)
+             arr[i] = 32; else
+             arr[i] = str.charCodeAt(i);
+             }
+             if (whichLetter == 0)
+             arr[whichInitial] = 32; //space
+             else
+             arr[whichInitial] = 64 + whichLetter; //some uppercase letter
 
-                str = String.fromCharCode(arr[0], arr[1], arr[2]);
-                newScore.initials = str; //store the string
-                for (i = 0; i < 3; i++)
-                {
-                    //update the display
-                    newInitials[i].text = str.charAt(i);
-                }
+             str = String.fromCharCode(arr[0], arr[1], arr[2]);
+             newScore.initials = str; //store the string
+             for (i = 0; i < 3; i++)
+             {
+             //update the display
+             newInitials[i].text = str.charAt(i);
+             }
 
-                //letterPreview.forms = String.fromCharCode(arr[whichInitial]);
-                letterPreview.text = String.fromCharCode(arr[whichInitial]);
-            }*/
+             //letterPreview.forms = String.fromCharCode(arr[whichInitial]);
+             letterPreview.text = String.fromCharCode(arr[whichInitial]);
+             }*/
 
             super.update(elapsed);
         }

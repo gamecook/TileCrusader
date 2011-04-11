@@ -17,10 +17,11 @@ package com.gamecook.tilecrusader.iterators
             randomizePool();
         }
 
-        protected function randomizePool():void {
+        protected function randomizePool():void
+        {
             var newArray:Array = new Array();
-            while(pool.length > 0){
-                var obj:Array = pool.splice(Math.floor(Math.random()*pool.length), 1);
+            while (pool.length > 0) {
+                var obj:Array = pool.splice(Math.floor(Math.random() * pool.length), 1);
                 newArray.push(obj[0]);
             }
             pool = newArray;
@@ -34,7 +35,7 @@ package com.gamecook.tilecrusader.iterators
 
         public function getNext():*
         {
-            if(pool.length == 0)
+            if (pool.length == 0)
                 return " ";
 
             randomizePool();

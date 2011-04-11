@@ -31,9 +31,9 @@
 
 package com.gamecook.tilecrusader.managers
 {
-import flash.utils.Dictionary;
+    import flash.utils.Dictionary;
 
-public class SingletonManager
+    public class SingletonManager
     {
         private static var _instance:SingletonManager;
 
@@ -56,8 +56,7 @@ public class SingletonManager
         {
             var singleton:* = singletons[ classReference ];
 
-            if (!singleton)
-            {
+            if (!singleton) {
                 singleton = new classReference();
                 singletons[ classReference ] = singleton;
             }
@@ -70,8 +69,7 @@ public class SingletonManager
          */
         private static function get instance():SingletonManager
         {
-            if (!_instance)
-            {
+            if (!_instance) {
                 _instance = new SingletonManager(new SingletonEnforcer());
             }
 

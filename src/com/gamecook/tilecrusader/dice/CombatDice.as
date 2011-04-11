@@ -27,11 +27,9 @@ package com.gamecook.tilecrusader.dice
             var i:int;
             var value:int = 0;
 
-            for (i = 0; i < rolls; ++i)
-            {
+            for (i = 0; i < rolls; ++i) {
                 rollValue = roll();
-                switch (rollValue)
-                {
+                switch (rollValue) {
                     case SKULL_1: case SKULL_2: case SKULL_3:
                     value ++;
                     break;
@@ -47,11 +45,9 @@ package com.gamecook.tilecrusader.dice
             var i:int;
             var value:int = 0;
 
-            for (i = 0; i < rolls; ++i)
-            {
+            for (i = 0; i < rolls; ++i) {
                 rollValue = roll();
-                switch (rollValue)
-                {
+                switch (rollValue) {
                     case SHIELD_1: case SHIELD_2:
                     value ++;
                     break;
@@ -67,13 +63,12 @@ package com.gamecook.tilecrusader.dice
             var i:int;
             var value:int;
 
-            for (i = 0; i < rolls; ++i)
-            {
+            for (i = 0; i < rolls; ++i) {
                 rollValue = roll();
                 value += rollValue == BLACK_SHIELD ? 1 : 0;
             }
 
-	        return value;
+            return value;
         }
     }
 }

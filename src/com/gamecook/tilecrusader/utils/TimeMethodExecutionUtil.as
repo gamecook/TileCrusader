@@ -24,9 +24,9 @@
  */
 package com.gamecook.tilecrusader.utils
 {
-import flash.utils.getTimer;
+    import flash.utils.getTimer;
 
-public class TimeMethodExecutionUtil
+    public class TimeMethodExecutionUtil
     {
         public static var t:int;
         public static var threshold:int = 10;
@@ -35,9 +35,9 @@ public class TimeMethodExecutionUtil
         {
             t = getTimer();
             var value:* = target.apply(target, arguments);
-            t = (getTimer()-t);
-            if(t > threshold)
-                trace("Method '"+name+"' executed in " + t + " ms\n");
+            t = (getTimer() - t);
+            if (t > threshold)
+                trace("Method '" + name + "' executed in " + t + " ms\n");
             return value;
         }
     }

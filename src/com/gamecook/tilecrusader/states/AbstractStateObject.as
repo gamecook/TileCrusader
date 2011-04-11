@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.states
 {
-import flash.net.SharedObject;
+    import flash.net.SharedObject;
 
-public class AbstractStateObject implements IStateObject
+    public class AbstractStateObject implements IStateObject
     {
         protected var sharedObject:SharedObject;
         protected var _dataObject:Object;
@@ -24,13 +24,11 @@ public class AbstractStateObject implements IStateObject
 
         public function load():void
         {
-            try
-            {
+            try {
                 sharedObject = SharedObject.getLocal(id);
                 _dataObject = sharedObject.data;
             }
-            catch(error:Error)
-            {
+            catch(error:Error) {
                 trace("Could not load shared obj");
             }
         }
@@ -39,7 +37,7 @@ public class AbstractStateObject implements IStateObject
         {
             //TODO need to add some logic to make sure this actually saves
             var success:String = sharedObject.flush();
-            trace("StateObject",id,"Size:", (sharedObject.size/1,024), "k");
+            trace("StateObject", id, "Size:", (sharedObject.size / 1,024), "k");
 
             return success;
         }

@@ -7,23 +7,23 @@
  */
 package com.gamecook.tilecrusader.renderer
 {
-import com.gamecook.frogue.renderer.MapBitmapRenderer;
-import com.gamecook.frogue.sprites.SpriteSheet;
-import com.gamecook.tilecrusader.combat.ICombatant;
-import com.gamecook.tilecrusader.managers.TileInstanceManager;
-import com.gamecook.tilecrusader.tiles.MonsterTile;
-import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.frogue.renderer.MapBitmapRenderer;
+    import com.gamecook.frogue.sprites.SpriteSheet;
+    import com.gamecook.tilecrusader.combat.ICombatant;
+    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.tilecrusader.tiles.MonsterTile;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
 
-import flash.display.BitmapData;
-import flash.filters.BitmapFilterQuality;
-import flash.filters.GlowFilter;
-import flash.geom.Matrix;
-import flash.text.AntiAliasType;
-import flash.text.TextField;
-import flash.text.TextFieldAutoSize;
-import flash.text.TextFormat;
+    import flash.display.BitmapData;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.GlowFilter;
+    import flash.geom.Matrix;
+    import flash.text.AntiAliasType;
+    import flash.text.TextField;
+    import flash.text.TextFieldAutoSize;
+    import flash.text.TextFormat;
 
-public class MQMapBitmapRenderer extends MapBitmapRenderer
+    public class MQMapBitmapRenderer extends MapBitmapRenderer
     {
         //private var tileMap:TileTypes;
         private var instances:TileInstanceManager;
@@ -75,41 +75,36 @@ public class MQMapBitmapRenderer extends MapBitmapRenderer
             var bitmapData:BitmapData;
             var sprites:Array = value.split(",");
 
-            if(spriteSheet.hasSpriteCached(value))
-            {
+            if (spriteSheet.hasSpriteCached(value)) {
                 bitmapData = spriteSheet.getSpriteFromCache(value);
             }
-            else
-            {
+            else {
                 bitmapData = spriteSheet.getSprite.apply(this, sprites);
             }
 
-            if(instances.hasInstance(currentTileID.toString()))
-            {
+            if (instances.hasInstance(currentTileID.toString())) {
                 var tile:MonsterTile = instances.getInstance(currentTileID.toString(), value) as MonsterTile;
 
-                if(tile is ICombatant && !TileTypes.isDarkness(sprites[sprites.length-1]))
-                {
+                if (tile is ICombatant && !TileTypes.isDarkness(sprites[sprites.length - 1])) {
 
-                    statsTF.htmlText = "<font color='#ffff00'>"+tile.getAttackRolls()+"</font>|<font color='#ffffff'>"+tile.getDefenseRolls()+"</font>";
+                    statsTF.htmlText = "<font color='#ffff00'>" + tile.getAttackRolls() + "</font>|<font color='#ffffff'>" + tile.getDefenseRolls() + "</font>";
 
                     bitmapData.draw(statsTF, statsMatrix);
 
                     var life:Number = tile.getLife() / tile.getMaxLife();
 
-                    if(life < 1)
-                    {
+                    if (life < 1) {
                         var matrix:Matrix = new Matrix();
 
                         bitmapData = bitmapData.clone();
-                        var xOffset:int = bitmapData.width-2;
+                        var xOffset:int = bitmapData.width - 2;
 
-                        var bg:BitmapData = new BitmapData(2,bitmapData.height,false, 0xff0000);
+                        var bg:BitmapData = new BitmapData(2, bitmapData.height, false, 0xff0000);
 
-                        var lifeBarHeight:Number = Math.floor(bitmapData.height * life -1);
-                        if(lifeBarHeight <=0) lifeBarHeight = 1;
+                        var lifeBarHeight:Number = Math.floor(bitmapData.height * life - 1);
+                        if (lifeBarHeight <= 0) lifeBarHeight = 1;
                         var lifeBarY:Number = bitmapData.height - lifeBarHeight;
-                        var bar:BitmapData = new BitmapData(2,lifeBarHeight,false, 0x00ff00);
+                        var bar:BitmapData = new BitmapData(2, lifeBarHeight, false, 0x00ff00);
 
                         matrix.translate(xOffset, 0);
                         bitmapData.draw(bg, matrix);

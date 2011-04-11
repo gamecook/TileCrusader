@@ -7,11 +7,11 @@
  */
 package com.gamecook.tilecrusader.factory
 {
-import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
-import com.gamecook.tilecrusader.states.ActiveGameState;
-import com.gamecook.tilecrusader.utils.ArrayUtil;
+    import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
+    import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.utils.ArrayUtil;
 
-public class NewGameFactory
+    public class NewGameFactory
     {
         private static var DEFAULT_POINTS:int = 20;
 
@@ -28,17 +28,16 @@ public class NewGameFactory
             var playerObj:Object = PlayerClassTemplates.getTemplate(playerClass);
 
 
-
             // configure ActiveGameState SO
             activeGameState.activeGame = true;
             activeGameState.player = {name:"Random Name",
-                            maxLife: playerObj.life,
-                            attackRoll: playerObj.attackRoll,
-                            defenseRoll: playerObj.defense,
-                            maxPotions: playerObj.potions,
-                            visibility: playerObj.visibility,
-                            points: DEFAULT_POINTS,
-                            characterPoints: DEFAULT_POINTS};
+                maxLife: playerObj.life,
+                attackRoll: playerObj.attackRoll,
+                defenseRoll: playerObj.defense,
+                maxPotions: playerObj.potions,
+                visibility: playerObj.visibility,
+                points: DEFAULT_POINTS,
+                characterPoints: DEFAULT_POINTS};
 
             activeGameState.size = ArrayUtil.pickRandomArrayElement(mapSizeOptions);
             activeGameState.gameType = ArrayUtil.pickRandomArrayElement(gameModeOptions);

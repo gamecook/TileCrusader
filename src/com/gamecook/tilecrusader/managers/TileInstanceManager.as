@@ -7,11 +7,11 @@
  */
 package com.gamecook.tilecrusader.managers
 {
-import com.gamecook.tilecrusader.factory.ITileFactory;
-import com.gamecook.tilecrusader.serialize.ISerializeToObject;
-import com.gamecook.tilecrusader.tiles.BaseTile;
+    import com.gamecook.tilecrusader.factory.ITileFactory;
+    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.gamecook.tilecrusader.tiles.BaseTile;
 
-public class TileInstanceManager implements ISerializeToObject
+    public class TileInstanceManager implements ISerializeToObject
     {
         protected var singletons:Array = [];
         private var factory:ITileFactory;
@@ -23,8 +23,7 @@ public class TileInstanceManager implements ISerializeToObject
 
         public function getInstance(uniqueID:String, type:String = "null", values:Object = null):BaseTile
         {
-            if(!singletons[uniqueID])
-            {
+            if (!singletons[uniqueID]) {
                 trace("Create new Tile for", type, uniqueID);
 
                 singletons[uniqueID] = factory.createTile(type);
@@ -32,7 +31,7 @@ public class TileInstanceManager implements ISerializeToObject
                 singletons[uniqueID].type = type;
             }
 
-            if(values)
+            if (values)
                 BaseTile(singletons[uniqueID]).parseObject(values);
 
             return singletons[uniqueID];
@@ -65,17 +64,15 @@ public class TileInstanceManager implements ISerializeToObject
 
         public function parseObject(value:Object):void
         {
-            if(value.instances)
-            {
+            if (value.instances) {
                 var tmpInstances:Array = value.instances;
                 var total:int = tmpInstances.length;
                 var i:int;
                 var instanceTemplate:Object;
 
-                for(i = 0; i < total; i++)
-                {
+                for (i = 0; i < total; i++) {
                     instanceTemplate = tmpInstances[i];
-                    getInstance(instanceTemplate.id,  instanceTemplate.type, instanceTemplate);
+                    getInstance(instanceTemplate.id, instanceTemplate.type, instanceTemplate);
                 }
             }
         }
@@ -85,9 +82,8 @@ public class TileInstanceManager implements ISerializeToObject
             var obj:Object = {};
             obj.instances = [];
             var baseTile:BaseTile;
-            for each(baseTile in singletons)
-            {
-                if(baseTile)
+            for each(baseTile in singletons) {
+                if (baseTile)
                     obj.instances.push(baseTile.toObject());
             }
             return obj;

@@ -5,8 +5,10 @@
  * Time: 9:08 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.sounds {
-    public class TCSoundClasses {
+package com.gamecook.tilecrusader.sounds
+{
+    public class TCSoundClasses
+    {
 
         [Embed(source="../../../../../build/assets/tc_sounds.swf", symbol="DeathTheme")]
         public static var DeathTheme:Class;

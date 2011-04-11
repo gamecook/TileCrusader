@@ -10,7 +10,9 @@ package com.gamecook.tilecrusader.iterators
     public interface IIterator
     {
         function hasNext():Boolean;
+
         function getNext():*;
+
         function setIndex(value:int = -1):void;
     }
 }

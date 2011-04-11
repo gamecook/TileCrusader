@@ -5,15 +5,15 @@
  */
 package com.gamecook.tilecrusader.equipment
 {
-import com.gamecook.tilecrusader.enum.EquipmentValues;
-import com.gamecook.tilecrusader.enum.SlotsEnum;
+    import com.gamecook.tilecrusader.enum.EquipmentValues;
+    import com.gamecook.tilecrusader.enum.SlotsEnum;
 
-public class Equipment implements IEquipable
-	{
-		private var _type:String;
-		private var _description:String;
-		private var _damage:int;
-		private var _defense:int;
+    public class Equipment implements IEquipable
+    {
+        private var _type:String;
+        private var _description:String;
+        private var _damage:int;
+        private var _defense:int;
         private var _tileID:String;
 
         public function get tileID():String
@@ -22,50 +22,50 @@ public class Equipment implements IEquipable
         }
 
         public function get type():String
-		{
-			return _type;
-		}
+        {
+            return _type;
+        }
 
-		public function get description():String
-		{
-			return _description;
-		}
+        public function get description():String
+        {
+            return _description;
+        }
 
-		public function get attack():int
-		{
-			return _damage;
-		}
+        public function get attack():int
+        {
+            return _damage;
+        }
 
-		public function Equipment()
-		{
+        public function Equipment()
+        {
 
-		}
+        }
 
-		public function get defense():int
-		{
-			return _defense;
-		}
+        public function get defense():int
+        {
+            return _defense;
+        }
 
-		public function toString():String
-		{
-			return "Weapon{_type=" + String(_type) + ",_description=" + String(_description) + ",_damage=" + String(_damage) + ",_defense=" + String(_defense) + "}";
-		}
+        public function toString():String
+        {
+            return "Weapon{_type=" + String(_type) + ",_description=" + String(_description) + ",_damage=" + String(_damage) + ",_defense=" + String(_defense) + "}";
+        }
 
         public function parseObject(value:Object):void
         {
-            if(value.hasOwnProperty("tileID"))
+            if (value.hasOwnProperty("tileID"))
                 _tileID = value.tileID;
 
-            if(value.hasOwnProperty("type"))
+            if (value.hasOwnProperty("type"))
                 _type = value.type;
 
-            if(value.hasOwnProperty("description"))
+            if (value.hasOwnProperty("description"))
                 _description = value.description;
 
-            if(value.hasOwnProperty("damage"))
+            if (value.hasOwnProperty("damage"))
                 _damage = value.damage;
 
-            if(value.hasOwnProperty("defense"))
+            if (value.hasOwnProperty("defense"))
                 _defense = value.defense;
         }
 

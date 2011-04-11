@@ -5,8 +5,10 @@
  * Time: 9:17 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.states {
-    public class CustomTemplateState extends AbstractStateObject{
+package com.gamecook.tilecrusader.states
+{
+    public class CustomTemplateState extends AbstractStateObject
+    {
 
         public function CustomTemplateState()
         {

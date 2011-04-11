@@ -5,11 +5,13 @@
  * Time: 10:08 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.tiles {
-import com.gamecook.tilecrusader.equipment.Equipment;
-import com.gamecook.tilecrusader.equipment.IEquipable;
+package com.gamecook.tilecrusader.tiles
+{
+    import com.gamecook.tilecrusader.equipment.Equipment;
+    import com.gamecook.tilecrusader.equipment.IEquipable;
 
-public class EquipmentTile extends BaseTile{
+    public class EquipmentTile extends BaseTile
+    {
 
         private var weapon:IEquipable;
 
@@ -21,8 +23,7 @@ public class EquipmentTile extends BaseTile{
         {
             super.parseObject(obj);
 
-            if(obj.hasOwnProperty("weapon"))
-            {
+            if (obj.hasOwnProperty("weapon")) {
                 weapon = new Equipment();
                 weapon.parseObject(obj.weapon);
             }

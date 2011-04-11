@@ -29,15 +29,15 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-import com.bit101.components.Label;
-import com.bit101.components.PushButton;
-import com.jessefreeman.factivity.activities.BaseActivity;
-import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.bit101.components.Label;
+    import com.bit101.components.PushButton;
+    import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.managers.IActivityManager;
 
-import flash.events.MouseEvent;
-import flash.text.TextFieldAutoSize;
+    import flash.events.MouseEvent;
+    import flash.text.TextFieldAutoSize;
 
-public class WarningActivity extends BaseActivity
+    public class WarningActivity extends BaseActivity
     {
         public function WarningActivity(stateManager:IActivityManager, date:*)
         {
@@ -49,7 +49,7 @@ public class WarningActivity extends BaseActivity
         {
             super.onCreate();
 
-            var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game." ;
+            var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game.";
 
             var tf:Label = new Label(this, 0, 50, warning);
             tf.autoSize = TextFieldAutoSize
@@ -60,7 +60,6 @@ public class WarningActivity extends BaseActivity
 
             var btn:PushButton = new PushButton(this, 0, tf.textField.y + tf.textField.height + 100, "Ok, I get it!", onAccept);
             btn.x = (fullSizeWidth - btn.width) * .5;
-
 
 
         }
