@@ -31,6 +31,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
+    import com.gamecook.tilecrusader.renderer.PreviewMapRenderer;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.templates.Template;
@@ -44,10 +45,12 @@ package com.gamecook.tilecrusader.activities
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
     import flash.events.MouseEvent;
     import flash.geom.Point;
+    import flash.geom.Rectangle;
     import flash.system.Capabilities;
     import flash.ui.Keyboard;
 
@@ -110,6 +113,8 @@ package com.gamecook.tilecrusader.activities
         private var currentPoint:Point;
         private var currentuID:String;
         private var mouseDown:Boolean;
+        private var previewMapShape:Shape;
+        private var previewMapRenderer:PreviewMapRenderer;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -225,6 +230,13 @@ package com.gamecook.tilecrusader.activities
             //TODO this isn't working look into it.
             /*if(activeGameState.startMessage)
              PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
+
+
+            previewMapShape = new Shape();
+            addChild(previewMapShape);
+
+            previewMapRenderer = new PreviewMapRenderer(previewMapShape.graphics, new Rectangle(0,0,5,5));
+            previewMapRenderer.renderMap(map);
         }
 
         private function onPlayerDefend():void

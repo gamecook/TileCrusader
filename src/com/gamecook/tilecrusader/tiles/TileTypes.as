@@ -27,6 +27,12 @@ package com.gamecook.tilecrusader.tiles
             TYPES[' '] = { name: 'Floor', sprite: "sprite0", type: PASSABLE},
                     TYPES['#'] = { name: 'Wall', sprite: "sprite1", type: IMPASSABLE},
                     TYPES['E'] = { name: 'Exit', sprite: "sprite2", type: EXIT},
+                    TYPES['_1'] = { name: 'Empty1', sprite: "sprite53", type: PASSABLE},
+                    TYPES['_2'] = { name: 'Empty2', sprite: "sprite54", type: PASSABLE},
+                    TYPES['_3'] = { name: 'Empty3', sprite: "sprite55", type: PASSABLE},
+                    TYPES['_4'] = { name: 'Empty4', sprite: "sprite56", type: PASSABLE},
+                    TYPES['_5'] = { name: 'Empty5', sprite: "sprite57", type: PASSABLE},
+                    TYPES['_6'] = { name: 'Empty6', sprite: "sprite58", type: PASSABLE},
                     TYPES['T'] = { name: 'Treasure', sprite: "sprite4", type: TREASURE, classPath:"TreasureChestTile"},
                     TYPES['$'] = { name: 'Gold', sprite: "sprite5", type: PICKUP, classPath:"GoldTile"},
                     TYPES['P'] = { name: 'Potion', sprite: "sprite6", type: PICKUP},
@@ -149,6 +155,13 @@ package com.gamecook.tilecrusader.tiles
         public static function getEmptyTile():String
         {
             return " ";
+        }
+
+        public static function getRandomOpenTile():String
+        {
+            var tileTypes:Array = [" ","_1","_2","_3","_4","_5","_6"]
+            var i:int = Math.floor(Math.random() * tileTypes.length);
+            return tileTypes[i];
         }
     }
 }

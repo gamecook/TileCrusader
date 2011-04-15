@@ -35,6 +35,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
@@ -95,7 +96,7 @@ package com.gamecook.tilecrusader.activities
             // Test to see if the current active state already has map
             if (activeGameState.map) {
                 // Get tiles from game state's map object
-                map.tiles = activeGameState.map.tiles;
+                map.setTiles(activeGameState.map.tiles);
             }
             else {
                 // If there were no tiles, generate a new map
@@ -105,6 +106,7 @@ package com.gamecook.tilecrusader.activities
 
                 generateMonsters();
                 generateTreasure();
+
 
                 //TODO Create start position and exit based on game mode.
 
@@ -126,6 +128,14 @@ package com.gamecook.tilecrusader.activities
                 activeGameState.cashRange = 10;
 
                 activeGameState.map = map.toObject();
+
+                // Swap out some open tiles
+                var total:int = populateMapHelper.getOpenSpaces() * .3;
+                var i:int;
+                for(i=0; i < total; i++)
+                {
+                    map.swapTile(populateMapHelper.getRandomEmptyPoint(), TileTypes.getRandomOpenTile());
+                }
             }
 
             trace("Map Size", map.width, map.height, "was generated");
