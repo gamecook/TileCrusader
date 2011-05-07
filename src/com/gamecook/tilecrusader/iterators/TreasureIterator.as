@@ -20,7 +20,8 @@ package com.gamecook.tilecrusader.iterators
         protected function randomizePool():void
         {
             var newArray:Array = new Array();
-            while (pool.length > 0) {
+            while (pool.length > 0)
+            {
                 var obj:Array = pool.splice(Math.floor(Math.random() * pool.length), 1);
                 newArray.push(obj[0]);
             }

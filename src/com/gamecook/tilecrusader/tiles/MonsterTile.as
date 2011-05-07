@@ -202,8 +202,10 @@ package com.gamecook.tilecrusader.tiles
 
         protected function set life(value:int):void
         {
-            if (value == 0) {
-                if (onDie != null) {
+            if (value == 0)
+            {
+                if (onDie != null)
+                {
                     onDie(this);
                     onDie = null;
                 }
@@ -253,7 +255,8 @@ package com.gamecook.tilecrusader.tiles
 
         public function defend(monster:ICombatant):void
         {
-            if (life > 0) {
+            if (life > 0)
+            {
                 attemptDamageDefender(monster);
                 onDefend();
             }
@@ -262,15 +265,19 @@ package com.gamecook.tilecrusader.tiles
         public function attack(monster:ICombatant, useChance:Boolean):void
         {
             var attackResult:AttackResult;
-            if (useChance) {
-                if (Math.random() >= .5) {
+            if (useChance)
+            {
+                if (Math.random() >= .5)
+                {
                     attackThenDefend(monster);
                 }
-                else {
+                else
+                {
                     monster.attack(this, false);
                 }
             }
-            else {
+            else
+            {
                 attackThenDefend(monster);
             }
         }
@@ -293,7 +300,8 @@ package com.gamecook.tilecrusader.tiles
             var difference:int = 0;
             var hitValue:int = getHitValue();
             var defenseValue:int = getDefenseValue();
-            if (hitValue > defenseValue) {
+            if (hitValue > defenseValue)
+            {
                 success = true;
                 difference = hitValue - defenseValue;
             }
@@ -324,7 +332,7 @@ package com.gamecook.tilecrusader.tiles
                 sprites.push(TileTypes.getTileSprite(getWeaponSlot().tileID));
 
 
-            var arrayAsString = sprites.toString();
+            var arrayAsString:String = sprites.toString();
             spriteID = arrayAsString;//.subStr(1,arrayAsString.length -1);
             trace("Sprite ID", spriteID);
         }
@@ -339,20 +347,20 @@ package com.gamecook.tilecrusader.tiles
                 droppedItem = getWeaponSlot();
                 setWeaponSlot(item);
             }
-            else if(item.getSlotID() == SlotsEnum.SHIELD)
+            else if (item.getSlotID() == SlotsEnum.SHIELD)
             {
                 droppedItem = getShieldSlot();
                 setShieldSlot(item)
-            }else if(item.getSlotID() == SlotsEnum.ARMOR)
+            } else if (item.getSlotID() == SlotsEnum.ARMOR)
             {
                 droppedItem = getArmorSlot();
                 setArmorSlot(item)
             }
-            else if(item.getSlotID() == SlotsEnum.HELMET)
+            else if (item.getSlotID() == SlotsEnum.HELMET)
             {
                 droppedItem = getHelmetSlot();
                 setHelmetSlot(item)
-            }else if(item.getSlotID() == SlotsEnum.SHOES)
+            } else if (item.getSlotID() == SlotsEnum.SHOES)
             {
                 droppedItem = getShoeSlot();
                 setShoeSlot(item)

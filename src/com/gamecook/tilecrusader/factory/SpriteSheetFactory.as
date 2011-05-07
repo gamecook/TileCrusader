@@ -36,7 +36,8 @@ package com.gamecook.tilecrusader.factory
             var i:int;
             var total:int = Math.floor(bitmap.width / tileSize);
             var spriteRect:Rectangle = new Rectangle(0, 0, tileSize, tileSize);
-            for (i = 0; i < total; ++i) {
+            for (i = 0; i < total; ++i)
+            {
                 spriteRect.x = i * tileSize;
                 spriteSheet.registerSprite("sprite" + i, spriteRect.clone());
             }
@@ -52,7 +53,8 @@ package com.gamecook.tilecrusader.factory
             var total:int = 100;
             var i:int;
 
-            for (i = 0; i <= total; i++) {
+            for (i = 0; i <= total; i++)
+            {
                 var matrix:Matrix = new Matrix();
 
                 var bitmapData:BitmapData = new BitmapData(TILE_SIZE, TILE_SIZE, true, 0x000000);
@@ -88,7 +90,8 @@ package com.gamecook.tilecrusader.factory
             var rect:Rectangle = new Rectangle(0, 0, TILE_SIZE, TILE_SIZE);
             var id:String;
 
-            for (i = 0; i < total; i ++) {
+            for (i = 0; i < total; i ++)
+            {
                 id = "light" + i;
                 bitmapData.fillRect(rect, ColorUtil.returnARGB(0x000000, i * 20));
                 spriteSheet.cacheSprite(id, bitmapData.clone());

@@ -17,16 +17,13 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
     import com.gamecook.tilecrusader.enum.ClassOptions;
     import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.states.CustomTemplateState;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
-    import flash.display.Bitmap;
     import flash.events.Event;
     import flash.events.FocusEvent;
     import flash.events.MouseEvent;
-    import flash.geom.Rectangle;
     import flash.text.TextField;
 
     public class ConfigureCharacterActivity extends RandomMapBGActivity
@@ -72,7 +69,6 @@ package com.gamecook.tilecrusader.activities
             //TODO this needs to run off the global style sheet.
             //parseSpriteSheet();
         }
-
 
 
         override public function onStart():void
@@ -143,7 +139,8 @@ package com.gamecook.tilecrusader.activities
             classOptionIterator = new OptionsBehavior(classButton, ClassOptions.getValues());
             layout.x = fullSizeWidth - 450;
 
-            if (customTemplateState.customTemplate) {
+            if (customTemplateState.customTemplate)
+            {
                 applyTemplate(customTemplateState.customTemplate);
                 classButton.label = customTemplateState.className;
                 nameInput.text = customTemplateState.name;
@@ -153,7 +150,8 @@ package com.gamecook.tilecrusader.activities
                 classOptionIterator.setIndex(index);
 
             }
-            else {
+            else
+            {
                 onChangeClass();
             }
             calculatePoints();
@@ -232,7 +230,8 @@ package com.gamecook.tilecrusader.activities
         {
             calculatePoints();
 
-            if (characterPoints < 0) {
+            if (characterPoints < 0)
+            {
                 event.target.value --;
                 characterPoints = 0;
             }

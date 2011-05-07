@@ -29,10 +29,12 @@ package com.gamecook.tilecrusader.factory
                 return null;
 
             var classReference:Class;
-            try {
+            try
+            {
                 classReference = getDefinitionByName(TILE_PACKAGE + template.classPath) as Class;
             }
-            catch(error:Error) {
+            catch(error:Error)
+            {
                 classReference = BaseTile;
             }
 

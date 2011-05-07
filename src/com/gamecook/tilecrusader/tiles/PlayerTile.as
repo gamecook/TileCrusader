@@ -27,7 +27,8 @@ package com.gamecook.tilecrusader.tiles
 
         override protected function set life(value:int):void
         {
-            if (value == 0 && getPotions() > 0) {
+            if (value == 0 && getPotions() > 0)
+            {
                 usePotion();
                 return;
             }
@@ -161,7 +162,8 @@ package com.gamecook.tilecrusader.tiles
         {
             super.attack(monster, useChance);
 
-            if (monster.isDead) {
+            if (monster.isDead)
+            {
                 addKill();
             }
         }

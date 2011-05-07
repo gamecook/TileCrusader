@@ -24,11 +24,13 @@ package com.gamecook.tilecrusader.states
 
         public function load():void
         {
-            try {
+            try
+            {
                 sharedObject = SharedObject.getLocal(id);
                 _dataObject = sharedObject.data;
             }
-            catch(error:Error) {
+            catch(error:Error)
+            {
                 trace("Could not load shared obj");
             }
         }

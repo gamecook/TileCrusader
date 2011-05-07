@@ -78,7 +78,8 @@ package net.hires.debug
          */
         public function Stats(_theme:Object = null):void
         {
-            if (_theme) {
+            if (_theme)
+            {
                 if (_theme.bg != null) theme.bg = _theme.bg;
                 if (_theme.fps != null) theme.fps = _theme.fps;
                 if (_theme.ms != null) theme.ms = _theme.ms;
@@ -151,7 +152,8 @@ package net.hires.debug
         {
             timer = getTimer();
 
-            if (timer - 1000 > ms_prev) {
+            if (timer - 1000 > ms_prev)
+            {
                 ms_prev = timer;
                 mem = Number((System.totalMemory * 0.000000954).toFixed(3));
                 mem_max = mem_max > mem ? mem_max : mem;

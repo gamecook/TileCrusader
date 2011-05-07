@@ -57,7 +57,8 @@ package com.gamecook.tilecrusader.templates
         {
             templates[id] = template;
 
-            while (weight > 0) {
+            while (weight > 0)
+            {
                 templateNames.push(id);
                 weight --;
             }

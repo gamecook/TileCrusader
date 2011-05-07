@@ -31,8 +31,9 @@ package com.gamecook.tilecrusader.activities
 {
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.jessefreeman.factivity.managers.ActivityManager;
+
+    import com.jessefreeman.factivity.managers.SingletonManager;
 
     import flash.display.Bitmap;
 

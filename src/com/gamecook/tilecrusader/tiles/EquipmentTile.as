@@ -23,7 +23,8 @@ package com.gamecook.tilecrusader.tiles
         {
             super.parseObject(obj);
 
-            if (obj.hasOwnProperty("weapon")) {
+            if (obj.hasOwnProperty("weapon"))
+            {
                 weapon = new Equipment();
                 weapon.parseObject(obj.weapon);
             }

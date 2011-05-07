@@ -6,7 +6,6 @@
 package com.gamecook.tilecrusader.equipment
 {
     import com.gamecook.tilecrusader.enum.EquipmentValues;
-    import com.gamecook.tilecrusader.enum.SlotsEnum;
 
     public class Equipment implements IEquipable
     {
@@ -69,7 +68,7 @@ package com.gamecook.tilecrusader.equipment
             if (value.hasOwnProperty("defense"))
                 _defense = value.defense;
 
-            if(value.hasOwnProperty("slotID"))
+            if (value.hasOwnProperty("slotID"))
                 slotID = value.slotID;
         }
 

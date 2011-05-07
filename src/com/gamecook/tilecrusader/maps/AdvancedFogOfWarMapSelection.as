@@ -84,14 +84,17 @@ package com.gamecook.tilecrusader.maps
             var rows:int;
             var columns:int;
 
-            for (rows = 0; rows < height; rows++) {
-                for (columns = 0; columns < width; columns ++) {
+            for (rows = 0; rows < height; rows++)
+            {
+                for (columns = 0; columns < width; columns ++)
+                {
                     var spriteID:String = TileTypes.getTileSprite("#");
                     var tileValue = tiles[rows][columns];
                     var uID:int = getTileID(columns, rows);
 
                     // Get base tile if it's not a wall
-                    if (tileValue != "#") {
+                    if (tileValue != "#")
+                    {
                         spriteID = TileTypes.getTileSprite(" ");
 
                         if (tileValue != " ")
@@ -100,7 +103,8 @@ package com.gamecook.tilecrusader.maps
                     }
 
                     //Pre-Process tile based on type.
-                    if (TileTypes.isMonster(tileValue)) {
+                    if (TileTypes.isMonster(tileValue))
+                    {
                         var newMonsterTile:MonsterTile = instanceManager.getInstance(uID.toString(), tileValue) as MonsterTile
                         var newTileID:String = newMonsterTile.getSpriteID();
                         if (newTileID != "" || newTileID)
@@ -108,7 +112,8 @@ package com.gamecook.tilecrusader.maps
                     }
 
                     //Apply lighting effects
-                    if (lightMap[uID]) {
+                    if (lightMap[uID])
+                    {
 
                         var id:int = Math.round((viewDistance - lightMap[uID]) / viewDistance * 10) - 3;
                         if (id < 1)
@@ -116,15 +121,18 @@ package com.gamecook.tilecrusader.maps
 
                         spriteID = spriteID.concat(",light" + id);
                     }
-                    else if (exploredTilesHashMap[uID]) {
+                    else if (exploredTilesHashMap[uID])
+                    {
                         //trace("Out Of Sight", uID, tileValue, viewDistance+1);
                         spriteID = spriteID = spriteID.concat(",light9");
                     }
-                    else if (TileTypes.isMonster(tileValue)) {
+                    else if (TileTypes.isMonster(tileValue))
+                    {
                         //trace("Monster in Dark", uID);
                         spriteID = "sprite3";
                     }
-                    else {
+                    else
+                    {
                         spriteID = "light10";
                     }
 
@@ -144,12 +152,14 @@ package com.gamecook.tilecrusader.maps
             var i:int;
 
             // Get top
-            for (i = 0; i < totalColumns; i++) {
+            for (i = 0; i < totalColumns; i++)
+            {
                 rayTrace(center.x, center.y, 0, i, tiles);
                 rayTrace(center.x, center.y, totalRows - 1, i, tiles);
             }
 
-            for (i = 0; i < totalRows; i++) {
+            for (i = 0; i < totalRows; i++)
+            {
                 rayTrace(center.x, center.y, i, 0, tiles);
                 rayTrace(center.x, center.y, i, totalColumns - 1, tiles);
             }
@@ -170,17 +180,20 @@ package com.gamecook.tilecrusader.maps
             dx *= 2;
             dy *= 2;
 
-            for (; n > 0; --n) {
+            for (; n > 0; --n)
+            {
                 var isWall:Boolean = visit(x, y, tiles, n);
 
                 if (isWall)
                     n = 0;
 
-                if (error > 0) {
+                if (error > 0)
+                {
                     x += x_inc;
                     error -= dy;
                 }
-                else {
+                else
+                {
                     y += y_inc;
                     error += dx;
                 }
@@ -207,7 +220,8 @@ package com.gamecook.tilecrusader.maps
 
             if (!_tourchMode);// || !_fullLineOfSight)
             {
-                if (!exploredTilesHashMap[uID] && tile != "#") {
+                if (!exploredTilesHashMap[uID] && tile != "#")
+                {
                     exploredTilesHashMap[uID] = " ";
                     exploredTiles.push(uID);
                 }

@@ -75,12 +75,14 @@ package com.gamecook.tilecrusader.managers
 
         private static function removePopUp(removeOverlay:Boolean):void
         {
-            if (currentPopUp) {
+            if (currentPopUp)
+            {
                 stage.removeChild(currentPopUp);
                 currentPopUp = null;
             }
 
-            if (overlay.stage && removeOverlay) {
+            if (overlay.stage && removeOverlay)
+            {
                 overlay.hasEventListener(MouseEvent.CLICK);
                 overlay.removeEventListener(MouseEvent.CLICK, onOverlayClick);
                 stage.removeChild(overlay);
@@ -90,7 +92,8 @@ package com.gamecook.tilecrusader.managers
         public static function close():void
         {
             removePopUp(true);
-            if (onClose != null) {
+            if (onClose != null)
+            {
                 onClose();
                 onClose = null;
             }

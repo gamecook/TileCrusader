@@ -78,19 +78,23 @@ package com.gamecook.tilecrusader.effects
          */
         override public function run(elapsed:Number = 0):void
         {
-            if (_timer > 0) {
+            if (_timer > 0)
+            {
                 _timer -= elapsed;
-                if (_timer <= 0) {
+                if (_timer <= 0)
+                {
                     _timer = 0;
                     target.x = 0;
                     target.y = 0;
                 }
-                else {
+                else
+                {
                     target.x = (Math.random() * _intensity * target.width * .5);
                     target.y = (Math.random() * _intensity * target.height * .5);
                 }
             }
-            else {
+            else
+            {
                 finish();
             }
         }

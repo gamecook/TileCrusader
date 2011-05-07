@@ -31,10 +31,12 @@ package com.gamecook.tilecrusader.status
         public function toString():String
         {
             var message:String = _attackStatus.toString();
-            if (_attackStatus.kill) {
+            if (_attackStatus.kill)
+            {
                 message += attackStatus.defender.getName() + " was defeated.\n"
             }
-            else {
+            else
+            {
                 //message += attackStatus.defender.getName() +" attacks back!\n";
                 message += attackStatus2.toString();
             }

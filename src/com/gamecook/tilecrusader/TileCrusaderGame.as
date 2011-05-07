@@ -29,31 +29,15 @@
  */
 package com.gamecook.tilecrusader
 {
-    import com.gamecook.tilecrusader.managers.SingletonManager;
-    import com.gamecook.tilecrusader.managers.SoundManager;
-    import com.gamecook.tilecrusader.managers.TCActivityManager;
-    import com.google.analytics.GATracker;
     import com.jessefreeman.factivity.AbstractApplication;
+    import com.jessefreeman.factivity.analytics.ITrack;
+    import com.jessefreeman.factivity.managers.ActivityManager;
 
     public class TileCrusaderGame extends AbstractApplication
     {
-        protected var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager) as SoundManager;
-
-        public function TileCrusaderGame(tracker:GATracker, x:int, y:int, state:Class, scale:Number = 1)
+        public function TileCrusaderGame(tracker:ITrack, x:int, y:int, state:Class, scale:Number = 1)
         {
-            super(new TCActivityManager(tracker), state, x, y, scale);
-        }
-
-        override public function resume():void
-        {
-            super.resume();
-            soundManager.playSounds();
-        }
-
-        override public function pause():void
-        {
-            super.pause();
-            soundManager.pauseSounds();
+            super(new ActivityManager(tracker), state, x, y, scale);
         }
     }
 }

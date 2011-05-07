@@ -29,8 +29,6 @@
  */
 package com.gamecook.tilecrusader.scores
 {
-    import com.gamecook.scores.FScoreboard;
-
     public class TileCrusaderScoreboard extends FScoreboard
     {
         public static const ID:String = "TileCrusaderScoreboard"
@@ -43,7 +41,8 @@ package com.gamecook.tilecrusader.scores
             //TODO need to remove this is just for testing
             //clearScoreboard();
 
-            if (total == 0) {
+            if (total == 0)
+            {
                 var defaultScores:Array = [
                     {initials:"BUM", score: 1000},
                     {initials:"Wil", score: 900},

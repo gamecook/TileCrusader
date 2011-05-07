@@ -43,12 +43,14 @@ package com.gamecook.tilecrusader.maps
 
         public function parseObject(value:Object):void
         {
-            if (value.exploredTiles) {
+            if (value.exploredTiles)
+            {
                 // trace("Parsing", value.exploredTiles);
                 exploredTiles = value.exploredTiles.slice();
                 var total:int = exploredTiles.length;
                 var i:int;
-                for (i = 0; i < total; i++) {
+                for (i = 0; i < total; i++)
+                {
                     exploredTilesHashMap[exploredTiles[i]] = " ";
                 }
             }

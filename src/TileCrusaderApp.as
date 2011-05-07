@@ -35,8 +35,9 @@ package
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.DebugStartActivity;
     import com.gamecook.tilecrusader.managers.PopUpManager;
-    import com.google.analytics.GATracker;
+    import com.gamecook.tilecrusader.trackers.GoogleTracker;
     import com.jessefreeman.factivity.activities.BaseActivity;
+    import com.jessefreeman.factivity.analytics.ITrack;
 
     import flash.display.DisplayObject;
     import flash.display.Sprite;
@@ -58,7 +59,7 @@ package
         private static var EMBEDDED_FONT2:String;
 
         private var game:TileCrusaderGame;
-        private var tracker:GATracker;
+        private var tracker:ITrack;
         private var os:String;
 
         public function TileCrusaderApp()
@@ -67,17 +68,20 @@ package
             configureComponents();
             os = Capabilities.version.substr(0, 3);
 
-            tracker = new GATracker(this, "UA-18884514-4", "AS3", false);
+            tracker = new GoogleTracker(this, "UA-18884514-4", "AS3", false);
 
             var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
             var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
             var scale:Number = 2;
-            if (stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE) {
-                if (os == "IOS") {
+            if (stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
+            {
+                if (os == "IOS")
+                {
                     screenHeight = stage.fullScreenWidth;
                     screenWidth = stage.fullScreenHeight;
                 }
-                else {
+                else
+                {
                     screenWidth = stage.fullScreenWidth;
                     screenHeight = stage.fullScreenHeight;
                 }
@@ -101,7 +105,7 @@ package
             stats.y = (BaseActivity.fullSizeHeight * 2) - stats.height;
 
             var label:Label = new Label(this, 0, 0);
-            label.autoSize = TextFieldAutoSize.LEFT;
+            label.autoSize = true;
             label.textField.multiline = true;
             label.textField.wordWrap = true;
             label.textField.width = 300;

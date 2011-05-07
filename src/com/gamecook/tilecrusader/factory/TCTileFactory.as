@@ -9,16 +9,13 @@ package com.gamecook.tilecrusader.factory
 {
     import com.gamecook.tilecrusader.combat.ICombatant;
     import com.gamecook.tilecrusader.enum.SlotsEnum;
-    import com.gamecook.tilecrusader.equipment.Equipment;
     import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.factory.EquipmentFactory;
     import com.gamecook.tilecrusader.templates.ITemplate;
     import com.gamecook.tilecrusader.templates.ITemplateCollection;
     import com.gamecook.tilecrusader.templates.TemplateApplicator;
     import com.gamecook.tilecrusader.tiles.BaseTile;
     import com.gamecook.tilecrusader.tiles.IMonster;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
 
     public class TCTileFactory extends TileFactory
     {
@@ -43,7 +40,8 @@ package com.gamecook.tilecrusader.factory
             var tile:BaseTile = super.createTile(value);
 
             //TODO: move to a combatantFactory subclass? TCTileFactory shouldn't have to worry about checking ICombatant/IMonsters/etc
-            if (tile is IMonster && !(tile is PlayerTile)) {
+            if (tile is IMonster && !(tile is PlayerTile))
+            {
                 var template:ITemplate = templates.getRandomTemplate();
 
                 // Generate and Equip items
@@ -53,10 +51,10 @@ package com.gamecook.tilecrusader.factory
                 var i:int = 0;
                 var tmpEquipment:IEquipable;
 
-                for(i = 0; i < total; i++)
+                for (i = 0; i < total; i++)
                 {
                     tmpEquipment = weaponGenerator.createEquipment(characterPoints, equipmentTypes[i]);
-                    if(tmpEquipment)
+                    if (tmpEquipment)
                         IMonster(tile).equip(tmpEquipment);
                 }
 

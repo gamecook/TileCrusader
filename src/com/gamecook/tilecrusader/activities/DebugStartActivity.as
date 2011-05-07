@@ -12,11 +12,10 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.ClassOptions;
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.factory.NewGameFactory;
     import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.managers.SingletonManager;
 
     public class DebugStartActivity extends AdvancedActivity
     {
@@ -36,9 +35,9 @@ package com.gamecook.tilecrusader.activities
             NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),
                     DarknessOptions.getValues(),
                     GameModeOptions.getValues(),
-                    /*MapSizeOptions.getValues(),*/[30],
+                /*MapSizeOptions.getValues(),*/[30],
                     BooleanOptions.getTFOptions(),
-                    /*BooleanOptions.getTFOptions()*/[true]);
+                /*BooleanOptions.getTFOptions()*/[true]);
 
             SpriteSheetFactory.parseSpriteSheet(SingletonManager.getClassReference(SpriteSheet) as SpriteSheet);
 

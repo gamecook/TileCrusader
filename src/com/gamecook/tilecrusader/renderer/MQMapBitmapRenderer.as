@@ -75,17 +75,21 @@ package com.gamecook.tilecrusader.renderer
             var bitmapData:BitmapData;
             var sprites:Array = value.split(",");
 
-            if (spriteSheet.hasSpriteCached(value)) {
+            if (spriteSheet.hasSpriteCached(value))
+            {
                 bitmapData = spriteSheet.getSpriteFromCache(value);
             }
-            else {
+            else
+            {
                 bitmapData = spriteSheet.getSprite.apply(this, sprites);
             }
 
-            if (instances.hasInstance(currentTileID.toString())) {
+            if (instances.hasInstance(currentTileID.toString()))
+            {
                 var tile:MonsterTile = instances.getInstance(currentTileID.toString(), value) as MonsterTile;
 
-                if (tile is ICombatant && !TileTypes.isDarkness(sprites[sprites.length - 1])) {
+                if (tile is ICombatant && !TileTypes.isDarkness(sprites[sprites.length - 1]))
+                {
 
                     statsTF.htmlText = "<font color='#ffff00'>" + tile.getAttackRolls() + "</font>|<font color='#ffffff'>" + tile.getDefenseRolls() + "</font>";
 
@@ -93,7 +97,8 @@ package com.gamecook.tilecrusader.renderer
 
                     var life:Number = tile.getLife() / tile.getMaxLife();
 
-                    if (life < 1) {
+                    if (life < 1)
+                    {
                         var matrix:Matrix = new Matrix();
 
                         bitmapData = bitmapData.clone();

@@ -34,12 +34,13 @@ package com.gamecook.tilecrusader.views
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.managers.SingletonManager;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
+
+    import com.jessefreeman.factivity.managers.SingletonManager;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;

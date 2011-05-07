@@ -41,7 +41,8 @@ package com.gamecook.tilecrusader.templates
         public function apply(target:ICombatant, template:ITemplate, points:int):void
         {
             var property:String;
-            while (points > 0) {
+            while (points > 0)
+            {
                 property = template.nextProperty();
                 addPoint(property, target);
 
@@ -53,7 +54,8 @@ package com.gamecook.tilecrusader.templates
         private function addPoint(property:String, target:ICombatant):void
         {
             //TODO need to add a check to see if you can actually add point, if not it needs to go to life.
-            switch (property) {
+            switch (property)
+            {
                 case TemplateProperties.LIFE:
                     target.addMaxLife(1);
                     break;

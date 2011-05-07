@@ -8,7 +8,7 @@ package com.gamecook.tilecrusader.factory
     import com.gamecook.tilecrusader.equipment.*;
     import com.gamecook.tilecrusader.tiles.TileTypes;
 
-public class EquipmentFactory
+    public class EquipmentFactory
     {
         include "prefixes.as"
         include "suffixes.as"

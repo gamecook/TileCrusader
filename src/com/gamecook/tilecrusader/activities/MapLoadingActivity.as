@@ -94,11 +94,13 @@ package com.gamecook.tilecrusader.activities
             map = new RandomMap();
 
             // Test to see if the current active state already has map
-            if (activeGameState.map) {
+            if (activeGameState.map)
+            {
                 // Get tiles from game state's map object
                 map.setTiles(activeGameState.map.tiles);
             }
-            else {
+            else
+            {
                 // If there were no tiles, generate a new map
                 TimeMethodExecutionUtil.execute("generateMap", map.generateMap, activeGameState.size, 2);
 
@@ -117,10 +119,12 @@ package com.gamecook.tilecrusader.activities
                 var exitPosition:Point = populateMapHelper.getRandomEmptyPoint();
                 map.swapTile(exitPosition, "E");
 
-                if (activeGameState.gameType != GameModeOptions.ESCAPE) {
+                if (activeGameState.gameType != GameModeOptions.ESCAPE)
+                {
                     activeGameState.startPositionPoint = exitPosition;
                 }
-                else {
+                else
+                {
                     //TODO need to loop through all random points and find the longest one from the exit
                     activeGameState.startPositionPoint = populateMapHelper.getRandomEmptyPoint();
                 }
@@ -132,7 +136,7 @@ package com.gamecook.tilecrusader.activities
                 // Swap out some open tiles
                 var total:int = populateMapHelper.getOpenSpaces() * .3;
                 var i:int;
-                for(i=0; i < total; i++)
+                for (i = 0; i < total; i++)
                 {
                     map.swapTile(populateMapHelper.getRandomEmptyPoint(), TileTypes.getRandomOpenTile());
                 }
@@ -168,10 +172,12 @@ package com.gamecook.tilecrusader.activities
 
             var i:int;
             //var treasureChestTotal:int = treasurePoolTotal *
-            for (i = 0; i < treasurePoolTotal; i ++) {
+            for (i = 0; i < treasurePoolTotal; i ++)
+            {
 
                 treasurePool.push(treasureTypes[Math.floor((Math.random() * treasureTypesTotal))]);
-                if (i < totalChests) {
+                if (i < totalChests)
+                {
                     chests.push("T");
                 }
             }
@@ -193,18 +199,21 @@ package com.gamecook.tilecrusader.activities
             var monsterType:int;
             var totalTiles:int = Math.ceil(RandomMap(map).getOpenTiles().length * totalMonsterPercent);
 
-            for (i = 0; i < total; i++) {
+            for (i = 0; i < total; i++)
+            {
                 //TODO need to look into why the values are sometimes larger then what they really are.
                 monsterValues = Math.floor(monsterPercentage[i] * totalTiles);
                 monsterType = monsterTypes[i];
                 //trace("MonsterType", monsterType, "monsterValues", monsterValues);
-                for (j = 0; j < monsterValues; j++) {
+                for (j = 0; j < monsterValues; j++)
+                {
 
                     monsters.push(monsterType);
                 }
             }
 
-            if (activeGameState.gameType == GameModeOptions.KILL_BOSS) {
+            if (activeGameState.gameType == GameModeOptions.KILL_BOSS)
+            {
                 monsters.push("9");
                 trace("Boss was added to level");
             }
@@ -222,12 +231,14 @@ package com.gamecook.tilecrusader.activities
         {
             textCounter += elapsed;
 
-            if (label.text.length > 11) {
+            if (label.text.length > 11)
+            {
                 label.text = LOADING_TEXT;
             }
 
 
-            if (textCounter >= textDelay) {
+            if (textCounter >= textDelay)
+            {
                 textCounter = 0;
                 label.text += ".";
             }
