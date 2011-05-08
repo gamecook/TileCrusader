@@ -28,10 +28,14 @@ package com.gamecook.tilecrusader.renderer
             {
                 case "#":
                     return 0x000000;
+                case "T":
+                    return 0x00FF00;
                 case "@":
                     return 0xff0000;
                 case "_":
                     return 0x999999;
+                case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9":
+                    return 0x0000ff;
                 default:
                     return 0xffffff;
             }

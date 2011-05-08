@@ -607,6 +607,7 @@ package com.gamecook.tilecrusader.activities
 
             swapTileOnMap(currentPoint, "X");
 
+            tileInstanceManager.removeInstance(currentuID);
 
             //Old drop treasure code
             if (monstersDropTreasure)
@@ -813,7 +814,8 @@ package com.gamecook.tilecrusader.activities
 
                 //Draw player
                 renderer.renderPlayer(x, y, playerSprite);
-                previewMapRenderer.renderPlayer(x, y, playerSprite);
+
+                previewMapRenderer.renderPlayer(mapSelection.getOffsetX() + x, mapSelection.getOffsetY() + y, playerSprite);
 
                 invalid = false;
             }

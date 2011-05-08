@@ -35,7 +35,7 @@ package com.gamecook.tilecrusader.activities
             NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),
                     DarknessOptions.getValues(),
                     GameModeOptions.getValues(),
-                /*MapSizeOptions.getValues(),*/[30],
+                /*MapSizeOptions.getValues(),*/[20],
                     BooleanOptions.getTFOptions(),
                 /*BooleanOptions.getTFOptions()*/[true]);
 

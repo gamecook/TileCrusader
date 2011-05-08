@@ -153,7 +153,7 @@ package com.gamecook.tilecrusader.activities
             var emptyTreasureChests:Boolean = true;
             var trapTreasureChests:Boolean = false;
 
-            var totalChests:int = Math.floor((Math.random() * monsters.length) + .1);
+            var totalChests:int = 10;//Math.floor((Math.random() * monsters.length) + .1);
             var treasurePool:Array = [];
 
             // These are the types of treasure in the game
@@ -191,7 +191,7 @@ package com.gamecook.tilecrusader.activities
         {
             var monsterTypes:Array = ["1","2","3","4","5","6","7","8"];
             var monsterPercentage:Array = [.3,.2,.1, .1, .05, .02, .02, .01];
-            var totalMonsterPercent:Number = .05;
+            var totalMonsterPercent:Number = .2;
             var i:int = 0;
             var j:int = 0;
             var total:int = monsterTypes.length;
