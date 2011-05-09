@@ -340,7 +340,7 @@ package com.gamecook.tilecrusader.tiles
         {
             var equipment:IEquipable;
 
-            if(canEquip(item))
+            if (canEquip(item))
             {
                 equipment = equipmentSlots[item.getSlotID()] as IEquipable;
                 modifyAttribute(equipment.getModifyAttribute(), - equipment.getValue())
@@ -351,7 +351,7 @@ package com.gamecook.tilecrusader.tiles
 
         protected function modifyAttribute(attribute:String, value:int):void
         {
-            if(hasOwnProperty(attribute))
+            if (hasOwnProperty(attribute))
                 this[attribute](value);
         }
 
@@ -410,12 +410,16 @@ package com.gamecook.tilecrusader.tiles
             return equipmentSlots[SlotsEnum.SHOES];
         }
 
-        public function modifyAttack(value:int):void {
+        public function modifyAttack(value:int):void
+        {
             attackRoll += value;
+            trace(id, "Modified Attack", value, attackRoll);
         }
 
-        public function modifyDefense(value:int):void {
+        public function modifyDefense(value:int):void
+        {
             defenseRoll += value;
+            trace(id, "Modified Defense", value, defenseRoll);
         }
     }
 }

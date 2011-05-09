@@ -32,7 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.bit101.components.PushButton;
     import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
 
     import flash.events.MouseEvent;
     import flash.text.TextFieldAutoSize;
@@ -43,7 +43,6 @@ package com.gamecook.tilecrusader.activities
         {
             super(stateManager, date);
         }
-
 
         override protected function onCreate():void
         {
@@ -60,7 +59,6 @@ package com.gamecook.tilecrusader.activities
 
             var btn:PushButton = new PushButton(this, 0, tf.textField.y + tf.textField.height + 100, "Ok, I get it!", onAccept);
             btn.x = (fullSizeWidth - btn.width) * .5;
-
 
         }
 

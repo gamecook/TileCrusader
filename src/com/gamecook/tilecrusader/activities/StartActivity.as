@@ -19,7 +19,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.factory.NewGameFactory;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     import flash.events.MouseEvent;
     import flash.net.SharedObject;
@@ -43,7 +43,7 @@ package com.gamecook.tilecrusader.activities
         override protected function onCreate():void
         {
 
-            loadState(null);
+            loadState();
             mapViewPortWidth = fullSizeWidth - mapViewPortX;
 
             super.onCreate();
@@ -99,10 +99,8 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
-            //super.loadState(obj);
-
             stateSO = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
             stateSOData = stateSO.data;
         }

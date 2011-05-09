@@ -14,8 +14,10 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.factory.NewGameFactory;
     import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
     import com.jessefreeman.factivity.managers.SingletonManager;
+    import com.jessefreeman.factivity.sounds.SoundManager;
+    import com.jessefreeman.factivity.threads.IThreadManager;
 
     public class DebugStartActivity extends AdvancedActivity
     {
@@ -25,7 +27,6 @@ package com.gamecook.tilecrusader.activities
             super(activityManager, data);
         }
 
-
         override public function onStart():void
         {
             super.onStart();
@@ -33,11 +34,11 @@ package com.gamecook.tilecrusader.activities
             // this allows you to jump right into a newly generated game,
             // use this area to configure the ActiveGameState
             NewGameFactory.createCofferBreakGame(ClassOptions.getValues(),
-                    DarknessOptions.getValues(),
-                    GameModeOptions.getValues(),
-                /*MapSizeOptions.getValues(),*/[20],
-                    BooleanOptions.getTFOptions(),
-                /*BooleanOptions.getTFOptions()*/[true]);
+                                                DarknessOptions.getValues(),
+                                                GameModeOptions.getValues(),
+                                                [20],
+                                                BooleanOptions.getTFOptions(),
+                                                [true]);
 
             SpriteSheetFactory.parseSpriteSheet(SingletonManager.getClassReference(SpriteSheet) as SpriteSheet);
 

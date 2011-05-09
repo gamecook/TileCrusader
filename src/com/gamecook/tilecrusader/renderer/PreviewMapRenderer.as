@@ -35,7 +35,7 @@ package com.gamecook.tilecrusader.renderer
                 case "_":
                     return 0x999999;
                 case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9":
-                    return 0x0000ff;
+                return 0x0000ff;
                 default:
                     return 0xffffff;
             }
@@ -43,15 +43,15 @@ package com.gamecook.tilecrusader.renderer
 
         override public function renderPlayer(j:int, i:int, tileType:String):void
         {
-            if(lastPlayerPosition)
+            if (lastPlayerPosition)
             {
-                renderTile(lastPlayerPosition.x, lastPlayerPosition.y, "_",0);
+                renderTile(lastPlayerPosition.x, lastPlayerPosition.y, "_", 0);
                 lastPlayerPosition.x = j;
                 lastPlayerPosition.y = i;
             }
             else
             {
-                lastPlayerPosition = new Point(j,i);
+                lastPlayerPosition = new Point(j, i);
             }
             super.renderPlayer(j, i, "@");
         }

@@ -19,7 +19,12 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.states.CustomTemplateState;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
+
+    import com.jessefreeman.factivity.activities.IActivityManager;
+
+    import com.jessefreeman.factivity.sounds.SoundManager;
+    import com.jessefreeman.factivity.threads.IThreadManager;
 
     import flash.events.Event;
     import flash.events.FocusEvent;
@@ -49,11 +54,11 @@ package com.gamecook.tilecrusader.activities
         private var activeGameState:ActiveGameState;
         private var customTemplateState:CustomTemplateState;
 
-        public function ConfigureCharacterActivity(activityManager:ActivityManager, data:* = null)
+
+        public function ConfigureCharacterActivity(activityManager:IActivityManager, data:*)
         {
             super(activityManager, data);
         }
-
 
         override protected function onCreate():void
         {
@@ -92,7 +97,6 @@ package com.gamecook.tilecrusader.activities
                     </HBox>
                     <HBox spacing="20">
                         <Label id="pointTotal" width="140" align="center" text="Character Points:\n 100 of 100"/>
-                        <PushButton id="customPic" label="Customize Look" event="click:onCustomLook"/>
                     </HBox>
                     <HBox spacing="10">
 
@@ -239,7 +243,7 @@ package com.gamecook.tilecrusader.activities
             updateTotalLabel();
         }
 
-        public function onBack(event:MouseEvent):void
+        override public function onBack():void
         {
             nextActivity(StartActivity);
         }
@@ -274,11 +278,6 @@ package com.gamecook.tilecrusader.activities
             customTemplateState.save();
 
             classLabel.text = "Class(Custom):";
-        }
-
-        public function onCustomLook(event:MouseEvent):void
-        {
-            nextActivity(GenerateCharacterActivity, null);
         }
 
         override public function loadState(obj:Object):void

@@ -32,7 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.scores.TileCrusaderScoreboard;
     import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
 
     public class HighScoreActivity extends BaseActivity
     {
@@ -61,132 +61,134 @@ package com.gamecook.tilecrusader.activities
             super.onCreate();
 
             /*scoreboard = new TileCrusaderScoreboard();
-            scores = scoreboard.scores;
+             scores = scoreboard.scores;
 
-            var score:Object;
+             var score:Object;
 
-            newInitials = [];
+             newInitials = [];
 
-            highScored = scoreboard.canSubmitScore(playerScore);
+             highScored = scoreboard.canSubmitScore(playerScore);
 
-            textItem = new Label(this, 0, fullSizeHeight / 6, "SCORE RANKING");
+             textItem = new Label(this, 0, fullSizeHeight / 6, "SCORE RANKING");
 
-            //TODO need to generate score here
-            var playerScore:int = 100;//FlxG.score;
-            var xpos:Number;
-            var i:int;
-            var totalScores:int = TileCrusaderScoreboard.MAX_SCORES;
+             //TODO need to generate score here
+             var playerScore:int = 100;//FlxG.score;
+             var xpos:Number;
+             var i:int;
+             var totalScores:int = TileCrusaderScoreboard.MAX_SCORES;
 
-            //find out if scores can be inserted at the beginning
-            if (!scores[0])
-            {
-                score = {score:playerScore, initials:""};
-                scores.push(score);
-                newScore = score;
-                highScored = true;
-                newScorePosition = 0;
-            }
+             //find out if scores can be inserted at the beginning
+             if (!scores[0])
+             {
+             score = {score:playerScore, initials:""};
+             scores.push(score);
+             newScore = score;
+             highScored = true;
+             newScorePosition = 0;
+             }
 
-            //first loop: find out if scores can be inserted in middle
-            for (i = 0; i < totalScores; i++)
-            {
-                score = scores[i];
-                if (highScored)
-                    break; else if (score.score <= playerScore)
-                {
-                    score = {score:playerScore, initials:""};
-                    newScorePosition = i;
-                    scores.splice(i, 0, score);
-                    if (totalScores > 10)
-                        scores.pop();
-                    highScored = true;
-                    newScore = score;
-                    break;
-                }
-            }
+             //first loop: find out if scores can be inserted in middle
+             for (i = 0; i < totalScores; i++)
+             {
+             score = scores[i];
+             if (highScored)
+             break; else if (score.score <= playerScore)
+             {
+             score = {score:playerScore, initials:""};
+             newScorePosition = i;
+             scores.splice(i, 0, score);
+             if (totalScores > 10)
+             scores.pop();
+             highScored = true;
+             newScore = score;
+             break;
+             }
+             }
 
-            //find out if scores can be inserted at end
-            if (!highScored && totalScores < 5)
-            {
-                score = {score:playerScore, initials:""};
-                scores.push(score);
-                newScorePosition = totalScores - 1;
-                highScored = true;
-                newScore = score;
-            }
+             //find out if scores can be inserted at end
+             if (!highScored && totalScores < 5)
+             {
+             score = {score:playerScore, initials:""};
+             scores.push(score);
+             newScorePosition = totalScores - 1;
+             highScored = true;
+             newScore = score;
+             }
 
-            var ypos:int = textItem.y + textItem.height + 20;
+             var ypos:int = textItem.y + textItem.height + 20;
 
-            //second loop lay out the current high scores.
-            for (i = 0; i < totalScores; i++)
-            {
-                var scoreObj:Object = scores[i];
-                //display the current scores.
+             //second loop lay out the current high scores.
+             for (i = 0; i < totalScores; i++)
+             {
+             var scoreObj:Object = scores[i];
+             //display the current scores.
 
-                var color:uint = (i == newScorePosition) ? 0xc83fbb : 0xffffff
+             var color:uint = (i == newScorePosition) ? 0xc83fbb : 0xffffff
 
-                textItem = new Label(this, 140, ypos, (i + 1).toString());
+             textItem = new Label(this, 140, ypos, (i + 1).toString());
 
-                xpos = (textItem.x - textItem.width) + 30;
+             xpos = (textItem.x - textItem.width) + 30;
 
-                //initials - loop to position each separately.
-                for (var j:Number = 0; j < 3; j++)
-                {
+             //initials - loop to position each separately.
+             for (var j:Number = 0; j < 3; j++)
+             {
 
-                    textItem = new Label(this, xpos, ypos, scoreObj.initials.charAt(j));
-                    //new high scores forms gets colored red.
-                    if (i == newScorePosition)
-                    {
-                        textItem.textField.textColor = color;
-                        newInitials.push(textItem);
-                    } else
-                        textItem.textField.textColor = color;
+             textItem = new Label(this, xpos, ypos, scoreObj.initials.charAt(j));
+             //new high scores forms gets colored red.
+             if (i == newScorePosition)
+             {
+             textItem.textField.textColor = color;
+             newInitials.push(textItem);
+             } else
+             textItem.textField.textColor = color;
 
-                    xpos += 20;
-                }
+             xpos += 20;
+             }
 
-                //scores
-                textItem = new Label(this, xpos, ypos, scoreObj.score.toString());
+             //scores
+             textItem = new Label(this, xpos, ypos, scoreObj.score.toString());
 
-                ypos += 20;
+             ypos += 20;
 
-            }
-
-
-            if (highScored)
-            {
-                var textItem:Label;
+             }
 
 
-                letterPreview = new Label(this, (fullSizeWidth - 100 ) * .5, 500, "_");
-                letterPreview.textField.textColor = 0xc83fbb
+             if (highScored)
+             {
+             var textItem:Label;
 
-                //add in arrows for displaying position and possible motions
-                leftArrow = new Label(null, (letterPreview.x - letterPreview.width) - 50, letterPreview.y + 10, " ");
-                leftArrow.textField.textColor = 0xc83fbb
 
-                *//*rightArrow = new FlxText(letterPreview.right, letterPreview.y + 10, 200, " ");
-                 rightArrow.textField.textColor = 0xc83fbb
+             letterPreview = new Label(this, (fullSizeWidth - 100 ) * .5, 500, "_");
+             letterPreview.textField.textColor = 0xc83fbb
 
-                 upArrow = new FlxText(letterPreview.left, letterPreview.top - 60, 100, "+");
-                 upArrow.textField.textColor = 0xc83fbb
+             //add in arrows for displaying position and possible motions
+             leftArrow = new Label(null, (letterPreview.x - letterPreview.width) - 50, letterPreview.y + 10, " ");
+             leftArrow.textField.textColor = 0xc83fbb
 
-                 downArrow = new FlxText(letterPreview.left, letterPreview.bottom - 30, 100, "-")
-                 downArrow.textField.textColor = 0xc83fbb
+             */
+            /*rightArrow = new FlxText(letterPreview.right, letterPreview.y + 10, 200, " ");
+             rightArrow.textField.textColor = 0xc83fbb
 
-                 textItem = new FlxText(0, upArrow.top - 30, FlxG.width, "ENTER YOUR INITIALS");
-                 textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
-                 add(textItem);
+             upArrow = new FlxText(letterPreview.left, letterPreview.top - 60, 100, "+");
+             upArrow.textField.textColor = 0xc83fbb
 
-                 textItem = new FlxText(0, downArrow.bottom, FlxG.width, "USE JOYSTICK TO SELECT LETTER");
-                 textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
-                 add(textItem);*//*
+             downArrow = new FlxText(letterPreview.left, letterPreview.bottom - 30, 100, "-")
+             downArrow.textField.textColor = 0xc83fbb
 
-            } else
-            {
-                //TODO Need to add something here so you don't accidentally click through the next screen.
-                nextActivity(StartActivity);
-            }*/
+             textItem = new FlxText(0, upArrow.top - 30, FlxG.width, "ENTER YOUR INITIALS");
+             textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
+             add(textItem);
+
+             textItem = new FlxText(0, downArrow.bottom, FlxG.width, "USE JOYSTICK TO SELECT LETTER");
+             textItem.setFormat(null, 15, 0xc83fbb, "center", 0);
+             add(textItem);*/
+            /*
+
+             } else
+             {
+             //TODO Need to add something here so you don't accidentally click through the next screen.
+             nextActivity(StartActivity);
+             }*/
         }
 
         override public function update(elapsed:Number = 0):void

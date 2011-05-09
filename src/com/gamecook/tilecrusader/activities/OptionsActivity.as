@@ -31,7 +31,7 @@ package com.gamecook.tilecrusader.activities
 {
     import com.bit101.utils.MinimalConfigurator;
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     import flash.events.MouseEvent;
     import flash.net.SharedObject;

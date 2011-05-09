@@ -32,7 +32,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.jessefreeman.factivity.activities.BaseActivity;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
 
     public class FinishMapActivity extends BaseActivity
     {
@@ -49,7 +49,7 @@ package com.gamecook.tilecrusader.activities
             activeGameState = new ActiveGameState();
 
             trace("Finish Map Success", data.success);
-            loadState(null);
+            loadState();
 
             super.onCreate();
 
@@ -60,12 +60,12 @@ package com.gamecook.tilecrusader.activities
         }
 
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
         }
 
-        override public function saveState(obj:Object, activeState:Boolean = true):void
+        override public function saveState():void
         {
             activeGameState.save();
 

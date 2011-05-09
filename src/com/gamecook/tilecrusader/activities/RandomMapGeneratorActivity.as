@@ -16,7 +16,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.utils.ArrayUtil;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     import flash.events.MouseEvent;
     import flash.net.SharedObject;
@@ -46,7 +46,7 @@ package com.gamecook.tilecrusader.activities
         override protected function onCreate():void
         {
             activeGameState = new ActiveGameState();
-            loadState(null);
+            loadState();
 
             super.onCreate();
 
@@ -104,7 +104,7 @@ package com.gamecook.tilecrusader.activities
         public function onSubmit(event:MouseEvent):void
         {
             //activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
-            saveState(null);
+            saveState();
 
             nextActivity(MapLoadingActivity);
         }
@@ -146,12 +146,12 @@ package com.gamecook.tilecrusader.activities
             nextActivity(RandomMapGeneratorFilterActivity);
         }
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
         }
 
-        override public function saveState(obj:Object, activeState:Boolean = true):void
+        override public function saveState():void
         {
             activeGameState.save();
         }

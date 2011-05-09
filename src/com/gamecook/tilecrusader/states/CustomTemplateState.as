@@ -7,9 +7,9 @@
  */
 package com.gamecook.tilecrusader.states
 {
-import com.jessefreeman.factivity.state.AbstractStateObject;
+    import com.jessefreeman.factivity.state.AbstractStateObject;
 
-public class CustomTemplateState extends AbstractStateObject
+    public class CustomTemplateState extends AbstractStateObject
     {
 
         public function CustomTemplateState()

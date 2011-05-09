@@ -40,7 +40,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     import com.jessefreeman.factivity.managers.SingletonManager;
 
@@ -124,7 +124,7 @@ package com.gamecook.tilecrusader.activities
         {
 
             activeGameState = new ActiveGameState();
-            loadState(null);
+            loadState();
 
             super.onCreate();
 
@@ -464,11 +464,11 @@ package com.gamecook.tilecrusader.activities
 
         private function equip(player:PlayerTile, tmpTile:EquipmentTile, uID:String, tilePoint:Point, nextMovePoint:Point):void
         {
-            //TODO need to test if you can equip
             //TODO prompt user to equip
 
             var droppedEquipment:IEquipable = player.equip(tmpTile.getWeapon());
 
+            addStatusMessage(player.getName() + " has equipped "+tmpTile.getName()+".\nNew stats: Attack "+player.getAttackRolls()+" | Defense "+player.getDefenceRolls());
             //TODO make sure the player is actually picking up the item.
 
 
@@ -878,7 +878,7 @@ package com.gamecook.tilecrusader.activities
             else if (localPoint.y < playerPoint.y)
                 directionY = -1;
 
-            if(directionX == 0 && directionY == 0)
+            if (directionX == 0 && directionY == 0)
             {
                 previewMapShape.visible = !previewMapShape.visible;
             }
@@ -890,12 +890,12 @@ package com.gamecook.tilecrusader.activities
             //trace(localTile, tileID, tileID%map.width, tileID%map.height, mapSelection.getOffsetX(), mapSelection.getOffsetY());
         }
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
         }
 
-        override public function saveState(obj:Object, activeState:Boolean = true):void
+        override public function saveState():void
         {
             if (!player.isDead)
             {
@@ -911,7 +911,7 @@ package com.gamecook.tilecrusader.activities
 
         override public function onStop():void
         {
-            saveState(null);
+            saveState();
             super.onStop();
         }
 

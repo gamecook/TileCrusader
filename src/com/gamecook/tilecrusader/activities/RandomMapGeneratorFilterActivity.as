@@ -37,7 +37,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
 
     import flash.events.MouseEvent;
     import flash.net.SharedObject;

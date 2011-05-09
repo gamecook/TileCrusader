@@ -30,7 +30,7 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.gamecook.tilecrusader.views.ArtisticMapView;
-    import com.jessefreeman.factivity.managers.IActivityManager;
+    import com.jessefreeman.factivity.activities.IActivityManager;
 
     public class RandomMapBGActivity extends AdvancedActivity
     {

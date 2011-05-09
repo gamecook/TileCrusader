@@ -49,7 +49,7 @@ package com.gamecook.tilecrusader.tiles
                     TYPES['9'] = { name: 'Gargoyle', sprite: "sprite17", type: BOSS, classPath:"MonsterTile", pointPercent:"1"},
                     TYPES['A'] = { name: 'Artifact', sprite: "sprite100", type: ARTIFACT},
 
-                    /* Weapons */
+                /* Weapons */
                     TYPES['w1'] = { name: 'Spear', sprite: "sprite18", classPath:"EquipmentTile", type: EQUIPMENT, modifyValue: 1 , modifyAttribute: "modifyAttack"},
                     TYPES['w2'] = { name: 'Cane', sprite: "sprite19", classPath:"EquipmentTile", type: EQUIPMENT, modifyValue: 1 , modifyAttribute: "modifyAttack"},
                     TYPES['w3'] = { name: 'Magic Wand', sprite: "sprite20", classPath:"EquipmentTile", type: EQUIPMENT, modifyValue: 1 , modifyAttribute: "modifyAttack"},

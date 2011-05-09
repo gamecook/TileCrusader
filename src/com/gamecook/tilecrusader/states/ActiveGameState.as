@@ -9,9 +9,9 @@ package com.gamecook.tilecrusader.states
 {
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
 
-import com.jessefreeman.factivity.state.AbstractStateObject;
+    import com.jessefreeman.factivity.state.AbstractStateObject;
 
-import flash.geom.Point;
+    import flash.geom.Point;
 
     public class ActiveGameState extends AbstractStateObject
     {

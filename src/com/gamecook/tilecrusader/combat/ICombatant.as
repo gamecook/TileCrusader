@@ -54,12 +54,7 @@ package com.gamecook.tilecrusader.combat
 
         function defend(monster:ICombatant):void;
 
-        //function addEquipment(modifier:IEquipment):void;
-
         function get isDead():Boolean;
-
-        /*function get equipmentSlot0():IEquipment;
-         function get equipmentSlot1():IEquipment;*/
 
         function setAttackRolls(value:int):void;
 

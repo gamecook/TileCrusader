@@ -37,7 +37,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.tiles.TileTypes;
     import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     import flash.geom.Point;
     import flash.utils.getQualifiedClassName;
@@ -72,13 +72,13 @@ package com.gamecook.tilecrusader.activities
 
             activeGameState = new ActiveGameState();
 
-            loadState(null);
+            loadState();
 
             activeGameState.lastActivity = getQualifiedClassName(MapLoadingActivity).replace("::", ".");
 
             createMap();
 
-            saveState(null);
+            saveState();
 
             // Create data object for next activity
             var activityObject:Object = {};
@@ -247,12 +247,12 @@ package com.gamecook.tilecrusader.activities
             super.update(elapsed);
         }
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
         }
 
-        override public function saveState(obj:Object, activeState:Boolean = true):void
+        override public function saveState():void
         {
             activeGameState.save();
         }

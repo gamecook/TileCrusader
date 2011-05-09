@@ -10,7 +10,7 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.jessefreeman.factivity.managers.ActivityManager;
+    import com.jessefreeman.factivity.activities.ActivityManager;
 
     public class GameOverActivity extends AdvancedActivity
     {
@@ -24,7 +24,7 @@ package com.gamecook.tilecrusader.activities
         override protected function onCreate():void
         {
             activeGameState = new ActiveGameState();
-            loadState(null);
+            loadState();
 
             super.onCreate();
 
@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.activities
             activeGameState.clear();
         }
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
         }
