@@ -28,23 +28,8 @@ package com.gamecook.tilecrusader.tiles
 
         public function MonsterTile()
         {
-            configureSlots()
+
         }
-
-        private function configureSlots():void
-        {
-            equipmentSlots[SlotsEnum.WEAPON] = null;
-            equipmentSlots[SlotsEnum.SHIELD] = null;
-            equipmentSlots[SlotsEnum.ARMOR] = null;
-            equipmentSlots[SlotsEnum.HELMET] = null;
-            equipmentSlots[SlotsEnum.SHOES] = null;
-        }
-
-        /* public function setSpriteID(value:String):void
-         {
-
-         spriteID = TileTypes.getTileSprite(equipmentSlot0.tileID);
-         }*/
 
         public function getSpriteID():String
         {
@@ -333,47 +318,46 @@ package com.gamecook.tilecrusader.tiles
 
 
             var arrayAsString:String = sprites.toString();
-            spriteID = arrayAsString;//.subStr(1,arrayAsString.length -1);
+            spriteID = arrayAsString;
             trace("Sprite ID", spriteID);
         }
 
         public function equip(item:IEquipable):IEquipable
         {
-            var droppedItem:IEquipable = null;//equipmentSlots[0] != null? equipmentSlots[0] : null;
 
-            //TODO need to clean all this mess up
-            if (item.getSlotID() == SlotsEnum.WEAPON)
-            {
-                droppedItem = getWeaponSlot();
-                setWeaponSlot(item);
-            }
-            else if (item.getSlotID() == SlotsEnum.SHIELD)
-            {
-                droppedItem = getShieldSlot();
-                setShieldSlot(item)
-            } else if (item.getSlotID() == SlotsEnum.ARMOR)
-            {
-                droppedItem = getArmorSlot();
-                setArmorSlot(item)
-            }
-            else if (item.getSlotID() == SlotsEnum.HELMET)
-            {
-                droppedItem = getHelmetSlot();
-                setHelmetSlot(item)
-            } else if (item.getSlotID() == SlotsEnum.SHOES)
-            {
-                droppedItem = getShoeSlot();
-                setShoeSlot(item)
-            }
+            var droppedItem:IEquipable = unequip(item);
+
+            equipmentSlots[item.getSlotID()] = item;
+            modifyAttribute(item.getModifyAttribute(), item.getValue());
 
             updateCustomSpriteID();
 
             return droppedItem;
         }
 
-        public function canEquip(item:IEquipable, slot:String):Boolean
+
+        public function unequip(item:IEquipable):IEquipable
         {
-            return (equipmentSlots[slot]);
+            var equipment:IEquipable;
+
+            if(canEquip(item))
+            {
+                equipment = equipmentSlots[item.getSlotID()] as IEquipable;
+                modifyAttribute(equipment.getModifyAttribute(), - equipment.getValue())
+            }
+
+            return equipment;
+        }
+
+        protected function modifyAttribute(attribute:String, value:int):void
+        {
+            if(hasOwnProperty(attribute))
+                this[attribute](value);
+        }
+
+        public function canEquip(item:IEquipable):Boolean
+        {
+            return (equipmentSlots[item.getSlotID()]);
         }
 
         public function setWeaponSlot(value:IEquipable):void
@@ -424,6 +408,14 @@ package com.gamecook.tilecrusader.tiles
         public function getShoeSlot():IEquipable
         {
             return equipmentSlots[SlotsEnum.SHOES];
+        }
+
+        public function modifyAttack(value:int):void {
+            attackRoll += value;
+        }
+
+        public function modifyDefense(value:int):void {
+            defenseRoll += value;
         }
     }
 }

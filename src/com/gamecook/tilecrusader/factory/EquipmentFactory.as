@@ -14,6 +14,8 @@ package com.gamecook.tilecrusader.factory
         include "suffixes.as"
         include "types.as"
 
+        private var modifyMap:Array = []
+
         public function createEquipment(level:uint, equipmentType:int):IEquipable
         {
             //TODO: figure out how level matches length of arrays
@@ -24,11 +26,13 @@ package com.gamecook.tilecrusader.factory
             var tileID:String = createTileID(equipmentType);
             var type:String = TileTypes.getTileName(tileID);
             var description:String = createDescription(level, type);
-            var modifierValue:int = createModifierValue(level);
-            var modify:String = type;
+            var modifierValue:int = createModifierValue(level, TileTypes.getEquipmentValue(tileID));
+
+            trace("Created weapon", modifierValue);
+            var modify:String = TileTypes.getEquipmentAttribute(tileID);
 
             var weapon:Equipment = new Equipment();
-            weapon.parseObject({tileID:tileID, type:equipmentType, description:description, modifierValue:modifierValue, modify:modify, slotID:equipmentType});
+            weapon.parseObject({tileID:tileID, type:equipmentType, description:description, modifyValue:modifierValue, modifyAttribute:modify, slotID:equipmentType});
             return weapon;
         }
 
@@ -54,10 +58,10 @@ package com.gamecook.tilecrusader.factory
             return prefix;
         }
 
-        private function createModifierValue(level:uint):uint
+        private function createModifierValue(level:uint, baseValue:int = 1):uint
         {
             //TODO: determine damage based on level
-            return int(Math.random() * level);
+            return int(Math.random() * level) + baseValue;
         }
 
         private function createSuffix(level:uint):String

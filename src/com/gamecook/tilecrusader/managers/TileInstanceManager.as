@@ -8,7 +8,7 @@
 package com.gamecook.tilecrusader.managers
 {
     import com.gamecook.tilecrusader.factory.ITileFactory;
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.jessefreeman.factivity.serialize.ISerializeToObject;
     import com.gamecook.tilecrusader.tiles.BaseTile;
 
     public class TileInstanceManager implements ISerializeToObject

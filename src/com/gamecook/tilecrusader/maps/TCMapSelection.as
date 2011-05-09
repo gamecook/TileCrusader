@@ -31,7 +31,7 @@ package com.gamecook.tilecrusader.maps
 {
     import com.gamecook.frogue.maps.IMap;
     import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.jessefreeman.factivity.serialize.ISerializeToObject;
 
     public class TCMapSelection extends AdvancedFogOfWarMapSelection implements ISerializeToObject
     {

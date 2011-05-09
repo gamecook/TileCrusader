@@ -59,7 +59,7 @@ package com.gamecook.tilecrusader.activities
 
                     <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
                     <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>
-                    <PushButton id="back" label="Back" event="click:onBack"/>
+                    <PushButton id="back" label="Back" event="click:back"/>
                 </VBox>
 
             </comps>
@@ -80,7 +80,7 @@ package com.gamecook.tilecrusader.activities
             so.clear();
         }
 
-        public function onBack(event:MouseEvent):void
+        override public function onBack():void
         {
             nextActivity(StartActivity);
         }

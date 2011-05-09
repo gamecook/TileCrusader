@@ -7,7 +7,7 @@
  */
 package com.gamecook.tilecrusader.tiles
 {
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.jessefreeman.factivity.serialize.ISerializeToObject;
 
     import flash.utils.getQualifiedClassName;
 

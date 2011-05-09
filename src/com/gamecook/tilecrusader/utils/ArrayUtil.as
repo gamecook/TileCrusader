@@ -11,7 +11,6 @@ package com.gamecook.tilecrusader.utils
     {
         public static function pickRandomArrayElement(value:Array):*
         {
-            //trace("Picking from ",value.length, "elements:", value)
             return value[Math.floor((Math.random() * value.length))];
         }
     }

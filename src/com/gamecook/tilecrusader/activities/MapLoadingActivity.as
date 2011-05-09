@@ -36,7 +36,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+    import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import flash.geom.Point;

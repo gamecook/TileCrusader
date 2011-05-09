@@ -13,7 +13,11 @@ package com.gamecook.tilecrusader.equipment
 
         function equip(item:IEquipable):IEquipable;
 
-        function canEquip(item:IEquipable, slot:String):Boolean;
+        function canEquip(item:IEquipable):Boolean;
+
+        function modifyAttack(value:int):void;
+
+        function modifyDefense(value:int):void;
 
     }
 }

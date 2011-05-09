@@ -7,7 +7,7 @@
  */
 package com.gamecook.tilecrusader.equipment
 {
-    import com.gamecook.tilecrusader.serialize.ISerializeToObject;
+    import com.jessefreeman.factivity.serialize.ISerializeToObject;
 
     public interface IEquipable extends ISerializeToObject
     {

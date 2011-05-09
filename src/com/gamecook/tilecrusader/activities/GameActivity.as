@@ -39,7 +39,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.tiles.EquipmentTile;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.utils.TimeMethodExecutionUtil;
+    import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.managers.ActivityManager;
 
     import com.jessefreeman.factivity.managers.SingletonManager;
@@ -235,10 +235,12 @@ package com.gamecook.tilecrusader.activities
 
 
             previewMapShape = new Shape();
+            previewMapShape.y = statusLabel.y + statusLabel.height;
             previewMapShape.visible;
             addChild(previewMapShape);
 
-            previewMapRenderer = new PreviewMapRenderer(previewMapShape.graphics, new Rectangle(0, 0, 5, 5));
+            previewMapRenderer = new PreviewMapRenderer(previewMapShape.graphics, new Rectangle(0, 0, 3, 3));
+
             previewMapRenderer.renderMap(map);
         }
 
