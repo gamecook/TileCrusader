@@ -65,8 +65,8 @@ package com.gamecook.tilecrusader.activities
             super.onCreate();
 
             label = new Label(this, 0, 0, LOADING_TEXT);
-            label.x = (fullSizeWidth - label.width) * .5
-            label.y = (fullSizeHeight - label.height) + 10;
+            label.x = (fullSizeWidth - label.width) * .5;
+            label.y = (fullSizeHeight - label.height) - 20;
             addChild(label);
 
 

@@ -56,7 +56,7 @@ package com.gamecook.tilecrusader.activities
             var message:Label = new Label(this, 0, 0, "You have escaped the map.");
 
             //activeGameState.clearMapData();
-            startNextActivityTimer(RandomMapGeneratorActivity, 1, data);
+            startNextActivityTimer(StartActivity, 1, data);
         }
 
 

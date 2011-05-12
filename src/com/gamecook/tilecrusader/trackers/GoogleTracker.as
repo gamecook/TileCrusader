@@ -26,5 +26,9 @@ package com.gamecook.tilecrusader.trackers
         {
             super.trackPageview(a);
         }
+
+        public function track(type:String, ... arguments)
+        {
+        }
     }
 }

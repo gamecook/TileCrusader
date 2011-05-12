@@ -15,7 +15,7 @@ package com.gamecook.tilecrusader.factory
     {
         private static var DEFAULT_POINTS:int = 20;
 
-        public static function createCofferBreakGame(classOptions:Array, darknessOptions:Array, gameModeOptions:Array, mapSizeOptions:Array, showMonsterOptions:Array, dropTreasureOptions:Array):Boolean
+        public static function createCoffeeBreakGame(classOptions:Array, darknessOptions:Array, gameModeOptions:Array, mapSizeOptions:Array, showMonsterOptions:Array, dropTreasureOptions:Array):Boolean
         {
             var activeGameState:ActiveGameState = new ActiveGameState();
             activeGameState.load();

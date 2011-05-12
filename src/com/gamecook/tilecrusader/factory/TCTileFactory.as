@@ -45,9 +45,10 @@ package com.gamecook.tilecrusader.factory
                 var template:ITemplate = templates.getRandomTemplate();
 
                 // Generate and Equip items
-                var equipmentTypes:Array = [SlotsEnum.WEAPON, SlotsEnum.SHIELD, SlotsEnum.HELMET, SlotsEnum.ARMOR, SlotsEnum.SHOES];
 
-                var total:int = equipmentTypes.length;
+                var equipmentTypes:Array = [SlotsEnum.WEAPON, SlotsEnum.ARMOR, SlotsEnum.HELMET, SlotsEnum.SHIELD, SlotsEnum.SHOES];
+
+                var total:int = Math.random() * equipmentTypes.length;
                 var i:int = 0;
                 var tmpEquipment:IEquipable;
 

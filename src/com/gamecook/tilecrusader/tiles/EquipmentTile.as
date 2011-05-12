@@ -13,7 +13,7 @@ package com.gamecook.tilecrusader.tiles
     public class EquipmentTile extends BaseTile
     {
 
-        private var weapon:IEquipable;
+        private var equipment:IEquipable;
 
         public function EquipmentTile()
         {
@@ -23,10 +23,10 @@ package com.gamecook.tilecrusader.tiles
         {
             super.parseObject(obj);
 
-            if (obj.hasOwnProperty("weapon"))
+            if (obj.hasOwnProperty("equipment"))
             {
-                weapon = new Equipment();
-                weapon.parseObject(obj.weapon);
+                equipment = new Equipment();
+                equipment.parseObject(obj.equipment);
             }
 
         }
@@ -34,14 +34,14 @@ package com.gamecook.tilecrusader.tiles
         override public function toObject():Object
         {
             var obj:Object = super.toObject();
-            obj.weapon = weapon.toObject();
+            obj.weapon = equipment.toObject();
 
             return obj;
         }
 
-        public function getWeapon():IEquipable
+        public function getEquipment():IEquipable
         {
-            return weapon;
+            return equipment;
         }
     }
 }

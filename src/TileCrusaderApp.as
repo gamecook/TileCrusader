@@ -34,10 +34,13 @@ package
     import com.bit101.components.Style;
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.DebugStartActivity;
+    import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
     import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.gamecook.tilecrusader.trackers.GoogleTracker;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.analytics.ITrack;
+
+    import com.jessefreeman.factivity.utils.DeviceUtil;
 
     import flash.display.DisplayObject;
     import flash.display.Sprite;
@@ -70,40 +73,25 @@ package
 
             tracker = new GoogleTracker(this, "UA-18884514-4", "AS3", false);
 
-            var screenWidth:int = stage.stageWidth >= 1280 ? 1280 : stage.stageWidth;
-            var screenHeight:int = stage.stageHeight >= 800 ? 800 : stage.stageHeight;
             var scale:Number = 2;
-            if (stage.displayState == StageDisplayState.FULL_SCREEN || stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
-            {
-                if (os == "IOS")
-                {
-                    screenHeight = stage.fullScreenWidth;
-                    screenWidth = stage.fullScreenHeight;
-                }
-                else
-                {
-                    screenWidth = stage.fullScreenWidth;
-                    screenHeight = stage.fullScreenHeight;
-                }
-            }
-
-            BaseActivity.fullSizeWidth = screenWidth * .5;
-            BaseActivity.fullSizeHeight = screenHeight * .5;
+            // Set up the screen size for BaseActivity
+            BaseActivity.fullSizeWidth = DeviceUtil.getScreenWidth(stage) / scale;
+            BaseActivity.fullSizeHeight = DeviceUtil.getScreenHeight(stage) / scale;
 
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             //Debug Game
-            game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
+            //game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
 
             // Real Game
-            //game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
+            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
 
             addChild(game);
 
             var stats:DisplayObject = addChild(new Stats());
 
             stats.y = (BaseActivity.fullSizeHeight * 2) - stats.height;
-
+            /*
             var label:Label = new Label(this, 0, 0);
             label.autoSize = true;
             label.textField.multiline = true;
@@ -117,7 +105,7 @@ package
             label.text += "Display Mode: " + stage.displayState + "\n";
 
             label.x = stats.width + 10;
-            label.y = stats.y;
+            label.y = stats.y;*/
         }
 
         private function configureComponents():void

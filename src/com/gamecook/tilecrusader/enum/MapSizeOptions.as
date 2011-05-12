@@ -31,9 +31,9 @@ package com.gamecook.tilecrusader.enum
 {
     public class MapSizeOptions
     {
-        public static const SMALL:int = 30;
-        public static const MEDIUM:int = 40;
-        public static const LARGE:int = 50;
+        public static const SMALL:int = 15;
+        public static const MEDIUM:int = 20;
+        public static const LARGE:int = 25;
 
         public static function getValues():Array
         {

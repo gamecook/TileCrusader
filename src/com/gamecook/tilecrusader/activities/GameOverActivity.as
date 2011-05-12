@@ -23,6 +23,8 @@ package com.gamecook.tilecrusader.activities
 
         override protected function onCreate():void
         {
+            soundManager.destroySounds(true);
+
             activeGameState = new ActiveGameState();
             loadState();
 
@@ -35,13 +37,14 @@ package com.gamecook.tilecrusader.activities
             tf.y = (fullSizeHeight - tf.height) * .5;
             addChild(tf);
 
-            startNextActivityTimer(StartActivity, 3);
-
             //TODO show stats before clearing this out.
 
             //TODO save player name and score
 
             activeGameState.clear();
+
+            startNextActivityTimer(StartActivity, 5);
+
         }
 
         override public function loadState():void

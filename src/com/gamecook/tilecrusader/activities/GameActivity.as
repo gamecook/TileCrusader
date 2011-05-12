@@ -39,6 +39,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.tiles.EquipmentTile;
     import com.gamecook.tilecrusader.tiles.PlayerTile;
     import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.jessefreeman.factivity.utils.DeviceUtil;
     import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.ActivityManager;
 
@@ -50,6 +51,7 @@ package com.gamecook.tilecrusader.activities
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
     import flash.events.MouseEvent;
+    import flash.filters.ColorMatrixFilter;
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.system.Capabilities;
@@ -223,7 +225,7 @@ package com.gamecook.tilecrusader.activities
              virtualKeys.y = fullSizeHeight - (virtualKeys.height + 10);*/
             //virtualKeys.scaleX = virtualKeys.scaleY = .5;
 
-            if (Capabilities.version.substr(0, 3) != "IOS")
+            if (DeviceUtil.os != DeviceUtil.IOS)
             {
                 quakeEffect = new Quake(display);
                 textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
@@ -235,13 +237,15 @@ package com.gamecook.tilecrusader.activities
 
 
             previewMapShape = new Shape();
-            previewMapShape.y = statusLabel.y + statusLabel.height;
+
             previewMapShape.visible;
             addChild(previewMapShape);
 
             previewMapRenderer = new PreviewMapRenderer(previewMapShape.graphics, new Rectangle(0, 0, 3, 3));
 
             previewMapRenderer.renderMap(map);
+            previewMapShape.x = fullSizeWidth - previewMapShape.width;
+            previewMapShape.y = fullSizeHeight - previewMapShape.height;
         }
 
         private function onPlayerDefend():void
@@ -331,7 +335,6 @@ package com.gamecook.tilecrusader.activities
             monsterTemplates.addTemplate("6", new Template("Defense Specialist", [TemplateProperties.DEFENSE, TemplateProperties.DEFENSE, TemplateProperties.LIFE, TemplateProperties.ATTACK]), 2);
             monsterTemplates.addTemplate("7", new Template("Life Specialist", [TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.LIFE, TemplateProperties.ATT_DEF]), 3);
             monsterTemplates.addTemplate("8", new Template("Chaos Specialist", [TemplateProperties.RANDOM, TemplateProperties.LIFE, TemplateProperties.RANDOM, TemplateProperties.ATT_DEF]), 1);
-
         }
 
         private function onTextEffectUpdate():void
@@ -466,9 +469,9 @@ package com.gamecook.tilecrusader.activities
         {
             //TODO prompt user to equip
 
-            var droppedEquipment:IEquipable = player.equip(tmpTile.getWeapon());
+            var droppedEquipment:IEquipable = player.equip(tmpTile.getEquipment());
 
-            addStatusMessage(player.getName() + " has equipped "+tmpTile.getName()+".\nNew stats: Attack "+player.getAttackRolls()+" | Defense "+player.getDefenceRolls());
+            addStatusMessage(player.getName() + " has equipped "+tmpTile.getEquipment().description+".\nNew stats: Attack "+player.getAttackRolls()+" | Defense "+player.getDefenceRolls());
             //TODO make sure the player is actually picking up the item.
 
 
@@ -479,10 +482,10 @@ package com.gamecook.tilecrusader.activities
             {
                 newTile = droppedEquipment.tileID;
 
-                var weaponTile:EquipmentTile = new EquipmentTile();
-                weaponTile.parseObject({weapon:droppedEquipment.toObject()});
+                var equipmentTile:EquipmentTile = new EquipmentTile();
+                equipmentTile.parseObject({equipment:droppedEquipment.toObject()});
 
-                tileInstanceManager.registerInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), weaponTile);
+                tileInstanceManager.registerInstance(mapSelection.getTileID(movementHelper.playerPosition.y, movementHelper.playerPosition.x).toString(), equipmentTile);
             }
             else
             {
@@ -596,7 +599,8 @@ package com.gamecook.tilecrusader.activities
                 message += " did " + attackResult.hitValue + " damage";
             }
 
-            message += " with " + monster.getWeaponSlot().description + "\n";
+            var weaponName:String = monster.getWeaponSlot() ? monster.getWeaponSlot().description : "no weapon";
+            message += " with " + weaponName + "\n";
             addStatusMessage(message, false);
 
             //TODO keep track of this sound, may need a player hit as well.
@@ -611,6 +615,11 @@ package com.gamecook.tilecrusader.activities
 
             tileInstanceManager.removeInstance(currentuID);
 
+            var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
+
+            //Default message
+            addStatusMessage(monster.getName() + " " + randomDeathMessage + ".\n", true);
+
             //Old drop treasure code
             if (monstersDropTreasure)
             {
@@ -618,7 +627,6 @@ package com.gamecook.tilecrusader.activities
                 // Pick a random number
                 var rand:Number = Math.random();
 
-                trace("Should Drop Value", rand);
                 if (rand < .6)
                 {
                     // if value is less the 70%, select from treasure pool
@@ -627,6 +635,8 @@ package com.gamecook.tilecrusader.activities
                         treasurePool.push(treasure);
                     else
                         swapTileOnMap(currentPoint, treasure);
+
+                    //TODO need to add a status message here
                 }
                 else
                 {
@@ -659,26 +669,17 @@ package com.gamecook.tilecrusader.activities
                         swapTileOnMap(currentPoint, droppedEquipment.tileID);
 
                         var weaponTile:EquipmentTile = new EquipmentTile();
-                        weaponTile.parseObject({weapon:droppedEquipment.toObject()});
+                        weaponTile.parseObject({equipment:droppedEquipment.toObject()});
 
                         tileInstanceManager.registerInstance(currentuID, weaponTile);
+
+                        addStatusMessage(monster.getName() + " " + randomDeathMessage + " and dropped " + monster.getWeaponSlot().description, true);
                     }
                 }
 
 
             }
 
-            var randomDeathMessage:String = DeathMessageFactory.getRandomDeathMessage();
-            var dropChance:Number = .25;
-            if (Math.random() < dropChance)
-            {
-                addStatusMessage(monster.getName() + " died and dropped " + monster.getWeaponSlot().description, false);
-                //TODO: some swap tile logic. Weapons need a map character.
-            }
-            else
-            {
-                addStatusMessage(monster.getName() + " " + randomDeathMessage + "\n", false);
-            }
         }
 
         private function openTreasure(tmpPoint:Point):void
@@ -814,8 +815,24 @@ package com.gamecook.tilecrusader.activities
                 if (player.getLife() < player.getMaxLife())
                     playerSprite = playerSprite.concat(",life" + (Math.round(player.getLife() / player.getMaxLife() * 100).toString()));
 
+
+                if(Math.round(player.getLife() / player.getMaxLife() * 100) < 30)
+                {
+                    var matrix:Array = new Array();
+                    matrix=matrix.concat([1,0,0,0,0]);// red
+                    matrix=matrix.concat([0,0,0,0,0]);// green
+                    matrix=matrix.concat([0,0,0,0,0]);// blue
+                    matrix=matrix.concat([0,0,0,1,0]);// alpha
+                    var my_filter:ColorMatrixFilter=new ColorMatrixFilter(matrix);
+
+                    var rect:Rectangle = new Rectangle(0, 0, mapBitmap.width, mapBitmap.height);
+
+                    mapBitmap.bitmapData.applyFilter(mapBitmap.bitmapData.clone(), rect, new Point(0, 0), my_filter);
+                }
+
                 //Draw player
                 renderer.renderPlayer(x, y, playerSprite);
+
 
                 previewMapRenderer.renderPlayer(mapSelection.getOffsetX() + x, mapSelection.getOffsetY() + y, playerSprite);
 

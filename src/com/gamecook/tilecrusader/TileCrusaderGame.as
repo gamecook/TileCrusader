@@ -38,6 +38,7 @@ package com.gamecook.tilecrusader
         public function TileCrusaderGame(tracker:ITrack, x:int, y:int, state:Class, scale:Number = 1)
         {
             super(new ActivityManager(tracker), state, x, y, scale);
+            soundManager.volume = 0;
         }
     }
 }

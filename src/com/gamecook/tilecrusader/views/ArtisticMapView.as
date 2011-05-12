@@ -137,7 +137,17 @@ package com.gamecook.tilecrusader.views
 
 
             var tmpBitmapData:BitmapData = mapBitmap.bitmapData.clone();
+
+
+           /* var matrix:Array = new Array();
+			matrix=matrix.concat([.3086,.6094,.0820,0,0]);// red
+			matrix=matrix.concat([0,0,0,0,0]);// green
+			matrix=matrix.concat([0,0,0,0,0]);// blue
+			matrix=matrix.concat([0,0,0,1,0]);// alpha
+			var my_filter:ColorMatrixFilter=new ColorMatrixFilter(matrix);
+*/
             tmpBitmapData.applyFilter(tmpBitmapData, rect, new Point(0, 0), greyColorMatrix);
+            //tmpBitmapData.applyFilter(tmpBitmapData, rect, new Point(0, 0), my_filter);
 
 
             mapBitmap.bitmapData.draw(tmpBitmapData);

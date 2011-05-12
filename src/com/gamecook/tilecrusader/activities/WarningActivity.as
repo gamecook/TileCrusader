@@ -48,7 +48,7 @@ package com.gamecook.tilecrusader.activities
         {
             super.onCreate();
 
-            var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, will this is not that. \n\nPlease take that into consideration as you play the game.";
+            var warning:String = "WARNING!!!\n\nThis game is what we would call Alpha software. You may know Beta as in almost ready, well this is not that! \n\nPlease take that into consideration as you play the game.";
 
             var tf:Label = new Label(this, 0, 50, warning);
             tf.autoSize = TextFieldAutoSize

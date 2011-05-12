@@ -59,7 +59,7 @@ package com.gamecook.tilecrusader.activities
 
                     <PushButton id="clearMapFilter" label="Clear Random Map Filter" width="200" event="click:onClearRandomMapFilter"/>
                     <PushButton id="clearSavedGame" label="Clear Saved Game" width="200" event="click:onClearSavedGame"/>
-                    <PushButton id="back" label="Back" event="click:back"/>
+                    <PushButton id="back" label="Back" event="click:onBackButton"/>
                 </VBox>
 
             </comps>
@@ -78,6 +78,11 @@ package com.gamecook.tilecrusader.activities
         {
             var so:SharedObject = SharedObject.getLocal(ApplicationShareObjects.ACTIVE_GAME);
             so.clear();
+        }
+
+        public function onBackButton(event:MouseEvent):void
+        {
+            onBack();
         }
 
         override public function onBack():void

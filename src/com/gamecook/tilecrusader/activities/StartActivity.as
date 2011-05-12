@@ -45,13 +45,14 @@ package com.gamecook.tilecrusader.activities
 
             loadState();
             mapViewPortWidth = fullSizeWidth - mapViewPortX;
+            mapViewPortY = 30;
 
             super.onCreate();
 
             var xml:XML = <comps>
-                <Label id="title" x="0" y="100" scaleX="2" scaleY="2" text="Tile Crusader"/>
+                <Label id="title" x="45" y="30" scaleX="2" scaleY="2" text="Tile Crusader"/>
 
-                <VBox id="buttonLayout" x="50" y="150">
+                <VBox id="buttonLayout" x="50" y="60">
                     <PushButton id="continueButton" label="Continue Crusade" event="click:onContinue"/>
                     <PushButton id="newGameButton" label="New Crusade" event="click:onStartGame"/>
                     <PushButton id="optionsButton" label="Options" event="click:onOptions"/>
@@ -63,7 +64,7 @@ package com.gamecook.tilecrusader.activities
             var config:MinimalConfigurator = new MinimalConfigurator(this);
             config.parseXML(xml);
 
-            title.x = fullSizeWidth - 300;
+            //title.x = fullSizeWidth - 300;
             if (!stateSOData.activeGame)
                 buttonLayout.removeChild(continueButton);
         }
@@ -77,7 +78,7 @@ package com.gamecook.tilecrusader.activities
             //stateSOData.activeGame = true;
             //nextActivity(ConfigureCharacterActivity);
             //nextActivity(ConfigureCharacterActivity);
-            NewGameFactory.createCofferBreakGame(ClassOptions.getValues(), DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions());
+            NewGameFactory.createCoffeeBreakGame(ClassOptions.getValues(), DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions());
 
             nextActivity(MapLoadingActivity);
         }
