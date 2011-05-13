@@ -32,12 +32,12 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.Label;
     import com.gamecook.frogue.maps.MapPopulater;
     import com.gamecook.frogue.maps.RandomMap;
+    import com.gamecook.frogue.tiles.TileTypes;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
     import com.jessefreeman.factivity.activities.ActivityManager;
+    import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
 
     import flash.geom.Point;
     import flash.utils.getQualifiedClassName;

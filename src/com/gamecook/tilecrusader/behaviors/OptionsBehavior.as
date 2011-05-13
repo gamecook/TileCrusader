@@ -29,8 +29,8 @@
  */
 package com.gamecook.tilecrusader.behaviors
 {
-    import com.gamecook.tilecrusader.iterators.IIterator;
-    import com.gamecook.tilecrusader.iterators.OptionsIterator;
+    import com.jessefreeman.factivity.iterators.ArrayIterator;
+    import com.jessefreeman.factivity.iterators.IIterator;
 
     public class OptionsBehavior
     {
@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.behaviors
             this.startIndex = startIndex;
             this.options = options;
             this.target = target;
-            iterator = new OptionsIterator(options, startIndex);
+            iterator = new ArrayIterator(options, startIndex);
         }
 
         public function nextOption():*

@@ -22,11 +22,11 @@
 
 package com.gamecook.tilecrusader.maps
 {
+    import com.gamecook.frogue.managers.TileInstanceManager;
     import com.gamecook.frogue.maps.FogOfWarMapSelection;
     import com.gamecook.frogue.maps.IMap;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
-    import com.gamecook.tilecrusader.tiles.MonsterTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.frogue.tiles.MonsterTile;
+    import com.gamecook.frogue.tiles.TileTypes;
 
     public class AdvancedFogOfWarMapSelection extends FogOfWarMapSelection
     {

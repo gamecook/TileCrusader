@@ -6,9 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.equipment {
-import com.gamecook.tilecrusader.enum.SlotsEnum;
+    import com.gamecook.frogue.equipment.Equipment;
+    import com.gamecook.frogue.enum.SlotsEnum;
 
-import com.gamecook.tilecrusader.tiles.PlayerTile;
+import com.gamecook.frogue.tiles.PlayerTile;
 
 import org.flexunit.Assert;
 

@@ -17,29 +17,21 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
- * /
+ *
  */
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jesse Freeman
- * Date: 2/20/11
- * Time: 10:53 PM
- * To change this template use File | Settings | File Templates.
- */
 package com.gamecook.tilecrusader.views
 {
+    import com.gamecook.frogue.factories.TileFactory;
+    import com.gamecook.frogue.managers.TileInstanceManager;
     import com.gamecook.frogue.maps.MapPopulater;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.frogue.tiles.PlayerTile;
+    import com.gamecook.frogue.tiles.TileTypes;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-
     import com.jessefreeman.factivity.managers.SingletonManager;
 
     import flash.display.Bitmap;
@@ -51,8 +43,6 @@ package com.gamecook.tilecrusader.views
 
     public class ArtisticMapView extends Sprite
     {
-        [Embed(source="../../../../../build/assets/tc_sprite_sheet.png")]
-        public static var SpriteSheetImage:Class;
 
         public var map:RandomMap;
         private var renderer:AbstractMapRenderer;
@@ -138,17 +128,7 @@ package com.gamecook.tilecrusader.views
 
             var tmpBitmapData:BitmapData = mapBitmap.bitmapData.clone();
 
-
-           /* var matrix:Array = new Array();
-			matrix=matrix.concat([.3086,.6094,.0820,0,0]);// red
-			matrix=matrix.concat([0,0,0,0,0]);// green
-			matrix=matrix.concat([0,0,0,0,0]);// blue
-			matrix=matrix.concat([0,0,0,1,0]);// alpha
-			var my_filter:ColorMatrixFilter=new ColorMatrixFilter(matrix);
-*/
             tmpBitmapData.applyFilter(tmpBitmapData, rect, new Point(0, 0), greyColorMatrix);
-            //tmpBitmapData.applyFilter(tmpBitmapData, rect, new Point(0, 0), my_filter);
-
 
             mapBitmap.bitmapData.draw(tmpBitmapData);
 

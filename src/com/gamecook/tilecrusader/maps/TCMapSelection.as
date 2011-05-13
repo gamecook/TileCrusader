@@ -29,8 +29,8 @@
  */
 package com.gamecook.tilecrusader.maps
 {
+    import com.gamecook.frogue.managers.TileInstanceManager;
     import com.gamecook.frogue.maps.IMap;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.jessefreeman.factivity.serialize.ISerializeToObject;
 
     public class TCMapSelection extends AdvancedFogOfWarMapSelection implements ISerializeToObject
@@ -45,7 +45,6 @@ package com.gamecook.tilecrusader.maps
         {
             if (value.exploredTiles)
             {
-                // trace("Parsing", value.exploredTiles);
                 exploredTiles = value.exploredTiles.slice();
                 var total:int = exploredTiles.length;
                 var i:int;
@@ -58,7 +57,6 @@ package com.gamecook.tilecrusader.maps
 
         public function toObject():Object
         {
-            //trace("Saving", exploredTiles);
             return {exploredTiles: exploredTiles.slice()};
         }
     }

@@ -7,6 +7,8 @@
  */
 package com.gamecook.tilecrusader.iterators
 {
+    import com.jessefreeman.factivity.iterators.IIterator;
+
     public class TreasureIterator implements IIterator
     {
         private var pool:Array = [];

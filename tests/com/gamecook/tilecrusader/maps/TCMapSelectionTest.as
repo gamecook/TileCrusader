@@ -8,8 +8,8 @@
 package com.gamecook.tilecrusader.maps {
     import com.gamecook.frogue.maps.Map;
 
-    import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
+    import com.gamecook.frogue.factories.TileFactory;
+    import com.gamecook.frogue.managers.TileInstanceManager;
 
     import flash.net.SharedObject;
 

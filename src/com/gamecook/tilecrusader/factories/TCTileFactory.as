@@ -5,17 +5,19 @@
  * Time: 10:32 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.factory
+package com.gamecook.tilecrusader.factories
 {
-    import com.gamecook.tilecrusader.combat.ICombatant;
-    import com.gamecook.tilecrusader.enum.SlotsEnum;
-    import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.templates.ITemplate;
-    import com.gamecook.tilecrusader.templates.ITemplateCollection;
-    import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.gamecook.tilecrusader.tiles.BaseTile;
-    import com.gamecook.tilecrusader.tiles.IMonster;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
+    import com.gamecook.frogue.combat.ICombatant;
+    import com.gamecook.frogue.enum.SlotsEnum;
+    import com.gamecook.frogue.equipment.IEquipable;
+    import com.gamecook.frogue.factories.EquipmentFactory;
+    import com.gamecook.frogue.factories.TileFactory;
+    import com.gamecook.frogue.templates.ITemplate;
+    import com.gamecook.frogue.templates.ITemplateCollection;
+    import com.gamecook.frogue.templates.TemplateApplicator;
+    import com.gamecook.frogue.tiles.BaseTile;
+    import com.gamecook.frogue.tiles.IMonster;
+    import com.gamecook.frogue.tiles.PlayerTile;
 
     public class TCTileFactory extends TileFactory
     {

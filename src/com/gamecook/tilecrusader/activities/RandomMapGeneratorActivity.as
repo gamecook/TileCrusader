@@ -15,8 +15,8 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.utils.ArrayUtil;
     import com.jessefreeman.factivity.activities.ActivityManager;
+    import com.jessefreeman.factivity.utils.ArrayUtil;
 
     import flash.events.MouseEvent;
     import flash.net.SharedObject;

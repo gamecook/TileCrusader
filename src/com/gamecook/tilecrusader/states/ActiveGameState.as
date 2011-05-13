@@ -8,7 +8,6 @@
 package com.gamecook.tilecrusader.states
 {
     import com.gamecook.tilecrusader.enum.ApplicationShareObjects;
-
     import com.jessefreeman.factivity.state.AbstractStateObject;
 
     import flash.geom.Point;

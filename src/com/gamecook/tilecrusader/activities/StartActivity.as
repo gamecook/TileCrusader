@@ -17,7 +17,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
     import com.gamecook.tilecrusader.enum.MapSizeOptions;
-    import com.gamecook.tilecrusader.factory.NewGameFactory;
+    import com.gamecook.tilecrusader.factories.NewGameFactory;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.jessefreeman.factivity.activities.ActivityManager;
 

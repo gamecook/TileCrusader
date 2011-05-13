@@ -7,10 +7,8 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.bit101.components.Calendar;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.factory.SpriteSheetFactory;
-    import com.gamecook.tilecrusader.utils.ColorUtil;
+    import com.gamecook.tilecrusader.factories.SpriteSheetFactory;
     import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.activities.IActivityManager;
     import com.jessefreeman.factivity.managers.SingletonManager;
@@ -49,7 +47,8 @@ package com.gamecook.tilecrusader.activities
             var redArray:Array = new Array(256);
             var greenArray:Array = new Array(256);
 
-            for(var i:uint = 0; i < 255; i++) {
+            for (var i:uint = 0; i < 255; i++)
+            {
                 redArray[i] = 0x00000000;
                 greenArray[i] = 0x00000000;
             }

@@ -6,9 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.gamecook.tilecrusader.managers {
-    import com.gamecook.tilecrusader.factory.TileFactory;
-    import com.gamecook.tilecrusader.tiles.MonsterTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.frogue.factories.TileFactory;
+    import com.gamecook.frogue.managers.TileInstanceManager;
+    import com.gamecook.frogue.tiles.MonsterTile;
+    import com.gamecook.frogue.tiles.TileTypes;
 
     import org.flexunit.Assert;
 

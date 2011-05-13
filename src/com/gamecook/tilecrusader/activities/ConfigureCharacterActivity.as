@@ -19,12 +19,7 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.states.CustomTemplateState;
-    import com.jessefreeman.factivity.activities.ActivityManager;
-
     import com.jessefreeman.factivity.activities.IActivityManager;
-
-    import com.jessefreeman.factivity.sounds.SoundManager;
-    import com.jessefreeman.factivity.threads.IThreadManager;
 
     import flash.events.Event;
     import flash.events.FocusEvent;

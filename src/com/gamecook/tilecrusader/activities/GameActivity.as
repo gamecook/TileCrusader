@@ -8,42 +8,41 @@
 package com.gamecook.tilecrusader.activities
 {
     import com.bit101.components.Label;
+    import com.gamecook.frogue.combat.AttackResult;
+    import com.gamecook.frogue.combat.DeathMessageFactory;
+    import com.gamecook.frogue.combat.ICombatant;
+    import com.gamecook.frogue.enum.SlotsEnum;
+    import com.gamecook.frogue.equipment.IEquipable;
     import com.gamecook.frogue.helpers.MovementHelper;
     import com.gamecook.frogue.io.Controls;
     import com.gamecook.frogue.io.IControl;
+    import com.gamecook.frogue.managers.TileInstanceManager;
     import com.gamecook.frogue.maps.MapAnalytics;
     import com.gamecook.frogue.maps.RandomMap;
     import com.gamecook.frogue.renderer.AbstractMapRenderer;
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.combat.AttackResult;
-    import com.gamecook.tilecrusader.combat.DeathMessageFactory;
-    import com.gamecook.tilecrusader.combat.ICombatant;
-    import com.gamecook.tilecrusader.effects.Quake;
-    import com.gamecook.tilecrusader.effects.TypeTextEffect;
+    import com.gamecook.frogue.templates.Template;
+    import com.gamecook.frogue.templates.TemplateApplicator;
+    import com.gamecook.frogue.templates.TemplateCollection;
+    import com.gamecook.frogue.templates.TemplateProperties;
+    import com.gamecook.frogue.tiles.EquipmentTile;
+    import com.gamecook.frogue.tiles.PlayerTile;
+    import com.gamecook.frogue.tiles.TileTypes;
     import com.gamecook.tilecrusader.enum.DarknessOptions;
     import com.gamecook.tilecrusader.enum.GameModeOptions;
-    import com.gamecook.tilecrusader.enum.SlotsEnum;
-    import com.gamecook.tilecrusader.enum.TemplateProperties;
-    import com.gamecook.tilecrusader.equipment.IEquipable;
-    import com.gamecook.tilecrusader.factory.TCTileFactory;
+    import com.gamecook.tilecrusader.factories.TCTileFactory;
     import com.gamecook.tilecrusader.iterators.TreasureIterator;
-    import com.gamecook.tilecrusader.managers.TileInstanceManager;
     import com.gamecook.tilecrusader.maps.TCMapSelection;
     import com.gamecook.tilecrusader.renderer.MQMapBitmapRenderer;
     import com.gamecook.tilecrusader.renderer.PreviewMapRenderer;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.templates.Template;
-    import com.gamecook.tilecrusader.templates.TemplateApplicator;
-    import com.gamecook.tilecrusader.templates.TemplateCollection;
-    import com.gamecook.tilecrusader.tiles.EquipmentTile;
-    import com.gamecook.tilecrusader.tiles.PlayerTile;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.jessefreeman.factivity.activities.ActivityManager;
+    import com.jessefreeman.factivity.managers.SingletonManager;
+    import com.jessefreeman.factivity.threads.effects.Quake;
+    import com.jessefreeman.factivity.threads.effects.TypeTextEffect;
     import com.jessefreeman.factivity.utils.DeviceUtil;
     import com.jessefreeman.factivity.utils.TimeMethodExecutionUtil;
-    import com.jessefreeman.factivity.activities.ActivityManager;
-
-    import com.jessefreeman.factivity.managers.SingletonManager;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;
@@ -54,7 +53,6 @@ package com.gamecook.tilecrusader.activities
     import flash.filters.ColorMatrixFilter;
     import flash.geom.Point;
     import flash.geom.Rectangle;
-    import flash.system.Capabilities;
     import flash.ui.Keyboard;
 
     public class GameActivity extends AdvancedActivity implements IControl
@@ -471,7 +469,7 @@ package com.gamecook.tilecrusader.activities
 
             var droppedEquipment:IEquipable = player.equip(tmpTile.getEquipment());
 
-            addStatusMessage(player.getName() + " has equipped "+tmpTile.getEquipment().description+".\nNew stats: Attack "+player.getAttackRolls()+" | Defense "+player.getDefenceRolls());
+            addStatusMessage(player.getName() + " has equipped " + tmpTile.getEquipment().description + ".\nNew stats: Attack " + player.getAttackRolls() + " | Defense " + player.getDefenceRolls());
             //TODO make sure the player is actually picking up the item.
 
 
@@ -816,14 +814,14 @@ package com.gamecook.tilecrusader.activities
                     playerSprite = playerSprite.concat(",life" + (Math.round(player.getLife() / player.getMaxLife() * 100).toString()));
 
 
-                if(Math.round(player.getLife() / player.getMaxLife() * 100) < 30)
+                if (Math.round(player.getLife() / player.getMaxLife() * 100) < 30)
                 {
                     var matrix:Array = new Array();
-                    matrix=matrix.concat([1,0,0,0,0]);// red
-                    matrix=matrix.concat([0,0,0,0,0]);// green
-                    matrix=matrix.concat([0,0,0,0,0]);// blue
-                    matrix=matrix.concat([0,0,0,1,0]);// alpha
-                    var my_filter:ColorMatrixFilter=new ColorMatrixFilter(matrix);
+                    matrix = matrix.concat([1,0,0,0,0]);// red
+                    matrix = matrix.concat([0,0,0,0,0]);// green
+                    matrix = matrix.concat([0,0,0,0,0]);// blue
+                    matrix = matrix.concat([0,0,0,1,0]);// alpha
+                    var my_filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
 
                     var rect:Rectangle = new Rectangle(0, 0, mapBitmap.width, mapBitmap.height);
 
@@ -880,32 +878,31 @@ package com.gamecook.tilecrusader.activities
             trace("Update Mouse Position", mouseX, mouseY, localPoint);
 
 
-
             var playerPoint:Point = mapSelection.getCenter().clone();
             playerPoint.x -= mapSelection.getOffsetX();
             playerPoint.y -= mapSelection.getOffsetY();
 
 
-            var distanceX:Number =localPoint.x-playerPoint.x;
-            var distanceY:Number = -1*(localPoint.y-playerPoint.y);
+            var distanceX:Number = localPoint.x - playerPoint.x;
+            var distanceY:Number = -1 * (localPoint.y - playerPoint.y);
 
             var angle:Number = Math.atan2(distanceY, distanceX); // radians
-            angle = Math.round(angle/Math.PI*180); // degrees
+            angle = Math.round(angle / Math.PI * 180); // degrees
 
             var dir:String;
 
             var directionX:int = 0;
             var directionY:int = 0;
 
-            if(angle >= -135 && angle <= -45)
+            if (angle >= -135 && angle <= -45)
             {
                 directionY = 1
             }
-            else if(angle >= -45 && angle <= 45)
+            else if (angle >= -45 && angle <= 45)
             {
                 directionX = 1;
             }
-            else if(angle >= 45 && angle <= 135)
+            else if (angle >= 45 && angle <= 135)
             {
                 directionY = -1
             }

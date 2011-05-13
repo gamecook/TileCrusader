@@ -5,11 +5,11 @@
  * Time: 11:55 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.factory
+package com.gamecook.tilecrusader.factories
 {
     import com.gamecook.frogue.sprites.SpriteSheet;
-    import com.gamecook.tilecrusader.tiles.TileTypes;
-    import com.gamecook.tilecrusader.utils.ColorUtil;
+    import com.gamecook.frogue.tiles.TileTypes;
+    import com.jessefreeman.factivity.utils.ColorUtil;
 
     import flash.display.Bitmap;
     import flash.display.BitmapData;

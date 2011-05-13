@@ -5,10 +5,10 @@
  */
 package com.gamecook.tilecrusader.tools.generator
 {
-import com.gamecook.tilecrusader.enum.SlotsEnum;
-import com.gamecook.tilecrusader.equipment.Equipment;
-import com.gamecook.tilecrusader.equipment.IEquipable;
-import com.gamecook.tilecrusader.factory.EquipmentFactory;
+import com.gamecook.frogue.enum.SlotsEnum;
+import com.gamecook.frogue.equipment.Equipment;
+import com.gamecook.frogue.equipment.IEquipable;
+import com.gamecook.frogue.factories.EquipmentFactory;
 
 	import org.hamcrest.assertThat;
 

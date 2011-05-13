@@ -5,11 +5,11 @@
  * Time: 4:01 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.gamecook.tilecrusader.factory
+package com.gamecook.tilecrusader.factories
 {
     import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
     import com.gamecook.tilecrusader.states.ActiveGameState;
-    import com.gamecook.tilecrusader.utils.ArrayUtil;
+    import com.jessefreeman.factivity.utils.ArrayUtil;
 
     public class NewGameFactory
     {

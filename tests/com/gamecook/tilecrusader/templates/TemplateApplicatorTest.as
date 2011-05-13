@@ -29,7 +29,8 @@
  */
 package com.gamecook.tilecrusader.templates
 {
-    import com.gamecook.tilecrusader.enum.TemplateProperties;
+    import com.gamecook.frogue.templates.TemplateApplicator;
+    import com.gamecook.frogue.templates.TemplateProperties;
 
     import org.flexunit.Assert;
 

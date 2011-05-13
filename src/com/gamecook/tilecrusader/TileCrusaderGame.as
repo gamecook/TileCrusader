@@ -30,8 +30,8 @@
 package com.gamecook.tilecrusader
 {
     import com.jessefreeman.factivity.AbstractApplication;
-    import com.jessefreeman.factivity.analytics.ITrack;
     import com.jessefreeman.factivity.activities.ActivityManager;
+    import com.jessefreeman.factivity.analytics.ITrack;
 
     public class TileCrusaderGame extends AbstractApplication
     {

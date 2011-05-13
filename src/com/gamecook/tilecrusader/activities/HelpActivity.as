@@ -7,8 +7,8 @@
  */
 package com.gamecook.tilecrusader.activities
 {
-    import com.jessefreeman.factivity.activities.BaseActivity;
     import com.jessefreeman.factivity.activities.ActivityManager;
+    import com.jessefreeman.factivity.activities.BaseActivity;
 
     public class HelpActivity extends BaseActivity
     {
