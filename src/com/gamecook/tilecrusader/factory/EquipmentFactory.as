@@ -5,8 +5,13 @@
  */
 package com.gamecook.tilecrusader.factory
 {
+    import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.equipment.*;
     import com.gamecook.tilecrusader.tiles.TileTypes;
+    import com.gamecook.tilecrusader.utils.ColorUtil;
+    import com.jessefreeman.factivity.managers.SingletonManager;
+
+    import flash.display.BitmapData;
 
     public class EquipmentFactory
     {
@@ -15,6 +20,10 @@ package com.gamecook.tilecrusader.factory
         include "types.as"
 
         private var modifyMap:Array = []
+        //private var materials:Array = [WOOD, STEEL, BRONZE, GOLD, DIMOND];
+        private var materialColors:Array = [];
+        private var baseColor:uint = 0xffa6a6a6;
+        private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
 
         public function createEquipment(level:uint, equipmentType:int):IEquipable
         {
@@ -23,11 +32,23 @@ package com.gamecook.tilecrusader.factory
             level = int(Math.random() * level);
 
             //TODO: match character level range to weapon range
+            //TODO need to convert tileID to sprite ID here and not in monster class.
             var tileID:String = createTileID(equipmentType);
             var type:String = TileTypes.getTileName(tileID);
             var description:String = createDescription(level, type);
             var modifierValue:int = createModifierValue(level, TileTypes.getEquipmentValue(tileID));
 
+            //TODO this all needs to be cleaned up
+            var spriteID:String = TileTypes.getTileSprite(tileID);
+            // GenerateNewSprite
+            /*if(!spriteSheet.hasSprite(spriteID))
+            {
+                var sprite:BitmapData = spriteSheet.getSprite(spriteID);
+                ColorUtil.replaceColor(sprite, baseColor, 0xffff0000);
+                //tileID = tileID.concat("Wood");
+                spriteSheet.cacheSprite(spriteID, sprite );
+            }
+            */
             trace("Created weapon", modifierValue);
             var modify:String = TileTypes.getEquipmentAttribute(tileID);
 

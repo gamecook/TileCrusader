@@ -245,7 +245,7 @@ package com.gamecook.tilecrusader.activities
 
             previewMapRenderer.renderMap(map);
             previewMapShape.x = fullSizeWidth - previewMapShape.width;
-            previewMapShape.y = fullSizeHeight - previewMapShape.height;
+            //previewMapShape.y = fullSizeHeight - previewMapShape.height;
         }
 
         private function onPlayerDefend():void
@@ -855,6 +855,7 @@ package com.gamecook.tilecrusader.activities
             addEventListener(MouseEvent.CLICK, onMouseClick);
         }
 
+
         private function onMouseClick(event:MouseEvent):void
         {
             onUpdateMousePosition();
@@ -879,32 +880,42 @@ package com.gamecook.tilecrusader.activities
             trace("Update Mouse Position", mouseX, mouseY, localPoint);
 
 
+
             var playerPoint:Point = mapSelection.getCenter().clone();
             playerPoint.x -= mapSelection.getOffsetX();
             playerPoint.y -= mapSelection.getOffsetY();
 
+
+            var distanceX:Number =localPoint.x-playerPoint.x;
+            var distanceY:Number = -1*(localPoint.y-playerPoint.y);
+
+            var angle:Number = Math.atan2(distanceY, distanceX); // radians
+            angle = Math.round(angle/Math.PI*180); // degrees
+
+            var dir:String;
+
             var directionX:int = 0;
-            if (localPoint.x > playerPoint.x)
-                directionX = 1;
-            else if (localPoint.x < playerPoint.x)
-                directionX = -1;
-
             var directionY:int = 0;
-            if (localPoint.y > playerPoint.y)
-                directionY = 1;
-            else if (localPoint.y < playerPoint.y)
-                directionY = -1;
 
-            if (directionX == 0 && directionY == 0)
+            if(angle >= -135 && angle <= -45)
             {
-                previewMapShape.visible = !previewMapShape.visible;
+                directionY = 1
             }
-
-            //trace("Move To", directionX, directionY, "playerPoint", playerPoint, "localPoint", localPoint, mapSelection.getOffsetX(), mapSelection.getOffsetY());
+            else if(angle >= -45 && angle <= 45)
+            {
+                directionX = 1;
+            }
+            else if(angle >= 45 && angle <= 135)
+            {
+                directionY = -1
+            }
+            else
+            {
+                directionX = -1;
+            }
 
             nextMove(new Point(directionX, directionY));
 
-            //trace(localTile, tileID, tileID%map.width, tileID%map.height, mapSelection.getOffsetX(), mapSelection.getOffsetY());
         }
 
         override public function loadState():void
