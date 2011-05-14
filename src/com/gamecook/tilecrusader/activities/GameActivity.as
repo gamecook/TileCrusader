@@ -71,8 +71,6 @@ package com.gamecook.tilecrusader.activities
         private var player:PlayerTile;
         private var tileInstanceManager:TileInstanceManager;
         private var treasureIterator:TreasureIterator;
-        //private var monsters:Array;
-        private var chests:Array;
         private var gameMode:String;
         private var hasArtifact:Boolean;
         private var spriteSheet:SpriteSheet = SingletonManager.getClassReference(SpriteSheet);
@@ -87,7 +85,6 @@ package com.gamecook.tilecrusader.activities
         private var scale:int = 1;
         private var tileWidth:int;
         private var tileHeight:int;
-        //private const SIDEBAR_WIDTH:int = 200;
         private var viewPortWidth:int = 0;
         private var viewPortHeight:int = 0;
         private const MESSAGE_HEIGHT:int = 40;

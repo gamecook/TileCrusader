@@ -13,20 +13,29 @@ package com.gamecook.tilecrusader.activities
     import com.bit101.components.PushButton;
     import com.bit101.components.VBox;
     import com.bit101.utils.MinimalConfigurator;
+
     import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.tilecrusader.behaviors.OptionsBehavior;
+    import com.gamecook.tilecrusader.enum.BooleanOptions;
     import com.gamecook.tilecrusader.enum.ClassOptions;
+    import com.gamecook.tilecrusader.enum.DarknessOptions;
+    import com.gamecook.tilecrusader.enum.GameModeOptions;
+    import com.gamecook.tilecrusader.enum.MapSizeOptions;
     import com.gamecook.tilecrusader.enum.PlayerClassTemplates;
+    import com.gamecook.tilecrusader.factories.NewGameFactory;
+    import com.gamecook.tilecrusader.factories.SpriteSheetFactory;
     import com.gamecook.tilecrusader.states.ActiveGameState;
     import com.gamecook.tilecrusader.states.CustomTemplateState;
     import com.jessefreeman.factivity.activities.IActivityManager;
+
+    import com.jessefreeman.factivity.managers.SingletonManager;
 
     import flash.events.Event;
     import flash.events.FocusEvent;
     import flash.events.MouseEvent;
     import flash.text.TextField;
 
-    public class ConfigureCharacterActivity extends RandomMapBGActivity
+    public class ConfigureCharacterActivity extends AdvancedActivity
     {
         private const DEFAULT_POINTS:int = 20;
 
@@ -39,9 +48,7 @@ package com.gamecook.tilecrusader.activities
         public var potionsNumStepper:NumericStepper;
         public var nameInput:InputText;
         private var defaultTotalTextColor:uint;
-        private var spriteSheet:SpriteSheet;
         public var classButton:PushButton;
-        //private var classTemplates:Array;
         public var layout:VBox;
         private var defaultName:String;
         private var classOptionIterator:OptionsBehavior;
@@ -60,14 +67,10 @@ package com.gamecook.tilecrusader.activities
             activeGameState = new ActiveGameState();
             customTemplateState = new CustomTemplateState();
 
-            loadState(null);
-            mapViewPortX = 20;
-            mapViewPortWidth = fullSizeWidth - 480;
-            mapViewPortY = 100;
+            loadState();
+
             super.onCreate();
 
-            //TODO this needs to run off the global style sheet.
-            //parseSpriteSheet();
         }
 
 
@@ -76,9 +79,9 @@ package com.gamecook.tilecrusader.activities
             super.onStart();
 
             var xml:XML = <comps>
-                <Label id="title" x="20" y="40" scaleX="4" scaleY="4" text="Create Character"/>
+                <Label id="title" x="20" y="10" scaleX="2" scaleY="2" text="Create Character"/>
 
-                <VBox id="layout" spacing="10" x="150" y="80" scaleX="2" scaleY="2">
+                <VBox id="layout" spacing="10" x="150" y="30" >
                     <HBox spacing="10">
                         <VBox spacing="-5">
                             <Label id="name" text="Name:"/>
@@ -118,10 +121,9 @@ package com.gamecook.tilecrusader.activities
                         </VBox>
 
                     </HBox>
-                    <PushButton id="accept" label="I Like It" width="210" event="click:onDone"/>
                     <HBox spacing="10">
-                        <PushButton id="cancel" label="Cancel" event="click:onBack"/>
-                        <PushButton id="saveButton" label="Save As Default" event="click:onSave"/>
+                        <PushButton id="cancel" label="Cancel" event="click:back"/>
+                        <PushButton id="accept" label="I Like It" event="click:onDone"/>
                     </HBox>
                 </VBox>
 
@@ -136,7 +138,7 @@ package com.gamecook.tilecrusader.activities
             //classIterator = new OptionsIterator();
 
             classOptionIterator = new OptionsBehavior(classButton, ClassOptions.getValues());
-            layout.x = fullSizeWidth - 450;
+            //layout.x = fullSizeWidth - 450;
 
             if (customTemplateState.customTemplate)
             {
@@ -216,8 +218,8 @@ package com.gamecook.tilecrusader.activities
 
         private function updateRandomMapPlayer():void
         {
-            randMap.player.setAttackRolls(hitNumStepper.value);
-            randMap.player.setDefenseRolls(defNumStepper.value);
+            /*randMap.player.setAttackRolls(hitNumStepper.value);
+            randMap.player.setDefenseRolls(defNumStepper.value);*/
         }
 
         public function onChangeAttribute(event:MouseEvent):void
@@ -238,6 +240,11 @@ package com.gamecook.tilecrusader.activities
             updateTotalLabel();
         }
 
+        public function back(event:MouseEvent):void
+        {
+            onBack();
+        }
+
         override public function onBack():void
         {
             nextActivity(StartActivity);
@@ -247,18 +254,20 @@ package com.gamecook.tilecrusader.activities
         {
 
             //Mark active game flag, save player info and go to next screen
-            activeGameState.activeGame = true;
-            activeGameState.player = {name:nameInput.text,
-                maxLife: lifeNumStepper.value,
-                attackRoll: hitNumStepper.value,
-                defenseRoll: defNumStepper.value,
-                maxPotions: potionsNumStepper.value,
-                points:characterPoints,
-                characterPoints:DEFAULT_POINTS};
+            //activeGameState.activeGame = true;
+            var playerObj:Object = {name:nameInput.text,
+            maxLife: lifeNumStepper.value,
+            attackRoll: hitNumStepper.value,
+            defenseRoll: defNumStepper.value,
+            maxPotions: potionsNumStepper.value,
+            points:characterPoints,
+            visibility: 3,
+            characterPoints:DEFAULT_POINTS};
 
-            saveState(null);
+            NewGameFactory.createCoffeeBreakGame(ClassOptions.getValues(), DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions(), playerObj);
 
-            nextActivity(RandomMapGeneratorActivity);
+            nextActivity(MapLoadingActivity);
+
         }
 
         public function onSave(event:MouseEvent):void
@@ -275,13 +284,13 @@ package com.gamecook.tilecrusader.activities
             classLabel.text = "Class(Custom):";
         }
 
-        override public function loadState(obj:Object):void
+        override public function loadState():void
         {
             activeGameState.load();
             customTemplateState.load();
         }
 
-        override public function saveState(obj:Object, activeState:Boolean = true):void
+        override public function saveState():void
         {
             activeGameState.save();
 

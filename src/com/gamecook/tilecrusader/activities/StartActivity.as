@@ -76,11 +76,11 @@ package com.gamecook.tilecrusader.activities
             //so.clear();
             //TODO show a warning that this will overwrite the current game
             //stateSOData.activeGame = true;
-            //nextActivity(ConfigureCharacterActivity);
-            //nextActivity(ConfigureCharacterActivity);
-            NewGameFactory.createCoffeeBreakGame(ClassOptions.getValues(), DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions());
 
-            nextActivity(MapLoadingActivity);
+            nextActivity(ConfigureCharacterActivity);
+            /*NewGameFactory.createCoffeeBreakGame(ClassOptions.getValues(), DarknessOptions.getValues(), GameModeOptions.getValues(), MapSizeOptions.getValues(), BooleanOptions.getTFOptions(), BooleanOptions.getTFOptions());
+
+            nextActivity(MapLoadingActivity);*/
         }
 
         public function onContinue(event:MouseEvent):void

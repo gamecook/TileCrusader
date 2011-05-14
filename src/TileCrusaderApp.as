@@ -33,6 +33,7 @@ package
     import com.bit101.components.Style;
     import com.gamecook.tilecrusader.TileCrusaderGame;
     import com.gamecook.tilecrusader.activities.DebugStartActivity;
+    import com.gamecook.tilecrusader.activities.GameCookSplashActivity;
     import com.gamecook.tilecrusader.managers.PopUpManager;
     import com.gamecook.tilecrusader.trackers.GoogleTracker;
     import com.jessefreeman.factivity.activities.BaseActivity;
@@ -76,11 +77,11 @@ package
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             //Debug Game
-            game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
+            //game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
             //game = new TileCrusaderGame(tracker, 0, 0, ColorSwapTest, scale);
 
             // Real Game
-            //game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
+            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
 
             addChild(game);
 

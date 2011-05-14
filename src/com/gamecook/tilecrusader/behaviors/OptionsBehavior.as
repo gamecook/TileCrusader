@@ -44,7 +44,7 @@ package com.gamecook.tilecrusader.behaviors
             this.startIndex = startIndex;
             this.options = options;
             this.target = target;
-            iterator = new ArrayIterator(options, startIndex);
+            iterator = new ArrayIterator(options, startIndex, true);
         }
 
         public function nextOption():*

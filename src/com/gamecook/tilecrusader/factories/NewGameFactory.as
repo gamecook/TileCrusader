@@ -15,7 +15,7 @@ package com.gamecook.tilecrusader.factories
     {
         private static var DEFAULT_POINTS:int = 20;
 
-        public static function createCoffeeBreakGame(classOptions:Array, darknessOptions:Array, gameModeOptions:Array, mapSizeOptions:Array, showMonsterOptions:Array, dropTreasureOptions:Array):Boolean
+        public static function createCoffeeBreakGame(classOptions:Array, darknessOptions:Array, gameModeOptions:Array, mapSizeOptions:Array, showMonsterOptions:Array, dropTreasureOptions:Array, playerValues:Object = null):Boolean
         {
             var activeGameState:ActiveGameState = new ActiveGameState();
             activeGameState.load();
@@ -24,20 +24,24 @@ package com.gamecook.tilecrusader.factories
 
             var success:Boolean = false;
 
-            var playerClass:String = ArrayUtil.pickRandomArrayElement(classOptions);
-            var playerObj:Object = PlayerClassTemplates.getTemplate(playerClass);
 
+            if(playerValues)
+            {
+                var playerClass:String = ArrayUtil.pickRandomArrayElement(classOptions);
+                var playerObj:Object = PlayerClassTemplates.getTemplate(playerClass);
 
+                playerValues = {name:"Random Name",
+                                        maxLife: playerObj.life,
+                                        attackRoll: playerObj.attackRoll,
+                                        defenseRoll: playerObj.defense,
+                                        maxPotions: playerObj.potions,
+                                        visibility: playerObj.visibility,
+                                        points: DEFAULT_POINTS,
+                                        characterPoints: DEFAULT_POINTS}
+            }
             // configure ActiveGameState SO
             activeGameState.activeGame = true;
-            activeGameState.player = {name:"Random Name",
-                maxLife: playerObj.life,
-                attackRoll: playerObj.attackRoll,
-                defenseRoll: playerObj.defense,
-                maxPotions: playerObj.potions,
-                visibility: playerObj.visibility,
-                points: DEFAULT_POINTS,
-                characterPoints: DEFAULT_POINTS};
+            activeGameState.player = playerValues;
 
             activeGameState.size = ArrayUtil.pickRandomArrayElement(mapSizeOptions);
             activeGameState.gameType = ArrayUtil.pickRandomArrayElement(gameModeOptions);
