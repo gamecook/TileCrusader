@@ -37,6 +37,8 @@ package com.gamecook.tilecrusader.activities
     import com.gamecook.tilecrusader.renderer.PreviewMapRenderer;
     import com.gamecook.tilecrusader.sounds.TCSoundClasses;
     import com.gamecook.tilecrusader.states.ActiveGameState;
+    import com.gamecook.tilecrusader.threads.effects.EaseScrollBehavior;
+    import com.gamecook.tilecrusader.views.CharacterSheetView;
     import com.jessefreeman.factivity.activities.ActivityManager;
     import com.jessefreeman.factivity.managers.SingletonManager;
     import com.jessefreeman.factivity.threads.effects.Quake;
@@ -60,7 +62,7 @@ package com.gamecook.tilecrusader.activities
 
 
         public var map:RandomMap;
-        private var renderer:AbstractMapRenderer;
+        private var renderer:MQMapBitmapRenderer;
         private var renderWidth:int;
         private var renderHeight:int;
         private var darknessWidth:int;
@@ -111,6 +113,8 @@ package com.gamecook.tilecrusader.activities
         private var mouseDown:Boolean;
         private var previewMapShape:Shape;
         private var previewMapRenderer:PreviewMapRenderer;
+        private var scrollThread:EaseScrollBehavior;
+        private var characterSheet:CharacterSheetView;
 
         public function GameActivity(activityManager:ActivityManager, data:* = null)
         {
@@ -133,7 +137,7 @@ package com.gamecook.tilecrusader.activities
 
             TimeMethodExecutionUtil.execute("updateMapAnalytics", analytics.update);
             var remainingMonsters:int = TimeMethodExecutionUtil.execute("remainingMonsters", analytics.getTotal, "1", "2", "3", "4", "5", "6", "7", "8", "9");
-            trace("Monsters in MapAnalytics", remainingMonsters);
+            //trace("Monsters in MapAnalytics", remainingMonsters);
 
 
             gameMode = activeGameState.gameType;
@@ -226,6 +230,8 @@ package com.gamecook.tilecrusader.activities
                 textEffect = new TypeTextEffect(statusLabel.textField, onTextEffectUpdate);
             }
 
+            scrollThread = new EaseScrollBehavior(renderer, onScrollUpdate, onScrollComplete);
+
             //TODO this isn't working look into it.
             /*if(activeGameState.startMessage)
              PopUpManager.showOverlay(new AlertPopUpWindow(activeGameState.startMessage));*/
@@ -241,6 +247,21 @@ package com.gamecook.tilecrusader.activities
             previewMapRenderer.renderMap(map);
             previewMapShape.x = fullSizeWidth - previewMapShape.width;
             //previewMapShape.y = fullSizeHeight - previewMapShape.height;
+            
+            characterSheet = addChild(new CharacterSheetView(player)) as CharacterSheetView;
+        }
+
+        private function onScrollComplete():void
+        {
+            //trace("Scroll Complete");
+            renderer.scrollX = 0;
+            renderer.scrollY = 0;
+        }
+
+        private function onScrollUpdate():void
+        {
+            //trace("Scroll Update", renderer.scrollX, scrollThread.targetX);
+            invalidate();
         }
 
         private function onPlayerDefend():void
@@ -371,7 +392,32 @@ package com.gamecook.tilecrusader.activities
 
         private function nextMove(value:Point):void
         {
-            _nextMove = value;
+            if(!scrollThread.isRunning())
+            {
+                if (value.y == 1)
+                {
+                    scrollThread.targetX = 0;
+                    scrollThread.targetY = -32;
+                }
+                else if (value.x == 1)
+                {
+                    scrollThread.targetX = -32;
+                    scrollThread.targetY = 0;
+                }
+                else if (value.y == -1)
+                {
+                    scrollThread.targetX = 0;
+                    scrollThread.targetY = 32;
+                }
+                else
+                {
+
+                    scrollThread.targetX = 32;
+                    scrollThread.targetY = 0;
+                }
+
+                _nextMove = value;
+            }
         }
 
         public function move(value:Point):void
@@ -637,7 +683,7 @@ package com.gamecook.tilecrusader.activities
                 {
                     // Randomly pick a slot
                     rand = Math.round(Math.random() * 7)// 5 slots + empty chances
-                    trace("Drop random equipment", rand);
+                    //trace("Drop random equipment", rand);
                     var droppedEquipment:IEquipable
 
                     switch (rand)
@@ -752,6 +798,10 @@ package com.gamecook.tilecrusader.activities
         {
             movementHelper.move(value.x, value.y);
             player.addStep();
+
+            //TODO enable to get animation working
+            /*if(!scrollThread.isRunning())
+                addThread(scrollThread);*/
         }
 
         protected function invalidate():void
@@ -791,7 +841,7 @@ package com.gamecook.tilecrusader.activities
 
             if (invalid)
             {
-
+                characterSheet.update();
                 mapSelection.setCenter(movementHelper.playerPosition);
                 renderer.renderMap(mapSelection);
 
@@ -832,7 +882,11 @@ package com.gamecook.tilecrusader.activities
                 previewMapRenderer.renderPlayer(mapSelection.getOffsetX() + x, mapSelection.getOffsetY() + y, playerSprite);
 
                 invalid = false;
+
+                trace("$Render");
             }
+
+
         }
 
         override public function onStart():void
@@ -872,7 +926,7 @@ package com.gamecook.tilecrusader.activities
             var localPoint:Point = new Point(Math.floor((mouseX - mapBitmap.x) / TILE_SIZE), Math.floor((mouseY - mapBitmap.y) / TILE_SIZE));
             var tileID:int = mapSelection.getTileID(localPoint.x, localPoint.y);
 
-            trace("Update Mouse Position", mouseX, mouseY, localPoint);
+            //trace("Update Mouse Position", mouseX, mouseY, localPoint);
 
 
             var playerPoint:Point = mapSelection.getCenter().clone();
@@ -893,19 +947,23 @@ package com.gamecook.tilecrusader.activities
 
             if (angle >= -135 && angle <= -45)
             {
-                directionY = 1
+                directionY = 1;
+
             }
             else if (angle >= -45 && angle <= 45)
             {
                 directionX = 1;
+
             }
             else if (angle >= 45 && angle <= 135)
             {
-                directionY = -1
+                directionY = -1;
+
             }
             else
             {
                 directionX = -1;
+
             }
 
             nextMove(new Point(directionX, directionY));

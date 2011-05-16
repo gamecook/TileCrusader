@@ -12,12 +12,16 @@ package com.gamecook.tilecrusader.factories
     import com.gamecook.frogue.equipment.IEquipable;
     import com.gamecook.frogue.factories.EquipmentFactory;
     import com.gamecook.frogue.factories.TileFactory;
+    import com.gamecook.frogue.sprites.SpriteSheet;
     import com.gamecook.frogue.templates.ITemplate;
     import com.gamecook.frogue.templates.ITemplateCollection;
     import com.gamecook.frogue.templates.TemplateApplicator;
     import com.gamecook.frogue.tiles.BaseTile;
     import com.gamecook.frogue.tiles.IMonster;
     import com.gamecook.frogue.tiles.PlayerTile;
+    import com.jessefreeman.factivity.managers.SingletonManager;
+
+    import flash.text.StyleSheet;
 
     public class TCTileFactory extends TileFactory
     {
@@ -25,7 +29,7 @@ package com.gamecook.tilecrusader.factories
         private var templateApplicator:TemplateApplicator;
         private var characterPoints:int;
         private var modifier:Number;
-        private var weaponGenerator:EquipmentFactory = new EquipmentFactory();
+        private var weaponGenerator:EquipmentFactory = new EquipmentFactory(SingletonManager.getClassReference(SpriteSheet));
 
         public function TCTileFactory(templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {
@@ -35,7 +39,6 @@ package com.gamecook.tilecrusader.factories
             this.templates = templates;
             super();
         }
-
 
         override public function createTile(value:String):BaseTile
         {

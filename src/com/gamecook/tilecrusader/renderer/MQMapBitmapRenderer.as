@@ -18,18 +18,22 @@ package com.gamecook.tilecrusader.renderer
     import flash.filters.BitmapFilterQuality;
     import flash.filters.GlowFilter;
     import flash.geom.Matrix;
+    import flash.geom.Point;
+    import flash.geom.Rectangle;
     import flash.text.AntiAliasType;
     import flash.text.TextField;
     import flash.text.TextFieldAutoSize;
     import flash.text.TextFormat;
 
-    public class MQMapBitmapRenderer extends MapBitmapRenderer
+    public class MQMapBitmapRenderer extends MapBitmapRenderer implements IScroll
     {
         //private var tileMap:TileTypes;
         private var instances:TileInstanceManager;
         private var currentTileID:int;
         private var statsTF:TextField;
         private var statsMatrix:Matrix;
+        private var _scrollX:int = 0;
+        private var _scrollY:int = 0;
 
         public function MQMapBitmapRenderer(target:BitmapData, spriteSheet:SpriteSheet, instances:TileInstanceManager)
         {
@@ -66,7 +70,11 @@ package com.gamecook.tilecrusader.renderer
         override protected function renderTile(j:int, i:int, currentTile:String, tileID:int):void
         {
             currentTileID = tileID;
-            super.renderTile(j, i, currentTile, tileID);
+            var bitmapData:BitmapData = tileBitmap(currentTile);
+            var tileRect:Rectangle = new Rectangle(0, 0, bitmapData.width, bitmapData.height);
+            var point:Point = new Point(j * tileRect.width + scrollX, i * tileRect.height + scrollY);
+
+            target.copyPixels(bitmapData, tileRect, point);
         }
 
 
@@ -125,5 +133,24 @@ package com.gamecook.tilecrusader.renderer
         }
 
 
+        public function set scrollX(value:int):void
+        {
+            _scrollX = value;
+        }
+
+        public function get scrollX():int
+        {
+            return _scrollX;
+        }
+
+        public function set scrollY(value:int):void
+        {
+            _scrollY = value;
+        }
+
+        public function get scrollY():int
+        {
+            return _scrollY;
+        }
     }
 }

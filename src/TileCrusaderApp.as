@@ -77,11 +77,11 @@ package
             PopUpManager.config(stage, BaseActivity.fullSizeWidth, BaseActivity.fullSizeHeight);
 
             //Debug Game
-            //game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
+            game = new TileCrusaderGame(tracker, 0, 0, DebugStartActivity, scale);
             //game = new TileCrusaderGame(tracker, 0, 0, ColorSwapTest, scale);
 
             // Real Game
-            game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
+            //game = new TileCrusaderGame(tracker, 0,0, GameCookSplashActivity, scale);
 
             addChild(game);
 

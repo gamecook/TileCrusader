@@ -25,7 +25,7 @@ package com.gamecook.tilecrusader.factories
             var success:Boolean = false;
 
 
-            if(playerValues)
+            if(!playerValues)
             {
                 var playerClass:String = ArrayUtil.pickRandomArrayElement(classOptions);
                 var playerObj:Object = PlayerClassTemplates.getTemplate(playerClass);
