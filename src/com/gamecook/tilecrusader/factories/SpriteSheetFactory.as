@@ -109,8 +109,8 @@ package com.gamecook.tilecrusader.factories
             //Register last light tile as darkness
             TileTypes.registerTile(id, {type:TileTypes.DARKNESS});
 
-            //This is the tile for the monster's eyes
-            TileTypes.registerTile("sprite3", {type:TileTypes.DARKNESS});
+            /*//This is the tile for the monster's eyes
+            TileTypes.registerTile("sprite3", {type:TileTypes.DARKNESS});*/
 
             return spriteSheet;
 

@@ -65,7 +65,8 @@ package com.gamecook.tilecrusader.activities
             config.parseXML(xml);
 
             //title.x = fullSizeWidth - 300;
-            if (!stateSOData.activeGame)
+            //TODO disabling this button for now until I fix continue state logic.
+            //if (!stateSOData.activeGame)
                 buttonLayout.removeChild(continueButton);
         }
 

@@ -111,7 +111,7 @@ public class EquipmentTest {
         player.equip(weapon3);
 
         var weapon4:Equipment = new Equipment();
-        weapon4.parseObject({tileID: "w4", modifyValue:5, modifyAttribute:"modifyDefense", slotID:SlotsEnum.SHOES});
+        weapon4.parseObject({tileID: "w4", modifyValue:5, modifyAttribute:"modifyDefense", slotID:SlotsEnum.BOOTS});
         player.equip(weapon4);
 
         Assert.assertEquals(player.getDefenceRolls(),16);

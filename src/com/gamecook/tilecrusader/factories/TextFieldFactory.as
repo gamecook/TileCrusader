@@ -57,8 +57,8 @@ package com.gamecook.tilecrusader.factories
             textField.wordWrap = wordWrap;
 
             // For testing
-            textField.border = true;
-            textField.borderColor = 0xff0000;
+            /*textField.border = true;
+            textField.borderColor = 0xff0000;*/
             return textField;
         }
 

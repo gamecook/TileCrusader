@@ -29,7 +29,10 @@ package com.gamecook.tilecrusader.factories
         private var templateApplicator:TemplateApplicator;
         private var characterPoints:int;
         private var modifier:Number;
-        private var weaponGenerator:EquipmentFactory = new EquipmentFactory(SingletonManager.getClassReference(SpriteSheet));
+        include "types.as";
+
+        private var weaponGenerator:EquipmentFactory = new EquipmentFactory(SingletonManager.getClassReference(SpriteSheet), types);
+
 
         public function TCTileFactory(templates:ITemplateCollection, templateApplicator:TemplateApplicator, characterPoints:int, modifier:Number = 0)
         {
@@ -51,7 +54,7 @@ package com.gamecook.tilecrusader.factories
 
                 // Generate and Equip items
 
-                var equipmentTypes:Array = [SlotsEnum.WEAPON, SlotsEnum.ARMOR, SlotsEnum.HELMET, SlotsEnum.SHIELD, SlotsEnum.SHOES];
+                var equipmentTypes:Array = [SlotsEnum.WEAPON, SlotsEnum.ARMOR, SlotsEnum.HELMET, SlotsEnum.SHIELD, SlotsEnum.BOOTS];
 
                 var total:int = Math.random() * equipmentTypes.length;
                 var i:int = 0;

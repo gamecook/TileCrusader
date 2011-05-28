@@ -94,7 +94,7 @@ package com.gamecook.tilecrusader.maps
                     else if (TileTypes.isMonster(tileValue))
                     {
                         //trace("Monster in Dark", uID);
-                        spriteID = "sprite3";
+                        spriteID = TileTypes.getTileSprite(":");
                     }
                     else
                     {

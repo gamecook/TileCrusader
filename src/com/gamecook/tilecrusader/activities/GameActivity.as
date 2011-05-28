@@ -249,6 +249,9 @@ package com.gamecook.tilecrusader.activities
             //previewMapShape.y = fullSizeHeight - previewMapShape.height;
             
             characterSheet = addChild(new CharacterSheetView(player)) as CharacterSheetView;
+            characterSheet.x = fullSizeWidth - characterSheet.width;
+            previewMapShape.x = characterSheet.x + ((characterSheet.width - previewMapShape.width) * .5);
+            previewMapShape.y = characterSheet.y + 100;
         }
 
         private function onScrollComplete():void
@@ -700,7 +703,7 @@ package com.gamecook.tilecrusader.activities
                         case SlotsEnum.HELMET:
                             droppedEquipment = monster.getHelmetSlot();
                             break;
-                        case SlotsEnum.SHOES:
+                        case SlotsEnum.BOOTS:
                             droppedEquipment = monster.getHelmetSlot();
                             break;
                     }

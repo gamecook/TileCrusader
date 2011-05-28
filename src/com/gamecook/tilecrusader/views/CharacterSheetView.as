@@ -56,10 +56,10 @@ package com.gamecook.tilecrusader.views
         {
 
             container = addChild(new Sprite()) as Sprite;
-            var playerClass:TextField = TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsSmall, "KNIGHT");
+            var playerClass:TextField = TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsSmall, playerTile.getClass());
             container.addChild(playerClass);
 
-            var playerName:TextField = TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsLarge, "BITCHASS");
+            var playerName:TextField = TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsLarge, playerTile.getName());
             playerName.y = playerClass.y + playerClass.height -5;
 
             playerClass.x = (playerName.width - playerClass.width) * .5;
@@ -81,7 +81,6 @@ package com.gamecook.tilecrusader.views
             potionsText = statsLineTwoContainer.addChild(TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsSmall, "L: 00")) as TextField;
             goldText = statsLineTwoContainer.addChild(TextFieldFactory.createTextField(TextFieldFactory.textFormatStatsSmall, "A: 00")) as TextField;
             goldText.x = potionsText.x + potionsText.width + 2;
-
 
             weaponBox = addChild(new Sprite()) as Sprite;
             weaponBox.y = statsLineTwoContainer.y + statsLineOneContainer.height + 2;
